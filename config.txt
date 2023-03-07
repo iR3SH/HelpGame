@@ -1,0 +1,58 @@
+## Fichier de configuration pour StarLoco par Kevin#6537 ##
+
+## CONNECTION
+IP = 127.0.0.1
+GAME_PORT = 5555
+
+EXCHANGE_IP = 127.0.0.1
+EXCHANGE_PORT = 666
+
+## BASE DE DONNEE
+LOGIN_IP_DB = 127.0.0.1
+LOGIN_NAME_DB = help_login
+LOGIN_USER_DB = root
+LOGIN_PASS_DB = 
+LOGIN_PORT_DB = 3306
+
+GAME_IP_DB = 127.0.0.1
+GAME_NAME_DB = help_game
+GAME_USER_DB = root
+GAME_PASS_DB = 
+GAME_PORT_DB = 3306
+
+## RULES
+SUBSCRIBER = false
+START_LEVEL = 1
+START_KAMAS = 10000
+START_PLAYER = 164,298
+## EXAMPLE FOR PANO AND ITEM : id;id;id;id
+START_PANO = 5
+START_ITEM = 
+ALL_ZAAP = true
+ALL_EMOTE = true
+NOEL = false
+HALLOWEEN = false
+HEROIC = false
+
+## CONFIGURATION
+MESSAGE = Bienvenue dans l'�mulation FREE d'entraide
+URL = nashira
+NAME = Eratz
+AUTO_REBOOT = true
+
+SERVER_ID = 601
+SERVER_KEY = eratz
+
+DEBUG = true
+USE_LOG = true
+
+## Server rate : 
+RATE_XP = 1
+RATE_DROP = 1
+RATE_JOB = 1
+RATE_KAMAS = 1
+RATE_FM = 2
+
+## Prestige :
+ALLOW_PRESTIGE = false
+
