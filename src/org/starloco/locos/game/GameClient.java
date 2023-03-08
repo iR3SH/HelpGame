@@ -218,7 +218,7 @@ public class GameClient {
         int ToniqueChoosedPos = Integer.parseInt(packet.substring(2));
         int ToniqueTemplateID = this.player.LastTonicProposed[ToniqueChoosedPos];
         int palier = Constant.getPalierByNewMap(this.player.getCurMap().getId());
-        int toniquePos = 40 + palier;
+        int toniquePos = 64 + palier;
         String StatsToadd = Constant.getStatStringbyPalier(palier);
         this.player.setTonique(ToniqueTemplateID,toniquePos,StatsToadd);
     }

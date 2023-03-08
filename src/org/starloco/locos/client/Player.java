@@ -1545,7 +1545,7 @@ public class Player {
             if (this.fight == null && !Constant.isGladiatroolWeapon(this.getObjetByPos(Constant.ITEM_POS_ARME).getTemplate().getId())) {
                 SocketManager.GAME_SEND_SPELL_LIST(this);
                 SocketManager.GAME_SEND_Ow_PACKET(this);
-                //SocketManager.GAME_SEND_ASK(this.getGameClient(), this);
+                SocketManager.GAME_SEND_ASK(this.getGameClient(), this);
             }
         }
 
@@ -3075,7 +3075,7 @@ public class Player {
         if(deleteGladiaWeapon) {
             if ( Constant.isGladiatroolWeapon(this.getObjetByPos(Constant.ITEM_POS_ARME).getTemplate().getId()) ) {
                 this.getGameClient().destroyObject("Od"+this.getObjetByPos(Constant.ITEM_POS_ARME).getGuid()+"|1");
-                for(int i=40;i<= Constant.ITEM_POS_TONIQUE9;i++){
+                for(int i=Constant.ITEM_POS_TONIQUE_EQUILIBRAGE;i<= Constant.ITEM_POS_TONIQUE9;i++){
                     this.removeTonique(i);
                 }
             }
@@ -5934,6 +5934,10 @@ public class Player {
 
         this.initiative = Integer.parseInt(fullMorph.get("initiative"));
         return statTonique;
+    }
+
+    public Map<Integer, GameObject> GetequipedObjects(){
+        return this.equipedObjects;
     }
 
     public String getWrPacket(int palier) {

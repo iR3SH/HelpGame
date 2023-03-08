@@ -96,16 +96,16 @@ public class Constant {
     public static final int ITEM_POS_MALEDICTION = 22;
     public static final int ITEM_POS_BONBON = 25;
 
-    public static final int ITEM_POS_TONIQUE_EQUILIBRAGE = 41;
-    public static final int ITEM_POS_TONIQUE1 = 42;
-    public static final int ITEM_POS_TONIQUE2 = 43;
-    public static final int ITEM_POS_TONIQUE3 = 44;
-    public static final int ITEM_POS_TONIQUE4 = 45;
-    public static final int ITEM_POS_TONIQUE5 = 46;
-    public static final int ITEM_POS_TONIQUE6 = 47;
-    public static final int ITEM_POS_TONIQUE7 = 48;
-    public static final int ITEM_POS_TONIQUE8 = 49;
-    public static final int ITEM_POS_TONIQUE9 = 50;
+    public static final int ITEM_POS_TONIQUE_EQUILIBRAGE = 65;
+    public static final int ITEM_POS_TONIQUE1 = 66;
+    public static final int ITEM_POS_TONIQUE2 = 67;
+    public static final int ITEM_POS_TONIQUE3 = 68;
+    public static final int ITEM_POS_TONIQUE4 = 69;
+    public static final int ITEM_POS_TONIQUE5 = 70;
+    public static final int ITEM_POS_TONIQUE6 = 71;
+    public static final int ITEM_POS_TONIQUE7 = 72;
+    public static final int ITEM_POS_TONIQUE8 = 73;
+    public static final int ITEM_POS_TONIQUE9 = 74;
 
     //Types
     public static final int ITEM_TYPE_AMULETTE = 1;

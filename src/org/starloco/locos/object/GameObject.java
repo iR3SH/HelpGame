@@ -411,7 +411,7 @@ public class GameObject {
     }
 
     public String parseItem() {
-        String posi = position == Constant.ITEM_POS_NO_EQUIPED ? "" : position+"";
+        String posi = position == Constant.ITEM_POS_NO_EQUIPED ? "" : Integer.toHexString(position)+"";
         return Integer.toHexString(guid) + "~"
                 + Integer.toHexString(template.getId()) + "~"
                 + Integer.toHexString(quantity) + "~" + posi + "~"
