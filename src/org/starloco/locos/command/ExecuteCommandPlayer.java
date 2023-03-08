@@ -1,6 +1,5 @@
 package org.starloco.locos.command;
 
-
 import org.starloco.locos.area.map.entity.House;
 
 import org.starloco.locos.client.Player;
@@ -19,7 +18,6 @@ import org.starloco.locos.kernel.Logging;
 import org.starloco.locos.kernel.Main;
 import org.starloco.locos.util.lang.Lang;
 
-
 import org.starloco.locos.fight.spells.*;
 import org.starloco.locos.object.GameObject;
 import org.starloco.locos.object.ObjectTemplate;
@@ -30,7 +28,7 @@ import java.util.List;
 
 public class ExecuteCommandPlayer {
 
-    public final static String canal = "Général";
+    public final static String canal = "GÃ©nÃ©ral";
     
     private static final String[] emplacements = new String[] {
     		
@@ -95,7 +93,7 @@ public class ExecuteCommandPlayer {
         	if(price != 0)
         		if(player.getAccount().getPoints() < price)
         		{
-        			player.sendErrorMessage("Tu n'as pas assez de points pour pouvoir éxecuter cette commande.");
+        			player.sendErrorMessage("Tu n'as pas assez de points pour pouvoir Ã©xecuter cette commande.");
         			return true;
         		}
         	
@@ -109,7 +107,7 @@ public class ExecuteCommandPlayer {
         	if(playerCommand.isVip())
         		if(!player.getAccount().isVip())
         		{
-        			player.sendErrorMessage("Tu dois êtres V.I.P pour pouvoir éxecuter cette commande.");
+        			player.sendErrorMessage("Tu dois Ãªtres V.I.P pour pouvoir Ã©xecuter cette commande.");
         			return true;
         		}
         	
@@ -244,7 +242,7 @@ public class ExecuteCommandPlayer {
     {
     	if(player.getFight() != null)
 		{
-			player.sendMessage("Commande impossible a exécuter en combat");
+			player.sendMessage("Commande impossible a exÃ©cuter en combat");
 			return false;
 		}	
 		boolean parcho = false;
@@ -275,7 +273,7 @@ public class ExecuteCommandPlayer {
 			SocketManager.GAME_SEND_STATS_PACKET(player);
 			return true;
 		}
-		SocketManager.GAME_SEND_Im_PACKET(player, "116;<i>Serveur: </i>~Vous êtes déjà parchotté dans tous les éléments !");
+		SocketManager.GAME_SEND_Im_PACKET(player, "116;<i>Serveur: </i>~Vous Ãªtes dÃ©jÃ  parchottÃ© dans tous les Ã©lÃ©ments !");
 		return false;
     }
     
@@ -301,7 +299,7 @@ public class ExecuteCommandPlayer {
     	if(arguments[1].equalsIgnoreCase("condition") || arguments[1].equalsIgnoreCase("bonus"))
     	{
     		if(arguments.length < 3) {
-    			player.sendErrorMessage("Commande incorrect , faîtes .prestige pour voir les commandes.");
+    			player.sendErrorMessage("Commande incorrect , faÃ®tes .prestige pour voir les commandes.");
     			return;
     		}
     		
@@ -310,7 +308,7 @@ public class ExecuteCommandPlayer {
     			prestigeId = Short.parseShort(arguments[2]);
     		}catch(NumberFormatException e)
     		{
-    			player.sendErrorMessage("L'id doit être un nombre");
+    			player.sendErrorMessage("L'id doit Ãªtre un nombre");
     			return;
     		}
     		
@@ -319,7 +317,7 @@ public class ExecuteCommandPlayer {
     		final Prestige prestige = World.world.getPrestigeById(prestigeId);
     		if(prestige == null)
     		{
-    			player.sendInformationMessage("Ce prestige n'éxiste pas.");
+    			player.sendInformationMessage("Ce prestige n'Ã©xiste pas.");
     			return;
     		}
     		
@@ -347,14 +345,14 @@ public class ExecuteCommandPlayer {
     	
     	if(!arguments[1].equalsIgnoreCase("next"))
     	{
-    		player.sendErrorMessage("Commande incorrect , faîtes .prestige pour voir les commandes.");
+    		player.sendErrorMessage("Commande incorrect , faÃ®tes .prestige pour voir les commandes.");
 			return;
     	}
     		
     	final Prestige prestige = World.world.getPrestigeById((short)(player.getPrestige() + 1));
     	if(prestige == null)
     	{
-    		player.sendInformationMessage("Tu es déjà au prestige maximum ! Félicitation :)");
+    		player.sendInformationMessage("Tu es dÃ©jÃ  au prestige maximum ! FÃ©licitation :)");
     		return;
     	}
 
@@ -364,7 +362,7 @@ public class ExecuteCommandPlayer {
     private static void removePoints(final Player player, final int price)
     {
     	if(price != 0) {
-    		final String message = price < 0 ? "gagné" : "perdu";
+    		final String message = price < 0 ? "gagnÃ©" : "perdu";
     		player.getAccount().setPoints(player.getAccount().getPoints() - price);
     		player.sendInformationMessage("Tu as " + message + " " + price + " points de boutique.");
     	}
@@ -433,7 +431,7 @@ public class ExecuteCommandPlayer {
     }
     
     private static boolean doMaster(final String msg, final Player player) {
-    	// 1) Création du groupe par IP joueur
+    	// 1) CrÃ©ation du groupe par IP joueur
 		if (player.isInPrison() || player.getFight() != null)
             return false;
 
@@ -460,25 +458,25 @@ public class ExecuteCommandPlayer {
         });
         
         
-        // 2) Création du maitre et des esclaves par le groupe, et donc par l'IP
+        // 2) CrÃ©ation du maitre et des esclaves par le groupe, et donc par l'IP
         if(player.cantTP()) return false;
 
         final Party party = player.getParty();
 
         if (party == null) {
-            player.sendMessage("Action impossible. Vérifiez que vos joueurs sont connectés ou ne font pas déjà partie d'un groupe.");
+            player.sendMessage("Action impossible. VÃ©rifiez que vos joueurs sont connectÃ©s ou ne font pas dÃ©jÃ  partie d'un groupe.");
             return false;
         }
 
         final List<Player> players = player.getParty().getPlayers();
 
         if (!party.getChief().getName().equals(player.getName())) {
-            player.sendMessage("Vous n'êtes pas le chef du groupe.");
+            player.sendMessage("Vous n'Ãªtes pas le chef du groupe.");
             return false;
         }
 
         if (msg.length() <= 8 && party.getMaster() != null) {
-        	SocketManager.GAME_SEND_MESSAGE(player, "Vous venez de désactiver le mode <b>maître</b>.", "009900"); //la
+        	SocketManager.GAME_SEND_MESSAGE(player, "Vous venez de dÃ©sactiver le mode <b>maÃ®tre</b>.", "009900"); //la
             players.stream().filter(follower -> follower != party.getMaster())
                     .forEach(follower -> SocketManager.GAME_SEND_MESSAGE(follower, "Vous ne suivez plus <b>" + party.getMaster().getName() + "</b>."));
             party.setMaster(null);
@@ -501,21 +499,21 @@ public class ExecuteCommandPlayer {
             return false;
         }
         if (target.getParty() == null || !target.getParty().getPlayers().contains(player)) {
-            player.sendMessage("Tu n'es pas dans le groupe du joueur indiqué.");
+            player.sendMessage("Tu n'es pas dans le groupe du joueur indiquÃ©.");
             return false;
         }
 
         party.setMaster(target);                
 
-        final String message = "Vous suivez désormais <b>" + target.getName() + "</b>.";
+        final String message = "Vous suivez dÃ©sormais <b>" + target.getName() + "</b>.";
         for (Player follower : players)
             if(follower != target)
                 SocketManager.GAME_SEND_MESSAGE(follower, message, "009900");
         party.teleportAllEsclaves();
         party.moveAllPlayersToMaster(null);
-        SocketManager.GAME_SEND_MESSAGE(target, "Vous êtes désormais le <b>maître</b>.", "009900");
+        SocketManager.GAME_SEND_MESSAGE(target, "Vous Ãªtes dÃ©sormais le <b>maÃ®tre</b>.", "009900");
         
-        //SocketManager.GAME_SEND_MESSAGE(target, "Vous êtes désormais le maitre.", "009900");
+        //SocketManager.GAME_SEND_MESSAGE(target, "Vous Ãªtes dÃ©sormais le maitre.", "009900");
         /*
         		+ "Vos <b>"+player.get_maitre().getEsclaves().size()+"</b> joueurs vont maintenant vous suivre."
         				+ " Faites <b>.tp</b> pour les faire venir s'ils se perdent!", "009900"); //la
@@ -524,35 +522,35 @@ public class ExecuteCommandPlayer {
         // TEST
         /*
    		if(player.isEsclave() == true) {
-   			SocketManager.GAME_SEND_MESSAGE(player, "Action impossible, vous êtes un héro.");
+   			SocketManager.GAME_SEND_MESSAGE(player, "Action impossible, vous Ãªtes un hÃ©ro.");
 				return true;
    		}
            */
-        //Enlever ce qui se répète
+        //Enlever ce qui se rÃ©pÃ¨te
        	if(player.get_maitre() != null)
        	{
        	
            	player.get_maitre()._esclaves.forEach(esclave -> esclave.setEsclave(false));
        		player.set_maitre(null);
-       		//SocketManager.GAME_SEND_MESSAGE(player, "Commande désactivée." , "009900");
+       		//SocketManager.GAME_SEND_MESSAGE(player, "Commande dÃ©sactivÃ©e." , "009900");
        		
        	} else if(player.get_maitre() != null && player.isEsclave() == true)
            	{
            	
                	player.get_maitre()._esclaves.forEach(esclave -> esclave.setEsclave(false));
            		player.set_maitre(null);
-           		//SocketManager.GAME_SEND_MESSAGE(player, "Commande désactivée." , "009900");
+           		//SocketManager.GAME_SEND_MESSAGE(player, "Commande dÃ©sactivÃ©e." , "009900");
            		
            	}else{
 				player.set_maitre(new Maitre(player));
 				
 				if(player.get_maitre() != null){
-					//SocketManager.GAME_SEND_MESSAGE(player, "Commande activée, vous avez <b>"+player.get_maitre().getEsclaves().size()+"</b> héros. Faites <b>.tp</b> pour téléporter votre escouade." , "009900");
+					//SocketManager.GAME_SEND_MESSAGE(player, "Commande activÃ©e, vous avez <b>"+player.get_maitre().getEsclaves().size()+"</b> hÃ©ros. Faites <b>.tp</b> pour tÃ©lÃ©porter votre escouade." , "009900");
 					SocketManager.GAME_SEND_MESSAGE(target, "Vos <b>" + player.get_maitre().getEsclaves().size() + "</b> joueurs vont maintenant vous suivre.", "009900");
 					SocketManager.GAME_SEND_MESSAGE(target, " Faites <b>.tp</b> pour les faire revenir s'ils se perdent!", "009900");
 					return true;
 				}else
-					SocketManager.GAME_SEND_MESSAGE(player, "Aucun héro n'a été trouvé.");
+					SocketManager.GAME_SEND_MESSAGE(player, "Aucun hÃ©ro n'a Ã©tÃ© trouvÃ©.");
 				
        	}
        	return false;
@@ -598,7 +596,7 @@ public class ExecuteCommandPlayer {
             return false;
         }
         player.teleport(player.getCurMap().getId(), player.getCurMap().getRandomFreeCellId());
-        SocketManager.GAME_SEND_MESSAGE(player, "Vous avez été débloqué!" , "009900");
+        SocketManager.GAME_SEND_MESSAGE(player, "Vous avez Ã©tÃ© dÃ©bloquÃ©!" , "009900");
         return true;
     }
     
@@ -674,7 +672,7 @@ public class ExecuteCommandPlayer {
                 if (bankKamas >= cost) {
                     player.setBankKamas(bankKamas - cost); //On modifie les kamas de la banque
                 } else if (totalKamas >= cost) {
-                    player.setKamas(0); //On puise l'entièreté des kamas du joueurs. Ankalike ?
+                    player.setKamas(0); //On puise l'entiÃ¨retÃ© des kamas du joueurs. Ankalike ?
                     player.setBankKamas(totalKamas - cost); //On modifie les kamas de la banque
                     SocketManager.GAME_SEND_STATS_PACKET(player);
                     SocketManager.GAME_SEND_Im_PACKET(player, "020;"
@@ -704,14 +702,14 @@ public class ExecuteCommandPlayer {
     private static boolean doExo(final String msg, final Player player) {
     	
     	if (player.getFight() != null) {
-    		player.sendErrorMessage("Action impossible : vous ne devez pas être en combat.");
+    		player.sendErrorMessage("Action impossible : vous ne devez pas Ãªtre en combat.");
             return false;
         } 
     	
     	final String[] split = msg.substring(0, msg.length() - 1).trim().split(" ");
     	
     	if(split.length < 3) {
-    		player.sendErrorMessage("La commande doit être : .[commandeName] [coiffe, cape, ceinture, bottes, amulette, anneauG, anneauD, cac] [pa, pm]");
+    		player.sendErrorMessage("La commande doit Ãªtre : .[commandeName] [coiffe, cape, ceinture, bottes, amulette, anneauG, anneauD, cac] [pa, pm]");
     		return false;
     	}
     	
@@ -725,12 +723,12 @@ public class ExecuteCommandPlayer {
     	}
     	
     	if(emplacementID == -1) {
-    		player.sendErrorMessage("Seul ces objets peuvent être exo : [coiffe, cape, ceinture, bottes, amulette, anneauG, anneauD, cac]");
+    		player.sendErrorMessage("Seul ces objets peuvent Ãªtre exo : [coiffe, cape, ceinture, bottes, amulette, anneauG, anneauD, cac]");
     		return false;
     	}
     	
     	if(!split[2].equalsIgnoreCase("pa") && !split[2].equalsIgnoreCase("pm")) {
-    		player.sendErrorMessage("Le exo doit soit être pa ou pm et rien d'autres.");
+    		player.sendErrorMessage("Le exo doit soit Ãªtre pa ou pm et rien d'autres.");
     		return false;
     	}
     	
@@ -756,9 +754,9 @@ public class ExecuteCommandPlayer {
 			else if(Integer.toHexString(key).equals(statsToCheck)) haveCheckExo = true;
 		}
 		
-		// Pour éviter d'avoir des items 2Pa/2Pm
+		// Pour Ã©viter d'avoir des items 2Pa/2Pm
 		if(alreadyHaveTheExo) {
-			player.sendErrorMessage("Cette "+split[1]+" possède déjà 1 "+split[2].toUpperCase()+", action impossible.");
+			player.sendErrorMessage("Cette "+split[1]+" possÃ¨de dÃ©jÃ  1 "+split[2].toUpperCase()+", action impossible.");
 		    return false;
 		}
 		
@@ -769,9 +767,9 @@ public class ExecuteCommandPlayer {
 			break;
 		}
 		
-		// Pour éviter l'ajout de PA + PM sur un item qui n'en possède aucun de base         
+		// Pour Ã©viter l'ajout de PA + PM sur un item qui n'en possÃ¨de aucun de base         
 		if(haveCheckExo && !haveBaseStats) {
-			player.sendErrorMessage("Cette "+split[1]+" est déjà exo.");
+			player.sendErrorMessage("Cette "+split[1]+" est dÃ©jÃ  exo.");
 		    return false;
 		}
 		// Ajout de l'exo
@@ -787,7 +785,7 @@ public class ExecuteCommandPlayer {
 		SocketManager.GAME_SEND_UPDATE_ITEM(player, obj);
 		SocketManager.GAME_SEND_STATS_PACKET(player);
 		
-		player.sendMessage("Votre item : <b>" + obj.getTemplate().getName() + "</b> a été exo avec succès !");
+		player.sendMessage("Votre item : <b>" + obj.getTemplate().getName() + "</b> a Ã©tÃ© exo avec succÃ¨s !");
 		 
 		return true;
 
@@ -804,17 +802,17 @@ public class ExecuteCommandPlayer {
             return false;
         }
         if (player.getExchangeAction() != null){
-            SocketManager.GAME_SEND_MESSAGE(player, "Vous ne pouvez pas utiliser cette commande car vous êtes occupé.");
+            SocketManager.GAME_SEND_MESSAGE(player, "Vous ne pouvez pas utiliser cette commande car vous Ãªtes occupÃ©.");
             return false;
         }
 	    if(player.get_maitre() != null){
 		    player.getGameClient().timeLastTP = System.currentTimeMillis();
 			player.get_maitre().teleportAllEsclaves();
-			SocketManager.GAME_SEND_MESSAGE(player, "Vous avez téléporté <b>"+player.get_maitre().getEsclaves().size()+"</b> joueurs." , "009900");
+			SocketManager.GAME_SEND_MESSAGE(player, "Vous avez tÃ©lÃ©portÃ© <b>"+player.get_maitre().getEsclaves().size()+"</b> joueurs." , "009900");
 			return true;
 		}
 	    else
-	    	SocketManager.GAME_SEND_MESSAGE(player, "Aucun joueur n'a été trouvé pour la téléportation.");
+	    	SocketManager.GAME_SEND_MESSAGE(player, "Aucun joueur n'a Ã©tÃ© trouvÃ© pour la tÃ©lÃ©portation.");
 	    return false;
     }
     
@@ -828,12 +826,12 @@ public class ExecuteCommandPlayer {
             changed = true;
         }
         if (!changed) {
-        	player.sendMessage("Aucun sorts n'a pu être montés.");
+        	player.sendMessage("Aucun sorts n'a pu Ãªtre montÃ©s.");
         	return false;
         }
         
         SocketManager.GAME_SEND_SPELL_LIST(player);
-        player.sendMessage("Tous vos sorts ont été montés au niveau <b>" + lvlMax + "</b>.");
+        player.sendMessage("Tous vos sorts ont Ã©tÃ© montÃ©s au niveau <b>" + lvlMax + "</b>.");
         return true;
     }
     
@@ -847,7 +845,7 @@ public class ExecuteCommandPlayer {
         SocketManager.GAME_SEND_UPDATE_ITEM(player, obj);
         SocketManager.GAME_SEND_STATS_PACKET(player);
 
-        if(sendMessage) player.sendMessage("Votre item : <b>" + obj.getTemplate().getName() + "</b> a été modifié avec les caractéristiques maximales !");
+        if(sendMessage) player.sendMessage("Votre item : <b>" + obj.getTemplate().getName() + "</b> a Ã©tÃ© modifiÃ© avec les caractÃ©ristiques maximales !");
         
         return true;
     }
@@ -855,14 +853,14 @@ public class ExecuteCommandPlayer {
     private static boolean doJetMax(final String msg, final Player player)
     {
     	if (player.getFight() != null) {
-    		player.sendErrorMessage("Action impossible : vous ne devez pas être en combat.");
+    		player.sendErrorMessage("Action impossible : vous ne devez pas Ãªtre en combat.");
             return false;
         } 
     	
     	final String[] split = msg.substring(0, msg.length() - 1).trim().split(" ");
     	
     	if(split.length < 2) {
-    		player.sendErrorMessage("La commande doit être : .[commandeName] [coiffe, cape, ceinture, bottes, amulette, anneauG, anneauD, cac, familier, dofus, bouclier, all]");
+    		player.sendErrorMessage("La commande doit Ãªtre : .[commandeName] [coiffe, cape, ceinture, bottes, amulette, anneauG, anneauD, cac, familier, dofus, bouclier, all]");
     		return false;
     	}
     	
@@ -875,7 +873,7 @@ public class ExecuteCommandPlayer {
     	}
     	
     	if(emplacementID == -1) {
-    		player.sendErrorMessage("Seul ces objets peuvent être indiqué : [coiffe, cape, ceinture, bottes, amulette, anneauG, anneauD, cac, familier, dofus, bouclier, all]");
+    		player.sendErrorMessage("Seul ces objets peuvent Ãªtre indiquÃ© : [coiffe, cape, ceinture, bottes, amulette, anneauG, anneauD, cac, familier, dofus, bouclier, all]");
     		return false;
     	}
     	
@@ -886,14 +884,14 @@ public class ExecuteCommandPlayer {
 			jetMaxAItem(player, split[1], dofusEmplacements[i], false);
 		
     	if(emplacementID != -3) {
-    		player.sendMessage("Toutes les dofus équipé ont été modifié avec les caractéristiques maximales !");
+    		player.sendMessage("Toutes les dofus Ã©quipÃ© ont Ã©tÃ© modifiÃ© avec les caractÃ©ristiques maximales !");
     		return true; 
     	}
     	
 		for(byte i = 0; i < emplacementsID.length - 2; ++i)
 			jetMaxAItem(player, split[1], emplacementsID[i], false);
     	
-		player.sendMessage("Tout les items équipé ont été modifié avec les caractéristiques maximales !");
+		player.sendMessage("Tout les items Ã©quipÃ© ont Ã©tÃ© modifiÃ© avec les caractÃ©ristiques maximales !");
 		return true;
     }
     
@@ -903,7 +901,7 @@ public class ExecuteCommandPlayer {
     		player.sendErrorMessage("Commande inutilisable en combat.");
     		return false;
     	}
-    	player.sendMessage("Tu as récupéré <b>"+(player.getMaxPdv() - player.getCurPdv())+"</b> points de vie et <b>"+(10000 - player.getEnergy())+"</b> points d'énergie.");
+    	player.sendMessage("Tu as rÃ©cupÃ©rÃ© <b>"+(player.getMaxPdv() - player.getCurPdv())+"</b> points de vie et <b>"+(10000 - player.getEnergy())+"</b> points d'Ã©nergie.");
 		player.setPdv(player.getMaxPdv());
 		player.setEnergy(10000);
 		SocketManager.GAME_SEND_STATS_PACKET(player);
@@ -917,14 +915,14 @@ public class ExecuteCommandPlayer {
     		return false;
     	}
     	player.ipDrop = !player.ipDrop;
-    	player.sendMessage("Les drops associés à votre adresse IP " + (player.ipDrop ? "vous seront attribués." : "ne vous seront plus attribués."));
+    	player.sendMessage("Les drops associÃ©s Ã  votre adresse IP " + (player.ipDrop ? "vous seront attribuÃ©s." : "ne vous seront plus attribuÃ©s."));
     	return true;
     }
     
     private static boolean doPass(final String msg, final Player player)
     {
     	player.setAutoSkip(!player.getAutoSkip());
-    	player.sendMessage((player.getAutoSkip() ? "Vos tours seront" : "Vos tours ne seront plus") + " passés automatiquement en combat.");
+    	player.sendMessage((player.getAutoSkip() ? "Vos tours seront" : "Vos tours ne seront plus") + " passÃ©s automatiquement en combat.");
     	return true;
     }
     
@@ -939,14 +937,14 @@ public class ExecuteCommandPlayer {
             if(player.addObjet(obj, true))
             	World.world.addGameObject(obj, true);
             
-            player.sendMessage(obj.getTemplate().getName()+" a été ajouté a votre inventaire"+(jetMax ? " avec les stats au maximum !" : "."));
+            player.sendMessage(obj.getTemplate().getName()+" a Ã©tÃ© ajoutÃ© a votre inventaire"+(jetMax ? " avec les stats au maximum !" : "."));
     	}
     	return true;
     }
     
     private static boolean doKralaClose(final String msg, final Player player)
     {
-    	player.sendMessage("<b>Porte Kralamour Fermée !</b>");
+    	player.sendMessage("<b>Porte Kralamour FermÃ©e !</b>");
         //player.teleport((short) 11939, 256);
 	    SocketManager.GAME_UPDATE_CELL(player.getCurMap(), "328;aaGaaaaaaa801;1");
 	    SocketManager.GAME_SEND_ACTION_TO_DOOR(player.getCurMap(), 328, false);
@@ -987,12 +985,12 @@ public class ExecuteCommandPlayer {
     private static boolean doLevel(final String msg, final Player player)
     {
     	if (player.getFight() != null) {
-    		player.sendErrorMessage("Action impossible : vous ne devez pas être en combat.");
+    		player.sendErrorMessage("Action impossible : vous ne devez pas Ãªtre en combat.");
             return false;       
 	    }
     	
     	if(player.getLevel() == World.world.getExpLevelSize()) {
-    		player.sendErrorMessage("Vous êtes déjà au level maximum.");
+    		player.sendErrorMessage("Vous Ãªtes dÃ©jÃ  au level maximum.");
     		return false;
     	}
     	
@@ -1000,7 +998,7 @@ public class ExecuteCommandPlayer {
     	
     	if(split.length < 2)
     	{
-    		player.sendErrorMessage("La commande doit être : .[commandeName] [level]");
+    		player.sendErrorMessage("La commande doit Ãªtre : .[commandeName] [level]");
     		return false;
     	}
     	
@@ -1009,12 +1007,12 @@ public class ExecuteCommandPlayer {
     	try {
     		level = Integer.parseInt(split[1]);
     	}catch (NumberFormatException e) {
-    		player.sendErrorMessage("Le level doit être un nombre.");
+    		player.sendErrorMessage("Le level doit Ãªtre un nombre.");
     		return false;
 		}
     	
     	if(level <= player.getLevel()) {
-    		player.sendErrorMessage("Le level données doit être supérieur au votre.");
+    		player.sendErrorMessage("Le level donnÃ©es doit Ãªtre supÃ©rieur au votre.");
     		return false;
     	}
     	
@@ -1041,7 +1039,7 @@ public class ExecuteCommandPlayer {
         target.modifAlignement(align);
         if(target.isOnline())
         SocketManager.GAME_SEND_STATS_PACKET(target);
-        SocketManager.GAME_SEND_MESSAGE(player, "Tu es désormais <b>Brâkmarien</b>." , "009900");
+        SocketManager.GAME_SEND_MESSAGE(player, "Tu es dÃ©sormais <b>BrÃ¢kmarien</b>." , "009900");
         return true;
     }
     
@@ -1050,7 +1048,7 @@ public class ExecuteCommandPlayer {
     	if (player.isInPrison() || player.getFight() != null )
             return false;
         if(player.getExchangeAction() == null || player.getExchangeAction().getType() != ExchangeAction.IN_BANK) {
-            player.sendMessage("L'interface de ta banque doit être ouverte.");
+            player.sendMessage("L'interface de ta banque doit Ãªtre ouverte.");
             return false;
         }
 
@@ -1082,7 +1080,7 @@ public class ExecuteCommandPlayer {
                     break;
             }
         }
-        SocketManager.GAME_SEND_MESSAGE(player, "Le transfert a été effectué, <b>" + count + "</b> objet(s) ont été déplacés." , "009900");
+        SocketManager.GAME_SEND_MESSAGE(player, "Le transfert a Ã©tÃ© effectuÃ©, <b>" + count + "</b> objet(s) ont Ã©tÃ© dÃ©placÃ©s." , "009900");
         return true;
     }
     
@@ -1093,7 +1091,7 @@ public class ExecuteCommandPlayer {
         target.modifAlignement(align);
         if(target.isOnline())
         SocketManager.GAME_SEND_STATS_PACKET(target);
-        SocketManager.GAME_SEND_MESSAGE(player, "Tu es désormais <b>Bontarien</b>." , "009900");
+        SocketManager.GAME_SEND_MESSAGE(player, "Tu es dÃ©sormais <b>Bontarien</b>." , "009900");
         return true;
     }
     
@@ -1104,14 +1102,14 @@ public class ExecuteCommandPlayer {
         target.modifAlignement(align);
         if(target.isOnline())
         SocketManager.GAME_SEND_STATS_PACKET(target);
-        SocketManager.GAME_SEND_MESSAGE(player, "Tu es désormais <b>Neutre</b>." , "009900");
+        SocketManager.GAME_SEND_MESSAGE(player, "Tu es dÃ©sormais <b>Neutre</b>." , "009900");
         return true;
     }
     
     private static boolean doFmCac(final String msg, final Player player)
     {
         if (player.getFight() != null) {
-        	player.sendErrorMessage("Action impossible : vous ne devez pas être en combat.");
+        	player.sendErrorMessage("Action impossible : vous ne devez pas Ãªtre en combat.");
             return false;
         }
         final GameObject obj = player.getObjetByPos(Constant.ITEM_POS_ARME);
@@ -1122,7 +1120,7 @@ public class ExecuteCommandPlayer {
         
         final String[] split = msg.substring(0, msg.length() - 1).trim().split(" ");
         if(split.length < 2) {
-        	player.sendErrorMessage("Action impossible : vous n'avez pas spécifié l'élément (air, feu, terre, eau) qui remplacera les dégats/vols de vies neutres");
+        	player.sendErrorMessage("Action impossible : vous n'avez pas spÃ©cifiÃ© l'Ã©lÃ©ment (air, feu, terre, eau) qui remplacera les dÃ©gats/vols de vies neutres");
         	return false;
         }
         
@@ -1133,7 +1131,7 @@ public class ExecuteCommandPlayer {
             break;
         }
         if (!containNeutre) {
-        	player.sendErrorMessage("Action impossible : votre arme n'a pas de dégats neutre");
+        	player.sendErrorMessage("Action impossible : votre arme n'a pas de dÃ©gats neutre");
             return false;
         }
 
@@ -1142,7 +1140,7 @@ public class ExecuteCommandPlayer {
         if (!element.equalsIgnoreCase("air") && !element.equalsIgnoreCase(
                 "terre") && !element.equalsIgnoreCase("feu") && !element.equalsIgnoreCase(
                 "eau")) {
-        	player.sendErrorMessage("Action impossible : l'élément " + element + " est incorrect. (Disponible : air, feu, terre, eau)");
+        	player.sendErrorMessage("Action impossible : l'Ã©lÃ©ment " + element + " est incorrect. (Disponible : air, feu, terre, eau)");
             return false;
         }
         for (final SpellEffect effect : obj.getEffects()) {
@@ -1184,21 +1182,21 @@ public class ExecuteCommandPlayer {
         SocketManager.GAME_SEND_UPDATE_ITEM(player, obj);
         SocketManager.GAME_SEND_STATS_PACKET(player);
 
-        player.sendMessage("Votre item : <b>" + obj.getTemplate().getName() + "</b> a été FM avec succès en <b>" + element + "</b> !");
+        player.sendMessage("Votre item : <b>" + obj.getTemplate().getName() + "</b> a Ã©tÃ© FM avec succÃ¨s en <b>" + element + "</b> !");
         return true;
     }
     
     private static boolean doBoost(final String msg, final Player player)
     {
 	    if (player.getFight() != null) {
-               player.sendErrorMessage("Action impossible : vous ne devez pas être en combat.");
+               player.sendErrorMessage("Action impossible : vous ne devez pas Ãªtre en combat.");
                return false;       
 	    }
 	    
 	    final String[] split = msg.substring(0, msg.length() - 1).trim().split(" ");
 	    
 	    if(split.length < 3) {
-	    	player.sendErrorMessage("La commande doit être .boost [sagesse, force, vita, intel, chance, agi] [quantity]");
+	    	player.sendErrorMessage("La commande doit Ãªtre .boost [sagesse, force, vita, intel, chance, agi] [quantity]");
 	    	return false;
 	    }
 	    
@@ -1231,7 +1229,7 @@ public class ExecuteCommandPlayer {
 	    }
 	    
 	    if(statID == -1) {
-	    	player.sendErrorMessage("Le type doit être : [sagesse, force, vita, intel, chance, agi]");
+	    	player.sendErrorMessage("Le type doit Ãªtre : [sagesse, force, vita, intel, chance, agi]");
 	    	return false;
 	    }
 	    
@@ -1239,7 +1237,7 @@ public class ExecuteCommandPlayer {
 	    try {
 	    	value = Integer.parseInt(split[2]);
 	    }catch(NumberFormatException e) {
-	    	player.sendErrorMessage("La quantité doit être un nombre.");
+	    	player.sendErrorMessage("La quantitÃ© doit Ãªtre un nombre.");
 	    	return false;
 	    }
 	    

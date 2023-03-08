@@ -1126,7 +1126,7 @@ public class World {
         } else if (getObjTemplate(template).getType() == 85) {
             return new SoulStone(Guid, qua, template, pos, strStats);
         } else if (getObjTemplate(template).getType() == 24
-                && (Constant.isCertificatDopeuls(getObjTemplate(template).getId()) || getObjTemplate(template).getId() == 6653)) {
+                && (Constant.isCertificatDopeuls(getObjTemplate(template).getId()) || getObjTemplate(template).getId() == 6653) || getObjTemplate(template).getId() == 12803 ) {
             try {
                 Map<Integer, String> txtStat = new HashMap<>();
                 txtStat.put(Constant.STATS_DATE, strStats.substring(3) + "");

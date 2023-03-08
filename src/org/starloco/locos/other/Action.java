@@ -401,14 +401,17 @@ public class Action {
                         String date = player.getItemTemplate(VerifCertificatID, 1).getTxtStat().get(Constant.STATS_DATE);
                         try {
                             long timeStamp = Long.parseLong(date);
-                            if (System.currentTimeMillis() - timeStamp <= 86400000) {
+                            if (System.currentTimeMillis() - timeStamp <= 60000) {
                                 SocketManager.GAME_SEND_MESSAGE(player, "Il faut que tu attendes 1 minute avant de pouvoir te retransformer.");
                                 return true;
                             } else
                                 player.removeByTemplateID(VerifCertificatID, 1);
+
                         } catch (Exception ignored) {
                             player.removeByTemplateID(VerifCertificatID, 1);
                         }
+                        SocketManager.GAME_SEND_Im_PACKET(player, "022;" + 1
+                                + "~" + VerifCertificatID);
                     }
 
                     ObjectTemplate T = World.world.getObjTemplate(newCacID);
@@ -497,10 +500,17 @@ public class Action {
                     }
 
 
+                    ObjectTemplate t2 = World.world.getObjTemplate(VerifCertificatID);
+                    GameObject obj2 = t2.createNewItem(1, false);
+                    obj2.refreshStatsObjet("325#0#0#"
+                            + System.currentTimeMillis());
+                    if (player.addObjet(obj2, false)) {
+                        SocketManager.GAME_SEND_Im_PACKET(player, "021;" + 1
+                                + "~" + obj2.getTemplate().getId());
+                        World.world.addGameObject(obj2, true);
+                    }
+
                     SocketManager.GAME_SEND_STATS_PACKET(player);
-
-
-
 
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -2965,9 +2975,15 @@ public class Action {
                     return true;
                 player.teleport((short) 3451, 267);
                 if(nbjeton>0){
-                    GameObject Jetons = World.world.getObjTemplate(1749).createNewItem(nbjeton, false);
+                    GameObject Jetons = World.world.getObjTemplate(16000).createNewItem(nbjeton, false);
                     if (player.addObjet(Jetons, true))
                         World.world.addGameObject(Jetons, true);
+                }
+
+                if(nbjeton==1250){
+                    GameObject medals = World.world.getObjTemplate(16001).createNewItem(1, false);
+                    if (player.addObjet(medals, true))
+                        World.world.addGameObject(medals, true);
                 }
                 break;
             case 964://Signer le registre

@@ -437,7 +437,7 @@ public class ObjectTemplate {
     public GameObject createNewItem(int qua, boolean useMax) {
     	int id = -1;
         GameObject item;
-        if (getType() == Constant.ITEM_TYPE_QUETES && (Constant.isCertificatDopeuls(getId()) || getId() == 6653)) {
+        if (getType() == Constant.ITEM_TYPE_QUETES && (Constant.isCertificatDopeuls(getId()) || getId() == 6653 || getId() == 12803)  ) {
             Map<Integer, String> txtStat = new HashMap<Integer, String>();
             txtStat.put(Constant.STATS_DATE, System.currentTimeMillis() + "");
             item = new GameObject(id, getId(), qua, Constant.ITEM_POS_NO_EQUIPED, new Stats(), new ArrayList<SpellEffect>(), new HashMap<Integer, Integer>(), txtStat, 0);
@@ -465,6 +465,10 @@ public class ObjectTemplate {
                 Stats.put(Constant.STATS_EXCHANGE_IN, -1+"");
                 Stats.put(Constant.STATS_NIVEAU2, 1+"");
                 item = new GameObject(-1, getId(), qua, 1, generateNewStatsFromTemplate(getStrTemplate(), useMax), getEffectTemplate(getStrTemplate()),new HashMap<>() , Stats, 0);
+            } else if (getId()==16001) {
+                Map<Integer, String> Stats = new HashMap<>();
+                Stats.put(Constant.STATS_EXCHANGE_IN, -1+"");
+                item = new GameObject(id, getId(), qua, Constant.ITEM_POS_NO_EQUIPED, new Stats(), new ArrayList<SpellEffect>(), new HashMap<Integer, Integer>(), Stats, 0);
             }
             else {
                 Map<Integer, String> Stat = new HashMap<>();

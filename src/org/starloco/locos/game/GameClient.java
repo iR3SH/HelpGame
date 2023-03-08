@@ -5863,6 +5863,76 @@ public class GameClient {
             case 's':
                 setSkinObvi(packet);
                 break;
+            case 'r':
+                addToShortcutObject(packet);
+                break;
+        }
+    }
+
+    private void addToShortcutObject(String packet) {
+        String[] infos = packet.substring(2).split("\\|");
+        try {
+            int guid = Integer.parseInt(infos[0]);
+            int qua = 1;
+            try {
+                qua = Integer.parseInt(infos[1]);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            GameObject obj = World.world.getGameObject(guid);
+            if (obj == null || !this.player.hasItemGuid(guid) || qua <= 0
+                    || this.player.getFight() != null || this.player.isAway()) {
+                //SocketManager.GAME_SEND_DELETE_OBJECT_FAILED_PACKET(this);
+                return;
+            }
+            if (obj.getPosition() != Constant.ITEM_POS_NO_EQUIPED){
+                int idSetExObj = obj.getTemplate().getPanoId();
+                GameObject obj2;
+                ObjectTemplate exObjTpl = obj.getTemplate();
+                if ((obj2 = player.getSimilarItem(obj)) != null)//On le poss?de deja
+                {
+                    obj2.setQuantity(obj2.getQuantity()
+                            + obj.getQuantity());
+                    SocketManager.GAME_SEND_OBJECT_QUANTITY_PACKET(player, obj2);
+                    World.world.removeGameObject(obj.getGuid());
+                    player.removeItem(obj.getGuid());
+                    SocketManager.GAME_SEND_REMOVE_ITEM_PACKET(player, obj.getGuid());
+                } else
+                //On ne le poss?de pas
+                {
+                    obj.setPosition(Constant.ITEM_POS_NO_EQUIPED);
+                    if ((idSetExObj >= 81 && idSetExObj <= 92)
+                            || (idSetExObj >= 201 && idSetExObj <= 212)) {
+                        String[] stats = exObjTpl.getStrTemplate().split(",");
+                        for (String stat : stats) {
+                            String[] val = stat.split("#");
+                            String modifi = Integer.parseInt(val[0], 16)
+                                    + ";" + Integer.parseInt(val[1], 16)
+                                    + ";0";
+                            SocketManager.SEND_SB_SPELL_BOOST(player, modifi);
+                            //player.removeObjectClassSpell(Integer.parseInt(val[1], 16));
+                        }
+                        //player.removeObjectClass(exObjTpl.getId());
+                    }
+                    SocketManager.GAME_SEND_OBJET_MOVE_PACKET(player, obj);
+                }
+            }
+            if (qua > obj.getQuantity())
+                qua = obj.getQuantity();
+            int newQua = obj.getQuantity() - qua;
+            if (newQua <= 0) {
+                this.player.removeItem(guid);
+                World.world.removeGameObject(guid);
+                Database.getDynamics().getObjectData().delete(guid);
+                SocketManager.GAME_SEND_REMOVE_ITEM_PACKET(this.player, guid);
+            } else {
+                obj.setQuantity(newQua);
+                SocketManager.GAME_SEND_OBJECT_QUANTITY_PACKET(this.player, obj);
+            }
+            SocketManager.GAME_SEND_Ow_PACKET(this.player);
+        } catch (Exception e) {
+            e.printStackTrace();
+            SocketManager.GAME_SEND_DELETE_OBJECT_FAILED_PACKET(this);
         }
     }
 
