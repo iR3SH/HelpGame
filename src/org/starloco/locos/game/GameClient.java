@@ -66,6 +66,8 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.regex.Pattern;
 
+import static org.starloco.locos.kernel.Main.exchangeClient;
+
 public class GameClient {
 
     private final IoSession session;
@@ -105,6 +107,12 @@ public class GameClient {
             SocketManager.GAME_SEND_PONG(this);
             return;
         }
+
+        if (packet.length() > 4 && packet.substring(0, 5).equalsIgnoreCase("qping")) {
+            SocketManager.GAME_SEND_QPONG(this);
+            return;
+        }
+
         if(Logging.USE_LOG) {
             if (this.player != null) {
                 Logging.getInstance().write("RecvPacket", this.player.getName() + " : " + this.player.getAccount().getCurrentIp() + " : " + packet);
@@ -162,6 +170,9 @@ public class GameClient {
             case 'h':
                 parseHousePacket(packet);
                 break;
+            case 'H':
+                parseDeconnectionPacket(packet);
+                break;
             case 'i':
                 parseEnemyPacket(packet);
                 break;
@@ -201,6 +212,21 @@ public class GameClient {
                         this.changeName(packet);                
                 break;*/ // Removed by Coding Mestre - [FIX] Name changing potion is now working as expected Close #38
         }
+    }
+
+    private void parseDeconnectionPacket(String packet) {
+        switch (packet.charAt(1)) {
+            case 'S':
+                Deconnection();
+                break;
+            default:
+                break;
+        }
+    }
+
+    private void Deconnection() {
+        //TODO : Faut géré ce cas de changement de perso en version 1.39.8
+       exchangeClient.send("HS" + this.getSession().getId() + ";");
     }
 
     private void parseGladiatroolPacket(String packet) {
