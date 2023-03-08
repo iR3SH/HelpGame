@@ -19,6 +19,12 @@ public class AstarPathfinding {
     private int cellStart;
     private int cellEnd;
 
+    public AstarPathfinding(GameMap map, int cellStart, int cellEnd) {
+        this.map = map;
+        this.cellStart = cellStart;
+        this.cellEnd = cellEnd;
+    }
+
     public AstarPathfinding(GameMap map, Fight fight, int cellStart, int cellEnd) {
         setMap(map);
         setFight(fight);
@@ -44,7 +50,7 @@ public class AstarPathfinding {
                 if (!getMap().getCase(cell).isWalkable(true, true, -1)
                         && cell != getCellEnd())
                     continue;
-                if (PathFinding.haveFighterOnThisCell(cell, getFight())
+                if (PathFinding.haveFighterOnThisCell(cell, getFight(),true)
                         && cell != getCellEnd())
                     continue;
                 if (closeList.containsKey(cell))
@@ -59,9 +65,51 @@ public class AstarPathfinding {
                                 + openList.get(cell).getHeristic());
                     }
                 } else {
-                    if (value == 0)
-                        if (PathFinding.casesAreInSameLine(getMap(), cell, getCellEnd(), dirs[loc0], 70))
-                            node.setCountF((node.getCountG() + node.getHeristic()) - 10);
+                    openList.put(cell, node);
+                    nodeCurrent.setChild(node);
+                    node.setParent(nodeCurrent);
+                    node.setCountG(getCostG(node));
+                    node.setHeristic(PathFinding.getDistanceBetween(getMap(), cell, getCellEnd()) * 10);
+                    node.setCountF(node.getCountG() + node.getHeristic());
+                }
+            }
+        }
+        return getPath();
+    }
+
+    public ArrayList<GameCase> getShortestPath() {
+        Node nodeStart = new Node(getCellStart(), null);
+        openList.put(getCellStart(), nodeStart);
+        while (!openList.isEmpty() && (!closeList.containsKey(getCellEnd()))) {
+            char[] dirs = {'b', 'd', 'f', 'h'};
+            Node nodeCurrent = bestNode();
+            if (nodeCurrent.getCellId() == getCellEnd()
+                    && !PathFinding.cellArroundCaseIDisOccuped(getFight(), nodeCurrent.getCellId()))
+                return getPath();
+            addListClose(nodeCurrent);
+            for (int loc0 = 0; loc0 < 4; loc0++) {
+                int cell = PathFinding.getCaseIDFromDirrection(nodeCurrent.getCellId(), dirs[loc0], getMap());
+                Node node = new Node(cell, nodeCurrent);
+                if (getMap().getCase(cell) == null)
+                    continue;
+                if (!getMap().getCase(cell).isWalkable(true, true, -1)
+                        && cell != getCellEnd())
+                    continue;
+                if (PathFinding.haveFighterOnThisCell(cell, getFight(),true)
+                        && cell != getCellEnd())
+                    continue;
+                if (closeList.containsKey(cell))
+                    continue;
+                if (openList.containsKey(cell)) {
+                    if (openList.get(cell).getCountG() > getCostG(node)) {
+                        nodeCurrent.setChild(openList.get(cell));
+                        openList.get(cell).setParent(nodeCurrent);
+                        openList.get(cell).setCountG(getCostG(node));
+                        openList.get(cell).setHeristic(PathFinding.getDistanceBetween(getMap(), cell, getCellEnd()) * 10);
+                        openList.get(cell).setCountF(openList.get(cell).getCountG()
+                                + openList.get(cell).getHeristic());
+                    }
+                } else {
                     openList.put(cell, node);
                     nodeCurrent.setChild(node);
                     node.setParent(nodeCurrent);

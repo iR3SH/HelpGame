@@ -41,7 +41,12 @@ public class ObjectTemplate {
                           int level, int pod, int price, int panoId, String conditions,
                           String armesInfos, int sold, int avgPrice, int points, int newPrice) {
         this.id = id;
-        this.strTemplate = this.initStrTemplate(strTemplate);
+        try {
+            this.strTemplate = this.initStrTemplate(strTemplate);
+        }
+        catch (Exception e ){
+            System.out.println(e);
+        }
         this.name = name;
         this.type = type;
         this.level = level;
@@ -130,7 +135,13 @@ public class ObjectTemplate {
     	boolean firstStats = true;
     	
     	for(final String split : strTemplate.split(",")) {
+            if(split.length() == 0){
+                continue;
+            }
     		final String[] datas = split.split("#");
+            if(datas.length == 0){
+                continue;
+            }
     		final int id = Integer.parseInt(datas[0], 16);
     		if (id >= 281 && id <= 294) { // Stats class item
     			if(!firstSorts)
@@ -165,7 +176,7 @@ public class ObjectTemplate {
                     break;
                 }
             }
-            if (!follow2) continue; //Si c'était un effet Actif d'arme ou une signature
+            if (!follow2) continue; //Si c'ï¿½tait un effet Actif d'arme ou une signature
             
             if(!firstStats)
             	statsBuilder.append(",");
@@ -449,7 +460,13 @@ public class ObjectTemplate {
                 Stats.put(Constant.ERR_STATS_XP, 0);
                 Stats.put(Constant.STATS_NIVEAU, 1);
                 item = new GameObject(id, getId(), qua, Constant.ITEM_POS_NO_EQUIPED, generateNewStatsFromTemplate(getStrTemplate(), useMax), getEffectTemplate(getStrTemplate()), Stats, new HashMap<Integer, String>(), 0);
-            } else {
+            } else if (Constant.isGladiatroolWeapon(getId())) {
+                Map<Integer, String> Stats = new HashMap<>();
+                Stats.put(Constant.STATS_EXCHANGE_IN, -1+"");
+                Stats.put(Constant.STATS_NIVEAU2, 1+"");
+                item = new GameObject(-1, getId(), qua, 1, generateNewStatsFromTemplate(getStrTemplate(), useMax), getEffectTemplate(getStrTemplate()),new HashMap<>() , Stats, 0);
+            }
+            else {
                 Map<Integer, String> Stat = new HashMap<>();
                 switch (getType()) {
                     case 1:
@@ -521,6 +538,7 @@ public class ObjectTemplate {
                 case 139:
                 case 605:
                 case 614:
+                case Constant.STATS_EXCHANGE_IN:
                     isStatsInvalid = true;
                     break;
                 case 615:
@@ -538,7 +556,12 @@ public class ObjectTemplate {
                     try {
                         //on prend le jet max
                         int min = Integer.parseInt(stats[1], 16);
-                        int max = Integer.parseInt(stats[2], 16);
+                        int max = 0;
+                        try {
+                            max = Integer.parseInt(stats[2], 16);
+                        }
+                        catch(Exception e){}
+
                         value = min;
                         if (max != 0)
                             value = max;
@@ -633,5 +656,17 @@ public class ObjectTemplate {
         long oldSold = getSold();
         sold += amount;
         avgPrice = (int) ((getAvgPrice() * oldSold + price) / getSold());
+    }
+
+    public GameObject createNewTonique(int posTonique,String StatsToadd) {
+        Stats stats = generateNewStatsFromTemplate(StatsToadd, true);
+        GameObject item = new GameObject(-1, getId(), 1, posTonique, stats, new ArrayList<>(), new HashMap<>(), new HashMap<>(), 0);
+        return item;
+
+    }
+
+    public GameObject createNewToniqueEquilibrage(Stats stats) {
+        GameObject item = new GameObject(-1, getId(), 1, Constant.ITEM_POS_TONIQUE_EQUILIBRAGE, stats, new ArrayList<>(), new HashMap<>(), new HashMap<>(), 0);
+        return item;
     }
 }

@@ -1142,7 +1142,7 @@ public class SocketManager {
                                                    int guid, String name, String msg) {
         String packet = "cMK" + suffix + "|" + guid + "|" + name + "|" + msg;
         if (perso.getLevel() < 6) {
-            SocketManager.GAME_SEND_MESSAGE(perso, "Ce canal n'est accessible qu'à  partir du niveau <b>6</b>.");
+            SocketManager.GAME_SEND_MESSAGE(perso, "Ce canal n'est accessible qu'ï¿½ partir du niveau <b>6</b>.");
             GAME_SEND_BN(perso);
             return;
         }
@@ -2677,4 +2677,8 @@ public class SocketManager {
 		
 	}
 
+    public static void GAME_SEND_wr(Player player,int palier) {
+        String packet = player.getWrPacket(palier);
+        send(player, packet);
+    }
 }

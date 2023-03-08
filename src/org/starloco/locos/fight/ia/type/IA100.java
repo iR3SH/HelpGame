@@ -41,7 +41,7 @@ public class IA100 extends AbstractNeedSpell
 	      //** edit C==null replace with !PathFinding.checkLoS(fight.getMap(), fighter.getCell().getId(), C.getCell().getId(), C)
 	      if(this.fighter.getCurPa(this.fight)>0&&!action&&A!=null)
 	      {
-	    	if(Function.getInstance().checkIfBuffAvailable(this.fight,this.fighter,this.fighter,this.buffs)&&!PathFinding.isCACwithEnnemy(this.fighter,ennemy)) // Vérification de la disponibilité sur soit-même
+	    	if(Function.getInstance().checkIfBuffAvailable(this.fight,this.fighter,this.fighter,this.buffs)&&!PathFinding.isCACwithEnnemy(this.fighter,ennemy)) // Vï¿½rification de la disponibilitï¿½ sur soit-mï¿½me
 			{
 	    		Function.getInstance().moveautourIfPossible(this.fight,this.fighter,A); // se place en face
 	    		move++;

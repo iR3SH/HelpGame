@@ -192,7 +192,9 @@ public class GameClient {
             case 'W':
                 parseWaypointPacket(packet);
                 break;
-
+            case 'w':
+                parseGladiatroolPacket(packet);
+                break;
            /* default:
                 if(this.player != null)
                     if(this.player.isChangeName())
@@ -200,6 +202,27 @@ public class GameClient {
                 break;*/ // Removed by Coding Mestre - [FIX] Name changing potion is now working as expected Close #38
         }
     }
+
+    private void parseGladiatroolPacket(String packet) {
+        switch (packet.charAt(1)) {
+            case 'c':
+                createTonique(packet);
+                break;
+            default:
+                break;
+        }
+
+    }
+
+    private void createTonique(String packet) {
+        int ToniqueChoosedPos = Integer.parseInt(packet.substring(2));
+        int ToniqueTemplateID = this.player.LastTonicProposed[ToniqueChoosedPos];
+        int palier = Constant.getPalierByNewMap(this.player.getCurMap().getId());
+        int toniquePos = 40 + palier;
+        String StatsToadd = Constant.getStatStringbyPalier(palier);
+        this.player.setTonique(ToniqueTemplateID,toniquePos,StatsToadd);
+    }
+
 
     /**
      * AccountPacket *
@@ -382,14 +405,14 @@ public class GameClient {
         //Validation du nom du this.playernnage
         boolean isValid = true;
         String name = infos[0].toLowerCase();
-        //Vérifie d'abord si il contient des termes définit
+        //Vï¿½rifie d'abord si il contient des termes dï¿½finit
         if (name.length() > 20 || name.length() < 3 || name.contains("modo")
                 || name.contains("admin") || name.contains("putain")
                 || name.contains("administrateur") || name.contains("puta")) {
             isValid = false;
         }
 
-        //Si le nom passe le test, on vérifie que les caractére entré sont correct.
+        //Si le nom passe le test, on vï¿½rifie que les caractï¿½re entrï¿½ sont correct.
         if (isValid) {
             int tiretCount = 0;
             char exLetterA = ' ';
@@ -438,7 +461,7 @@ public class GameClient {
         try {
             int stat = -1;
             if (this.player.getMorphMode()) {
-                this.player.sendMessage("Vous êtes incarné, vous ne pouvez donc pas vous ajoutez de point de caractéristique !");
+                this.player.sendMessage("Vous ï¿½tes incarnï¿½, vous ne pouvez donc pas vous ajoutez de point de caractï¿½ristique !");
                 return;
             }
 
@@ -860,11 +883,11 @@ public class GameClient {
                 if (this.player.cantCanal()) {
                     SocketManager.GAME_SEND_MESSAGE(this.player, "Vous n'avez pas la permission de parler dans ce canal !", "B9121B");
                 } else if (this.player.isInPrison()) {
-                    SocketManager.GAME_SEND_MESSAGE(this.player, "Vous êtes en prison, impossible de parler dans ce canal !", "B9121B");
+                    SocketManager.GAME_SEND_MESSAGE(this.player, "Vous ï¿½tes en prison, impossible de parler dans ce canal !", "B9121B");
                 } else {
                     if (this.player.getGroupe() == null) {
                         if ((l = System.currentTimeMillis() - timeLastTradeMsg) < 50000) {
-                            l = (50000 - l) / 1000;//On calcul la différence en secondes
+                            l = (50000 - l) / 1000;//On calcul la diffï¿½rence en secondes
                             SocketManager.GAME_SEND_Im_PACKET(this.player, "0115;"
                                     + ((int) Math.ceil(l) + 1));
                             return;
@@ -901,12 +924,12 @@ public class GameClient {
                 if (this.player.cantCanal()) {
                     SocketManager.GAME_SEND_MESSAGE(this.player, "Vous n'avez pas la permission de parler dans ce canal !", "B9121B");
                 } else if (this.player.isInPrison()) {
-                    SocketManager.GAME_SEND_MESSAGE(this.player, "Vous êtes en prison, impossible de parler dans ce canal !", "B9121B");
+                    SocketManager.GAME_SEND_MESSAGE(this.player, "Vous ï¿½tes en prison, impossible de parler dans ce canal !", "B9121B");
                 } else {
                     if (this.player.getGroupe() == null) {
                         if ((j = System.currentTimeMillis()
                                 - timeLastRecrutmentMsg) < 40000) {
-                            j = (40000 - j) / 1000;//On calcul la différence en secondes
+                            j = (40000 - j) / 1000;//On calcul la diffï¿½rence en secondes
                             SocketManager.GAME_SEND_Im_PACKET(this.player, "0115;"
                                     + ((int) Math.ceil(j) + 1));
                             return;
@@ -952,7 +975,7 @@ public class GameClient {
                 }
                 long k;
                 if ((k = System.currentTimeMillis() - timeLastAlignMsg) < 30000) {
-                    k = (30000 - k) / 1000;//On calcul la différence en secondes
+                    k = (30000 - k) / 1000;//On calcul la diffï¿½rence en secondes
                     SocketManager.GAME_SEND_Im_PACKET(this.player, "0115;"
                             + ((int) Math.ceil(k) + 1));
                     return;
@@ -1003,7 +1026,7 @@ public class GameClient {
                         SocketManager.GAME_SEND_Im_PACKET(this.player, "184");
                         return;
                     }
-                    if (this.player.getGroupe() == null && target.isInvisible()) // Alors pas connecté
+                    if (this.player.getGroupe() == null && target.isInvisible()) // Alors pas connectï¿½
                     {
                         SocketManager.GAME_SEND_CHAT_ERROR_PACKET(this, nom);
                         return;
@@ -1091,7 +1114,7 @@ public class GameClient {
         }
     }
 
-    // Téléportation de MJ
+    // Tï¿½lï¿½portation de MJ
     private void goToMap(String packet) {
         if (this.player.getGroupe() == null)
             return;
@@ -1283,7 +1306,7 @@ public class GameClient {
                 create(packet);
                 break;
 
-            case 'R'://Réponse du joueur
+            case 'R'://Rï¿½ponse du joueur
                 response(packet);
                 break;
 
@@ -1545,22 +1568,22 @@ public class GameClient {
         if (this.player.isDead() == 1)
             return;
         switch (packet.charAt(1)) {
-            case 'A'://Accepter demande d'échange
+            case 'A'://Accepter demande d'ï¿½change
                 accept();
                 break;
             case 'B'://Achat
                 buy(packet);
                 break;
-            case 'H'://Demande prix moyen + catégorie
+            case 'H'://Demande prix moyen + catï¿½gorie
                 bigStore(packet);
                 break;
             case 'K'://Ok
                 ready();
                 break;
-            case 'L'://jobAction : Refaire le craft précedent
+            case 'L'://jobAction : Refaire le craft prï¿½cedent
                 replayCraft();
                 break;
-            case 'M'://Move (Ajthiser//retirer un objet a l'échange)
+            case 'M'://Move (Ajthiser//retirer un objet a l'ï¿½change)
                 movementItemOrKamas(packet);
                 break;
             case 'P':
@@ -1569,7 +1592,7 @@ public class GameClient {
             case 'q'://Mode marchand (demande de la taxe)
                 askOfflineExchange();
                 break;
-            case 'Q'://Mode marchand (Si valider aprés la taxe)
+            case 'Q'://Mode marchand (Si valider aprï¿½s la taxe)
                 offlineExchange();
                 break;
             case 'r'://Rides => Monture
@@ -1590,7 +1613,7 @@ public class GameClient {
             case 'W'://Metier public
                 setPublicMode(packet);
                 break;
-            case 'V'://Fin de l'échange
+            case 'V'://Fin de l'ï¿½change
                 leaveExchange(this.player);
                 break;
         }
@@ -1735,7 +1758,7 @@ public class GameClient {
                 }
                 if (template.getType() == 18 && qua > 1) qua=1;
                 /*{
-                    this.player.sendMessage("Merci de n'acheter qu'un seul familier à la fois !");
+                    this.player.sendMessage("Merci de n'acheter qu'un seul familier ï¿½ la fois !");
                     return;
                 }*/
                 if (npc == null)
@@ -1752,7 +1775,7 @@ public class GameClient {
 
                 
                 
-                // Amélioration du système de points boutiques
+                // Amï¿½lioration du systï¿½me de points boutiques
                 if ((npcTemplate.getInformations() & 0x4) == 4) {
                     final boolean hasPoints = template.getPoints() > 0;
                     final long value = hasPoints ? template.getPoints() * qua : template.getPrice() * qua;
@@ -1868,9 +1891,9 @@ public class GameClient {
                 }
                 HdvEntry hE = hL.doYouHave(amount, Integer.parseInt(info[2]));
                 if (hE == null) {
-                    // Intervient lorsque un client achéte plusieurs fois la méme ressource.
-                    // Par exemple une pyrute é 45'000k trois fois. Au bout d'un moment elle monte é 100'000k, mais le client
-                    // voit toujours 45'000k. Il doit il y avoir un manque de paquet envoyé. La 4éme avait buggé.
+                    // Intervient lorsque un client achï¿½te plusieurs fois la mï¿½me ressource.
+                    // Par exemple une pyrute ï¿½ 45'000k trois fois. Au bout d'un moment elle monte ï¿½ 100'000k, mais le client
+                    // voit toujours 45'000k. Il doit il y avoir un manque de paquet envoyï¿½. La 4ï¿½me avait buggï¿½.
                     SocketManager.GAME_SEND_MESSAGE(this.player, "[2 - Template '"
                             + hL.getTemplateId()
                             + "'] Une erreur est survenue lors de la confirmation d'achat. Veuillez contactacter un administrateur.");
@@ -1880,7 +1903,7 @@ public class GameClient {
                 if (owner == null) {
                     SocketManager.GAME_SEND_MESSAGE(this.player, "[3 - Template '"
                             + hL.getTemplateId()
-                            + "'] Cet objet n'a pas de propriétaire. Contactez un administrateur.");
+                            + "'] Cet objet n'a pas de propriï¿½taire. Contactez un administrateur.");
                     return;
                 }
                 if (owner == this.player.getAccount().getId()) {
@@ -1892,10 +1915,10 @@ public class GameClient {
                     SocketManager.GAME_SEND_EHm_PACKET(this.player, "-", ligneID + "");//Enleve la ligne
                     if (curHdv.getLine(ligneID) != null
                             && !curHdv.getLine(ligneID).isEmpty())
-                        SocketManager.GAME_SEND_EHm_PACKET(this.player, "+", curHdv.getLine(ligneID).parseToEHm());//Réajthise la ligne si elle n'est pas vide
+                        SocketManager.GAME_SEND_EHm_PACKET(this.player, "+", curHdv.getLine(ligneID).parseToEHm());//Rï¿½ajthise la ligne si elle n'est pas vide
                     this.player.refreshStats();
                     SocketManager.GAME_SEND_Ow_PACKET(this.player);
-                    SocketManager.GAME_SEND_Im_PACKET(this.player, "068");//Envoie le message "Lot acheté"
+                    SocketManager.GAME_SEND_Im_PACKET(this.player, "068");//Envoie le message "Lot achetï¿½"
                 } else {
                     SocketManager.GAME_SEND_Im_PACKET(this.player, "172");//Envoie un message d'erreur d'achat
                 }
@@ -1915,7 +1938,7 @@ public class GameClient {
                 templateID = Integer.parseInt(packet.substring(3));
                 SocketManager.GAME_SEND_EHP_PACKET(this.player, templateID);
                 break;
-            case 'T'://Demande des template de la catégorie
+            case 'T'://Demande des template de la catï¿½gorie
                 int categ = Integer.parseInt(packet.substring(3));
                 String allTemplate = World.world.getHdv(Math.abs(exchangeAction.getValue())).parseTemplate(categ);
                 SocketManager.GAME_SEND_EHL_PACKET(this.player, categ, allTemplate);
@@ -2052,7 +2075,7 @@ public class GameClient {
     private synchronized void movementItemOrKamas(String packet) {
         if(this.player.getExchangeAction() == null) return;
         if(packet.contains("NaN")) {
-            this.player.sendMessage("Error : StartExchange : (" + this.player.getExchangeAction().getType() + ") : " + packet + "\nA envoyer à Locos.");
+            this.player.sendMessage("Error : StartExchange : (" + this.player.getExchangeAction().getType() + ") : " + packet + "\nA envoyer ï¿½ Locos.");
             return;
         }
         switch(this.player.getExchangeAction().getType()) {
@@ -2530,8 +2553,8 @@ public class GameClient {
                             price = Integer.parseInt(packet.substring(4).split("\\|")[2]);
                         } catch (Exception e) {
                             World.world.logger.error("Error Echange HDV '" + packet + "' => " + e.getMessage());
-                            // Arrive quand price n'est pas dans le pacquet. C'est que le joueur ne veut pas mettre dans un hdv, mais dans autre chose ... Un paquet qui est MO+itmID|qté
-                            // Peeut-étre aprésa voir utilisé le concasseur ...
+                            // Arrive quand price n'est pas dans le pacquet. C'est que le joueur ne veut pas mettre dans un hdv, mais dans autre chose ... Un paquet qui est MO+itmID|qtï¿½
+                            // Peeut-ï¿½tre aprï¿½sa voir utilisï¿½ le concasseur ...
                             e.printStackTrace();
                             SocketManager.GAME_SEND_MESSAGE(this.player, "Une erreur s'est produite lors de la mise en vente de votre objet. Veuillez vous reconnectez pour corriger l'erreur. Personnage "
                                     + this.getPlayer().getName()
@@ -2553,7 +2576,7 @@ public class GameClient {
                         if (taxe < 0)
                             return;
 
-                        if (!this.player.hasItemGuid(itmID))//Vérifie si le this.playernnage a bien l'item spécifié et l'argent pour payer la taxe
+                        if (!this.player.hasItemGuid(itmID))//Vï¿½rifie si le this.playernnage a bien l'item spï¿½cifiï¿½ et l'argent pour payer la taxe
                             return;
                         if (this.player.getAccount().countHdvEntries(curHdv.getHdvId()) >= curHdv.getMaxAccountItem()) {
                             SocketManager.GAME_SEND_Im_PACKET(this.player, "058");
@@ -2564,7 +2587,7 @@ public class GameClient {
                             return;
                         }
 
-                        GameObject obj = World.world.getGameObject(itmID);//Récupére l'item
+                        GameObject obj = World.world.getGameObject(itmID);//Rï¿½cupï¿½re l'item
                         if (obj.isAttach()) return;
 
                         this.player.addKamas(taxe * -1);//Retire le montant de la taxe au this.playernnage
@@ -2572,14 +2595,14 @@ public class GameClient {
 
                         int qua = (amount == 1 ? 1 : (amount == 2 ? 10 : 100));
 
-                        if (qua > obj.getQuantity())//S'il veut mettre plus de cette objet en vente que ce qu'il posséde
+                        if (qua > obj.getQuantity())//S'il veut mettre plus de cette objet en vente que ce qu'il possï¿½de
                             return;
                         int rAmount = (int) (Math.pow(10, amount) / 10);
                         int newQua = (obj.getQuantity() - rAmount);
 
-                        if (newQua <= 0)//Si c'est plusieurs objets ensemble enleve seulement la quantité de mise en vente
+                        if (newQua <= 0)//Si c'est plusieurs objets ensemble enleve seulement la quantitï¿½ de mise en vente
                         {
-                            this.player.removeItem(itmID);//Enléve l'item de l'inventaire du this.playernnage
+                            this.player.removeItem(itmID);//Enlï¿½ve l'item de l'inventaire du this.playernnage
                             SocketManager.GAME_SEND_REMOVE_ITEM_PACKET(this.player, itmID);//Envoie un packet au client pour retirer l'item de son inventaire
                         } else {
                             obj.setQuantity(obj.getQuantity() - rAmount);
@@ -2957,7 +2980,7 @@ public class GameClient {
             return;
         }
         if (taxe < 0) {
-            SocketManager.GAME_SEND_MESSAGE(this.player, "Erreur de mode marchand, la somme est négative.");
+            SocketManager.GAME_SEND_MESSAGE(this.player, "Erreur de mode marchand, la somme est nï¿½gative.");
             return;
         }
         int orientation = Formulas.getRandomValue(1, 3);
@@ -3163,7 +3186,7 @@ public class GameClient {
             return;
         }
 
-        if (packet.substring(2, 4).equals("13") && this.player.getExchangeAction() == null) { // Craft sécurisé : celui qui n'a pas le job ( this.player ) souhaite invité player
+        if (packet.substring(2, 4).equals("13") && this.player.getExchangeAction() == null) { // Craft sï¿½curisï¿½ : celui qui n'a pas le job ( this.player ) souhaite invitï¿½ player
             try {
                 String[] split = packet.split("\\|");
                 int id = Integer.parseInt(split[1]);
@@ -3247,7 +3270,7 @@ public class GameClient {
                 e.printStackTrace();
             }
             return;
-        } else if (packet.substring(2, 4).equals("12") && this.player.getExchangeAction() == null) { // Craft sécurisé : celui qui é le job ( this.player ) souhaite invité player
+        } else if (packet.substring(2, 4).equals("12") && this.player.getExchangeAction() == null) { // Craft sï¿½curisï¿½ : celui qui ï¿½ le job ( this.player ) souhaite invitï¿½ player
             try {
                 String[] split = packet.split("\\|");
                 int id = Integer.parseInt(split[1]);
@@ -3330,7 +3353,7 @@ public class GameClient {
             if (hdv != null) {
                 String info = "1,10,100;" + hdv.getStrCategory() + ";" + hdv.parseTaxe() + ";" + hdv.getLvlMax() + ";" + hdv.getMaxAccountItem() + ";-1;" + hdv.getSellTime();
                 SocketManager.GAME_SEND_ECK_PACKET(this.player, 11, info);
-                ExchangeAction<Integer> exchangeAction = new ExchangeAction<>(ExchangeAction.AUCTION_HOUSE_BUYING, -this.player.getCurMap().getId()); //Récupére l'ID de la map et rend cette valeur négative
+                ExchangeAction<Integer> exchangeAction = new ExchangeAction<>(ExchangeAction.AUCTION_HOUSE_BUYING, -this.player.getCurMap().getId()); //Rï¿½cupï¿½re l'ID de la map et rend cette valeur nï¿½gative
                 this.player.setExchangeAction(exchangeAction);
             }
             return;
@@ -3469,7 +3492,7 @@ public class GameClient {
                 SocketManager.GAME_SEND_ECK_PACKET(this, 8, String.valueOf(collector.getId()));
                 SocketManager.GAME_SEND_ITEM_LIST_PACKET_PERCEPTEUR(this, collector);
                 break;
-            case '9'://Déposé/Retiré un familier
+            case '9'://Dï¿½posï¿½/Retirï¿½ un familier
                 id = Integer.parseInt(packet.substring(4));
 
                 if (this.player.getCurMap().getNpc(id) != null) {
@@ -3550,7 +3573,7 @@ public class GameClient {
                     }
                 }
                 //if (cant == 0)
-                    //SocketManager.GAME_SEND_MESSAGE(this.player, "Dans ces moments il n'y a pas d'artisan disponible du métier que tu cherches.");
+                    //SocketManager.GAME_SEND_MESSAGE(this.player, "Dans ces moments il n'y a pas d'artisan disponible du mï¿½tier que tu cherches.");
                 break;
         }
     }
@@ -3724,14 +3747,14 @@ public class GameClient {
         if (this.player == null)
             return;
         if (this.player.getFight() != null)
-            return;//Pas d'émote en combat
+            return;//Pas d'ï¿½mote en combat
         if (!this.player.getEmotes().contains(emote))
             return;
         if (emote != 1 || emote != 19 && this.player.isSitted())
             this.player.setSitted(false);
 
         switch (emote) {
-            case 20://Tabouret héhé ( rime )
+            case 20://Tabouret hï¿½hï¿½ ( rime )
             case 19://s'allonger
             case 1:// s'asseoir
                 this.player.setSitted(!this.player.isSitted());
@@ -3916,7 +3939,7 @@ public class GameClient {
             case 'S'://Teleportation
                 // TP Mariage : mettre une condition de donjon ...
                 if (Wife.getCurMap().noTP || Wife.getCurMap().haveMobFix()) {
-                    SocketManager.GAME_SEND_MESSAGE(this.player, "Une barrière magique vous empêche de rejoindre votre conjoint.");
+                    SocketManager.GAME_SEND_MESSAGE(this.player, "Une barriï¿½re magique vous empï¿½che de rejoindre votre conjoint.");
                     return;
                 }
                 if (this.player.getFight() != null)
@@ -3951,7 +3974,7 @@ public class GameClient {
     private void parseFightPacket(String packet) {
         try {
             switch (packet.charAt(1)) {
-                case 'D'://Détails d'un combat (liste des combats)
+                case 'D'://Dï¿½tails d'un combat (liste des combats)
                     int key = -1;
                     try {
                         key = Integer.parseInt(packet.substring(2).replace(0x0
@@ -4039,11 +4062,11 @@ public class GameClient {
                 if (this.player.getFight() != null)
                     this.player.getFight().playerPass(this.player);
                 break;
-                // Pour éviter map noir client > 1.34
+                // Pour ï¿½viter map noir client > 1.34
             default:
                 if((int)packet.charAt(1) == 1030) getExtraInformations();
                 break;
-             // Pour éviter map noir client > 1.34
+             // Pour ï¿½viter map noir client > 1.34
         }
     }
 
@@ -4102,7 +4125,7 @@ public class GameClient {
                 this.player.setGameAction(GA);
                 break;
 
-            case 507://Panneau intérieur de la maison
+            case 507://Panneau intï¿½rieur de la maison
                 houseAction(packet);
                 break;
 
@@ -4217,7 +4240,7 @@ public class GameClient {
                 removeAction(GA);
                 return;
             }
-            //Si déplacement inutile
+            //Si dï¿½placement inutile
             GameCase targetCell = this.player.getCurMap().getCase(CryptManager.cellCode_To_ID(path.substring(path.length() - 2)));
 
             if(this.player.getCurMap().getId() == 6824 && this.player.start != null && targetCell.getId() == 325 && !this.player.start.leave) {
@@ -4269,11 +4292,11 @@ public class GameClient {
             if (this.player.walkFast) {
                 this.player.getCurCell().removePlayer(this.player);
                 SocketManager.GAME_SEND_BN(this);
-                //On prend la case ciblée
+                //On prend la case ciblï¿½e
                 GameCase nextCell = this.player.getCurMap().getCase(CryptManager.cellCode_To_ID(path.substring(path.length() - 2)));
                 targetCell = this.player.getCurMap().getCase(CryptManager.cellCode_To_ID(GA.packet.substring(GA.packet.length() - 2)));
 
-                //On définie la case et on ajthise le this.playernnage sur la case
+                //On dï¿½finie la case et on ajthise le this.playernnage sur la case
                 this.player.setCurCell(nextCell);
                 this.player.set_orientation(CryptManager.getIntByHashedValue(path.charAt(path.length() - 3)));
                 this.player.getCurCell().addPlayer(this.player);
@@ -4312,9 +4335,9 @@ public class GameClient {
         Quest quete = Quest.getQuestById(Integer.parseInt(packet.substring(5)));
         Quest.QuestPlayer qp = this.player.getQuestPersoByQuest(quete);
         if (qp == null)
-            quete.applyQuest(this.player); // S'il n'a pas la quéte
+            quete.applyQuest(this.player); // S'il n'a pas la quï¿½te
         else
-            SocketManager.GAME_SEND_MESSAGE(this.player, "Vous avez déjà  appris la quête.");
+            SocketManager.GAME_SEND_MESSAGE(this.player, "Vous avez dï¿½jï¿½ appris la quï¿½te.");
         //this.player.addNewQuest(Integer.parseInt(packet.substring(5)));
     }
 
@@ -4384,7 +4407,7 @@ public class GameClient {
         if (h == null)
             return;
         switch (actionID) {
-            case 81://Vérouiller maison
+            case 81://Vï¿½rouiller maison
                 h.lock(this.player);
                 break;
             case 97://Acheter maison
@@ -4706,7 +4729,7 @@ public class GameClient {
             SocketManager.GAME_SEND_GM_MOUNT(this, this.player.getCurMap(), true);
             //items au sol
             this.player.getCurMap().sendFloorItems(this.player);
-            //Porte intéractif
+            //Porte intï¿½ractif
             InteractiveDoor.show(this.player);
             //Prisme
             World.world.showPrismes(this.player);
@@ -4780,14 +4803,14 @@ public class GameClient {
 
                         SocketManager.GAME_SEND_BN(this);
                         String path = GA.args;
-                        //On prend la case ciblée
+                        //On prend la case ciblï¿½e
 
                         GameCase nextCell = this.player.getCurMap().getCase(CryptManager.cellCode_To_ID(path.substring(path.length() - 2)));
                         GameCase targetCell = this.player.getCurMap().getCase(CryptManager.cellCode_To_ID(GA.packet.substring(GA.packet.length() - 2)));
 
                         //FIXME: Anti cheat engine speedhack
 
-                        //On définie la case et on ajoute le personnage sur la case
+                        //On dï¿½finie la case et on ajoute le personnage sur la case
                         this.player.setCurCell(nextCell);
                         this.player.set_orientation(CryptManager.getIntByHashedValue(path.charAt(path.length() - 3)));
                         this.player.getCurCell().addPlayer(this.player);
@@ -4882,7 +4905,7 @@ public class GameClient {
 
         if (id > 0) {
             Player target = World.world.getPlayer(id);
-            //On ne quitte pas un joueur qui : est null, ne combat pas, n'est pas de éa team.
+            //On ne quitte pas un joueur qui : est null, ne combat pas, n'est pas de ï¿½a team.
             if (target == null || target.getFight() == null)
                 return;
             if(target.getFight().getTeamId(target.getId()) != this.player.getFight().getTeamId(this.player.getId()))
@@ -4932,13 +4955,13 @@ public class GameClient {
             case 'C'://Creation
                 createGuild(packet);
                 break;
-            case 'f'://Téléportation enclo de guilde
+            case 'f'://Tï¿½lï¿½portation enclo de guilde
                 teleportToGuildFarm(packet.substring(2));
                 break;
             case 'F'://Retirer Collector
                 removeTaxCollector(packet.substring(2));
                 break;
-            case 'h'://Téléportation maison de guilde
+            case 'h'://Tï¿½lï¿½portation maison de guilde
                 teleportToGuildHouse(packet.substring(2));
                 break;
             case 'H'://Poser un Collector
@@ -4959,7 +4982,7 @@ public class GameClient {
             case 'T'://attaque sur Collector
                 joinOrLeaveTaxCollector(packet.substring(2));
                 break;
-            case 'V'://Ferme le panneau de création de guilde
+            case 'V'://Ferme le panneau de crï¿½ation de guilde
                 leavePanelGuildCreate();
                 break;
         }
@@ -5056,13 +5079,13 @@ public class GameClient {
             //Validation du nom de la guilde
             String tempName = name.toLowerCase();
             boolean isValid = true;
-            //Vérifie d'abord si il contient des termes définit
+            //Vï¿½rifie d'abord si il contient des termes dï¿½finit
             if (tempName.length() > 20 || tempName.contains("mj")
                     || tempName.contains("modo") || tempName.contains("fuck")
                     || tempName.contains("admin")) {
                 isValid = false;
             }
-            //Si le nom passe le test, on vérifie que les caractére entré sont correct.
+            //Si le nom passe le test, on vï¿½rifie que les caractï¿½re entrï¿½ sont correct.
             if (isValid) {
                 int tiretCount = 0;
                 for (char curLetter : tempName.toCharArray()) {
@@ -5100,7 +5123,7 @@ public class GameClient {
                 SocketManager.GAME_SEND_gC_PACKET(this.player, "Eae");
                 return;
             }
-            if (this.player.getCurMap().getId() == 2196)//Temple de création de guilde
+            if (this.player.getCurMap().getId() == 2196)//Temple de crï¿½ation de guilde
             {
                 if (!this.player.hasItemTemplate(1575, 1))//Guildalogemme
                 {
@@ -5222,11 +5245,11 @@ public class GameClient {
             SocketManager.GAME_SEND_Im_PACKET(this.player, "182");
             return;
         }
-        if (Collector.getCollectorByGuildId(this.player.getCurMap().getId()) > 0) {//La Map posséde un Collector
+        if (Collector.getCollectorByGuildId(this.player.getCurMap().getId()) > 0) {//La Map possï¿½de un Collector
             SocketManager.GAME_SEND_Im_PACKET(this.player, "1168;1");
             return;
         }
-        if (this.player.getCurMap().getPlaces().length() < 5 || SoulStone.isInArenaMap(this.player.getCurMap().getId()) || this.player.getCurMap().noCollector) {//La map ne posséde pas de "places"
+        if (this.player.getCurMap().getPlaces().length() < 5 || SoulStone.isInArenaMap(this.player.getCurMap().getId()) || this.player.getCurMap().noCollector) {//La map ne possï¿½de pas de "places"
             SocketManager.GAME_SEND_Im_PACKET(this.player, "113");
             return;
         }
@@ -5343,7 +5366,7 @@ public class GameClient {
                         + "")) {
                     Player p = World.world.getPlayer(this.player.getInvitation());
                     if (p == null)
-                        return;//Pas censé arriver
+                        return;//Pas censï¿½ arriver
                     SocketManager.GAME_SEND_gJ_PACKET(p, "Ec");
                 }
                 break;
@@ -5352,7 +5375,7 @@ public class GameClient {
                         + "")) {
                     Player p = World.world.getPlayer(this.player.getInvitation());
                     if (p == null)
-                        return;//Pas censé arriver
+                        return;//Pas censï¿½ arriver
                     Guild G = p.get_guild();
                     Guild.GuildMember GM = G.addNewMember(this.player);
                     Database.getDynamics().getGuildMemberData().update(this.player);
@@ -5389,26 +5412,26 @@ public class GameClient {
             toRemGuild = P.get_guild();
             if (toRemGuild == null)//La guilde du this.playernnage n'est pas charger ?
             {
-                toRemGuild = World.world.getGuild(this.player.get_guild().getId());//On prend la guilde du this.player qui l'éjecte
+                toRemGuild = World.world.getGuild(this.player.get_guild().getId());//On prend la guilde du this.player qui l'ï¿½jecte
             }
             toRemMember = toRemGuild.getMember(P.getId());
             if (toRemMember == null)
                 return;//Si le membre n'est pas dans la guilde.
             if (toRemMember.getGuild().getId() != this.player.get_guild().getId())
-                return;//Si guilde différente
+                return;//Si guilde diffï¿½rente
         }
         //si pas la meme guilde
         if (toRemGuild.getId() != this.player.get_guild().getId()) {
             SocketManager.GAME_SEND_gK_PACKET(this.player, "Ea");
             return;
         }
-        //S'il n'a pas le droit de kick, et que ce n'est pas lui méme la cible
+        //S'il n'a pas le droit de kick, et que ce n'est pas lui mï¿½me la cible
         if (!this.player.getGuildMember().canDo(Constant.G_BAN)
                 && this.player.getGuildMember().getGuid() != toRemMember.getGuid()) {
             SocketManager.GAME_SEND_gK_PACKET(this.player, "Ed");
             return;
         }
-        //Si différent : Kick
+        //Si diffï¿½rent : Kick
         if (this.player.getGuildMember().getGuid() != toRemMember.getGuid()) {
             if (toRemMember.getRank() == 1) //S'il veut kicker le meneur
                 return;
@@ -5429,7 +5452,7 @@ public class GameClient {
             if (this.player.getGuildMember().getRank() == 1
                     && G.getMembers().size() > 1) //Si le meneur veut quitter la guilde mais qu'il reste d'autre joueurs
             {
-                SocketManager.GAME_SEND_MESSAGE(this.player, "Vous devez désigner un autre meneur pour quitter la guilde !");
+                SocketManager.GAME_SEND_MESSAGE(this.player, "Vous devez dï¿½signer un autre meneur pour quitter la guilde !");
                 return;
             }
             G.removeMember(this.player);
@@ -5445,7 +5468,7 @@ public class GameClient {
 
     private void changeMemberProfil(String packet) {
         if (this.player.get_guild() == null)
-            return; //Si le this.playernnage envoyeur n'a méme pas de guilde
+            return; //Si le this.playernnage envoyeur n'a mï¿½me pas de guilde
 
         String[] infos = packet.split("\\|");
 
@@ -5454,19 +5477,19 @@ public class GameClient {
         byte xpGive = Byte.parseByte(infos[2]);
         int right = Integer.parseInt(infos[3]);
 
-        Player p = World.world.getPlayer(guid); //Cherche le this.playernnage a qui l'on change les droits dans la mémoire
+        Player p = World.world.getPlayer(guid); //Cherche le this.playernnage a qui l'on change les droits dans la mï¿½moire
         Guild.GuildMember toChange;
         Guild.GuildMember changer = this.player.getGuildMember();
 
-        //Récupération du this.playernnage é changer, et verification de quelques conditions de base
-        if (p == null) //Arrive lorsque le this.playernnage n'est pas chargé dans la mémoire
+        //Rï¿½cupï¿½ration du this.playernnage ï¿½ changer, et verification de quelques conditions de base
+        if (p == null) //Arrive lorsque le this.playernnage n'est pas chargï¿½ dans la mï¿½moire
         {
-            int guildId = Database.getDynamics().getGuildMemberData().isPersoInGuild(guid); //Récupére l'id de la guilde du this.playernnage qui n'est pas dans la mémoire
+            int guildId = Database.getDynamics().getGuildMemberData().isPersoInGuild(guid); //Rï¿½cupï¿½re l'id de la guilde du this.playernnage qui n'est pas dans la mï¿½moire
 
             if (guildId < 0)
-                return; //Si le this.playernnage é qui les droits doivent étre modifié n'existe pas ou n'a pas de guilde
+                return; //Si le this.playernnage ï¿½ qui les droits doivent ï¿½tre modifiï¿½ n'existe pas ou n'a pas de guilde
 
-            if (guildId != this.player.get_guild().getId()) //Si ils ne sont pas dans la méme guilde
+            if (guildId != this.player.get_guild().getId()) //Si ils ne sont pas dans la mï¿½me guilde
             {
                 SocketManager.GAME_SEND_gK_PACKET(this.player, "Ed");
                 return;
@@ -5474,7 +5497,7 @@ public class GameClient {
             toChange = World.world.getGuild(guildId).getMember(guid);
         } else {
             if (p.get_guild() == null)
-                return; //Si la this.playernne é qui changer les droits n'a pas de guilde
+                return; //Si la this.playernne ï¿½ qui changer les droits n'a pas de guilde
             if (this.player.get_guild().getId() != p.get_guild().getId()) //Si ils ne sont pas de la meme guilde
             {
                 SocketManager.GAME_SEND_gK_PACKET(this.player, "Ea");
@@ -5484,11 +5507,11 @@ public class GameClient {
             toChange = p.getGuildMember();
         }
 
-        //Vérifie ce que le this.playernnage changeur é le droit de faire
+        //Vï¿½rifie ce que le this.playernnage changeur ï¿½ le droit de faire
 
         if (changer.getRank() == 1) //Si c'est le meneur
         {
-            if (changer.getGuid() == toChange.getGuid()) //Si il se modifie lui méme, reset tthis sauf l'XP
+            if (changer.getGuid() == toChange.getGuid()) //Si il se modifie lui mï¿½me, reset tthis sauf l'XP
             {
                 rank = -1;
                 right = -1;
@@ -5499,7 +5522,7 @@ public class GameClient {
                 {
                     changer.setAllRights(2, (byte) -1, 29694, this.player); //Met le meneur "Bras droit" avec tthis les droits
 
-                    //Défini les droits é mettre au nouveau meneur
+                    //Dï¿½fini les droits ï¿½ mettre au nouveau meneur
                     rank = 1;
                     xpGive = -1;
                     right = 1;
@@ -5817,7 +5840,7 @@ public class GameClient {
         }
     }
 
-    private void destroyObject(String packet) {
+    public void destroyObject(String packet) {
         String[] infos = packet.substring(2).split("\\|");
         try {
             int guid = Integer.parseInt(infos[0]);
@@ -5833,8 +5856,38 @@ public class GameClient {
                 //SocketManager.GAME_SEND_DELETE_OBJECT_FAILED_PACKET(this);
                 return;
             }
-            if (obj.getPosition() != Constant.ITEM_POS_NO_EQUIPED)
-                return;
+            if (obj.getPosition() != Constant.ITEM_POS_NO_EQUIPED){
+                int idSetExObj = obj.getTemplate().getPanoId();
+                GameObject obj2;
+                ObjectTemplate exObjTpl = obj.getTemplate();
+                if ((obj2 = player.getSimilarItem(obj)) != null)//On le poss?de deja
+                {
+                    obj2.setQuantity(obj2.getQuantity()
+                            + obj.getQuantity());
+                    SocketManager.GAME_SEND_OBJECT_QUANTITY_PACKET(player, obj2);
+                    World.world.removeGameObject(obj.getGuid());
+                    player.removeItem(obj.getGuid());
+                    SocketManager.GAME_SEND_REMOVE_ITEM_PACKET(player, obj.getGuid());
+                } else
+                //On ne le poss?de pas
+                {
+                    obj.setPosition(Constant.ITEM_POS_NO_EQUIPED);
+                    if ((idSetExObj >= 81 && idSetExObj <= 92)
+                            || (idSetExObj >= 201 && idSetExObj <= 212)) {
+                        String[] stats = exObjTpl.getStrTemplate().split(",");
+                        for (String stat : stats) {
+                            String[] val = stat.split("#");
+                            String modifi = Integer.parseInt(val[0], 16)
+                                    + ";" + Integer.parseInt(val[1], 16)
+                                    + ";0";
+                            SocketManager.SEND_SB_SPELL_BOOST(player, modifi);
+                            //player.removeObjectClassSpell(Integer.parseInt(val[1], 16));
+                        }
+                        //player.removeObjectClass(exObjTpl.getId());
+                    }
+                    SocketManager.GAME_SEND_OBJET_MOVE_PACKET(player, obj);
+                }
+            }
             if (qua > obj.getQuantity())
                 qua = obj.getQuantity();
             int newQua = obj.getQuantity() - qua;
@@ -5981,7 +6034,7 @@ public class GameClient {
         return true;
     }
 
-    private void onMovementItemClass(final GameObject object, final int position)
+    public void onMovementItemClass(final GameObject object, final int position)
     {
     	
     	final ObjectTemplate objTemplate = object.getTemplate();
@@ -6036,20 +6089,20 @@ public class GameClient {
             SocketManager.send(this.player, "Im1161");
             return true;
         }
-        if (exObj.getObvijevanPos() != 0) {// si il y a déjé un obvi
+        if (exObj.getObvijevanPos() != 0) {// si il y a dï¿½jï¿½ un obvi
             SocketManager.GAME_SEND_BN(this.player);
             return true;
         }
-        exObj.setObvijevanPos(object.getObvijevanPos()); // L'objet qui était en place a maintenant un obvi
+        exObj.setObvijevanPos(object.getObvijevanPos()); // L'objet qui ï¿½tait en place a maintenant un obvi
         Database.getStatics().getObvejivanData().add(object, exObj);
-        this.player.removeItem(object.getGuid(), 1, false, false); // on enléve l'existance de l'obvi en lui-méme
-        SocketManager.send(this.player, "OR" + object.getGuid()); // on le précise au client.
+        this.player.removeItem(object.getGuid(), 1, false, false); // on enlï¿½ve l'existance de l'obvi en lui-mï¿½me
+        SocketManager.send(this.player, "OR" + object.getGuid()); // on le prï¿½cise au client.
         Database.getDynamics().getObjectData().delete(object.getGuid());
 
         exObj.refreshStatsObjet(object.parseStatsStringSansUserObvi() + ",3ca#" + Integer.toHexString(objGUID) + "#0#0#0d0+" + objGUID);
 
         SocketManager.send(this.player, exObj.obvijevanOCO_Packet(position));
-        SocketManager.GAME_SEND_ON_EQUIP_ITEM(this.player.getCurMap(), this.player); // Si l'obvi était cape ou coiffe : packet au client
+        SocketManager.GAME_SEND_ON_EQUIP_ITEM(this.player.getCurMap(), this.player); // Si l'obvi ï¿½tait cape ou coiffe : packet au client
         // S'il y avait plusieurs objets
         if (object.getQuantity() > 1) {
             if (quantity > object.getQuantity())
@@ -6074,7 +6127,7 @@ public class GameClient {
     private synchronized void onMovementUnEquipObject(final GameObject objectToRemove) {
     	this.player.unEquipItem(objectToRemove.getPosition());
         final GameObject object = this.player.getSimilarItem(objectToRemove);
-        if (object != null)//On le posséde deja
+        if (object != null)//On le possï¿½de deja
         {
         	object.setQuantity(object.getQuantity() + objectToRemove.getQuantity());
             SocketManager.GAME_SEND_OBJECT_QUANTITY_PACKET(this.player, object);
@@ -6090,7 +6143,7 @@ public class GameClient {
     }
     
     private synchronized void onMovementEquipItem(final GameObject object, final int position, final boolean isAConsumableItem, int quantity) {
-    	// Equiper un item de manière basique
+    	// Equiper un item de maniï¿½re basique
         object.setPosition(position);
         this.player.equipItem(object);
         SocketManager.GAME_SEND_OBJET_MOVE_PACKET(this.player, object);
@@ -6167,7 +6220,7 @@ public class GameClient {
         
         // Si la position est de retirer
         // Ou bien
-        // Si il y avait déjà un item sur l'emplacement on le retire
+        // Si il y avait dï¿½jï¿½ un item sur l'emplacement on le retire
         if(position == Constant.ITEM_POS_NO_EQUIPED || exObj != null)
         	this.onMovementUnEquipObject(object);
         else
@@ -6188,12 +6241,12 @@ public class GameClient {
         		this.player.setGfxId(this.player.getClasse() * 10 + this.player.getSexe());
         		SocketManager.GAME_SEND_ERASE_ON_MAP_TO_MAP(this.player.getCurMap(), this.player.getId());
         		SocketManager.GAME_SEND_ADD_PLAYER_TO_MAP(this.player.getCurMap(), this.player);
-        		SocketManager.GAME_SEND_MESSAGE(this.player, "Vous n'êtes plus mercenaire.");
+        		SocketManager.GAME_SEND_MESSAGE(this.player, "Vous n'ï¿½tes plus mercenaire.");
         	}else if (position == Constant.ITEM_POS_COIFFE) {
         		this.player.setGfxId((this.player.getSexe() == 1) ? 8009 : 8006);
                 SocketManager.GAME_SEND_ERASE_ON_MAP_TO_MAP(this.player.getCurMap(), this.player.getId());
                 SocketManager.GAME_SEND_ADD_PLAYER_TO_MAP(this.player.getCurMap(), this.player);
-                SocketManager.GAME_SEND_MESSAGE(this.player, "Vous avez été transformé en mercenaire.");
+                SocketManager.GAME_SEND_MESSAGE(this.player, "Vous avez ï¿½tï¿½ transformï¿½ en mercenaire.");
         	}
         } else if (position == Constant.ITEM_POS_ARME) {
             switch (object.getTemplate().getId())
@@ -6243,7 +6296,7 @@ public class GameClient {
         if (position == Constant.ITEM_POS_FAMILIER && this.player.isOnMount())
             this.player.toogleOnMount();
         
-        //Verif pour les thisils de métier
+        //Verif pour les thisils de mï¿½tier
         
         if (position == Constant.ITEM_POS_NO_EQUIPED && oldPosition == Constant.ITEM_POS_ARME)
             SocketManager.GAME_SEND_OT_PACKET(this, -1);
@@ -6280,7 +6333,7 @@ public class GameClient {
             	if(infos.length > 2) 
             		quantity = Integer.parseInt(infos[2]);
             }catch(NumberFormatException e) {
-            	// Pas de quantité donnée
+            	// Pas de quantitï¿½ donnï¿½e
             }
 
             GameObject object = World.world.getGameObject(id);
@@ -6315,7 +6368,7 @@ public class GameClient {
             
             if(this.onMovementItemIsTwoHand(object, position)) return;
             
-            //On ne peut équiper 2 items de panoplies identiques, ou 2 Dofus identiques
+            //On ne peut ï¿½quiper 2 items de panoplies identiques, ou 2 Dofus identiques
             if (position != Constant.ITEM_POS_NO_EQUIPED && (object.getTemplate().getPanoId() != -1 || object.getTemplate().getType() == Constant.ITEM_TYPE_DOFUS) && this.player.hasEquiped(object.getTemplate().getId()))
                 return;
 
@@ -6683,7 +6736,7 @@ public class GameClient {
         Party g = this.player.getParty();
         if (g == null)
             return;
-        if (packet.length() == 2)//Si aucun guid est spécifié, alors c'est que le joueur quitte
+        if (packet.length() == 2)//Si aucun guid est spï¿½cifiï¿½, alors c'est que le joueur quitte
         {
             g.leave(this.player);
             SocketManager.GAME_SEND_PV_PACKET(this, "");
@@ -6743,7 +6796,7 @@ public class GameClient {
             case 'p'://Demande Decription en Enclo.
                 dataMount(packet, false);
                 break;
-            case 'f'://Libére la monture
+            case 'f'://Libï¿½re la monture
                 killMount(packet);
                 break;
             case 'n'://Change le nom
@@ -7024,7 +7077,7 @@ public class GameClient {
             int Position = Integer.parseInt(packet.substring(2).split("\\|")[1]);
             Spell.SortStats Spell = this.player.getSortStatBySortIfHas(SpellID);
             if (Spell != null) {
-                this.player.set_SpellPlace(SpellID, CryptManager.getHashedValueByInt(Position));
+                this.player.set_SpellPlace(SpellID, Integer.toHexString(Position));
             }
             SocketManager.GAME_SEND_BN(this);
         } catch (Exception e) {
@@ -7223,7 +7276,7 @@ public class GameClient {
             //cellID == this.player.getCurCell().getId()
             if ((list != null && list.contains((int) this.player.getCurCell().getId())) || distPecheur())// et on verrifie si le joueur = cellI
                 this.player.getGameClient().gameAction(actions.get(-1));// On renvois comme demande
-                //Risqué mais bon pas le choix si on veut pas étre emmerder avec les blés. Parser le bon type ?
+                //Risquï¿½ mais bon pas le choix si on veut pas ï¿½tre emmerder avec les blï¿½s. Parser le bon type ?
                 //this.player.getGameClient().gameAction(actions.getWaitingAccount(-1));// On renvois comme demande
             actions.remove(-1);
         }
@@ -7252,7 +7305,7 @@ public class GameClient {
     public void changeName(String packet) {
         if(!this.player.hasItemTemplate(10860, 1)) {
             this.player.send("AlEr");
-            this.player.sendMessage("Désolé, vous ne possédez pas la potion.");
+            this.player.sendMessage("Dï¿½solï¿½, vous ne possï¿½dez pas la potion.");
             return;
         }
 

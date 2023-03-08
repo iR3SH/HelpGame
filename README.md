@@ -1,5 +1,5 @@
 ```diff
-- ATTENTION ! A partir de cette  version il faut avoir le Login qui va avec !
+- ATTENTION ! Cette version n'est qu'un tweak du travail de [@sarazar928ghost](https://github.com/sarazar928ghost) 
 ```
 Cliquez sur ce lien pour voir le Github du login : [HelpLogin](https://github.com/Sarazar928Ghost/HelpLogin) 
 ## HelpGame
@@ -7,29 +7,24 @@ Cliquez sur ce lien pour voir le Github du login : [HelpLogin](https://github.co
 Cette émulateur est open source pour toute personne.  
 Merci de pas le vendre , vous avez reçu gratuitement , donnez gratuitement 🤗
 
+
 ## Authors
 
 - [@sarazar928ghost](https://github.com/sarazar928ghost) 
 - Discord : Kevin#6537
 
+TWEAK GLADIATROOL :
+- [@arwase](https://github.com/arwase) 
+- Discord : Arwase#6656
 
 ## Nouveautées :
 
-- Commandes joueurs lié avec la base de données.
-- Prestige lié avec la base de données.
-- Nouvelle condition : PRE , exemple : PRE>1 , prestige supérieur a 1. A mettre dans les colonnes conditions en base de données.
-- Nouvelle config.txt. (Se génére toute seule lors du lancement si inéxistant)
-- Possibilités de donner des items/pano lors de la création d'un personnage via la config.txt
-- Commande joueur giveItem ( numéro 6 ) avec arguments exemple : idTemplate,idTemplate,idTemplate,idTemplate;true (true veut dire jetMax)
-- Nouveau système de stockage des items équipés.
-- Le serveur game n'envoie plus de packet au client pour créer un item/pet/mount/quest/guild
-- Refonte système de parchotage et reset stats.
-- Mimibiote ( Objet action 35 ) ( Item Template mimibiote : 4 )
-- Cameleon DD ( Objet action action 36 ) ( Item Template Potion : 2 )
-- Piège débugé a 100% ( Normalement 🤗 )
-- Demande désormais au Login l'ID pour le futur player crée.
-- Item classe fonctionnel.
-- Les commandes joueurs possèdent une description customamisable via la BDD.
+- Gladiatrool
+- Gestion du client 1.39.8 :
+    - Split packet ù
+    - Positions Spell/ Obj en Int au lieu d'Hexa
+- Meilleure gestion des map chiffrés offi
+
 
 ## DEBUG :
 

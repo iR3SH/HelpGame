@@ -18,6 +18,7 @@ import java.util.ArrayList;
 import java.util.Map;
 import java.util.Random;
 import java.util.TreeMap;
+import java.util.concurrent.ThreadLocalRandom;
 import java.util.concurrent.atomic.AtomicReference;
 
 public class Formulas {
@@ -464,7 +465,7 @@ public class Formulas {
                 //Ajout de la resist Magique
                 resfT = target.getTotalStats().getEffect(183);
                 break;
-            case Constant.ELEMENT_AIR://agilité
+            case Constant.ELEMENT_AIR://agilitï¿½
                 statC = caster.getTotalStats().getEffect(Constant.STATS_ADD_AGIL);
                 resfT = target.getTotalStats().getEffect(Constant.STATS_ADD_R_AIR);
                 respT = target.getTotalStats().getEffect(Constant.STATS_ADD_RP_AIR);
@@ -522,7 +523,7 @@ public class Formulas {
         }
 
         num = a * mulT * (jet * ((100 + statC + perdomC + (multiplier * 100)) / 100))
-                + domC;//dégats bruts
+                + domC;//dï¿½gats bruts
         //Poisons
         if (spellid != -1) {
             switch (spellid) {
@@ -612,15 +613,15 @@ public class Formulas {
                         + "", target.getId() + "," + armor);
         if (!isHeal)
             num -= resfT;//resis fixe
-        //dégats finaux
+        //dï¿½gats finaux
         if (num < 1)
             num = 0;
         //Perte de 10% des PDV MAX par points de degat 10 PDV = 1PDV max en moins
         if (target.getPersonnage() != null)
             target.removePdvMax((int) Math.floor(num / 10));
-        // Début Formule pour les MOBs
+        // Dï¿½but Formule pour les MOBs
         if (caster.getPersonnage() == null && !caster.isCollector()) {
-            if (caster.getMob().getTemplate().getId() == 116)//Sacrifié Dommage = PDV*2
+            if (caster.getMob().getTemplate().getId() == 116)//Sacrifiï¿½ Dommage = PDV*2
             {
                 return (int) ((num / 25) * caster.getPdvMax());
             } else {
@@ -648,7 +649,7 @@ public class Formulas {
                     //Si pas element feu, on ignore l'armure
                     if (statID != Constant.ELEMENT_FEU)
                         continue;
-                    //Les stats du féca sont prises en compte
+                    //Les stats du fï¿½ca sont prises en compte
                     fighter = SE.getCaster();
                     break;
                 case 6://Armure Terrestre
@@ -656,21 +657,21 @@ public class Formulas {
                     if (statID != Constant.ELEMENT_TERRE
                             && statID != Constant.ELEMENT_NEUTRE)
                         continue;
-                    //Les stats du féca sont prises en compte
+                    //Les stats du fï¿½ca sont prises en compte
                     fighter = SE.getCaster();
                     break;
                 case 14://Armure Venteuse
                     //Si pas element air, on ignore l'armure
                     if (statID != Constant.ELEMENT_AIR)
                         continue;
-                    //Les stats du féca sont prises en compte
+                    //Les stats du fï¿½ca sont prises en compte
                     fighter = SE.getCaster();
                     break;
                 case 18://Armure aqueuse
                     //Si pas element eau, on ignore l'armure
                     if (statID != Constant.ELEMENT_EAU)
                         continue;
-                    //Les stats du féca sont prises en compte
+                    //Les stats du fï¿½ca sont prises en compte
                     fighter = SE.getCaster();
                     break;
 
@@ -742,7 +743,7 @@ public class Formulas {
         int loose = 0;
         for (short i = 0; i < value; ++i) {
             final float pts = (type == 'a' ? target.getPa() : target.getPm()) - loose;
-            // Probabilité de retirer 1 PA = 50 * (Retrait lanceur / esquive cible)* (PA actuels cible / PA totaux cibles) %
+            // Probabilitï¿½ de retirer 1 PA = 50 * (Retrait lanceur / esquive cible)* (PA actuels cible / PA totaux cibles) %
             float chance = 50f * (esquiveC / esquiveT) * (pts / ptsMax);
             if(chance > 90f) chance = 90f;
             else if(chance < 10f) chance = 10f;
@@ -806,17 +807,17 @@ public class Formulas {
                 LvlGuild = perso.getPersonnage().get_guild().getLvl(),
                 pXpGive = (double) gm.getPXpGive() / 100;
 
-        double maxP = xp * pXpGive * 0.10; //Le maximum donné é la guilde est 10% du montant prélevé sur l'xp du combat
-        double diff = Math.abs(Lvl - LvlGuild); //Calcul l'écart entre le niveau du personnage et le niveau de la guilde
+        double maxP = xp * pXpGive * 0.10; //Le maximum donnï¿½ ï¿½ la guilde est 10% du montant prï¿½levï¿½ sur l'xp du combat
+        double diff = Math.abs(Lvl - LvlGuild); //Calcul l'ï¿½cart entre le niveau du personnage et le niveau de la guilde
         double toGuild;
         if (diff >= 70) {
-            toGuild = maxP * 0.10; //Si l'écart entre les deux level est de 70 ou plus, l'experience donnée a la guilde est de 10% la valeur maximum de don
+            toGuild = maxP * 0.10; //Si l'ï¿½cart entre les deux level est de 70 ou plus, l'experience donnï¿½e a la guilde est de 10% la valeur maximum de don
         } else if (diff >= 31 && diff <= 69) {
             toGuild = maxP - ((maxP * 0.10) * (Math.floor((diff + 30) / 10)));
         } else if (diff >= 10 && diff <= 30) {
             toGuild = maxP - ((maxP * 0.20) * (Math.floor(diff / 10)));
         } else
-        //Si la différence est [0,9]
+        //Si la diffï¿½rence est [0,9]
         {
             toGuild = maxP;
         }
@@ -1021,7 +1022,7 @@ public class Formulas {
         return 10;
     }
 
-    public static int getLvlDopeuls(int lvl)//Niveau du dopeul à combattre
+    public static int getLvlDopeuls(int lvl)//Niveau du dopeul ï¿½ combattre
     {
         if (lvl < 20)
             return 20;
@@ -1071,7 +1072,7 @@ public class Formulas {
             c = 1 - ((1 - (m1 / m2)) / 2);
         if (c < 0)
             c = 0;
-        // la variable c reste à 1 si le jet ne depasse pas 80% sinon il diminue trés fortement. Si le jet dépasse 100% alors il diminue encore plus.
+        // la variable c reste ï¿½ 1 si le jet ne depasse pas 80% sinon il diminue trï¿½s fortement. Si le jet dï¿½passe 100% alors il diminue encore plus.
 
         int moyenne = (int) Math.floor(WeightTotalBase
                 - ((WeightTotalBase - WeightTotalBaseMin) / 2));
@@ -1101,14 +1102,14 @@ public class Formulas {
         		p3 = 90;
         	} else {
             	p1 = 2; 							// On propose 2% de SC
-            	p2 = 78 - actualStat*217*weight/(statsAdd*100); 		// Base 80% de succes avec difficulté croissante -> Cale sur 25
+            	p2 = 78 - actualStat*217*weight/(statsAdd*100); 		// Base 80% de succes avec difficultï¿½ croissante -> Cale sur 25
             	// Cas d'un gelano + carac
-            	// On cherche que la proba tende vers 0 vers +36 dans un élément (216/100 * 36 = 78 pour p2(SN) qui tend vers 0)
-            	// Le calcul a été arrangé pour ne pas être éronné malgré les int
-            	// On y ajoute la constante poidRune/StatsAjouté pour permettre aux gelano vita d'être + cohérants
-            	// FIXME: Ajouter la difficulté en f(poid des runes)
-            	// Le cas des runes éléments et vie a été géré, il faut ajouter les autres runes
-            	// Par exemple les runes vi passent + facilement de 0 à 30 en carac etc
+            	// On cherche que la proba tende vers 0 vers +36 dans un ï¿½lï¿½ment (216/100 * 36 = 78 pour p2(SN) qui tend vers 0)
+            	// Le calcul a ï¿½tï¿½ arrangï¿½ pour ne pas ï¿½tre ï¿½ronnï¿½ malgrï¿½ les int
+            	// On y ajoute la constante poidRune/StatsAjoutï¿½ pour permettre aux gelano vita d'ï¿½tre + cohï¿½rants
+            	// FIXME: Ajouter la difficultï¿½ en f(poid des runes)
+            	// Le cas des runes ï¿½lï¿½ments et vie a ï¿½tï¿½ gï¿½rï¿½, il faut ajouter les autres runes
+            	// Par exemple les runes vi passent + facilement de 0 ï¿½ 30 en carac etc
             	if(p2<0) {
             		p2 = 0;
             	}
@@ -1338,7 +1339,7 @@ public class Formulas {
         String alpha = "a b c d e f g h i j k l n o p q r s t u v w x y z Ã© Ã¨ Ã  Ã§ & Ã» Ã¢ Ãª Ã´ Ã® Ã¤ Ã« Ã¼ Ã¯ Ã¶";
         for (String i : alpha.split(" "))
             msg = msg.replace(i, "m");
-        alpha = "A B C D E F G H I J K L M N O P Q R S T U V W X Y Z Ã‹ Ãœ Ã„ Ã Ã– Ã‚ ÃŠ Ã› ÃŽ Ã”";
+        alpha = "A B C D E F G H I J K L M N O P Q R S T U V W X Y Z Ã‹ Ãœ Ã„ ï¿½ Ã– Ã‚ ÃŠ Ã› ÃŽ Ã”";
         for (String i : alpha.split(" "))
             msg = msg.replace(i, "H");
         return msg;
@@ -1416,5 +1417,37 @@ public class Formulas {
     	return theReturn.toString();
     	
     }
-    
+
+    public static char[] shuffleCharArray(char[] ar)
+    {
+        // If running on Java 6 or older, use `new Random()` on RHS here
+        Random rnd = ThreadLocalRandom.current();
+        for (int i = ar.length - 1; i > 0; i--)
+        {
+            int index = rnd.nextInt(i + 1);
+            // Simple swap
+            char a = ar[index];
+            ar[index] = ar[i];
+            ar[i] = a;
+        }
+        return ar;
+    }
+
+    public static int[] getRandomsInt(int[] table,int nb)
+    {
+        int[] randomInts = new int[nb];
+        Random random = new Random();
+
+        // Shuffle the array using Fisher-Yates algorithm
+        for (int i = table.length - 1; i >= 1; i--) {
+            int j = random.nextInt(i + 1);
+            int temp = table[j];
+            table[j] = table[i];
+            table[i] = temp;
+        }
+
+        // Copy the first 7 elements of the shuffled array to the randomInts array
+        System.arraycopy(table, 0, randomInts, 0, nb);
+        return randomInts;
+    }
 }

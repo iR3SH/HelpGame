@@ -30,12 +30,13 @@ public class Monster {
     private ArrayList<Drop> drops = new ArrayList<>();
     private boolean isCapturable;
     private int aggroDistance = 0;
+    private int type;
 
     public Monster(int id, int gfxId, int align, String colors,
                    String thisGrades, String thisSpells, String thisStats,
                    String thisStatsInfos, String thisPdvs, String thisPoints,
                    String thisInit, int minKamas, int maxKamas, String thisXp, int ia,
-                   boolean capturable, int aggroDistance) {
+                   boolean capturable, int aggroDistance, int type) {
         this.id = id;
         this.gfxId = gfxId;
         this.align = align;
@@ -45,6 +46,7 @@ public class Monster {
         this.ia = ia;
         this.isCapturable = capturable;
         this.aggroDistance = aggroDistance;
+        this.type = type;
         int G = 1;
 
         for (int n = 0; n < 12; n++) {
@@ -245,6 +247,21 @@ public class Monster {
         return null;
     }
 
+    public MobGrade getGrade(int gradevalue) {
+        int graderandom = 1;
+        for (Entry<Integer, MobGrade> grade : getGrades().entrySet()) {
+            if (graderandom == gradevalue)
+                return grade.getValue();
+            else
+                graderandom++;
+        }
+        return null;
+    }
+
+    public int getType() {
+        return this.type;
+    }
+
     public static class MobGroup {
         public final static MaitreCorbac MAITRE_CORBAC = new MaitreCorbac();
 
@@ -269,7 +286,7 @@ public class Monster {
 
             id = Aid;
             align = Aalign;
-            //Détermination du nombre de mob du groupe
+            //Dï¿½termination du nombre de mob du groupe
             int rand = 0;
             int nbr = 0;
             if (fixSize > 0 && fixSize < 9) {
@@ -628,7 +645,7 @@ public class Monster {
                 this.mobs.put(guid, extra);
                 guid--;
             }
-            //On vérifie qu'il existe des monstres de l'alignement demandé pour éviter les boucles infinies
+            //On vï¿½rifie qu'il existe des monstres de l'alignement demandï¿½ pour ï¿½viter les boucles infinies
             for (MobGrade mob : possibles)
                 if (mob.getTemplate().getAlign() == this.align)
                     haveSameAlign = true;
@@ -748,7 +765,49 @@ public class Monster {
             this.orientation = generateOrientation(); 
             this.starBonus = (star ? Constant.getStarAlea() : 0);
         }
-        
+
+        public MobGroup(int id, GameMap map, int cellId, String groupData) {
+            this.id = id;
+            this.align = Constant.ALIGNEMENT_NEUTRE;
+            this.cellId = cellId;
+            this.isFix = true;
+            int guid = -1;
+            boolean star = false;
+            for (String data : groupData.split(";")) {
+                if (data.equalsIgnoreCase(""))
+                    continue;
+                String[] infos = data.split(",");
+                try {
+                    int idMonster = Integer.parseInt(infos[0]);
+                    int min = Integer.parseInt(infos[1]);
+                    int max = Integer.parseInt(infos[2]);
+                    Monster m = World.world.getMonstre(idMonster);
+                    List<MobGrade> mgs = new ArrayList<MobGrade>();
+                    //on ajoute a la liste les grades possibles
+
+                    for (MobGrade MG : m.getGrades().values()) {
+                        if (MG.getBaseXp() != 0)
+                            star = true;
+                        if (MG.level >= min && MG.level <= max)
+                            mgs.add(MG);
+                    }
+                    if (mgs.isEmpty())
+                        continue;
+                    if(m.getAlign() != align)
+                        align = m.getAlign();
+                    //On prend un grade au hasard entre 0 et size -1 parmis les mobs possibles
+                    this.mobs.put(guid, mgs.get(Formulas.getRandomValue(0, mgs.size() - 1)));
+                    if (m.getAggroDistance() > this.aggroDistance)
+                        this.aggroDistance = m.getAggroDistance();
+                    guid--;
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+            this.orientation = map != null && map.getId() == 11095 ? 3 : (Formulas.getRandomValue(0, 3) * 2) + 1;
+            this.starBonus = (short) (star ? 0 : -1);
+        }
+
         private byte generateOrientation()
         {
             byte orient = 0;
@@ -772,7 +831,7 @@ public class Monster {
             if (!changeAgro) {
                 if (this.haveMineur()) {
                     // 29 : sous-terrain
-                    // 96 : exploitation miniére d'astrub
+                    // 96 : exploitation miniï¿½re d'astrub
                     // 31 : passage vers brakmar
                     if (this.subarea != 29 && this.subarea != 96
                             && this.subarea != 31) {
@@ -917,10 +976,10 @@ public class Monster {
             	colors.append(entry.getValue().getTemplate().getColors()).append(";0,1C3C,1C40,0;");
             else if (tst==547) // Pandalette ivre
             	colors.append(entry.getValue().getTemplate().getColors()).append(";0,1C3C,1C40,0;");
-            else if (tst==1213) // Mage Céleste
+            else if (tst==1213) // Mage Cï¿½leste
             	colors.append(entry.getValue().getTemplate().getColors()).append(";0,2BA,847,0;");
             
-            /*else if (tst==30063) // Yllib  -  Affiche le Flood derrière la tête ???
+            /*else if (tst==30063) // Yllib  -  Affiche le Flood derriï¿½re la tï¿½te ???
             {
             	colors.append(entry.getValue().getTemplate().getColors()).append(";0,0,2155,0;");
             }*/
@@ -930,7 +989,7 @@ public class Monster {
             }
             toreturn.append("+").append(this.cellId).append(";").append(this.orientation).append(";");
         	//a mettre dans monster/parsegm
-            toreturn.append(getStarBonus());// bonus en pourcentage (étoile/20%) // Actuellement 1%/min
+            toreturn.append(getStarBonus());// bonus en pourcentage (ï¿½toile/20%) // Actuellement 1%/min
             toreturn.append(";").append(this.id).append(";").append(mobIDs).append(";-3;").append(mobGFX).append(";").append(mobLevels).append(";").append(colors);
             return toreturn.toString();
         }
@@ -963,12 +1022,12 @@ public class Monster {
             		 this.size = 120 + n * pSize; 
             	 if(template.getId()==30065) // Cramody
             		 this.size = 110 + n * pSize;  /*
-                 if(template.getId()==30071) // Envoyé des Abysses
+                 if(template.getId()==30071) // Envoyï¿½ des Abysses
                      this.size = 90 + n * pSize;
                      */
-                 if(template.getId()==30072) // Sorcier Démon
+                 if(template.getId()==30072) // Sorcier Dï¿½mon
                      this.size = 120 + n * pSize;/*
-                 if(template.getId()==30073) // Petit Démon Rapide
+                 if(template.getId()==30073) // Petit Dï¿½mon Rapide
                      this.size = 80 + n * pSize;*/
                  if(template.getId()==30074) // Sbire de Qu'Tan
                      this.size = 110 + n * pSize;

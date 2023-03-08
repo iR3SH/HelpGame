@@ -161,6 +161,18 @@ public class GameObject {
                         txtStats.put(Constant.STATS_CHANGE_BY, split.split("#")[4]);
                         continue;
                     }
+                    if (split.substring(0, 3).equalsIgnoreCase("3d7")) {// Si c'est une rune de signature modifiï¿½
+                        txtStats.put(Constant.STATS_EXCHANGE_IN, split.split("#")[4]);
+                        continue;
+                    }
+                    if (split.substring(0, 3).equalsIgnoreCase("29d")) {// Si c'est une rune de signature modifiï¿½
+                        txtStats.put(Constant.STATS_NIVEAU2, split.split("#")[4]);
+                        continue;
+                    }
+                    if (split.substring(0, 3).equalsIgnoreCase("844")) {// Si c'est une rune de signature modifiï¿½
+                        txtStats.put(Constant.STATS_BONUSADD, split.split("#")[4]);
+                        continue;
+                    }
 
                     String[] stats = split.split("#");
                     int id = Integer.parseInt(stats[0], 16);
@@ -254,7 +266,7 @@ public class GameObject {
                         }
                     }
                     if (!follow2)
-                        continue;//Si c'était un effet Actif d'arme ou une signature
+                        continue;//Si c'ï¿½tait un effet Actif d'arme ou une signature
 
                     if(!isForFm)
                     	Stats.addOneStat(id, Integer.parseInt(stats[1], 16));
@@ -399,7 +411,7 @@ public class GameObject {
     }
 
     public String parseItem() {
-        String posi = position == Constant.ITEM_POS_NO_EQUIPED ? "" : Integer.toHexString(position);
+        String posi = position == Constant.ITEM_POS_NO_EQUIPED ? "" : position+"";
         return Integer.toHexString(guid) + "~"
                 + Integer.toHexString(template.getId()) + "~"
                 + Integer.toHexString(quantity) + "~" + posi + "~"
@@ -533,7 +545,12 @@ public class GameObject {
                 stats.append(Integer.toHexString(entry.getKey())).append("#").append(Integer.toHexString(getResistanceMax(getTemplate().getStrTemplate()))).append("#").append(entry.getValue()).append("#").append(Integer.toHexString(getResistanceMax(getTemplate().getStrTemplate())));
             } else if (entry.getKey() == Constant.STATS_RESIST) {
                 stats.append(Integer.toHexString(entry.getKey())).append("#").append(Integer.toHexString(getResistanceMax(getTemplate().getStrTemplate()))).append("#").append(entry.getValue()).append("#").append(Integer.toHexString(getResistanceMax(getTemplate().getStrTemplate())));
-            } else {
+            } else if (entry.getKey() == Constant.STATS_NIVEAU2) {
+                stats.append(Integer.toHexString(entry.getKey())).append("###").append(entry.getValue());
+            } else if (entry.getKey() == Constant.STATS_EXCHANGE_IN) {
+                stats.append(Integer.toHexString(entry.getKey())).append("#").append(entry.getValue());
+            }
+            else {
                 stats.append(Integer.toHexString(entry.getKey())).append("#0#0#0#").append(entry.getValue());
             }
             isFirst = false;
@@ -1161,7 +1178,7 @@ public class GameObject {
             } else if ((statID == 152) || (statID == 154) || (statID == 155)
                     || (statID == 157) || (statID == 116) || (statID == 153)) {
                 
-            	//System.out.println( " des stats négatif qu'on remet au max");
+            	//System.out.println( " des stats nï¿½gatif qu'on remet au max");
             	float a = (float) (value * poid / 100.0D);
             	
                 if (a < 1.0F)
@@ -1373,7 +1390,7 @@ public class GameObject {
                 this.clearStats();
                 this.refreshStatsObjet(statsStr);
             } else {
-                statsStr = this.parseFMStatsString(statsObjectFm, this, statsAdd, negative)// Ajouté this
+                statsStr = this.parseFMStatsString(statsObjectFm, this, statsAdd, negative)// Ajoutï¿½ this
                         + ","
                         + statsObjectFm
                         + "#"

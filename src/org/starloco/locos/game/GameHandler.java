@@ -24,6 +24,9 @@ public class GameHandler implements IoHandler {
 
         int i = 0;
         do {
+            if(s[i].contains("ù")){
+                s[i] = s[i].split("ù")[2];
+            }
             client.parsePacket(s[i]);
             if (Main.modDebug)
                 World.world.logger.trace((client.getPlayer() == null ? "" : client.getPlayer().getName()) + " <-- " + s[i]);

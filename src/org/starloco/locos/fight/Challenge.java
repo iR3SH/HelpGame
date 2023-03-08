@@ -119,19 +119,19 @@ public class Challenge {
         SocketManager.GAME_SEND_FIGHT_SHOW_CASE(Pws, _cible.getId(), _cible.getCell().getId());
     }
 
-    public void fightStart() {//Définit les cibles au début du combat
+    public void fightStart() {//Dï¿½finit les cibles au dï¿½but du combat
         if (!challengeAlive)
             return;
         switch (Type) {
-            case 3://Désigné Volontaire
+            case 3://Dï¿½signï¿½ Volontaire
             case 4://Sursis
             case 32://Elitiste
-            case 35://Tueur é gages
+            case 35://Tueur ï¿½ gages
                 if (_cible == null && _ordreJeu.size() > 0)//Si aucun cible n'est choise on en choisie une
                 {
                     List<Fighter> Choix = new ArrayList<Fighter>();
                     Choix.addAll(_ordreJeu);
-                    Collections.shuffle(Choix);//Mélange l'ArrayList
+                    Collections.shuffle(Choix);//Mï¿½lange l'ArrayList
                     for (Fighter f : Choix) {
                         if (f.getPersonnage() != null)
                             continue;
@@ -159,9 +159,9 @@ public class Challenge {
                 if (_cible != null)
                     showCibleToFight();
                 break;
-            case 25://Ordonné
+            case 25://Ordonnï¿½
                 int levelMax = 0;
-                for (Fighter fighter : fight.getFighters(2))//la cible sera le niveau le plus élevé
+                for (Fighter fighter : fight.getFighters(2))//la cible sera le niveau le plus ï¿½levï¿½
                 {
                     if (fighter.isInvocation() || fighter.isDouble())
                         continue;
@@ -179,7 +179,7 @@ public class Challenge {
         }
     }
 
-    public void fightEnd() {//Vérifie la validité des challenges en fin de combat (si nécessaire)
+    public void fightEnd() {//Vï¿½rifie la validitï¿½ des challenges en fin de combat (si nï¿½cessaire)
         if (!challengeAlive)
             return;
         switch (Type) {
@@ -206,7 +206,7 @@ public class Challenge {
             return;
         switch (Type) {
             case 33: // survivant
-            case 49: // Protégez vos mules
+            case 49: // Protï¿½gez vos mules
                 if (fighter.getPersonnage() != null)
                     challengeLoose(fight.getFighterByOrdreJeu());
                 break;
@@ -224,7 +224,7 @@ public class Challenge {
         switch (Type) {
             case 17:// Intouchable
                 if (target.getTeam() == 0 && !target.isInvocation()) {
-                    if (target.getBuff(9) == null) // Si dérobade
+                    if (target.getBuff(9) == null) // Si dï¿½robade
                         challengeLoose(target);
                     break;
                 }
@@ -285,7 +285,7 @@ public class Challenge {
                 }
 
                 break;
-            case 20: // Elémentaire
+            case 20: // Elï¿½mentaire
                 if ((caster.getTeam() == 0)
                         && DamagingEffects.contains("|" + effectID + "|")
                         && effectID != 141) {
@@ -294,7 +294,7 @@ public class Challenge {
                         case 149://Mutilation
                         case 106://Roue de la fortune
                         case 111://Contrecoup
-                        case 108://Esprit félin
+                        case 108://Esprit fï¿½lin
                         case 435://Transfert de vie
                         case 135://Mot de sacrifice
                         case 123://Mot drainant
@@ -360,7 +360,7 @@ public class Challenge {
                 }
                 break;
             case 32: // Elitiste
-            case 34: // Imprévisible
+            case 34: // Imprï¿½visible
                 if ((caster.getTeam() == 0)
                         && DamagingEffects.contains("|" + effectID + "|")) {
                     for (Fighter target : targets) {
@@ -386,7 +386,7 @@ public class Challenge {
                     }
                 }
                 break;
-            case 43: // Abnégation
+            case 43: // Abnï¿½gation
                 if ((caster.getTeam() == 0) && HealingEffects.contains("|" + effectID + "|") && caster.getInvocator() == null)
                     for (Fighter target : targets)
                         if (target.getId() == caster.getId())
@@ -433,7 +433,7 @@ public class Challenge {
             return;
 
         switch (Type) {
-            case 3: // Désigné Volontaire
+            case 3: // Dï¿½signï¿½ Volontaire
                 if (_cible == null)
                     return;
                 if(mob.isInvocation()) return;
@@ -488,7 +488,7 @@ public class Challenge {
                     challengeWin();
                 break;
 
-            case 34: // Imprévisible
+            case 34: // Imprï¿½visible
                 _cible = null;
                 break;
             case 42: // Deux pour le prix d'un
@@ -518,7 +518,7 @@ public class Challenge {
                 }
                 break;
 
-            case 35: // Tueur é gages
+            case 35: // Tueur ï¿½ gages
                 if (_cible == null)
                     return;
                 if (_cible.getId() != mob.getId()) {
@@ -580,7 +580,7 @@ public class Challenge {
                 }
                 break;
 
-            case 25: // Ordonné
+            case 25: // Ordonnï¿½
                 if (_cible == null)
                     return;
                 if (killer.isMob() || mob.isInvocation() || mob.isDouble() || mob.getPersonnage() != null)
@@ -616,7 +616,7 @@ public class Challenge {
             return;
         switch (Type) {
             case 1: // Zombie
-                if (this.fight.getCurFighterUsedPm() > 1) // Si l'on a utilisé plus d'un PM
+                if (this.fight.getCurFighterUsedPm() > 1) // Si l'on a utilisï¿½ plus d'un PM
                     //if (fighter.getPm() - fighter.getCurPm(fight) > 1)
                     challengeLoose(fight.getFighterByOrdreJeu());
                 break;
@@ -637,7 +637,7 @@ public class Challenge {
                 lastActions += action.toString();
                 break;
 
-            case 24: // Borné
+            case 24: // Bornï¿½
                 if (!lastActions.contains(action.toString())
                         && lastActions.contains(";" + fighter.getId() + ","))
                     challengeLoose(fight.getFighterByOrdreJeu());
@@ -703,7 +703,7 @@ public class Challenge {
                         Args = "ok";
                     else Args = "cant";
                 break;
-            case 34: // Imprévisible
+            case 34: // Imprï¿½visible
                 if (fighter.getTeam() == 1)
                     return;
                 try {
@@ -764,11 +764,11 @@ public class Challenge {
             return;
 
         boolean hasFailed = false;
-        ArrayList<Fighter> fighters = PathFinding.getFightersAround(fighter.getCell().getId(), fight.getMap(), fight);
+        ArrayList<Fighter> fighters = PathFinding.getFightersAround(fighter.getCell().getId(), fight.getMap());
 
         switch (Type) {
             case 1: // Zombie
-                if (this.fight.getCurFighterUsedPm() <= 0) // Si l'on a pas bougé
+                if (this.fight.getCurFighterUsedPm() <= 0) // Si l'on a pas bougï¿½
                     challengeLoose(fighter);
                 break;
 
@@ -823,7 +823,7 @@ public class Challenge {
                             hasFailed = false;
                 break;
 
-            case 39: // Anachoréte
+            case 39: // Anachorï¿½te
                 if (!fighters.isEmpty())
                     fighters.stream().filter(f -> f.getTeam() == fighter.getTeam()).forEach(f -> challengeLoose(fighter));
                 break;
@@ -833,7 +833,7 @@ public class Challenge {
                     fighters.stream().filter(f -> f.getTeam() != fighter.getTeam()).forEach(f -> challengeLoose(fighter));
                 break;
 
-            case 41: // Pétulant
+            case 41: // Pï¿½tulant
                 if (this.fight.getCurFighterPa() != 0)
                     challengeLoose(fighter);
                 break;

@@ -37,6 +37,7 @@ public class ObjectTemplateData extends AbstractDAO<ObjectTemplate> {
                 }
             }
         } catch (SQLException e) {
+            System.out.println("ici" + e);
             super.sendError("Item_templateData load", e);
             Main.stop("unknown");
         } finally {

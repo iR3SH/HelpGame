@@ -1,8 +1,10 @@
 package org.starloco.locos.game.world;
 
 import ch.qos.logback.classic.Level;
+import org.apache.commons.lang.ArrayUtils;
 import org.starloco.locos.area.Area;
 import org.starloco.locos.area.SubArea;
+import org.starloco.locos.area.map.labyrinth.Gladiatrool;
 import org.starloco.locos.area.map.labyrinth.PigDragon;
 import org.starloco.locos.area.map.labyrinth.Minotoror;
 import org.starloco.locos.client.Account;
@@ -482,6 +484,8 @@ public class World {
         PigDragon.initialize();
         logger.debug("Initialization of the dungeon : Labyrinth of the Minotoror.");
         Minotoror.initialize();
+        logger.debug("Initialization of the dungeons : Gladiatrool.");
+        Gladiatrool.initialize();
 
         Database.getStatics().getServerData().updateTime(time);
         logger.info("All data was loaded successfully at "
@@ -491,7 +495,7 @@ public class World {
         		+ new SimpleDateFormat("SS", Locale.FRANCE).format((System.currentTimeMillis() - time)) + " m.");
         logger.setLevel(Level.ALL);
         
-        // Permet de générer le fichier itemstats pour les langs
+        // Permet de gï¿½nï¿½rer le fichier itemstats pour les langs
         /*try(PrintWriter p = new PrintWriter(new FileWriter("itemstats.txt"))) {
         	
         	p.print("FILE_BEGIN = true;\r\n"
@@ -929,12 +933,11 @@ public class World {
     }
 
     public void addFullMorph(int morphID, String name, int gfxID,
-                                    String spells, String[] args) {
+                             String spells, String[] args) {
         if (fullmorphs.get(morphID) != null)
             return;
 
         fullmorphs.put(morphID, new HashMap<>());
-
         fullmorphs.get(morphID).put("name", name);
         fullmorphs.get(morphID).put("gfxid", gfxID + "");
         fullmorphs.get(morphID).put("spells", spells);
@@ -951,6 +954,31 @@ public class World {
             fullmorphs.get(morphID).put("initiative", args[9]);
             fullmorphs.get(morphID).put("stats", args[10]);
             fullmorphs.get(morphID).put("donjon", args[11]);
+            if(morphID > 100){
+                fullmorphs.get(morphID).put("do", args[12]);
+                fullmorphs.get(morphID).put("doper", args[13]);
+                fullmorphs.get(morphID).put("invo", args[14]);
+                fullmorphs.get(morphID).put("esPA", args[15]);
+                fullmorphs.get(morphID).put("esPM", args[16]);
+                fullmorphs.get(morphID).put("resiNeu", args[17]);
+                fullmorphs.get(morphID).put("resiTer", args[18]);
+                fullmorphs.get(morphID).put("resiFeu", args[19]);
+                fullmorphs.get(morphID).put("resiEau", args[20]);
+                fullmorphs.get(morphID).put("resiAir", args[21]);
+                fullmorphs.get(morphID).put("PO", args[22]);
+                fullmorphs.get(morphID).put("soin", args[23]);
+                fullmorphs.get(morphID).put("crit", args[24]);
+                fullmorphs.get(morphID).put("rfixNeu", "0");
+                fullmorphs.get(morphID).put("rfixTer", "0");
+                fullmorphs.get(morphID).put("rfixFeu", "0");
+                fullmorphs.get(morphID).put("rfixEau", "0");
+                fullmorphs.get(morphID).put("rfixAir", "0");
+                fullmorphs.get(morphID).put("renvoie", "0");
+                fullmorphs.get(morphID).put("dotrap", "0");
+                fullmorphs.get(morphID).put("perdotrap", "0");
+                fullmorphs.get(morphID).put("dophysique", "0");
+
+            }
         }
     }
 
@@ -1194,15 +1222,15 @@ public class World {
         if(boy.getSexe() == 0 && girl.getSexe() == 1) {
             final GameMap map = boy.getCurMap();
             if (boy.getWife() != 0) {// 0 : femme | 1 = homme
-                SocketManager.GAME_SEND_MESSAGE_TO_MAP(map, boy.getName() + " est déjà  marié !", Config.getInstance().colorMessage);
+                SocketManager.GAME_SEND_MESSAGE_TO_MAP(map, boy.getName() + " est dï¿½jï¿½ mariï¿½ !", Config.getInstance().colorMessage);
                 return;
             }
             if (girl.getWife() != 0) {
-                SocketManager.GAME_SEND_MESSAGE_TO_MAP(map, girl.getName() + " est déjà  marié !", Config.getInstance().colorMessage);
+                SocketManager.GAME_SEND_MESSAGE_TO_MAP(map, girl.getName() + " est dï¿½jï¿½ mariï¿½ !", Config.getInstance().colorMessage);
                 return;
             }
-            SocketManager.GAME_SEND_cMK_PACKET_TO_MAP(map, "", -1, "Prêtre", asked.getName()
-                    + " acceptez-vous d'épouser " + (asked.getSexe() == 1 ? girl : boy).getName() + " ?");
+            SocketManager.GAME_SEND_cMK_PACKET_TO_MAP(map, "", -1, "Prï¿½tre", asked.getName()
+                    + " acceptez-vous d'ï¿½pouser " + (asked.getSexe() == 1 ? girl : boy).getName() + " ?");
             SocketManager.GAME_SEND_WEDDING(map, 617, (boy == asked ? boy.getId() : girl.getId()), (boy == asked ? girl.getId() : boy.getId()), -1);
         }
     }
@@ -1210,8 +1238,8 @@ public class World {
 
     public void wedding(Player boy, Player girl, int isOK) {
         if (isOK > 0) {
-            SocketManager.GAME_SEND_cMK_PACKET_TO_MAP(boy.getCurMap(), "", -1, "Prêtre", "Je déclare "
-                    + boy.getName() + " et " + girl.getName() + " unis par les liens sacrés du mariage.");
+            SocketManager.GAME_SEND_cMK_PACKET_TO_MAP(boy.getCurMap(), "", -1, "Prï¿½tre", "Je dï¿½clare "
+                    + boy.getName() + " et " + girl.getName() + " unis par les liens sacrï¿½s du mariage.");
             boy.setWife(girl.getId());
             girl.setWife(boy.getId());
         } else {
@@ -2153,6 +2181,47 @@ public class World {
                 break;
         }
         return temple;
+    }
+
+    public ArrayList<Monster.MobGrade> getMobgradeBetweenLvl(int min, int max){
+        ArrayList<Monster> arrayMonstre = new ArrayList<>();
+        ArrayList<Monster.MobGrade> arrayMobgrade = new ArrayList<>();
+        getMonstres().stream().filter(monster -> monster != null && !(ArrayUtils.contains(Constant.FILTER_MONSTRE_SPE, monster.getType())) && !(monster.getGrade(1).getSpells().keySet().isEmpty()) && (monster.getAlign() == -1)
+                && !(ArrayUtils.contains(Constant.BOSS_ID, monster.getId())) && !(ArrayUtils.contains(Constant.EXCEPTION_GLADIATROOL_MONSTRES, monster.getId())) && (getLvlMax(monster) >= min && getLvlMax(monster) < max)).forEach(arrayMonstre::add);
+
+        for(Monster mob : arrayMonstre){
+            arrayMobgrade.add(mob.getGrade(5));
+        }
+        return arrayMobgrade;
+    }
+
+    public ArrayList<Monster.MobGrade> getArchiMobgradeBetweenLvl(int min, int max){
+        ArrayList<Monster> arrayMonstre = new ArrayList<>();
+        ArrayList<Monster.MobGrade> arrayMobgrade = new ArrayList<>();
+        getMonstres().stream().filter(monster -> monster != null && (ArrayUtils.contains(Constant.MONSTRE_TYPE_ARCHI, monster.getType())) && !(ArrayUtils.contains(Constant.EXCEPTION_GLADIATROOL_ARCHI, monster.getId())) && !(monster.getGrade(1).getSpells().keySet().isEmpty())
+                && (getLvlMax(monster) >= min && getLvlMax(monster) < max)).forEach(arrayMonstre::add);
+
+        for(Monster mob : arrayMonstre){
+            arrayMobgrade.add(mob.getGrade(5));
+        }
+        return arrayMobgrade;
+    }
+
+    public ArrayList<Monster.MobGrade> getBossMobgradeBetweenLvl(int min, int max){
+        ArrayList<Monster> arrayMonstre = new ArrayList<>();
+        ArrayList<Monster.MobGrade> arrayMobgrade = new ArrayList<>();
+        getMonstres().stream().filter(monster -> monster != null && (ArrayUtils.contains(Constant.BOSS_ID, monster.getId())) && !(ArrayUtils.contains(Constant.EXCEPTION_GLADIATROOL_BOSS, monster.getId())) && !(monster.getGrade(1).getSpells().keySet().isEmpty()) && (monster.getAlign() == -1)
+                && (getLvlMax(monster) >= min && getLvlMax(monster) < max)).forEach(arrayMonstre::add);
+
+        for(Monster mob : arrayMonstre){
+            arrayMobgrade.add(mob.getGrade(5));
+        }
+        return arrayMobgrade;
+    }
+
+    public int getLvlMax(Monster monstre){
+        int levelmoyen = monstre.getGrade(5).getLevel();
+        return levelmoyen;
     }
 
     public static class Drop {

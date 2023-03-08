@@ -287,7 +287,7 @@ public class Function {
       if(CellDest==fighter.getCell().getId())
         return targetCell+bestSS.getSpellID()*1000;
 
-      ArrayList<GameCase> path=new AstarPathfinding(fight.getMapOld(),fight,fighter.getCell().getId(),CellDest).getShortestPath(-1);
+      ArrayList<GameCase> path=new AstarPathfinding(fight.getMapOld(),fight,fighter.getCell().getId(),CellDest).getShortestPath();
 
       if(path==null)
         return -1;
@@ -300,7 +300,7 @@ public class Function {
         for(GameCase c : path)
         {
           if(curCaseID==c.getId())
-            continue; // Empéche le d == 0
+            continue; // Empï¿½che le d == 0
           char d=PathFinding.getDirBetweenTwoCase(curCaseID,c.getId(),fight.getMap(),true);
           if(d==0)
             return -1;//Ne devrait pas arriver :O
@@ -319,7 +319,7 @@ public class Function {
       {
         e.printStackTrace();
       }
-      //Création d'une GameAction
+      //Crï¿½ation d'une GameAction
       GameAction GA=new GameAction(0,1,"");
       GA.args=pathstr;
       fight.onFighterDeplace(fighter,GA);
@@ -412,7 +412,7 @@ public class Function {
         
         while (++coef < limit)
         {
-        	//Method Debuggé
+        	//Method Debuggï¿½
             nearestCell = PathFinding.getNearestCellAroundKrala(fight.getMap(), startCell, nearest.getCell().getId(), coef);
             if(nearestCell != startCell) break;
         }
@@ -563,7 +563,7 @@ public class Function {
       return fight.tryCastSpell(fighter,SS,target.getCell().getId());
     }
 
-    public boolean HealIfPossiblefriend(Fight fight, Fighter f, Fighter target)//boolean pour choisir entre auto-soin ou soin allié
+    public boolean HealIfPossiblefriend(Fight fight, Fighter f, Fighter target)//boolean pour choisir entre auto-soin ou soin alliï¿½
     {
       if(fight==null||f==null||target==null)
         return false;
@@ -876,7 +876,7 @@ public class Function {
         }
       }
 
-      ArrayList<GameCase> path=new AstarPathfinding(fight.getMapOld(),fight,cell.getId(),cell2.getId()).getShortestPath(-1);
+      ArrayList<GameCase> path=new AstarPathfinding(fight.getMapOld(),fight,cell.getId(),cell2.getId()).getShortestPath();
 
       if(path==null||path.isEmpty())
         return false;
@@ -912,7 +912,7 @@ public class Function {
       {
         e.printStackTrace();
       }
-      //Création d'une GameAction
+      //Crï¿½ation d'une GameAction
       GameAction GA=new GameAction(0,1,"");
       GA.args=pathstr;
       boolean result=fight.onFighterDeplace(F,GA);
@@ -1051,7 +1051,7 @@ public class Function {
       if(fight.getMap()==null)
         return 0;
       int nbrcase=0;
-      //On créer une liste de distance entre ennemi et de cellid, nous permet de savoir si un ennemi est collé a nous
+      //On crï¿½er une liste de distance entre ennemi et de cellid, nous permet de savoir si un ennemi est collï¿½ a nous
       int dist[]= { 1000, 1000, 1000, 1000, 1000, 1000, 1000, 1000, 1000, 1000 },cell[]= { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
       for(int i=0;i<10;i++)//on repete 10 fois pour les 10 joueurs ennemis potentielle
       {
@@ -1079,13 +1079,13 @@ public class Function {
           }
         }
       }
-      //if(dist[0] == 0)return false;//Si ennemi "collé"
+      //if(dist[0] == 0)return false;//Si ennemi "collï¿½"
 
       int dist2[]= { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
       int PM=F.getCurPm(fight),caseDepart=F.getCell().getId(),destCase=F.getCell().getId();
       ArrayList<Integer> caseUse=new ArrayList<Integer>();
-      caseUse.add(caseDepart); // On ne revient pas a sa position de départ
-      for(int i=0;i<=PM;i++)//Pour chaque PM on analyse la meilleur case a prendre. C'est a dire la plus éliognée de tous.
+      caseUse.add(caseDepart); // On ne revient pas a sa position de dï¿½part
+      for(int i=0;i<=PM;i++)//Pour chaque PM on analyse la meilleur case a prendre. C'est a dire la plus ï¿½liognï¿½e de tous.
       {
         if(destCase>0)
           caseDepart=destCase;
@@ -1097,7 +1097,7 @@ public class Function {
         for(int a=0;a<10&&dist[a]!=0;a++)
         {
           dist2[a]=PathFinding.getDistanceBetween(fight.getMap(),curCase,cell[a]);//pour chaque ennemi on calcul la nouvelle distance depuis cette nouvelle case (curCase)
-          if(dist2[a]>dist[a])//Si la cellule (curCase) demander et plus distante que la précedente de l'ennemi alors on dirrige le mouvement vers elle
+          if(dist2[a]>dist[a])//Si la cellule (curCase) demander et plus distante que la prï¿½cedente de l'ennemi alors on dirrige le mouvement vers elle
             infl++;
         }
 
@@ -1205,7 +1205,7 @@ public class Function {
       {
         e.printStackTrace();
       }
-      //Création d'une GameAction
+      //Crï¿½ation d'une GameAction
       GameAction GA=new GameAction(0,1,"");
       GA.args=pathstr;
 
@@ -1215,7 +1215,7 @@ public class Function {
       return nbrcase*Config.getInstance().AIMovementCellDelay+Config.getInstance().AIMovementFlatDelay;
     }
 
-    public static boolean testCotes(int cellWeAre, int cellWego)//Nous permet d'interdire le déplacement du bord vers des cellules hors map
+    public static boolean testCotes(int cellWeAre, int cellWego)//Nous permet d'interdire le dï¿½placement du bord vers des cellules hors map
     {
         if (cellWeAre == 15 || cellWeAre == 44 || cellWeAre == 73
                 || cellWeAre == 102 || cellWeAre == 131 || cellWeAre == 160
@@ -1397,7 +1397,7 @@ public class Function {
       return null;
     }
 
-    public int HealIfPossible(Fight fight, Fighter f, boolean autoSoin, int PDVPERmin)//boolean pour choisir entre auto-soin ou soin allié
+    public int HealIfPossible(Fight fight, Fighter f, boolean autoSoin, int PDVPERmin)//boolean pour choisir entre auto-soin ou soin alliï¿½
     {
       if(fight==null||f==null)
         return 0;
@@ -1417,7 +1417,7 @@ public class Function {
         }
       }
       else
-      //sélection joueur ayant le moins de pv
+      //sï¿½lection joueur ayant le moins de pv
       {
         Fighter curF=null;
         //int PDVPERmin = 100;
@@ -1484,7 +1484,7 @@ public class Function {
       return 0;
     }
 
-    public int HealIfPossible(Fight fight, Fighter f)//boolean pour choisir entre auto-soin ou soin allié
+    public int HealIfPossible(Fight fight, Fighter f)//boolean pour choisir entre auto-soin ou soin alliï¿½
     {
       if(fight==null||f==null)
         return 0;
@@ -1502,7 +1502,7 @@ public class Function {
       return 0;
     }
 
-    public int HealIfPossible(Fight fight, Fighter f, Fighter A)//boolean pour choisir entre auto-soin ou soin allié
+    public int HealIfPossible(Fight fight, Fighter f, Fighter A)//boolean pour choisir entre auto-soin ou soin alliï¿½
     {
       if(fight==null||f==null||A==null)
         return 0;
@@ -1519,7 +1519,7 @@ public class Function {
     }
 
 
-    public boolean HealIfPossible(Fight fight, Fighter f, boolean autoSoin)//boolean pour choisir entre auto-soin ou soin allié
+    public boolean HealIfPossible(Fight fight, Fighter f, boolean autoSoin)//boolean pour choisir entre auto-soin ou soin alliï¿½
     {
       if(fight==null||f==null)
         return false;
@@ -1535,7 +1535,7 @@ public class Function {
         SS=getHealSpell(fight,f,target);
       }
       else
-      //sélection joueur ayant le moins de pv
+      //sï¿½lection joueur ayant le moins de pv
       {
         Fighter curF=null;
         int PDVPERmin=100;
@@ -1651,7 +1651,7 @@ public class Function {
       return ss;
     }
     
-    // Le teste doit être fait lorsque la PO du sort est valide
+    // Le teste doit ï¿½tre fait lorsque la PO du sort est valide
     public boolean checkIfBuffAvailable(Fight fight, Fighter fighter, Fighter target, List<SortStats> Spelllist)
     {
     	SortStats SS=getBuffSpellDopeul(fight,fighter,target,Spelllist);
@@ -1804,7 +1804,7 @@ public class Function {
       {
         e.printStackTrace();
       }
-      //Création d'une GameAction
+      //Crï¿½ation d'une GameAction
       GameAction GA=new GameAction(0,1,"");
       GA.args=pathstr;
       if(!fight.onFighterDeplace(F,GA))
@@ -1894,7 +1894,7 @@ public class Function {
       {
         e.printStackTrace();
       }
-      //Création d'une GameAction
+      //Crï¿½ation d'une GameAction
       GameAction GA=new GameAction(0,1,"");
       GA.args=pathstr;
       if(!fight.onFighterDeplace(F,GA))
@@ -1981,7 +1981,7 @@ public class Function {
       {
         e.printStackTrace();
       }
-      //Création d'une GameAction
+      //Crï¿½ation d'une GameAction
       GameAction GA=new GameAction(0,1,"");
       GA.args=pathstr;
       if(!fight.onFighterDeplace(F,GA))
@@ -2166,7 +2166,7 @@ public class Function {
       {
         e.printStackTrace();
       }
-      //Création d'une GameAction
+      //Crï¿½ation d'une GameAction
       GameAction GA=new GameAction(0,1,"");
       GA.args=pathstr;
       if(!fight.onFighterDeplace(F,GA))
@@ -2930,7 +2930,7 @@ public class Function {
           for(GameCase c : path)
           {
             if(curCaseID==c.getId())
-              continue; // Empéche le d == 0
+              continue; // Empï¿½che le d == 0
             char d=PathFinding.getDirBetweenTwoCase(curCaseID,c.getId(),fight.getMap(),true);
             if(d==0)
               return 0;// Ne devrait pas arriver :O
@@ -2952,7 +2952,7 @@ public class Function {
           e.printStackTrace();
         }
 
-        // Création d'une GameAction
+        // Crï¿½ation d'une GameAction
         GameAction GA=new GameAction(0,1,"");
         GA.args=pathstr;
         result=fight.onFighterDeplace(current,GA);
@@ -3112,7 +3112,7 @@ public class Function {
         for(GameCase c : path)
         {
           if(curCaseID==c.getId())
-            continue; // Empéche le d == 0
+            continue; // Empï¿½che le d == 0
           char d=PathFinding.getDirBetweenTwoCase(curCaseID,c.getId(),m,true);
           if(d==0)
             return -1;//Ne devrait pas arriver :O
@@ -3131,7 +3131,7 @@ public class Function {
       {
         e.printStackTrace();
       }
-      //Création d'une GameAction
+      //Crï¿½ation d'une GameAction
       GameAction GA=new GameAction(0,1,"");
       GA.args=pathstr;
       fight.onFighterDeplace(fighter,GA);

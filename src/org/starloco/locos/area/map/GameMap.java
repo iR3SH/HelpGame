@@ -100,6 +100,7 @@ public class GameMap {
     private boolean isMute = false;
     private SubArea subArea;
     private MountPark mountPark;
+    private CellCacheImpl cellCache;
     private List<GameCase> cases = new ArrayList<>();
     private List<Fight> fights = new ArrayList<>();
     private ArrayList<Monster.MobGrade> mobPossibles = new ArrayList<>();
@@ -840,6 +841,28 @@ public class GameMap {
         ((ArrayList<RespawnGroup>) updatable.get()).add(new RespawnGroup(this, cell, System.currentTimeMillis()));
     }
 
+    public void setCellCache(CellCacheImpl cache) {
+        this.cellCache = cache;
+    }
+
+    public Monster.MobGroup spawnGroupGladiatrool(String groupData) {
+        while(this.mobGroups.get(this.nextObjectId) != null)
+            this.nextObjectId--;
+        int cell = this.getRandomFreeCellId();
+        while (this.containsForbiddenCellSpawn(cell))
+            cell = this.getRandomFreeCellId();
+        Monster.MobGroup group = new Monster.MobGroup(this.nextObjectId, this, cell, groupData);
+        if (group.getMobs().isEmpty())
+            return group;
+        this.mobGroups.put(this.nextObjectId, group);
+        group.setIsFix(false);
+        SocketManager.GAME_SEND_MAP_MOBS_GM_PACKET(this, group);
+
+        this.nextObjectId--;
+        return group;
+    }
+
+
     private static class RespawnGroup {
 
         private final GameMap map;
@@ -1068,7 +1091,7 @@ public class GameMap {
     
     //v2.7 - Tactical mode memory
     //v2.8 - Better follower system
-    //Pas encore ajouté:
+    //Pas encore ajoutï¿½:
     //v2.8 - Fixed follower teleporting
     //v2.8 - Fixed starting fights against newly spawned monsters
     //v2.8 - Save old map and cell
@@ -1080,7 +1103,7 @@ public class GameMap {
             return;
         }
         if (this.placesStr.isEmpty() || this.placesStr.equals("|")) {
-            perso.sendMessage("Poste sur le forum dans la catégorie adéquat avec l'id de la map (/mapid dans le tchat) afin de pouvoir y mettre les cellules de combat. Merci.");
+            perso.sendMessage("Poste sur le forum dans la catï¿½gorie adï¿½quat avec l'id de la map (/mapid dans le tchat) afin de pouvoir y mettre les cellules de combat. Merci.");
             return;
         }
         if (Main.fightAsBlocked||perso.isDead() == 1||perso.afterFight||!perso.canAggro())
@@ -1213,7 +1236,7 @@ public class GameMap {
         int id = 1;
 
         if (this.placesStr.isEmpty() || this.placesStr.equals("|")) {
-            perso.sendMessage("Poste sur le forum dans la catégorie adéquat avec l'id de la map (/mapid dans le tchat) afin de pouvoir y mettre les cellules de combat. Merci.");
+            perso.sendMessage("Poste sur le forum dans la catï¿½gorie adï¿½quat avec l'id de la map (/mapid dans le tchat) afin de pouvoir y mettre les cellules de combat. Merci.");
             return;
         }
         if(this.fights == null)
@@ -1683,7 +1706,7 @@ public class GameMap {
                 SocketManager.GAME_SEND_Ow_PACKET(player);
             }
             if (obj != null && Main.mapAsBlocked)
-                SocketManager.GAME_SEND_MESSAGE(player, "L'Administrateur à bloqué temporairement la récolte des objets aux sols.");
+                SocketManager.GAME_SEND_MESSAGE(player, "L'Administrateur ï¿½ bloquï¿½ temporairement la rï¿½colte des objets aux sols.");
         }
         InteractiveDoor.check(player, this);
         this.getCase(id).applyOnCellStopActions(player);

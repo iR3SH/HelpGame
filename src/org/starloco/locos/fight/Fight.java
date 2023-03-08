@@ -1,6 +1,7 @@
 package org.starloco.locos.fight;
 
 import org.starloco.locos.area.map.GameMap;
+import org.starloco.locos.area.map.labyrinth.Gladiatrool;
 import org.starloco.locos.area.map.labyrinth.Minotoror;
 import org.starloco.locos.client.Player;
 import org.starloco.locos.client.Prestige;
@@ -77,6 +78,7 @@ public class Fight {
     private boolean checkTimer = false;
     private boolean finish = false;
     private boolean collectorProtect = false;
+    private boolean ingladiatroll = false;
     private boolean curAction = false;
     private boolean traped = false;
     private String walkingPacket = "";
@@ -165,6 +167,10 @@ public class Fight {
         setCheckTimer(true);
         setMobGroup(group);
         demorph(perso);
+        if(Constant.isInGladiatorDonjon(map.getId())) {
+            ingladiatroll = true;
+            Gladiatrool.respawn(map.getId());
+        }
         setType(Constant.FIGHT_TYPE_PVM); // (0: Dfie) 4: Pvm (1:PVP) (5:Perco)
         setId(id);
         setMap(map.getMapCopy());
@@ -959,7 +965,7 @@ public class Fight {
 
                     TimerWaiter.addNext(() -> this.joinCollectorFight(player, collector.getId()), 1000, TimerWaiter.DataType.CLIENT);
                 } else {
-                    SocketManager.GAME_SEND_MESSAGE(player, "Vous n'avez pas pu rejoindre le combat du percepteur suite à  votre indisponibilit.");
+                    SocketManager.GAME_SEND_MESSAGE(player, "Vous n'avez pas pu rejoindre le combat du percepteur suite ï¿½ votre indisponibilit.");
                     collector.delDefenseFight(player);
                 }
             }
@@ -1011,8 +1017,8 @@ public class Fight {
         SocketManager.GAME_SEND_GTM_PACKET_TO_FIGHT(this, 7);
 
         /** Challenges **/
-        if (getType() == Constant.FIGHT_TYPE_PVM
-                || getType() == Constant.FIGHT_TYPE_DOPEUL) {
+        if ( (getType() == Constant.FIGHT_TYPE_PVM
+                || getType() == Constant.FIGHT_TYPE_DOPEUL) && !ingladiatroll ) {
             boolean hasMale = false, hasFemale = false, hasDisciple = false;
             boolean hasCawotte = false, hasChafer = false, hasRoulette = false, hasArakne = false, hasArround = false;
             boolean severalEnnemies, severalAllies, bothSexes, EvenEnnemies, MoreEnnemies, ecartLvlPlayer = false;
@@ -1526,7 +1532,7 @@ public class Fight {
       Fighter current=this.getFighterByOrdreJeu();
       /*if(getType() == Constant.FIGHT_TYPE_CHALLENGE || getType() == Constant.FIGHT_TYPE_AGRESSION ) 
       {
-    	  final short currentPa, currentPm; // Limiter les PA/PM à 12-6 en aggro & defi
+    	  final short currentPa, currentPm; // Limiter les PA/PM ï¿½ 12-6 en aggro & defi
     	  currentPa = (short) (current.getPa() > 12? 12:current.getPa());
     	  currentPm = (short) (current.getPm() > 6?  6:current.getPm());
     	  setCurFighterPa(currentPa);
@@ -1809,7 +1815,7 @@ public class Fight {
 
       SocketManager.GAME_SEND_GTM_PACKET_TO_FIGHT(this,7);
       SocketManager.GAME_SEND_GTR_PACKET_TO_FIGHT(this,7,current.getId());
-      // Timer d'une seconde à la fin du tour
+      // Timer d'une seconde ï¿½ la fin du tour
       this.startTurn();
     }
 
@@ -1845,7 +1851,7 @@ public class Fight {
                     if (perso.getAccount().getCurrentIp().compareTo(f.getPersonnage().getAccount().getCurrentIp()) == 0)
                         multiIp = true;
                 if (multiIp) {
-                    SocketManager.GAME_SEND_MESSAGE(perso, "Impossible de rejoindre ce combat, vous êtes djà  dans le combat avec une même IP !");
+                    SocketManager.GAME_SEND_MESSAGE(perso, "Impossible de rejoindre ce combat, vous ï¿½tes djï¿½ dans le combat avec une mï¿½me IP !");
                     return;
                 }
             }
@@ -1918,7 +1924,7 @@ public class Fight {
                     if (perso.getAccount().getCurrentIp().compareTo(f.getPersonnage().getAccount().getCurrentIp()) == 0)
                         multiIp = true;
                 if (multiIp) {
-                    SocketManager.GAME_SEND_MESSAGE(perso, "Impossible de rejoindre ce combat, vous êtes djà  dans le combat avec une même IP !");
+                    SocketManager.GAME_SEND_MESSAGE(perso, "Impossible de rejoindre ce combat, vous ï¿½tes djï¿½ dans le combat avec une mï¿½me IP !");
                     return;
                 }
             }
@@ -2443,7 +2449,7 @@ public class Fight {
               for(Fighter f : this.getFighters(3))
                 if(f.getTeam()==fighter.getTeam())
                   if(f.getPersonnage()!=null)
-                    SocketManager.GAME_SEND_MESSAGE(f.getPersonnage(),"<b>"+player.getName()+"</b> ne peut pas lancer <b>"+spell.getSpell().getNombre()+"</b> à cause d'un obstacle invisible !");
+                    SocketManager.GAME_SEND_MESSAGE(f.getPersonnage(),"<b>"+player.getName()+"</b> ne peut pas lancer <b>"+spell.getSpell().getNombre()+"</b> ï¿½ cause d'un obstacle invisible !");
               setCurAction(false);
               SocketManager.GAME_SEND_GA_PACKET_TO_FIGHT(this,7,102,fighter.getId()+"",fighter.getId()+",-0");
               return 10;
@@ -2672,7 +2678,7 @@ public class Fight {
         char dir = PathFinding.getDirBetweenTwoCase(casterCell, cell.getId(), getMap(), true);
 
         if (SS.getSpellID() == 67) {
-            if (!PathFinding.checkLoS(getMap(), PathFinding.GetCaseIDFromDirrection(casterCell, dir, getMap(), true), cell.getId(), null, true)) {
+            if (!PathFinding.checkLoS(getMap(), PathFinding.GetCaseIDFromDirrection(casterCell, dir, getMap(), true), cell.getId(), null)) {
                 if (perso != null)
                     SocketManager.GAME_SEND_Im_PACKET(perso, "1174");
                 return false;
@@ -2805,8 +2811,8 @@ public class Fight {
       setCurFighterPm(getCurFighterPm()-nStep);
       this.setCurFighterUsedPm(this.getCurFighterUsedPm()+nStep);
 
-      World.world.getCryptManager(); // Chang -> Accès en statique
-	int nextCellID=CryptManager.cellCode_To_ID(newPath.substring(newPath.length()-2));
+        int nextCellID=World.world.getCryptManager().cellCode_To_ID(newPath.substring(newPath.length() - 2));
+
       // les monstres n'ont pas de GAS//GAF
       if(current.getPersonnage()!=null)
         SocketManager.GAME_SEND_GAS_PACKET_TO_FIGHT(this,7,current.getId());
@@ -2820,13 +2826,13 @@ public class Fight {
       {
         if(current.getPersonnage()!=null)
         {
-          // On envoie le path qu'au joueur qui se déplace
+          // On envoie le path qu'au joueur qui se dï¿½place
           GameClient out=current.getPersonnage().getGameClient();
           SocketManager.GAME_SEND_GA_PACKET(out,GA.id+"","1",current.getId()+"","a"+World.world.getCryptManager().cellID_To_Code(fighter.getCell().getId())+newPath);
         }
       }
 
-      // Si porté
+      // Si portï¿½
       final Fighter po=current.getHoldedBy();
 
       if(po!=null)
@@ -2834,13 +2840,13 @@ public class Fight {
         // si le joueur va bouger
         if((short)nextCellID!=po.getCell().getId())
         {
-          // on retire les états
+          // on retire les ï¿½tats
           po.setState(Constant.ETAT_PORTEUR,0,po.getId());
           current.setState(Constant.ETAT_PORTE,0,po.getId());
-          // on retire dé lie les 2 fighters
+          // on retire dï¿½ lie les 2 fighters
           po.setIsHolding(null);
           current.setHoldedBy(null);
-          // La nouvelle case sera définie plus tard dans le code. On
+          // La nouvelle case sera dï¿½finie plus tard dans le code. On
           // envoie les packets !
         }
       }
@@ -2849,7 +2855,7 @@ public class Fight {
       current.setCell(getMap().getCase(nextCellID));
       current.getCell().addFighter(current);
 
-      if(po!=null)// même erreur que tantôt, bug ou plus de fighter sur la
+      if(po!=null)// mï¿½me erreur que tantï¿½t, bug ou plus de fighter sur la
         // case
         po.getCell().addFighter(po);
       if(nStep<0)
@@ -2863,7 +2869,7 @@ public class Fight {
 
       if(po2!=null&&current.haveState(Constant.ETAT_PORTEUR)&&po2.haveState(Constant.ETAT_PORTE))
       {
-        // on déplace le porté sur la case
+        // on dï¿½place le portï¿½ sur la case
         po2.setCell(current.getCell());
       }
 
@@ -3250,7 +3256,7 @@ public class Fight {
                     if (e.getPersonnage() == null || !e.getPersonnage().isOnline())
                         continue;
                     SocketManager.GAME_SEND_MESSAGE(e.getPersonnage(), f.getPacketsName()
-                            + " s'est dconnect plus de 5 fois dans le même combat, nous avons dcid de lui faire abandonner.", "A00000");
+                            + " s'est dconnect plus de 5 fois dans le mï¿½me combat, nous avons dcid de lui faire abandonner.", "A00000");
                 }
             }
             return false;
@@ -4112,6 +4118,76 @@ public class Fight {
                 loosers.addAll(this.getTeam0().values());
             }
 
+            //region Gladitroll
+            if (ingladiatroll) {
+                try {
+                    long time = System.currentTimeMillis() - getStartTime();
+                    int initGUID = getInit0().getId();
+                    StringBuilder Packet = new StringBuilder();
+                    Packet.append("GE").append(time);
+                    Packet.append("|").append(initGUID).append("|").append(0).append("|");
+
+                    for (Fighter i : winners)//Les Gagnant
+                    {
+                        Player player = i.getPlayer();
+                        String gfx = "";
+                        if(player != null){
+                            gfx=player.getGfxId()+"";
+                        }
+
+                        if (i.isInvocation() && i.getMob() != null)
+                            continue;//Pas d'invoc dans les gains
+                        if (i.getMob() != null)
+                            continue;
+                        if (i.getDouble() != null)
+                            continue;//Pas de double dans les gains
+                        if (i.getPdv() == 0 || i.hasLeft()) {
+                            Packet.append("2;")
+                                    .append(i.getId()).append(";")
+                                    .append(i.getPacketsName()).append(";")
+                                    .append(i.getLvl()).append(";")
+                                    .append(gfx).append(";")
+                                    .append(";1;;;;0;;;;0").append(";|");
+                        }
+                        else {
+                            Packet.append("2;")
+                                    .append(i.getId()).append(";")
+                                    .append(i.getPacketsName()).append(";")
+                                    .append(i.getLvl()).append(";")
+                                    .append(gfx).append(";")
+                                    .append(";0;;;;0;;;;0").append(";|");
+                        }
+                    }
+                    // Fin gagnant
+                    for (Fighter i : loosers)//Les perdants
+                    {
+                        if (i.isInvocation() && i.getMob() != null)
+                            continue;//Pas d'invoc dans les gains
+                        if (i.getDouble() != null)
+                            continue;//Pas de double dans les gains
+                        if (i.getPdv() == 0 || i.hasLeft()) {
+                            Packet.append("0;")
+                                    .append(i.getId()).append(";")
+                                    .append(i.getPacketsName()).append(";")
+                                    .append(i.getLvl()).append(";").append(";")
+                                    .append(";1").append(";;;;;;;;;|");
+                        }
+                        else{
+                            Packet.append("0;")
+                                    .append(i.getId()).append(";")
+                                    .append(i.getPacketsName()).append(";")
+                                    .append(i.getLvl()).append(";").append(";")
+                                    .append(";0").append(";;;;;;;;;|");
+                        }
+
+                    }
+                    return Packet.toString();
+                } catch (Exception e) {
+                    System.out.println(e);
+                }
+            }
+            //endregion
+
             /** Var heroic mod **/
             boolean team = false;
 
@@ -4181,7 +4257,7 @@ public class Fight {
                     }
                 }
             }
-            /** Capture d'âmes **/
+            /** Capture d'ï¿½mes **/
 
             /** Quest **/
             if (this.getType() == Constant.FIGHT_TYPE_PVM || this.getType() == Constant.FIGHT_TYPE_DOPEUL) {
@@ -4614,7 +4690,7 @@ public class Fight {
                                         ok = true;
                                     break;
                             }
-                            if (jet < chance || ok) { // item gagné
+                            if (jet < chance || ok) { // item gagnï¿½
                                 ObjectTemplate objectTemplate = World.world.getObjTemplate(drop.getObjectId());
 
                                 if (objectTemplate == null)
@@ -5786,4 +5862,22 @@ public class Fight {
     public String getWalkingPacket() {
 		return walkingPacket;
 	}
+
+    public Fighter getFighterByGameOrder() {
+        if (this.orderPlaying == null)
+            return null;
+        if (this.curPlayer >= this.orderPlaying.size())
+            this.curPlayer = this.orderPlaying.size() - 1;
+        if (this.curPlayer < 0)
+            this.curPlayer = 0;
+        if (this.orderPlaying.size() <= 0)
+            return null;
+        Fighter current = null;
+        try {
+            current = this.orderPlaying.get(this.curPlayer);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return current;
+    }
 }
