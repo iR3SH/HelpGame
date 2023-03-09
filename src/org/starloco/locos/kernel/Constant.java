@@ -404,6 +404,7 @@ public class Constant {
     public static final int STATS_SPELL_REM_PA = 285;
     public static final int STATS_SPELL_REM_DELAY = 286;
     public static final int STATS_SPELL_ADD_CRIT = 287;
+    public static final int STATS_SPELL_LINE_LAUNCH = 288;
     public static final int STATS_SPELL_LOS = 289;
     public static final int STATS_SPELL_ADD_LAUNCH = 290;
     public static final int STATS_SPELL_ADD_PER_TARGET = 291;
@@ -412,9 +413,9 @@ public class Constant {
 
     public static int[] BOSS_ID = {58,85,86,107,113,121,147,173,180,225,226,230,232,251,252,257,289,295,374,375,377,382,404,423,430,457,478,568,605,612,669,670,673,675,677,681,780,792,797,799,800,827,854,926,939,940,943,1015,1027,1045,1051,1071,1072,1085,1086,1087,1159,1170,1184,1185,1186,1187,1188,1195};
 
-    public static int[] EXCEPTION_GLADIATROOL_BOSS = {423,1159};
-    public static int[] EXCEPTION_GLADIATROOL_ARCHI = {423,1159};
-    public static int[] EXCEPTION_GLADIATROOL_MONSTRES = {258,260,424,1090,1091,1092,1094};
+    public static int[] EXCEPTION_GLADIATROOL_BOSS = {404,423,1159};
+    public static int[] EXCEPTION_GLADIATROOL_ARCHI = {404,423,1159};
+    public static int[] EXCEPTION_GLADIATROOL_MONSTRES = {258,260,404,424,1090,1091,1092,1094};
 
     //Monstre
     public static final int[] MONSTRE_TYPE_DIVERS = {-1,29,32,18,28,27,0,1,68,50,79};
