@@ -5296,6 +5296,8 @@ public class Player {
             HashMap<Integer, Integer> newMap = new HashMap<>();
             newMap.put(effect, modif);
             _itemClasseSpell.put(spell, newMap);
+            String modifi = effect + ";" + spell + ";" + modif;
+            SocketManager.SEND_SB_SPELL_BOOST(this, modifi);
         }
         else
         {
@@ -5310,6 +5312,8 @@ public class Player {
             {
                 map.put(effect, modif);
             }
+            String modifi = effect + ";" + spell + ";" + map.get(effect);
+            SocketManager.SEND_SB_SPELL_BOOST(this, modifi);
             _itemClasseSpell.remove(spell);
             _itemClasseSpell.put(spell, map);
         }
@@ -5341,14 +5345,31 @@ public class Player {
                 final int effect = Integer.parseInt(val[0], 16);
                 final int spell = Integer.parseInt(val[1], 16);
                 final int modif = Integer.parseInt(val[3], 16);
-                final String modifi = effect + ";" + spell + ";" + modif;
-                SocketManager.SEND_SB_SPELL_BOOST(this, modifi);
                 addItemClasseSpell(spell, effect, modif);
             }
             if (!_itemClasse.contains(template))
                 _itemClasse.add(template);
             
         }
+        for(int j = 65; j < 75; j++) {
+            if (getObjetByPos(j) == null)
+                continue;
+            final GameObject obj = getObjetByPos(j);
+            final int template = obj.getTemplate().getId();
+
+            if(obj.getSortStats().isEmpty()) continue;
+
+            for (final String stat : obj.getSortStats()) {
+                final String[] val = stat.split("#");
+                final int effect = Integer.parseInt(val[0], 16);
+                final int spell = Integer.parseInt(val[1], 16);
+                final int modif = Integer.parseInt(val[3], 16);
+                addItemClasseSpell(spell, effect, modif);
+            }
+            if (!_itemClasse.contains(template))
+                _itemClasse.add(template);
+        }
+
     }
 
     public int getItemClasseModif(int spell, int effect) {

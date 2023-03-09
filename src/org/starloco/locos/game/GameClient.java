@@ -6157,8 +6157,8 @@ public class GameClient {
                 final int effect = Integer.parseInt(val[0], 16);
                 final int spell = Integer.parseInt(val[1], 16);
                 final int modif = Integer.parseInt(val[3], 16);
-                final String modifi = effect + ";" + spell + ";" + modif;
-                SocketManager.SEND_SB_SPELL_BOOST(this.player, modifi);
+                /*final String modifi = effect + ";" + spell + ";" + modif;
+                SocketManager.SEND_SB_SPELL_BOOST(this.player, modifi);*/
                 this.player.addItemClasseSpell(spell, effect, modif);
             }
             this.player.addItemClasse(objTemplate.getId());
