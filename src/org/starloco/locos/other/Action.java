@@ -862,9 +862,21 @@ public class Action {
                                 //Le perso a l'item
                                 //Le perso est sur la bonne map
                                 //On t�l�porte, on supprime apr�s
-                                player.teleport(newMapID, newCellID);
-                                player.removeByTemplateID(ObjetNeed, 1);
-                                SocketManager.GAME_SEND_Ow_PACKET(player);
+                                if(ObjetNeed == 12804){
+                                    if(Constant.isGladiatroolWeapon(player.getObjetByPos(Constant.ITEM_POS_ARME).getTemplate().getId())){
+                                        player.teleport(newMapID, newCellID);
+                                        player.removeByTemplateID(ObjetNeed, 1);
+                                        SocketManager.GAME_SEND_Ow_PACKET(player);
+                                    }
+                                    else{
+                                        SocketManager.GAME_SEND_MESSAGE(player, "Il faut d'abord choisir une arme en se positionnant sur une dalle avant de rejoindre le Gladiatrool !", "009900");
+                                    }
+                                }
+                                else {
+                                    player.teleport(newMapID, newCellID);
+                                    player.removeByTemplateID(ObjetNeed, 1);
+                                    SocketManager.GAME_SEND_Ow_PACKET(player);
+                                }
                             } else if (player.getCurMap().getId() != MapNeed) {
                                 //Le perso n'est pas sur la bonne map
                                 SocketManager.GAME_SEND_MESSAGE(player, "Vous n'�tes pas sur la bonne map du donjon pour �tre t�l�port�.", "009900");
