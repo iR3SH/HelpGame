@@ -538,7 +538,7 @@ public class Fighter implements Comparable<Fighter> {
         /*if(id == 606 || id == 607 || id == 608 || id == 609 || id == 611 || id == 125 || id == 114)
             debuff = true;*/
 
-        // Certains effects peuvent être débuffable mais nous on veut que sur certains spell ils ne le soient pas.
+        // Certains effects peuvent ï¿½tre dï¿½buffable mais nous on veut que sur certains spell ils ne le soient pas.
         switch(spellID)
         {
             case 2144: case 2146: case 2149: case 2152: // Chatiment dopeul ( Cause : effect 776 )
@@ -551,7 +551,7 @@ public class Fighter implements Comparable<Fighter> {
             duration--;
 
 
-        //Si c'est le jouer actif qui s'autoBuff, on ajoute 1 a la durée
+        //Si c'est le jouer actif qui s'autoBuff, on ajoute 1 a la durï¿½e
         this.fightBuffs.add(new SpellEffect(effectID,val,(this.canPlay?duration+1:duration),turns,debuff,caster,args,spellID));
         if(Main.modDebug)
             System.out.println("- Ajout du Buff "+effectID+" sur le personnage fighter ("+this.getId()+") val : "+val+" duration : "+duration+" turns : "+turns+" debuff : "+debuff+" spellid : "+spellID+" args : "+args+" !");
@@ -568,7 +568,7 @@ public class Fighter implements Comparable<Fighter> {
                 SocketManager.GAME_SEND_FIGHT_GIE_TO_FIGHT(this.fight, 7, effectID, getId(), -1, val+"", "10", "", duration, spellID);
                 break;
 
-            case 79://Chance éca
+            case 79://Chance ï¿½ca
                 val = Integer.parseInt(args.split(";")[0]);
                 String valMax = args.split(";")[1];
                 String chance = args.split(";")[2];
@@ -597,9 +597,9 @@ public class Fighter implements Comparable<Fighter> {
                 break;
 
             case 98://Poison insidieux
-            case 107://Mot d'épine (2Ã 3), Contre(3)
-            case 100://FlÃ¨che Empoisonnée, Tout ou rien
-            case 108://Mot de Régénération, Tout ou rien
+            case 107://Mot d'ï¿½pine (2Ã 3), Contre(3)
+            case 100://FlÃ¨che Empoisonnï¿½e, Tout ou rien
+            case 108://Mot de Rï¿½gï¿½nï¿½ration, Tout ou rien
             case 165://MaÃ®trises
             case 781://MAX
             case 782://MIN
@@ -628,9 +628,9 @@ public class Fighter implements Comparable<Fighter> {
                 case 431:
                 case 433:
                 case 443:
-                case 441://Châtiments
+                case 441://Chï¿½timents
                     continue;
-                case 52://Cupidité
+                case 52://Cupiditï¿½
                 case 228://Etourderie mortelle (DC)
                     it.remove();
                     continue;
@@ -826,7 +826,7 @@ public class Fighter implements Comparable<Fighter> {
         porcCC -= getTotalStats().getEffect(Constant.STATS_ADD_CC);
         if (fighter.getType() == 1
                 && perso.getItemClasseSpell().containsKey(sSort.getSpellID())) {
-            int modi = perso.getItemClasseModif(sSort.getSpellID(), 287);
+            int modi = perso.getItemClasseModif(sSort.getSpellID(), Constant.STATS_SPELL_ADD_CRIT);
             porcCC -= modi;
         }
         porcCC = (int) ((porcCC * 2.9901) / Math.log(agi + 12));
@@ -1063,15 +1063,15 @@ public class Fighter implements Comparable<Fighter> {
                 str.append(this.mob.getTemplate().getGfxId()).append("^").append(this.mob.getSize()).append(";");
                 str.append(this.mob.getGrade()).append(";");
                 str.append(this.mob.getTemplate().getColors().replace(",", ";")).append(";");
-                //Accessories Mobs (Qu'Tan & Ili) (Change taille démon + ajout item sur mobs en combat)
+                //Accessories Mobs (Qu'Tan & Ili) (Change taille dï¿½mon + ajout item sur mobs en combat)
                 int tst = this.mob.getTemplate().getId();
                 if (tst==534) // Pandawa Ivre
                     str.append("0,1C3C,1C40,0;");
                 else if (tst==547) // Pandalette ivre
                     str.append("0,1C3C,1C40,0;");
-                else if (tst==1213)  // Mage Céleste
+                else if (tst==1213)  // Mage Cï¿½leste
                     str.append("0,2BA,847,0;");
-                /*else if (tst==30063) // Yllib - Affiche le Flood derrière la tête
+                /*else if (tst==30063) // Yllib - Affiche le Flood derriï¿½re la tï¿½te
                 {
                     str.append("0,0,2155,0;");
                 }*/

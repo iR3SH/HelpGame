@@ -1,0 +1,88 @@
+java.lang.NumberFormatException: For input string: ""
+	at java.lang.NumberFormatException.forInputString(NumberFormatException.java:65)
+	at java.lang.Integer.parseInt(Integer.java:592)
+	at java.lang.Integer.parseInt(Integer.java:615)
+	at org.starloco.locos.kernel.Config.convertArrayStringToInt(Config.java:281)
+	at org.starloco.locos.kernel.Config.load(Config.java:133)
+	at org.starloco.locos.kernel.Main.start(Main.java:86)
+	at org.starloco.locos.kernel.Main.main(Main.java:76)
+java.lang.NumberFormatException: For input string: "5
+
+
+"
+	at java.lang.NumberFormatException.forInputString(NumberFormatException.java:65)
+	at java.lang.Integer.parseInt(Integer.java:580)
+	at java.lang.Integer.parseInt(Integer.java:615)
+	at org.starloco.locos.entity.monster.Monster$MobGrade.<init>(Monster.java:1105)
+	at org.starloco.locos.entity.monster.Monster.<init>(Monster.java:104)
+	at org.starloco.locos.database.dynamics.data.MonsterData.load(MonsterData.java:52)
+	at org.starloco.locos.game.world.World.createWorld(World.java:330)
+	at org.starloco.locos.kernel.Main.start(Main.java:91)
+	at org.starloco.locos.kernel.Main.main(Main.java:76)
+java.lang.NumberFormatException: For input string: "5
+"
+	at java.lang.NumberFormatException.forInputString(NumberFormatException.java:65)
+	at java.lang.Integer.parseInt(Integer.java:580)
+	at java.lang.Integer.parseInt(Integer.java:615)
+	at org.starloco.locos.entity.monster.Monster$MobGrade.<init>(Monster.java:1105)
+	at org.starloco.locos.entity.monster.Monster.<init>(Monster.java:104)
+	at org.starloco.locos.database.dynamics.data.MonsterData.load(MonsterData.java:52)
+	at org.starloco.locos.game.world.World.createWorld(World.java:330)
+	at org.starloco.locos.kernel.Main.start(Main.java:91)
+	at org.starloco.locos.kernel.Main.main(Main.java:76)
+java.lang.NumberFormatException: For input string: "5
+"
+	at java.lang.NumberFormatException.forInputString(NumberFormatException.java:65)
+	at java.lang.Integer.parseInt(Integer.java:580)
+	at java.lang.Integer.parseInt(Integer.java:615)
+	at org.starloco.locos.entity.monster.Monster$MobGrade.<init>(Monster.java:1105)
+	at org.starloco.locos.entity.monster.Monster.<init>(Monster.java:104)
+	at org.starloco.locos.database.dynamics.data.MonsterData.load(MonsterData.java:52)
+	at org.starloco.locos.game.world.World.createWorld(World.java:330)
+	at org.starloco.locos.kernel.Main.start(Main.java:91)
+	at org.starloco.locos.kernel.Main.main(Main.java:76)
+java.lang.NumberFormatException: For input string: "5
+"
+	at java.lang.NumberFormatException.forInputString(NumberFormatException.java:65)
+	at java.lang.Integer.parseInt(Integer.java:580)
+	at java.lang.Integer.parseInt(Integer.java:615)
+	at org.starloco.locos.entity.monster.Monster$MobGrade.<init>(Monster.java:1105)
+	at org.starloco.locos.entity.monster.Monster.<init>(Monster.java:104)
+	at org.starloco.locos.database.dynamics.data.MonsterData.load(MonsterData.java:52)
+	at org.starloco.locos.game.world.World.createWorld(World.java:330)
+	at org.starloco.locos.kernel.Main.start(Main.java:91)
+	at org.starloco.locos.kernel.Main.main(Main.java:76)
+java.lang.NumberFormatException: For input string: "5
+"
+	at java.lang.NumberFormatException.forInputString(NumberFormatException.java:65)
+	at java.lang.Integer.parseInt(Integer.java:580)
+	at java.lang.Integer.parseInt(Integer.java:615)
+	at org.starloco.locos.entity.monster.Monster$MobGrade.<init>(Monster.java:1105)
+	at org.starloco.locos.entity.monster.Monster.<init>(Monster.java:104)
+	at org.starloco.locos.database.dynamics.data.MonsterData.load(MonsterData.java:52)
+	at org.starloco.locos.game.world.World.createWorld(World.java:330)
+	at org.starloco.locos.kernel.Main.start(Main.java:91)
+	at org.starloco.locos.kernel.Main.main(Main.java:76)
+java.lang.NumberFormatException: For input string: "5
+"
+	at java.lang.NumberFormatException.forInputString(NumberFormatException.java:65)
+	at java.lang.Integer.parseInt(Integer.java:580)
+	at java.lang.Integer.parseInt(Integer.java:615)
+	at org.starloco.locos.entity.monster.Monster$MobGrade.<init>(Monster.java:1105)
+	at org.starloco.locos.entity.monster.Monster.<init>(Monster.java:104)
+	at org.starloco.locos.database.dynamics.data.MonsterData.load(MonsterData.java:52)
+	at org.starloco.locos.game.world.World.createWorld(World.java:330)
+	at org.starloco.locos.kernel.Main.start(Main.java:91)
+	at org.starloco.locos.kernel.Main.main(Main.java:76)
+java.lang.NumberFormatException: For input string: "5
+
+"
+	at java.lang.NumberFormatException.forInputString(NumberFormatException.java:65)
+	at java.lang.Integer.parseInt(Integer.java:580)
+	at java.lang.Integer.parseInt(Integer.java:615)
+	at org.starloco.locos.entity.monster.Monster$MobGrade.<init>(Monster.java:1105)
+	at org.starloco.locos.entity.monster.Monster.<init>(Monster.java:104)
+	at org.starloco.locos.database.dynamics.data.MonsterData.load(MonsterData.java:52)
+	at org.starloco.locos.game.world.World.createWorld(World.java:330)
+	at org.starloco.locos.kernel.Main.start(Main.java:91)
+	at org.starloco.locos.kernel.Main.main(Main.java:76)

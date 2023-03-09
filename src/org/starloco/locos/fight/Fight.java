@@ -2466,7 +2466,10 @@ public class Fight {
           SocketManager.GAME_SEND_STATS_PACKET(fighter.getPersonnage()); // envoi des stats du lanceur
         if(fighter.getType()==1&&player.getItemClasseSpell().containsKey(spell.getSpellID()))
         {
-          int modi=player.getItemClasseModif(spell.getSpellID(),285);
+          int modi = player.getItemClasseModif(spell.getSpellID(),285);
+          if(modi < 0) {
+              modi = 0;
+          }
           setCurFighterPa(getCurFighterPa()-(spell.getPACost()-modi));
           setCurFighterUsedPa(getCurFighterUsedPa()+spell.getPACost()-modi);
         }
@@ -2495,8 +2498,9 @@ public class Fight {
             }
           }
 
-          boolean isCC=fighter.testIfCC(spell.getTauxCC(),spell,fighter);
-          String sort=spell.getSpellID()+","+cell+","+spell.getSpriteID()+","+spell.getLevel()+","+spell.getSpriteInfos();
+
+          boolean isCC = fighter.testIfCC(spell.getTauxCC(),spell,fighter);
+          String sort = spell.getSpellID()+","+cell+","+spell.getSpriteID()+","+spell.getLevel()+","+spell.getSpriteInfos();
           SocketManager.GAME_SEND_GA_PACKET_TO_FIGHT(this,7,300,fighter.getId()+"",sort); // xx lance le sort
 
           if(isCC)
@@ -2517,7 +2521,11 @@ public class Fight {
 
         if(fighter.getType()==1&&player.getItemClasseSpell().containsKey(spell.getSpellID()))
         {
-          int modi=player.getItemClasseModif(spell.getSpellID(),285);
+          int modi = player.getItemClasseModif(spell.getSpellID(),Constant.STATS_SPELL_REM_PA);
+          if(modi < 0)
+          {
+              modi = 0;
+          }
           SocketManager.GAME_SEND_GA_PACKET_TO_FIGHT(this,7,102,fighter.getId()+"",fighter.getId()+",-"+(spell.getPACost()-modi));
         }
         else
@@ -2636,13 +2644,17 @@ public class Fight {
         }
 
         int usedPA;
-
+        int costed = perso.getSortStatBySortIfHas(SS.getSpellID()).getPACost();
         if (caster.getType() == 1
                 && perso.getItemClasseSpell().containsKey(SS.getSpellID())) {
             int modi = perso.getItemClasseModif(SS.getSpellID(), 285);
             usedPA = SS.getPACost() - modi;
         } else {
             usedPA = SS.getPACost();
+        }
+        if(usedPA <= 0)
+        {
+            usedPA = 1;
         }
 
         if (getCurFighterPa() < usedPA) {
@@ -2754,8 +2766,9 @@ public class Fight {
         Fighter t = cell.getFirstFighter();
         int numLunchT = SS.getMaxLaunchByTarget();
 
-        if (caster.getType() == 1 && perso.getItemClasseSpell().containsKey(SS.getSpellID()))
+        if (caster.getType() == 1 && perso.getItemClasseSpell().containsKey(SS.getSpellID())) {
             numLunchT += perso.getItemClasseModif(SS.getSpellID(), 291);
+        }
 
         return !(numLunchT - LaunchedSpell.getNbLaunchTarget(caster, t, SS.getSpellID()) <= 0 && numLunchT > 0);
     }
@@ -3299,7 +3312,11 @@ public class Fight {
       }
 
       int usedPA;
-
+      int costed = 0;
+      if(caster.getPlayer().getStuffStats().getEffect(285) != 0)
+      {
+          costed = caster.getPlayer().getStuffStats().getEffect(285);
+      }
       if(caster.getType()==1&&perso.getItemClasseSpell().containsKey(SS.getSpellID()))
       {
         int modi=perso.getItemClasseModif(SS.getSpellID(),285);

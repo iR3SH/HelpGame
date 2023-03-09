@@ -298,6 +298,22 @@ public class Stats {
                 if (this.effects.get(Constant.STATS_ADD_MAITRISE) != null)
                     val = this.effects.get(Constant.STATS_ADD_MAITRISE);
                 break;
+            case Constant.STATS_SPELL_PO:
+                if(this.effects.get(Constant.STATS_SPELL_PO) != null)
+                    val = this.effects.get(Constant.STATS_SPELL_PO);
+                break;
+            case Constant.STATS_SPELL_REM_PA:
+                if(this.effects.get(Constant.STATS_SPELL_REM_PA) != null)
+                    val = this.effects.get(Constant.STATS_SPELL_REM_PA);
+                break;
+            case Constant.STATS_SPELL_ADD_LAUNCH:
+                if(this.effects.get(Constant.STATS_SPELL_ADD_LAUNCH) != null)
+                    val = this.effects.get(Constant.STATS_SPELL_ADD_LAUNCH);
+                break;
+            case Constant.STATS_SPELL_ADD_PER_TARGET:
+                if(this.effects.get(Constant.STATS_SPELL_ADD_PER_TARGET) != null)
+                    val = this.effects.get(Constant.STATS_SPELL_ADD_PER_TARGET);
+                break;
         }
         return val;
     }

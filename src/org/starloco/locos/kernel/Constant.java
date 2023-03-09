@@ -397,6 +397,18 @@ public class Constant {
     public static final int STATS_SIGNATURE = 988;
     public static final int ERR_STATS_XP = 1000;
 
+    // Buff de Sort Classe
+    public static final int STATS_SPELL_PO = 281;
+    public static final int STATS_SPELL_PO_MODIF = 282;
+    public static final int STATS_SPELL_ADD_DOM = 283;
+    public static final int STATS_SPELL_REM_PA = 285;
+    public static final int STATS_SPELL_REM_DELAY = 286;
+    public static final int STATS_SPELL_ADD_CRIT = 287;
+    public static final int STATS_SPELL_LOS = 289;
+    public static final int STATS_SPELL_ADD_LAUNCH = 290;
+    public static final int STATS_SPELL_ADD_PER_TARGET = 291;
+
+
 
     public static int[] BOSS_ID = {58,85,86,107,113,121,147,173,180,225,226,230,232,251,252,257,289,295,374,375,377,382,404,423,430,457,478,568,605,612,669,670,673,675,677,681,780,792,797,799,800,827,854,926,939,940,943,1015,1027,1045,1051,1071,1072,1085,1086,1087,1159,1170,1184,1185,1186,1187,1188,1195};
 

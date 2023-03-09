@@ -174,7 +174,7 @@ public class Player {
     private Monster.MobGroup hasMobGroup = null;
     //Item classe
     private ArrayList<Integer> _itemClasse = new ArrayList<Integer>();
-    private Map<Integer, World.Couple<Integer, Integer>> _itemClasseSpell = new HashMap<>();
+    private Map<Integer, HashMap<Integer, Integer>> _itemClasseSpell = new HashMap<>();
     private int _bendHechizo = 0;
     private int _bendEfecto = 0;
     private int _bendModif = 0;
@@ -5281,7 +5281,7 @@ public class Player {
                 + (color3 == -1 ? "" : Integer.toHexString(color3));
     }
 
-    public Map<Integer, World.Couple<Integer, Integer>> getItemClasseSpell() {
+    public Map<Integer, HashMap<Integer, Integer>> getItemClasseSpell() {
         return _itemClasseSpell;
     }
 
@@ -5293,7 +5293,25 @@ public class Player {
 
     public void addItemClasseSpell(int spell, int effect, int modif) {
         if (!_itemClasseSpell.containsKey(spell)) {
-            _itemClasseSpell.put(spell, new World.Couple<Integer, Integer>(effect, modif));
+            HashMap<Integer, Integer> newMap = new HashMap<>();
+            newMap.put(effect, modif);
+            _itemClasseSpell.put(spell, newMap);
+        }
+        else
+        {
+            HashMap<Integer, Integer> map = _itemClasseSpell.get(spell);
+            if(map.containsKey(effect))
+            {
+                int newValue = map.get(effect) + modif;
+                map.remove(effect);
+                map.put(effect, newValue);
+            }
+            else
+            {
+                map.put(effect, modif);
+            }
+            _itemClasseSpell.remove(spell);
+            _itemClasseSpell.put(spell, map);
         }
     }
 
@@ -5339,8 +5357,8 @@ public class Player {
             modif += _bendModif;
         }
         if (_itemClasseSpell.containsKey(spell)) {
-            if (_itemClasseSpell.get(spell).first == effect) {
-                modif += _itemClasseSpell.get(spell).second;
+            if (_itemClasseSpell.get(spell).containsKey(effect)) {
+                modif += _itemClasseSpell.get(spell).get(effect);
                 return modif;
             }
         }
@@ -5849,8 +5867,8 @@ public class Player {
         World.world.addGameObject(obj,true);
         this.equipItem(obj);
         this.getGameClient().onMovementItemClass(obj, Constant.ITEM_POS_TONIQUE_EQUILIBRAGE);
-        //SocketManager.GAME_SEND_Ow_PACKET(this);
-        //SocketManager.GAME_SEND_STATS_PACKET(this);
+        SocketManager.GAME_SEND_Ow_PACKET(this);
+        SocketManager.GAME_SEND_STATS_PACKET(this);
     }
 
     public void removeTonique(int pos){
