@@ -17,7 +17,11 @@ public class LaunchedSpell {
         if (caster.getType() == 1
                 && caster.getPersonnage().getItemClasseSpell().containsKey(SS.getSpellID())) {
             int modi = caster.getPersonnage().getItemClasseModif(SS.getSpellID(), 286);
-            this.cooldown = SS.getCoolDown() - modi;
+            int newCoolDown = SS.getCoolDown() - modi;
+            if(newCoolDown < 0){
+                newCoolDown = 0;
+            }
+            this.cooldown = newCoolDown;
         } else {
             this.cooldown = SS.getCoolDown();
         }

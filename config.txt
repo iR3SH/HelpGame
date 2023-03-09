@@ -35,7 +35,7 @@ HALLOWEEN = false
 HEROIC = false
 
 ## CONFIGURATION
-MESSAGE = Bienvenue dans l'�mulation FREE d'entraide
+MESSAGE = Bienvenue dans l'émulation FREE d'entraide
 URL = nashira
 NAME = Eratz
 AUTO_REBOOT = true
