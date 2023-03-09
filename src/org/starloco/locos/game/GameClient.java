@@ -1869,24 +1869,38 @@ public class GameClient {
                 } else if (template.getPoints() == 0) {
                     int price = template.getPrice() * qua;
                     if (price < 0) return;
+                    if(template.getMoney() == -1) {
+                        if (this.player.getKamas() < price) {
+                            SocketManager.GAME_SEND_BUY_ERROR_PACKET(this);
+                            return;
+                        }
 
-                    if (this.player.getKamas() < price) {
-                        SocketManager.GAME_SEND_BUY_ERROR_PACKET(this);
-                        return;
-                    }
+                        GameObject object = template.createNewItem(qua, (npcTemplate.getInformations() & 0x1) == 1);
+                        if (template.getType() == Constant.ITEM_TYPE_CERTIF_MONTURE) {
+                            Mount mount = new Mount(Constant.getMountColorByParchoTemplate(object.getTemplate().getId()), this.getPlayer().getId(), false);
+                            object.clearStats();
+                            object.getStats().addOneStat(995, -(mount.getId()));
+                            object.getTxtStat().put(996, this.getPlayer().getName());
+                            object.getTxtStat().put(997, mount.getName());
+                        }
+                        this.player.setKamas(this.player.getKamas() - price);
+                        if (this.player.addObjet(object, true)) World.world.addGameObject(object, true);
+                        if (attachObject) object.attachToPlayer(this.player);
+                        SocketManager.GAME_SEND_BUY_OK_PACKET(this);
 
-                    GameObject object = template.createNewItem(qua, (npcTemplate.getInformations() & 0x1) == 1);
-                    if (template.getType() == Constant.ITEM_TYPE_CERTIF_MONTURE) {
-                        Mount mount = new Mount(Constant.getMountColorByParchoTemplate(object.getTemplate().getId()), this.getPlayer().getId(), false);
-                        object.clearStats();
-                        object.getStats().addOneStat(995, -(mount.getId()));
-                        object.getTxtStat().put(996, this.getPlayer().getName());
-                        object.getTxtStat().put(997, mount.getName());
                     }
-                    this.player.setKamas(this.player.getKamas() - price);
-                    if (this.player.addObjet(object, true)) World.world.addGameObject(object, true);
-                    if (attachObject) object.attachToPlayer(this.player);
-                    SocketManager.GAME_SEND_BUY_OK_PACKET(this);
+                    else{
+                        price = template.getNewPrice() * qua;
+                        if (!this.player.hasItemTemplate(template.getMoney(),price)) {
+                            SocketManager.GAME_SEND_BUY_ERROR_PACKET(this);
+                            return;
+                        }
+                        GameObject object = template.createNewItem(qua, (npcTemplate.getInformations() & 0x1) == 1);
+                        this.player.removeByTemplateID(template.getMoney(),price);
+                        if (this.player.addObjet(object, true)) World.world.addGameObject(object,true);
+                        if (attachObject) object.attachToPlayer(this.player);
+                        SocketManager.GAME_SEND_BUY_OK_PACKET(this);
+                    }
                     SocketManager.GAME_SEND_STATS_PACKET(this.player);
                     SocketManager.GAME_SEND_Ow_PACKET(this.player);
                 }

@@ -3074,7 +3074,10 @@ public class Player {
 
         if(deleteGladiaWeapon) {
             if ( Constant.isGladiatroolWeapon(this.getObjetByPos(Constant.ITEM_POS_ARME).getTemplate().getId()) ) {
-                this.getGameClient().destroyObject("Od"+this.getObjetByPos(Constant.ITEM_POS_ARME).getGuid()+"|1");
+
+                this.removeByTemplateID(this.getObjetByPos(Constant.ITEM_POS_ARME).getTemplate().getId(),1);
+                /*this.getGameClient().destroyObject("Od"+this.getObjetByPos(Constant.ITEM_POS_ARME).getGuid()+"|1");*/
+
                 for(int i=Constant.ITEM_POS_TONIQUE_EQUILIBRAGE;i<= Constant.ITEM_POS_TONIQUE9;i++){
                     this.removeTonique(i);
                 }
@@ -3210,8 +3213,8 @@ public class Player {
 
         if(deleteGladiaWeapon) {
             if ( Constant.isGladiatroolWeapon(this.getObjetByPos(Constant.ITEM_POS_ARME).getTemplate().getId()) ) {
-                this.getGameClient().destroyObject("Od"+this.getObjetByPos(Constant.ITEM_POS_ARME).getGuid()+"|1");
-                for(int i=41;i<= Constant.ITEM_POS_TONIQUE9;i++){
+                this.removeByTemplateID(this.getObjetByPos(Constant.ITEM_POS_ARME).getTemplate().getId(),1);
+                for(int i=Constant.ITEM_POS_TONIQUE_EQUILIBRAGE;i<= Constant.ITEM_POS_TONIQUE9;i++){
                     this.removeTonique(i);
                 }
             }
@@ -3561,6 +3564,10 @@ public class Player {
             if (obj.getTemplate().getId() != tID)
                 continue;
 
+            if(obj.getPosition() != Constant.ITEM_POS_NO_EQUIPED){
+                this.getGameClient().onMovementEquipUnequipItem(obj, Constant.ITEM_POS_NO_EQUIPED, 1, true);
+            }
+
             if (obj.getQuantity() >= count) {
                 int newQua = obj.getQuantity() - count;
                 if (newQua > 0) {
@@ -3569,6 +3576,7 @@ public class Player {
                         SocketManager.GAME_SEND_OBJECT_QUANTITY_PACKET(this, obj);
                 } else {
                     //on supprime de l'inventaire et du Monde
+                    this.removeItem(obj.getGuid());
                     objects.remove(obj.getGuid());
                     World.world.removeGameObject(obj.getGuid());
                     //on envoie le packet si connect�
@@ -3590,9 +3598,8 @@ public class Player {
 
                     for (GameObject o : remove) {
                         //on supprime de l'inventaire et du Monde
-
+                        this.removeItem(o.getGuid());
                         objects.remove(o.getGuid());
-
                         World.world.removeGameObject(o.getGuid());
                         //on envoie le packet si connect�
                         if (isOnline)

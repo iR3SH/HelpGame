@@ -4166,7 +4166,7 @@ public class Fight {
                         if (i.getDouble() != null)
                             continue;//Pas de double dans les gains
 
-                        if (i.isDead() || i.hasLeft()) {
+                        if (i.isDead() || i.hasLeft() || i.isDead() ) {
                             Packet.append("0;")
                                     .append(i.getId()).append(";")
                                     .append(i.getPacketsName()).append(";")

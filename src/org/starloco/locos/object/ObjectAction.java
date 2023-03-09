@@ -49,7 +49,7 @@ public class ObjectAction {
         Player player = target != null ? target : player0;
         
         if (gameObject == null) {
-        	SocketManager.GAME_SEND_MESSAGE(player, "Error object null. Merci de prévenir un administrateur est d'indiquer le message.");
+        	SocketManager.GAME_SEND_MESSAGE(player, "Error object null. Merci de prï¿½venir un administrateur est d'indiquer le message.");
         	return;
         }
         
@@ -76,7 +76,7 @@ public class ObjectAction {
                         send = false;
                         break;
 
-                    case 0://Téléportation.
+                    case 0://Tï¿½lï¿½portation.
                         if (player0.getFight() != null) return;
                         short mapId = Short.parseShort(arg.split(",", 2)[0]);
                         int cellId = Integer.parseInt(arg.split(",", 2)[1]);
@@ -86,7 +86,7 @@ public class ObjectAction {
                             player.teleport(mapId, cellId);
                         break;
 
-                    case 1://Téléportation au point de sauvegarde.
+                    case 1://Tï¿½lï¿½portation au point de sauvegarde.
                         if (player0.getFight() != null) return;
                         if (!player.isInPrison() && !player.cantTP())
                             player.warpToSavePos();
@@ -144,12 +144,12 @@ public class ObjectAction {
                                     SocketManager.GAME_SEND_Im_PACKET(player, "07;" + val);
                                     sureIsOk = true;
                                     break;
-                                case 605://Expérience.
+                                case 605://Expï¿½rience.
                                     player.addXp(val);
                                     SocketManager.GAME_SEND_STATS_PACKET(player);
                                     SocketManager.GAME_SEND_Im_PACKET(player, "08;" + val);
                                     break;
-                                case 614://Expérience métier.
+                                case 614://Expï¿½rience mï¿½tier.
                                     JobStat job = player.getMetierByID(Integer.parseInt(arg0.split(";")[1]));
                                     if (job == null) {
                                         isOk1 = false;
@@ -176,7 +176,7 @@ public class ObjectAction {
                             int statId = Integer.parseInt(arg0.split(";")[0]);
                             int val = Integer.parseInt(arg0.split(";")[1]);
                             switch (statId) {
-                                case 1://Vitalité.
+                                case 1://Vitalitï¿½.
                                     for (int i = 0; i < val; i++) {
                                         player.boostStat(11, false);
                                         player.getStatsParcho().addOneStat(Constant.STATS_ADD_VITA, 1);
@@ -206,7 +206,7 @@ public class ObjectAction {
                                         player.getStatsParcho().addOneStat(Constant.STATS_ADD_CHAN, 1);
                                     }
                                     break;
-                                case 6://Agilité.
+                                case 6://Agilitï¿½.
                                     for (int i = 0; i < val; i++) {
                                         player.boostStat(14, false);
                                         player.getStatsParcho().addOneStat(Constant.STATS_ADD_AGIL, 1);
@@ -222,7 +222,7 @@ public class ObjectAction {
                         SocketManager.GAME_SEND_STATS_PACKET(player);
                         break;
 
-                    case 5://Fée d'artifice.
+                    case 5://Fï¿½e d'artifice.
                         if (player0.getFight() != null) return;
                         int id0 = Integer.parseInt(arg);
                         Animation anim = World.world.getAnimation(id0);
@@ -242,7 +242,7 @@ public class ObjectAction {
                         send = false;
                         break;
 
-                    case 7://Désapprendre un sort.
+                    case 7://Dï¿½sapprendre un sort.
                         if (player0.getFight() != null) return;
                         id0 = Integer.parseInt(arg);
                         int oldLevel = player.getSortStatBySortIfHas(id0).getLevel();
@@ -253,14 +253,14 @@ public class ObjectAction {
                         player.unlearnSpell(player, id0, 1, oldLevel, true, true);
                         break;
 
-                    case 8://Désapprendre un sort é un percepteur.
+                    case 8://Dï¿½sapprendre un sort ï¿½ un percepteur.
                         if (player0.getFight() != null) return;
                         //TODO
                         isOk = false;
                         send = false;
                         break;
 
-                    case 9://Oublié un métier.
+                    case 9://Oubliï¿½ un mï¿½tier.
                         if (player0.getFight() != null) return;
                         int job = Integer.parseInt(arg);
                         JobStat jobStats = player.getMetierByID(job);
@@ -288,7 +288,7 @@ public class ObjectAction {
                             MyPets.giveEpo(player);
                         break;
 
-                    case 11://Changé de Sexe.
+                    case 11://Changï¿½ de Sexe.
                         if (player0.getFight() != null) return;
                         if (player.getSexe() == 0)
                             player.setSexe(1);
@@ -299,31 +299,31 @@ public class ObjectAction {
                         Database.getStatics().getPlayerData().updateInfos(player);
                         break;
 
-                    case 12://Changé de nom.
+                    case 12://Changï¿½ de nom.
                         if (player0.getFight() != null) return;
                         player.setChangeName(true);
                         isOk = false;
                         send = false;
                         break;
 
-                    case 13://Apprendre une émote.
+                    case 13://Apprendre une ï¿½mote.
                         if (player0.getFight() != null) return;
                         int emote = Integer.parseInt(arg);
 
                         if (player.getEmotes().contains(emote)) {
-                            SocketManager.GAME_SEND_MESSAGE(player, "Tu connais déjÃ  cet aptitude !");
+                            SocketManager.GAME_SEND_MESSAGE(player, "Tu connais dï¿½jÃ  cet aptitude !");
                             return;
                         }
 
                         player.addStaticEmote(emote);
                         break;
 
-                    case 14://Apprendre un métier.
+                    case 14://Apprendre un mï¿½tier.
                         if (player0.getFight() != null) return;
                         job = Integer.parseInt(arg);
                         if (World.world.getMetier(job) == null)
                             return;
-                        if (player.getMetierByID(job) != null)//Métier déjé appris
+                        if (player.getMetierByID(job) != null)//Mï¿½tier dï¿½jï¿½ appris
                         {
                             SocketManager.GAME_SEND_Im_PACKET(player, "111");
                             return;
@@ -409,16 +409,16 @@ public class ObjectAction {
 
                     case 16://Pnj Follower.
                         if (player0.getFight() != null) return;
-                        // Petite larve dorée = 7425
+                        // Petite larve dorï¿½e = 7425
                         player.setMascotte(Integer.parseInt(this.args));
                         break;
 
-                    case 17://Bénédiction.
+                    case 17://Bï¿½nï¿½diction.
                         if (player0.getFight() != null) return;
                         player.setBenediction(gameObject.getTemplate().getId());
                         break;
 
-                    case 18://Malédiction.
+                    case 18://Malï¿½diction.
                         if (player0.getFight() != null) return;
                         player.setMalediction(gameObject.getTemplate().getId());
                         break;
@@ -433,7 +433,7 @@ public class ObjectAction {
                         player.setCandy(gameObject.getTemplate().getId());
                         break;
 
-                    case 21://Poser un objet d'élevage.
+                    case 21://Poser un objet d'ï¿½levage.
                         if (player0.getFight() != null) return;
                         GameMap map0 = player.getCurMap();
                         id0 = gameObject.getTemplate().getId();
@@ -481,7 +481,7 @@ public class ObjectAction {
                         if (cellId1 <= 0)
                             return;
                         if (alignement == 0 || alignement == 3) {
-                            SocketManager.GAME_SEND_MESSAGE(player, "Vous ne possedez pas l'alignement nécessaire pour poser un prisme.");
+                            SocketManager.GAME_SEND_MESSAGE(player, "Vous ne possedez pas l'alignement nï¿½cessaire pour poser un prisme.");
                             return;
                         }
                         if (!player.is_showWings()) {
@@ -548,7 +548,7 @@ public class ObjectAction {
                             player.teleport(mapId, cellId);
                         break;
 
-                    case 24://TP Village aligné.
+                    case 24://TP Village alignï¿½.
                         if (player0.getFight() != null) return;
                         mapId = (short) Integer.parseInt(arg.split(",")[0]);
                         cellId = Integer.parseInt(arg.split(",")[1]);
@@ -603,7 +603,7 @@ public class ObjectAction {
                         new Action(511, "", "", null).apply(player, null, objet, -1);
                         break;
 
-                    case 32://Géoposition traque.
+                    case 32://Gï¿½oposition traque.
                         if (player0.getFight() != null) return;
                         String traque = gameObject.getTraquedName();
 
@@ -667,9 +667,9 @@ public class ObjectAction {
                             SocketManager.GAME_SEND_STATS_PACKET(player);
                             SocketManager.GAME_SEND_UPDATE_ITEM(player, weapon);
                             weapon.setModification();
-                            player.sendMessage("Votre corps-corps a été modifié avec succès.");
+                            player.sendMessage("Votre corps-corps a ï¿½tï¿½ modifiï¿½ avec succï¿½s.");
                         } else {
-                            player.sendMessage("Votre corps-à-corps ne contient aucun dégât de type neutre.");
+                            player.sendMessage("Votre corps-ï¿½-corps ne contient aucun dï¿½gï¿½t de type neutre.");
                             isOk = false;
                             send = false;
                         }
@@ -686,13 +686,13 @@ public class ObjectAction {
                     	if(mount == null) return;
                     	if(mount.getCapacitys().contains(9)) 
                     	{
-                    		player.sendInformationMessage("Votre monture est déjà caméléonne");
+                    		player.sendInformationMessage("Votre monture est dï¿½jï¿½ camï¿½lï¿½onne");
                     		return;
                     	}
                     	mount.getCapacitys().add(9);
                     	SocketManager.GAME_SEND_ERASE_ON_MAP_TO_MAP(player.getCurMap(), player.getId());
                     	SocketManager.GAME_SEND_ADD_PLAYER_TO_MAP(player.getCurMap(), player);
-                    	SocketManager.GAME_SEND_Im_PACKET(player, "0105"); // Votre monture apprécie le repas.
+                    	SocketManager.GAME_SEND_Im_PACKET(player, "0105"); // Votre monture apprï¿½cie le repas.
                     	isOk = true;
                     	break;
                         
@@ -722,6 +722,7 @@ public class ObjectAction {
         boolean effect = this.haveEffect(gameObject.getTemplate().getId(), gameObject, player);
         if (effect)
             isOk = true;
+            send = true;
         if (isOk)
             effect = true;
         if (this.type.split(";").length > 1)
@@ -845,7 +846,14 @@ public class ObjectAction {
                 return false;
             case 10914://Cadeau nowel 3
                 return false;
-
+            case 12839://Gemme Spirituel emballÃ©e
+                int templateid =  Constant.getRandomGemmesSpritiuels();
+                GameObject obj = World.world.getObjTemplate(templateid).createNewItem(1, false);
+                if (player.addObjet(obj, true))
+                    World.world.addGameObject(obj,true);
+                SocketManager.GAME_SEND_Ow_PACKET(player);
+                SocketManager.GAME_SEND_Im_PACKET(player, "021;" + 1 + "~" + templateid);
+                return true;
         }
         return false;
     }

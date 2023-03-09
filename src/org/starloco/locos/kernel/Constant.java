@@ -13,8 +13,10 @@ import org.starloco.locos.game.world.World;
 import org.starloco.locos.object.ObjectTemplate;
 import org.starloco.locos.util.RandomStats;
 
+import java.util.ArrayList;
 import java.util.Map;
 import java.util.HashMap;
+import java.util.Random;
 
 public class Constant {
 	
@@ -2770,6 +2772,16 @@ public class Constant {
                 stats.addOneStat(STATS_ADD_RP_FEU, lvl / 20);
                 stats.addOneStat(STATS_ADD_RP_NEU, lvl / 20);
                 break;
+            //Tabi
+            case 90:
+                stats.addOneStat(STATS_ADD_PERDOM, lvl / 2);
+                stats.addOneStat(STATS_ADD_PA, lvl / 100);
+                break;
+            //Karnage
+            case 91:
+                stats.addOneStat(STATS_ADD_DOMA, lvl / 10);
+                stats.addOneStat(STATS_ADD_PM, lvl / 100);
+                break;
         }
         return stats;
     }
@@ -2989,6 +3001,15 @@ public class Constant {
             //Armure
             case 88:
                 return World.world.getObjTemplate(9582);
+            //Dragodinde du Paladin
+            case 89:
+                return World.world.getObjTemplate(12776);
+            //Tabi
+            case 90:
+                return World.world.getObjTemplate(12780);
+            //Karnage
+            case 91:
+                return World.world.getObjTemplate(12827);
         }
         return null;
     }
@@ -4584,4 +4605,23 @@ public class Constant {
 
         return tonique3;
     }
+
+    public static Integer getRandomGemmesSpritiuels() {
+        ArrayList<Integer> gemmespi = new ArrayList<Integer>();
+
+        for(int i= 10227; i<=10270;i++){
+            gemmespi.add(i);
+        }
+        gemmespi.add(10278);
+        gemmespi.add(10606);
+        gemmespi.add(11567);
+        gemmespi.add(11568);
+
+        Random rand = new Random();
+        int randomIndex = rand.nextInt(gemmespi.size());
+        int randomNum = gemmespi.get(randomIndex);
+
+        return randomNum;
+    }
+
 }

@@ -32,7 +32,7 @@ public class ObjectTemplate {
     private int avgPrice;
     private int points, newPrice;
     private ArrayList<ObjectAction> onUseActions;
-
+    private int money=-1;
     public String toString() {
         return id + "";
     }
@@ -64,6 +64,7 @@ public class ObjectTemplate {
         this.avgPrice = avgPrice;
         this.points = points;
         this.newPrice = newPrice;
+        this.money=-1;
         if(armesInfos.isEmpty()) return;
         try {
             String[] infos = armesInfos.split(";");
@@ -111,8 +112,23 @@ public class ObjectTemplate {
             e.printStackTrace();
         }
     }
-    
-    
+
+    public int getMoney() {
+        return money;
+    }
+
+    public void setMoney(int id) {
+        this.money = id;
+    }
+
+    public int getNewPrice() {
+        return newPrice;
+    }
+
+    public void setNewPrice(int id) {
+        this.newPrice = id;
+    }
+
     /**
      * 
      * Permet de trier l'ordre des stats des items templates. En premier c'est les stats de class , ensuite les effects ( donc les degats d armes ) 
@@ -618,7 +634,12 @@ public class ObjectTemplate {
     }
 
     public String parseItemTemplateStats() {
-        return getId() + ";" + getStrTemplate() + (this.newPrice > 0 ? ";" + this.newPrice : "");
+        if(this.money == -1) {
+            return getId() + ";" + getStrTemplate() + (this.newPrice > 0 ? ";" + this.newPrice : "");
+        }
+        else{
+            return getId() + ";" + getStrTemplate() + ";" + this.money + ";" + (this.newPrice > 0 ? ";" + this.newPrice : "") +";;";
+        }
     }
 
     /*public void applyAction(Player player, Player target, int objectId, short cellId) {
