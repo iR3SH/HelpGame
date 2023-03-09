@@ -25,8 +25,8 @@ public class GameHandler implements IoHandler {
         int i = 0;
         do {
 
-            if(s[i].contains("ù")){
-                s[i] = s[i].split("ù")[2];
+            if(s[i].contains("Ã¹")){
+                s[i] = s[i].split("Ã¹")[2];
             }
 
             client.parsePacket(s[i]);
