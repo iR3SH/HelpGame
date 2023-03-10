@@ -43,10 +43,10 @@ FIX GLADIATROOL :
 - System de ban fonctionnel
 - System de mute fonctionnel
 
-## DEBUG GLADIATROOL
+## DEBUG GLADIATROOL :
 
 - System de sauvegarde des placements de sorts personnalisé d'incarnation du gladiatrool par personnage
-- System de sauvegarde des sorts du personnage afin de les restitués aux joueurs même après un reboot
+- System de sauvegarde des sorts du personnage afin de les restituer aux joueurs même après un reboot
 - Prise en compte de tout les effets de sorts des Toniques
 
 ## AUTRES :
