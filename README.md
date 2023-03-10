@@ -1,7 +1,7 @@
 ```diff
 - ATTENTION ! Cette version n'est qu'un fix du travail de [@sarazar928ghost](https://github.com/sarazar928ghost) & [@arwase](https://github.com/arwase)  
 ```
-Cliquez sur ce lien pour voir le Github du login : [HelpLogin](https://github.com/Sarazar928Ghost/HelpLogin) 
+Cliquez sur ce lien pour voir le Github du login : [HelpLogin](https://github.com/iR3SH/HelpLogin) 
 ## HelpGame
 
 Cette émulateur est open source pour toute personne.  
