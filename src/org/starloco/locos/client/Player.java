@@ -1053,16 +1053,16 @@ public class Player {
                 sorts.append(",");
             }
         } else {
-            if (_sorts.isEmpty())
+            if (_saveSorts.isEmpty())
                 return "";
-            for (int key : _sorts.keySet()) {
+            for (int key : _saveSorts.keySet()) {
                 //3;1;a,4;3;b
-                Spell.SortStats SS = _sorts.get(key);
+                Spell.SortStats SS = _saveSorts.get(key);
                 if (SS == null)
                     continue;
                 sorts.append(SS.getSpellID()).append(";").append(SS.getLevel()).append(";");
-                if (_sortsPlaces.get(key) != null)
-                    sorts.append(_sortsPlaces.get(key));
+                if (_saveSortsPlaces.get(key) != null)
+                    sorts.append(_saveSortsPlaces.get(key));
                 else
                     sorts.append("_");
                 sorts.append(",");
@@ -1719,6 +1719,17 @@ public class Player {
     }
 
     public void remove() {
+        List<GladiatroolSpells> gladiatroolSpells = World.world.getAllGladiatroolSpells().get(this);
+        if(gladiatroolSpells != null)
+        {
+            if(gladiatroolSpells.size() > 0)
+            {
+                for(GladiatroolSpells gladiatroolSpell : gladiatroolSpells)
+                {
+                    Database.getDynamics().getGladiatroolSpellsData().delete(gladiatroolSpell);
+                }
+            }
+        }
         Database.getStatics().getPlayerData().delete(this);
     }
 

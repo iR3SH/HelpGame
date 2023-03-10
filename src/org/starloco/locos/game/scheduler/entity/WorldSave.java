@@ -82,7 +82,8 @@ public class WorldSave extends Updatable {
             World.world.logger.info("-> of areas.");
             World.world.getAreas().values().stream().forEach(area -> Database.getDynamics().getAreaData().update(area));
             World.world.getSubAreas().values().stream().forEach(subArea -> Database.getDynamics().getSubAreaData().update(subArea));
-
+            World.world.logger.info("-> of Gladiatrool Spell Places.");
+            World.world.getAllGladiatroolSpells().values().stream().forEach(gladiatroolSpells -> Database.getDynamics().getGladiatroolSpellsData().update(gladiatroolSpells));
             World.world.logger.info("-> of objects.");
             try {
                 for (GameObject object : new ArrayList<>(World.world.getGameObjects())) {

@@ -130,7 +130,7 @@ public class Config {
                 		break;
                 	case "START_ITEM":
                 		try {
-                			START_ITEM = this.convertArrayStringToInt(value.split(";"));
+                			START_ITEM = value == "" ? new int[]{} : this.convertArrayStringToInt(value.split(";"));
                 		}catch(NumberFormatException e) {
                         	e.printStackTrace();
                         }
@@ -241,7 +241,7 @@ public class Config {
             		+ "HEROIC = false\r\n"
             		+ "\r\n"
             		+ "## CONFIGURATION\r\n"
-            		+ "MESSAGE = Bienvenue dans l'émulation FREE d'entraide\r\n"
+            		+ "MESSAGE = Bienvenue dans l'ï¿½mulation FREE d'entraide\r\n"
             		+ "URL = nashira\r\n"
             		+ "NAME = Eratz\r\n"
             		+ "AUTO_REBOOT = true\r\n"

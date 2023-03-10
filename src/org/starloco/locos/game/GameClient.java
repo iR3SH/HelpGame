@@ -228,6 +228,7 @@ public class GameClient {
     private void Deconnection() {
         //TODO : Faut géré ce cas de changement de perso en version 1.39.8
        exchangeClient.send("HS" + this.getSession().getId() + ";");
+
     }
 
     private void parseGladiatroolPacket(String packet) {
@@ -7200,6 +7201,7 @@ public class GameClient {
                     if(gladiatroolSpells != null)
                     {
                         gladiatroolSpells.setSpells(this.player.parseSpellToDB());
+                        World.world.addGladiatroolSpells(this.player, gladiatroolSpells);
                         Database.getDynamics().getGladiatroolSpellsData().update(gladiatroolSpells);
                     }
                     else

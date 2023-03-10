@@ -494,7 +494,7 @@ public class Action {
 
                         player.setToniqueEquilibrage(player.generateStatsTonique(fullMorph));
 
-                    } else {// Tourmenteur ; on d?morphe
+                    } else {// Tourmenteur ; on démorphe
                         if (Constant.isIncarnationWeapon(object.getTemplate().getId()))
                             player.unsetFullMorph();
                     }

@@ -62,6 +62,22 @@ public class GladiatroolSpellsData extends AbstractDAO<Object> {
         return false;
     }
 
+    public boolean delete(GladiatroolSpells gladiatroolSpells)
+    {
+        PreparedStatement p = null;
+        try{
+            p = getPreparedStatement("DELETE FROM gladiatrool_spells WHERE id = ?");
+            p.setInt(1, gladiatroolSpells.getId());
+            execute(p);
+        } catch (SQLException e) {
+            super.sendError("GladiatroolSpellsData delete", e);
+            return false;
+        } finally {
+            close(p);
+        }
+        return true;
+    }
+
     public void add(GladiatroolSpells gladiatroolSpells) {
         PreparedStatement p = null;
         try {

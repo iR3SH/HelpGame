@@ -18,7 +18,7 @@ public class GladiatroolSpells {
     }
     public GladiatroolSpells(Player owner, int fullMorphId, String spells)
     {
-        Id = Database.getDynamics().getWorldEntityData().getNextGuidId();
+        Id = Database.getDynamics().getWorldEntityData().getNextGladiatroolSpellsId();
         player = owner;
         this.fullMorphId = fullMorphId;
         this.spells = spells;
