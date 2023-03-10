@@ -18,6 +18,7 @@ import org.starloco.locos.entity.pet.Pet;
 import org.starloco.locos.entity.pet.PetEntry;
 import org.starloco.locos.fight.Fight;
 import org.starloco.locos.fight.Fighter;
+import org.starloco.locos.fight.spells.GladiatroolSpells;
 import org.starloco.locos.fight.spells.SpellEffect;
 import org.starloco.locos.game.action.ExchangeAction;
 import org.starloco.locos.game.action.GameAction;
@@ -1036,7 +1037,7 @@ public class Player {
     public String parseSpellToDB() {
         StringBuilder sorts = new StringBuilder();
 
-        if (_morphMode) {
+        if (_morphMode && !Constant.GLADIATROOL_FULLMORPHID.contains(_morphId)) {
             if (_saveSorts.isEmpty())
                 return "";
             for (int key : _saveSorts.keySet()) {
@@ -1532,7 +1533,18 @@ public class Player {
         }
 
         this.send("SLo-");
-        parseSpellsFullMorph2(fullMorph.get("spells"));
+        if(Constant.GLADIATROOL_FULLMORPHID.contains(morphid)){
+            GladiatroolSpells gladiatroolSpells = World.world.getGladiatroolSpellsFromPlayer(this, morphid);
+            if(gladiatroolSpells != null){
+                parseSpellsFullMorph2(gladiatroolSpells.getSpells());
+            }
+            else{
+                parseSpellsFullMorph2(fullMorph.get("spells"));
+            }
+        }
+        else {
+            parseSpellsFullMorph2(fullMorph.get("spells"));
+        }
         setMorphId(morphid);
 
         if (this.getObjetByPos(Constant.ITEM_POS_ARME) != null) {

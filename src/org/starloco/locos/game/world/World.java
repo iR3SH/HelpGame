@@ -23,6 +23,7 @@ import org.starloco.locos.entity.npc.NpcQuestion;
 import org.starloco.locos.entity.npc.NpcTemplate;
 import org.starloco.locos.entity.pet.Pet;
 import org.starloco.locos.entity.pet.PetEntry;
+import org.starloco.locos.fight.spells.GladiatroolSpells;
 import org.starloco.locos.fight.spells.Spell;
 import java.util.concurrent.ConcurrentHashMap;
 import org.starloco.locos.hdv.Hdv;
@@ -97,6 +98,7 @@ public class World {
     private Map<Integer, GameMap> extraMonstreOnMap = new HashMap<>();
     private Map<Integer, org.starloco.locos.area.map.entity.Tutorial> Tutorial = new HashMap<>();
     private CryptManager cryptManager=new CryptManager();
+    private Map<Player, List<GladiatroolSpells>> gladiatroolSpells = new HashMap<>();
     private int nextObjectHdvId, nextLineHdvId;
     
     private Map<Short, Prestige> prestiges = new HashMap<>();
@@ -486,6 +488,9 @@ public class World {
         Minotoror.initialize();
         logger.debug("Initialization of the dungeons : Gladiatrool.");
         Gladiatrool.initialize();
+
+        Database.getDynamics().getGladiatroolSpellsData().load();
+        logger.debug("The gladiatrool spells of players were loaded successfully.");
 
         Database.getStatics().getServerData().updateTime(time);
         logger.info("All data was loaded successfully at "
@@ -931,6 +936,70 @@ public class World {
     public ArrayList<Couple<Integer, Integer>> getCraft(int i) {
         return Crafts.get(i);
     }
+
+    public void addGladiatroolSpells(Player owner, GladiatroolSpells gladiatroolSpell)
+    {
+        if(!gladiatroolSpells.containsKey(owner)){
+
+            List<GladiatroolSpells> list = new ArrayList<>();
+            list.add(gladiatroolSpell);
+            gladiatroolSpells.put(owner, list);
+        }
+        else{
+
+            List<GladiatroolSpells> list = gladiatroolSpells.get(owner);
+
+            if(list.contains(gladiatroolSpell)){
+                list.remove(gladiatroolSpell);
+                list.add(gladiatroolSpell);
+            }
+            else {
+                list.add(gladiatroolSpell);
+            }
+
+            gladiatroolSpells.remove(owner);
+            gladiatroolSpells.put(owner, list);
+        }
+    }
+
+    public Map<Player, List<GladiatroolSpells>> getAllGladiatroolSpells()
+    {
+        return gladiatroolSpells;
+    }
+
+    public String getGladiatroolSpells(Player owner, int fullMorpId)
+    {
+        if(gladiatroolSpells.containsKey(owner))
+        {
+            List<GladiatroolSpells> list = gladiatroolSpells.get(owner);
+
+            for(GladiatroolSpells gladia : list)
+            {
+                if(gladia.getFullMorphId() == fullMorpId)
+                {
+                    return gladia.getSpells();
+                }
+            }
+        }
+        return "";
+    }
+    public GladiatroolSpells getGladiatroolSpellsFromPlayer(Player owner, int fullMorpId)
+    {
+        if(gladiatroolSpells.containsKey(owner))
+        {
+            List<GladiatroolSpells> list = gladiatroolSpells.get(owner);
+
+            for(GladiatroolSpells gladia : list)
+            {
+                if(gladia.getFullMorphId() == fullMorpId)
+                {
+                    return gladia;
+                }
+            }
+        }
+        return null;
+    }
+
 
     public void addFullMorph(int morphID, String name, int gfxID,
                              String spells, String[] args) {

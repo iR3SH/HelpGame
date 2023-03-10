@@ -26,6 +26,7 @@ import org.starloco.locos.entity.pet.Pet;
 import org.starloco.locos.entity.pet.PetEntry;
 import org.starloco.locos.fight.Fight;
 import org.starloco.locos.fight.Fighter;
+import org.starloco.locos.fight.spells.GladiatroolSpells;
 import org.starloco.locos.fight.spells.Spell;
 import org.starloco.locos.game.action.ExchangeAction;
 import org.starloco.locos.game.action.GameAction;
@@ -7190,6 +7191,25 @@ public class GameClient {
                 this.player.set_SpellPlace(SpellID, Integer.toHexString(Position));
             }
             SocketManager.GAME_SEND_BN(this);
+            if(this.player.getMorphMode())
+            {
+                int fullMorphId = this.player.getMorphId();
+                if(Constant.GLADIATROOL_FULLMORPHID.contains(fullMorphId))
+                {
+                    GladiatroolSpells gladiatroolSpells = World.world.getGladiatroolSpellsFromPlayer(this.player, fullMorphId);
+                    if(gladiatroolSpells != null)
+                    {
+                        gladiatroolSpells.setSpells(this.player.parseSpellToDB());
+                        Database.getDynamics().getGladiatroolSpellsData().update(gladiatroolSpells);
+                    }
+                    else
+                    {
+                        GladiatroolSpells newGladiatroolSpells = new GladiatroolSpells(this.player, fullMorphId,this.player.parseSpellToDB());
+                        World.world.addGladiatroolSpells(this.player, newGladiatroolSpells);
+                        Database.getDynamics().getGladiatroolSpellsData().add(newGladiatroolSpells);
+                    }
+                }
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
