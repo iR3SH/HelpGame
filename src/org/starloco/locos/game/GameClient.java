@@ -7191,7 +7191,6 @@ public class GameClient {
             if (Spell != null) {
                 this.player.set_SpellPlace(SpellID, Integer.toHexString(Position));
             }
-            SocketManager.GAME_SEND_BN(this);
             if(this.player.getMorphMode())
             {
                 int fullMorphId = this.player.getMorphId();
@@ -7200,18 +7199,19 @@ public class GameClient {
                     GladiatroolSpells gladiatroolSpells = World.world.getGladiatroolSpellsFromPlayer(this.player, fullMorphId);
                     if(gladiatroolSpells != null)
                     {
-                        gladiatroolSpells.setSpells(this.player.parseSpellToDB());
+                        gladiatroolSpells.setSpells(this.player.parseSpellToDB(false));
                         World.world.addGladiatroolSpells(this.player, gladiatroolSpells);
                         Database.getDynamics().getGladiatroolSpellsData().update(gladiatroolSpells);
                     }
                     else
                     {
-                        GladiatroolSpells newGladiatroolSpells = new GladiatroolSpells(this.player, fullMorphId,this.player.parseSpellToDB());
+                        GladiatroolSpells newGladiatroolSpells = new GladiatroolSpells(this.player, fullMorphId,this.player.parseSpellToDB(false));
                         World.world.addGladiatroolSpells(this.player, newGladiatroolSpells);
                         Database.getDynamics().getGladiatroolSpellsData().add(newGladiatroolSpells);
                     }
                 }
             }
+            SocketManager.GAME_SEND_BN(this);
         } catch (Exception e) {
             e.printStackTrace();
         }

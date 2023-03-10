@@ -130,7 +130,7 @@ public class Config {
                 		break;
                 	case "START_ITEM":
                 		try {
-                			START_ITEM = value == "" ? new int[]{} : this.convertArrayStringToInt(value.split(";"));
+                			START_ITEM = value.isEmpty() ? new int[]{} : this.convertArrayStringToInt(value.split(";"));
                 		}catch(NumberFormatException e) {
                         	e.printStackTrace();
                         }

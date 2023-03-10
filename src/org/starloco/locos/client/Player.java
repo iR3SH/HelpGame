@@ -250,7 +250,7 @@ public class Player {
                   String savePos, String jobs, int mountXp, int mount, int honor,
                   int deshonor, int alvl, String z, byte title, int wifeGuid,
                   String morphMode, String allTitle, String emotes, long prison,
-                  boolean isNew, String parcho, long timeDeblo, boolean noall, String deadInformation, byte deathCount, long totalKills, short prestige, String artefact) {
+                  boolean isNew, String parcho, long timeDeblo, boolean noall, String deadInformation, byte deathCount, long totalKills, short prestige, String artefact, String saveSpells, int saveSpellPts) {
         this.id = id;
         this.noall = noall;
         this.name = name;
@@ -310,18 +310,6 @@ public class Player {
             if (!emotes.isEmpty())
                 for (String i : emotes.split(";"))
                     this.addStaticEmote(Integer.parseInt(i));
-            if (!morphMode.equals("")) {
-                if (morphMode.equals("0"))
-                    morphMode = "0;0";
-                String[] i = morphMode.split(";");
-                _morphMode = i[0].equals("1");
-                if (!i[1].equals(""))
-                    _morphId = Integer.parseInt(i[1]);
-            }
-            if (_morphMode)
-                this._saveSpellPts = pts;
-            else
-                this._spellPts = pts;
             if (prison != 0) {
                 this.isInEnnemyFaction = true;
                 this.enteredOnEnnemyFaction = prison;
@@ -420,6 +408,18 @@ public class Player {
             if (this.curPdv <= 0)
                 this.curPdv = 1;
             parseSpells(spells);
+            if (!morphMode.equals("")) {
+                if (morphMode.equals("0"))
+                    morphMode = "0;0";
+                String[] i = morphMode.split(";");
+                _morphMode = i[0].equals("1");
+                if (!i[1].equals(""))
+                    _morphId = Integer.parseInt(i[1]);
+            }
+            if (_morphMode)
+                this._saveSpellPts = pts;
+            else
+                this._spellPts = pts;
             //Chargement des m�tiers
             if (!jobs.equals("")) {
                 for (String aJobData : jobs.split(";")) {
@@ -457,6 +457,22 @@ public class Player {
             		Main.stop("Probl�me lors de la cr�ation de personnnage au niveau des artefact");
             	}
             }
+            if(saveSpells != null) {
+                if (!saveSpells.isEmpty()) {
+                    String[] spellArgs = saveSpells.split(",");
+                    Map<Integer, SortStats> savedSpells = new HashMap<>();
+                    Map<Integer, String> savedSpellsPlaces = new HashMap<>();
+                    for (String args : spellArgs) {
+                        int spellId = Integer.parseInt(args.split(";")[0]);
+                        int spellLevel = Integer.parseInt(args.split(";")[1]);
+                        String spellPlace = args.split(";")[2];
+                        Spell spell = World.world.getSort(spellId);
+                        savedSpells.put(spellId, spell.getSortsStats().get(spellLevel));
+                        savedSpellsPlaces.put(spellId, spellPlace);
+                    }
+                }
+            }
+            _saveSpellPts = saveSpellPts;
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -521,7 +537,7 @@ public class Player {
                 //224,
                 "", "", 100, "", (Config.getInstance().startMap != 0 ? (short) Config.getInstance().startMap : Constant.getStartMap(classe))
                 + ","
-                + (Config.getInstance().startCell != 0 ? (short) Config.getInstance().startCell : Constant.getStartCell(classe)), "", 0, -1, 0, 0, 0, z, (byte) 0, 0, "0;0", "", (Config.getInstance().allEmote ? "0;1;2;3;4;5;6;7;8;9;10;11;12;13;14;15;16;17;18;19;20;21" : "0"), 0, true, "118,0;119,0;123,0;124,0;125,0;126,0", 0, false, "0,0,0,0", (byte) 0, 0, (short)0, null);
+                + (Config.getInstance().startCell != 0 ? (short) Config.getInstance().startCell : Constant.getStartCell(classe)), "", 0, -1, 0, 0, 0, z, (byte) 0, 0, "0;0", "", (Config.getInstance().allEmote ? "0;1;2;3;4;5;6;7;8;9;10;11;12;13;14;15;16;17;18;19;20;21" : "0"), 0, true, "118,0;119,0;123,0;124,0;125,0;126,0", 0, false, "0,0,0,0", (byte) 0, 0, (short)0, null, "", -1);
         perso.emotes.add(1);
         perso._sorts = Constant.getStartSorts(classe);
         for (int a = 1; a <= perso.getLevel(); a++)
@@ -1034,10 +1050,10 @@ public class Player {
         this.party = party;
     }
 
-    public String parseSpellToDB() {
+    public String parseSpellToDB(boolean savedSpell) {
         StringBuilder sorts = new StringBuilder();
 
-        if (_morphMode && !Constant.GLADIATROOL_FULLMORPHID.contains(_morphId)) {
+        if (savedSpell) {
             if (_saveSorts.isEmpty())
                 return "";
             for (int key : _saveSorts.keySet()) {
@@ -1053,16 +1069,16 @@ public class Player {
                 sorts.append(",");
             }
         } else {
-            if (_saveSorts.isEmpty())
+            if (_sorts.isEmpty())
                 return "";
-            for (int key : _saveSorts.keySet()) {
+            for (int key : _sorts.keySet()) {
                 //3;1;a,4;3;b
-                Spell.SortStats SS = _saveSorts.get(key);
+                Spell.SortStats SS = _sorts.get(key);
                 if (SS == null)
                     continue;
                 sorts.append(SS.getSpellID()).append(";").append(SS.getLevel()).append(";");
-                if (_saveSortsPlaces.get(key) != null)
-                    sorts.append(_saveSortsPlaces.get(key));
+                if (_sortsPlaces.get(key) != null)
+                    sorts.append(_sortsPlaces.get(key));
                 else
                     sorts.append("_");
                 sorts.append(",");
@@ -1097,10 +1113,7 @@ public class Player {
                         int id = Integer.parseInt(e.split(";")[0]);
                         int lvl = Integer.parseInt(e.split(";")[1]);
                         String place = e.split(";")[2];
-                        if (!_morphMode)
-                            learnSpell(id, lvl, false, false, false);
-                        else
-                            learnSpell(id, lvl, false, true, false);
+                        learnSpell(id, lvl, false, false, false);
                         _sortsPlaces.put(id, place);
                     } catch (NumberFormatException e1) {
                         e1.printStackTrace();
@@ -1163,8 +1176,8 @@ public class Player {
 		 return _sorts.values();
 	}
     
-    public int get_spellPts() {
-        if (_morphMode)
+    public int get_spellPts(boolean savedPts) {
+        if (savedPts)
             return _saveSpellPts;
         else
             return _spellPts;
@@ -1325,8 +1338,8 @@ public class Player {
             return;
         }
 
-        if (!_sorts.containsKey(Integer.valueOf(spell))) {
-            _sorts.put(Integer.valueOf(spell), World.world.getSort(spell).getStatsByLevel(level));
+        if (!_sorts.containsKey(spell)) {
+            _sorts.put(spell, World.world.getSort(spell).getStatsByLevel(level));
             replace_SpellInBook(pos);
             _sortsPlaces.remove(spell);
             _sortsPlaces.put(spell, pos);
@@ -1342,11 +1355,11 @@ public class Player {
             return false;
         }
 
-        if (_sorts.containsKey(Integer.valueOf(spellID)) && learn) {
+        if (_sorts.containsKey(spellID) && learn) {
             SocketManager.GAME_SEND_MESSAGE(this, "Tu poss�des d�j� ce sort.");
             return false;
         } else {
-            _sorts.put(Integer.valueOf(spellID), World.world.getSort(spellID).getStatsByLevel(level));
+            _sorts.put(spellID, World.world.getSort(spellID).getStatsByLevel(level));
             if (send) {
                 SocketManager.GAME_SEND_SPELL_LIST(this);
                 SocketManager.GAME_SEND_Im_PACKET(this, "03;" + spellID);
@@ -1363,10 +1376,10 @@ public class Player {
             return false;
         }
 
-        if (_saveSorts.containsKey(Integer.valueOf(spellID))) {
+        if (_saveSorts.containsKey(spellID)) {
             return false;
         } else {
-            _saveSorts.put(Integer.valueOf(spellID), World.world.getSort(spellID).getStatsByLevel(level));
+            _saveSorts.put(spellID, World.world.getSort(spellID).getStatsByLevel(level));
             return true;
         }
     }
@@ -1589,8 +1602,11 @@ public class Player {
                 }
             }
         }
-
-        if (this.fight == null) SocketManager.GAME_SEND_STATS_PACKET(this);
+        if (this.fight == null) {
+            if (!Constant.isGladiatroolWeapon(this.getObjetByPos(Constant.ITEM_POS_ARME).getTemplate().getId())) {
+                SocketManager.GAME_SEND_STATS_PACKET(this);
+            }
+        }
         if (!join)
             Database.getStatics().getPlayerData().update(this);
     }
@@ -1646,7 +1662,7 @@ public class Player {
         _spellPts = _saveSpellPts;
         _sorts.putAll(_saveSorts);
         _sortsPlaces.putAll(_saveSortsPlaces);
-        parseSpells(parseSpellToDB());
+        parseSpells(parseSpellToDB(false));
 
         setMorphId(0);
         if (this.getFight() == null) {
@@ -2365,12 +2381,18 @@ public class Player {
     }
 
     public int get_pdvper() {
-        refreshLife(false);
-        int pdvper = 100;
-        pdvper = (100 * this.curPdv) / this.maxPdv;
-        if (pdvper > 100)
-            return 100;
-        return pdvper;
+        try {
+            refreshLife(false);
+            int pdvper = 100;
+            pdvper = (100 * this.curPdv) / this.maxPdv;
+            if (pdvper > 100)
+                return 100;
+            return pdvper;
+        }catch (Exception ex)
+        {
+            ex.printStackTrace();
+            return 1;
+        }
     }
 
     public void useSmiley(String str) {
@@ -2660,7 +2682,7 @@ public class Player {
     	final double actPdvPer = (100.0 * (double) this.curPdv) / (double) this.maxPdv;
         if (!useStats)
             this.maxPdv = (this.getLevel() - 1) * this.pdvMaxByLevel + 50 + getTotalStats().getEffect(Constant.STATS_ADD_VITA);
-        if(Constant.isInGladiatorDonjon(this.curMap.getId()) || this.getCurMap().getId() == 12277)
+        if(_morphMode && (Constant.isInGladiatorDonjon(this.curMap.getId()) || this.getCurMap().getId() == 12277))
             this.maxPdv = getTotalStats().getEffect(Constant.STATS_ADD_VITA);
         this.curPdv = (int) Math.round(maxPdv * actPdvPer / 100.0);
     }
@@ -5336,6 +5358,27 @@ public class Player {
                 map.put(effect, modif);
             }
             String modifi = effect + ";" + spell + ";" + map.get(effect);
+            Spell spellToCheck = null;
+            if(effect == Constant.STATS_SPELL_REM_PA)
+            {
+                spellToCheck = World.world.getSort(spell);
+                int paCost = spellToCheck.getSortsStats().get(6).getPACost() - map.get(effect);
+                if(paCost <= 0)
+                {
+                    paCost = 1;
+                }
+                modifi = effect + ";" + spell + ";" + paCost;
+            }
+            else if(effect == Constant.STATS_SPELL_REM_DELAY)
+            {
+                spellToCheck = World.world.getSort(spell);
+                int delay = spellToCheck.getSortsStats().get(6).getCoolDown() - map.get(effect);
+                if(delay < 0)
+                {
+                    delay = 0;
+                }
+                modifi = effect + ";" + spell + ";" + delay;
+            }
             SocketManager.SEND_SB_SPELL_BOOST(this, modifi);
             _itemClasseSpell.remove(spell);
             _itemClasseSpell.put(spell, map);

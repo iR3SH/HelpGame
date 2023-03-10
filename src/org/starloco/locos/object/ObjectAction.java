@@ -213,7 +213,7 @@ public class ObjectAction {
                                     }
                                     break;
                                 case 7://Point de Sort.
-                                    player.set_spellPts(player.get_spellPts()
+                                    player.set_spellPts(player.get_spellPts(false)
                                             + val);
                                     break;
                             }

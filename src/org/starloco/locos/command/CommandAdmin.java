@@ -20,6 +20,7 @@ import org.starloco.locos.entity.npc.Npc;
 import org.starloco.locos.entity.npc.NpcTemplate;
 import org.starloco.locos.fight.Challenge;
 import org.starloco.locos.fight.Fight;
+import org.starloco.locos.fight.spells.Spell;
 import org.starloco.locos.game.GameClient;
 import org.starloco.locos.game.GameServer;
 import org.starloco.locos.game.action.ExchangeAction;
@@ -40,11 +41,8 @@ import org.starloco.locos.quest.Quest.QuestPlayer;
 
 import org.starloco.locos.quest.Quest_Etape;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 import java.util.Map.Entry;
-import java.util.Random;
-import java.util.Set;
 
 public class CommandAdmin extends AdminUser {
 
@@ -1964,7 +1962,22 @@ public class CommandAdmin extends AdminUser {
                     + perso.getName() + ".";
             this.sendMessage(str);
             return;
-        } else if (command.equalsIgnoreCase("CAPITAL")) {
+        } else if (command.equalsIgnoreCase("REFRESHSPELL")) {
+            Collection< Spell.SortStats> spells = this.getPlayer().getSorts();
+            for(Spell.SortStats spell : spells)
+            {
+                this.getPlayer().forgetSpell(spell.getSpellID());
+            }
+            this.getPlayer().setSpells(Constant.getStartSorts(this.getPlayer().getClasse()));
+            this.getPlayer().setSpellsPlace(true);
+            for (int i = 3; i < this.getPlayer().getLevel() + 1; i++) {
+                Constant.onLevelUpSpells(this.getPlayer(), i, true);
+            }
+            this.getPlayer().set_spellPts(this.getPlayer().getLevel() * 5);
+            SocketManager.GAME_SEND_STATS_PACKET(this.getPlayer());
+            SocketManager.GAME_SEND_SPELL_LIST(this.getPlayer());
+
+        }else if (command.equalsIgnoreCase("CAPITAL")) {
             int pts = -1;
             try {
                 pts = Integer.parseInt(infos[1]);

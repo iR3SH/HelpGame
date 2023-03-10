@@ -2328,7 +2328,6 @@ public class Constant {
 
     }
 
-
     public static int getGlyphColor(int spell) {
         switch (spell) {
             case 10://Enflamm�
