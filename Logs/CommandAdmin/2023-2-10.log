@@ -116,3 +116,10 @@
 [17 : 13 : 10] : 127.0.0.1 : ir3sh > Hydro > infos
 [17 : 13 : 40] : Starting logger..
 [17 : 13 : 40] : 127.0.0.1 : ir3sh > Hydro > infos
+[17 : 39 : 48] : Starting logger..
+[17 : 39 : 48] : 127.0.0.1 : ir3sh > Hydro > infos
+[17 : 41 : 31] : 127.0.0.1 : ir3sh > Hydro > REFRESHSPELL
+[17 : 41 : 56] : 127.0.0.1 : iop > Blue-Shot > infos
+[18 : 08 : 39] : 127.0.0.1 : ir3sh > Hydro > endfight 1
+[18 : 27 : 44] : 127.0.0.1 : iop > Blue-Shot > REFRESHSPELL
+[18 : 28 : 05] : 127.0.0.1 : iop > Blue-Shot > infos

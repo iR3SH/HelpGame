@@ -1973,9 +1973,9 @@ public class CommandAdmin extends AdminUser {
             for (int i = 3; i < this.getPlayer().getLevel() + 1; i++) {
                 Constant.onLevelUpSpells(this.getPlayer(), i, true);
             }
-            this.getPlayer().set_spellPts(this.getPlayer().getLevel() * 5);
-            SocketManager.GAME_SEND_STATS_PACKET(this.getPlayer());
+            this.getPlayer().set_spellPts(this.getPlayer().getLevel() - 1);
             SocketManager.GAME_SEND_SPELL_LIST(this.getPlayer());
+            SocketManager.GAME_SEND_STATS_PACKET(this.getPlayer());
 
         }else if (command.equalsIgnoreCase("CAPITAL")) {
             int pts = -1;
