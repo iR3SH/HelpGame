@@ -398,6 +398,7 @@ public class Constant {
     public static final int STATS_SPELL_PO = 281;
     public static final int STATS_SPELL_PO_MODIF = 282;
     public static final int STATS_SPELL_ADD_DOM = 283;
+    public static final int STATS_SPELL_ADD_HEAL = 284;
     public static final int STATS_SPELL_REM_PA = 285;
     public static final int STATS_SPELL_REM_DELAY = 286;
     public static final int STATS_SPELL_ADD_CRIT = 287;

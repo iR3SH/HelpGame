@@ -422,7 +422,7 @@ public class SpellEffect {
 			if (perso.getItemClasseSpell().containsKey(spell)) {
 				int modi = 0;
 				if (effectID == 108)
-					modi = perso.getItemClasseModif(spell, 284);
+					modi = perso.getItemClasseModif(spell, Constant.STATS_SPELL_ADD_HEAL);
 				else if (effectID >= 91 && effectID <= 100)
 					modi = perso.getItemClasseModif(spell, Constant.STATS_SPELL_ADD_DOM);
 				String jeta = jet.split("\\+")[0];

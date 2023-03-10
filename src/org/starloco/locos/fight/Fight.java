@@ -3310,7 +3310,7 @@ public class Fight {
       int usedPA;
       if(caster.getType()==1&&perso.getItemClasseSpell().containsKey(SS.getSpellID()))
       {
-        int modi=perso.getItemClasseModif(SS.getSpellID(),285);
+        int modi=perso.getItemClasseModif(SS.getSpellID(),Constant.STATS_SPELL_REM_PA);
         if(modi < 0)
         {
             modi = 0;
