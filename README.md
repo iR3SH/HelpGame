@@ -1,5 +1,5 @@
 ```diff
-- ATTENTION ! Cette version n'est qu'un tweak du travail de [@sarazar928ghost](https://github.com/sarazar928ghost) 
+- ATTENTION ! Cette version n'est qu'un fix du travail de [@sarazar928ghost](https://github.com/sarazar928ghost) & [@arwase](https://github.com/arwase)  
 ```
 Cliquez sur ce lien pour voir le Github du login : [HelpLogin](https://github.com/Sarazar928Ghost/HelpLogin) 
 ## HelpGame
@@ -16,6 +16,10 @@ Merci de pas le vendre , vous avez reçu gratuitement , donnez gratuitement 🤗
 TWEAK GLADIATROOL :
 - [@arwase](https://github.com/arwase) 
 - Discord : Arwase#6656
+
+FIX GLADIATROOL :
+- [@iR3SH](https://github.com/iR3SH)
+- Discord : Hydronish#0843
 
 ## Nouveautées :
 
@@ -39,6 +43,12 @@ TWEAK GLADIATROOL :
 - System de ban fonctionnel
 - System de mute fonctionnel
 
+## DEBUG GLADIATROOL
+
+- System de sauvegarde des placements de sorts personnalisé d'incarnation du gladiatrool par personnage
+- System de sauvegarde des sorts du personnage afin de les restitués aux joueurs même après un reboot
+- Prise en compte de tout les effets de sorts des Toniques
+
 ## AUTRES :
 
 - Refactoring du code en masse afin de le rendre plus lisible et professionel.
@@ -47,11 +57,12 @@ TWEAK GLADIATROOL :
 - Refactoring des actions des objets + optimisation
 - Refactoring addObjet et createNewItem
 - Optimisation getDirBetweenTwoCase
+- Ajout de condition afin d'eviter les exceptions dans la lecture de la config
 
 
 ## TELECHARGEMENT :
 - GameCompiled.rar contient le game compilé avec le .bat pour le lancer.
-- Ne pas oublier d'executer les SQL
+- Ne pas oublier d'executer les SQL (help_game / help_login)
 - Si vous n'avez jamais lancé cette ému , il faut supprimer l'ancienne config.txt.
 
 ## AIDE :
