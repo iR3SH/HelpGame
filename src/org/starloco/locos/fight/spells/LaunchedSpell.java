@@ -2,6 +2,7 @@ package org.starloco.locos.fight.spells;
 
 import org.starloco.locos.fight.Fighter;
 import org.starloco.locos.fight.spells.Spell.SortStats;
+import org.starloco.locos.kernel.Constant;
 
 import java.util.Map;
 
@@ -16,7 +17,7 @@ public class LaunchedSpell {
         this.spellStats = SS;
         if (caster.getType() == 1
                 && caster.getPersonnage().getItemClasseSpell().containsKey(SS.getSpellID())) {
-            int modi = caster.getPersonnage().getItemClasseModif(SS.getSpellID(), 286);
+            int modi = caster.getPersonnage().getItemClasseModif(SS.getSpellID(), Constant.STATS_SPELL_REM_DELAY);
             int newCoolDown = SS.getCoolDown() - modi;
             if(newCoolDown < 0){
                 newCoolDown = 0;

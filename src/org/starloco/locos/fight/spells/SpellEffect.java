@@ -133,7 +133,7 @@ public class SpellEffect {
 						if (nbrCase == 0) continue;
 						int exCase = target.getCell().getId();
 						int newCellID = PathFinding.newCaseAfterPush(fight, caster.getCell(), target.getCell(), nbrCase);
-						if (newCellID < 0)//S'il a été bloqué
+						if (newCellID < 0)//S'il a ï¿½tï¿½ bloquï¿½
 						{
 							int a = -newCellID;
 							a = nbrCase - a;
@@ -154,7 +154,7 @@ public class SpellEffect {
 							finalDommage = 0;
 						break;
 
-					case 79://chance éca
+					case 79://chance ï¿½ca
 						try {
 							String[] infos = buff.getArgs().split(";");
 							int coefDom = Integer.parseInt(infos[0]);
@@ -252,7 +252,7 @@ public class SpellEffect {
 							continue;
 						}
 
-						//on retire au max possible la valeur déjÃ  gagné sur le chati
+						//on retire au max possible la valeur dï¿½jÃ  gagnï¿½ sur le chati
 						int oldValue = (target.getChatiValue().get(stat) == null ? 0 : target.getChatiValue().get(stat));
 						max -= oldValue;
 						//Si gain trop grand, on le reduit au max
@@ -409,7 +409,7 @@ public class SpellEffect {
 
 	public void applyToFight(Fight fight, Fighter acaster, ArrayList<Fighter> cibles, boolean isCaC) {
 		try {
-			if (turns != -1)//Si ce n'est pas un buff qu'on applique en début de tour
+			if (turns != -1)//Si ce n'est pas un buff qu'on applique en dï¿½but de tour
 				turns = Integer.parseInt(args.split(";")[3]);
 		} catch (NumberFormatException ignored) {}
 		caster = acaster;
@@ -422,9 +422,9 @@ public class SpellEffect {
 			if (perso.getItemClasseSpell().containsKey(spell)) {
 				int modi = 0;
 				if (effectID == 108)
-					modi = perso.getItemClasseModif(spell, 284);
+					modi = perso.getItemClasseModif(spell, Constant.STATS_SPELL_ADD_HEAL);
 				else if (effectID >= 91 && effectID <= 100)
-					modi = perso.getItemClasseModif(spell, 283);
+					modi = perso.getItemClasseModif(spell, Constant.STATS_SPELL_ADD_DOM);
 				String jeta = jet.split("\\+")[0];
 				int bonus = Integer.parseInt(jet.split("\\+")[1]) + modi;
 				jet = jeta + "+" + bonus;
@@ -432,7 +432,7 @@ public class SpellEffect {
 		}
 
 		switch (effectID) {
-			case 4://Fuite/Bond du félin/ Bond du iop / téléport
+			case 4://Fuite/Bond du fï¿½lin/ Bond du iop / tï¿½lï¿½port
 				applyEffect_4(fight, cibles);
 				break;
 			case 5://Repousse de X case
@@ -459,7 +459,7 @@ public class SpellEffect {
 			case 78://Bonus PM
 				applyEffect_78(cibles, fight);
 				break;
-			case 79:// + X chance(%) dommage subis * Y sinon soigné de dommage *Z
+			case 79:// + X chance(%) dommage subis * Y sinon soignï¿½ de dommage *Z
 				applyEffect_79(cibles, fight);
 				break;
 			case 81:// Cura, PDV devueltos
@@ -522,7 +522,7 @@ public class SpellEffect {
 			case 101://Retrait PA
 				applyEffect_101(cibles, fight);
 				break;
-			case 105://Dommages réduits de X
+			case 105://Dommages rï¿½duits de X
 				applyEffect_105(cibles, fight);
 				break;
 			case 106://Renvoie de sort
@@ -561,7 +561,7 @@ public class SpellEffect {
 			case 118://Bonus force
 				applyEffect_118(cibles, fight);
 				break;
-			case 119://Bonus Agilité
+			case 119://Bonus Agilitï¿½
 				applyEffect_119(cibles, fight);
 				break;
 			case 120://Bonus PA
@@ -579,7 +579,7 @@ public class SpellEffect {
 			case 124://+Sagesse
 				applyEffect_124(cibles, fight);
 				break;
-			case 125://+Vitalité
+			case 125://+Vitalitï¿½
 				applyEffect_125(cibles, fight);
 				break;
 			case 126://+Intelligence
@@ -615,7 +615,7 @@ public class SpellEffect {
 			case 143:// PDV rendu
 				applyEffect_143(cibles, fight);
 				break;
-			case 144:// - Dommages (pas bosté)
+			case 144:// - Dommages (pas bostï¿½)
 				applyEffect_144(fight, cibles);
 			case 145://Malus Dommage
 				applyEffect_145(fight, cibles);
@@ -623,7 +623,7 @@ public class SpellEffect {
 			case 149://Change l'apparence
 				applyEffect_149(fight, cibles);
 				break;
-			case 150://Invisibilité
+			case 150://Invisibilitï¿½
 				applyEffect_150(fight, cibles);
 				break;
 			case 152:// - Chance
@@ -686,7 +686,7 @@ public class SpellEffect {
 			case 180://Double du sram
 				applyEffect_180(fight);
 				break;
-			case 181://Invoque une créature
+			case 181://Invoque une crï¿½ature
 				applyEffect_181(fight);
 				break;
 			case 182://+ Crea Invoc
@@ -746,10 +746,10 @@ public class SpellEffect {
 			case 266://Vol Chance
 				applyEffect_266(fight, cibles);
 				break;
-			case 267://Vol vitalité
+			case 267://Vol vitalitï¿½
 				applyEffect_267(fight, cibles);
 				break;
-			case 268://Vol agitlité
+			case 268://Vol agitlitï¿½
 				applyEffect_268(fight, cibles);
 				break;
 			case 269://Vol intell
@@ -761,16 +761,16 @@ public class SpellEffect {
 			case 271://Vol force
 				applyEffect_271(fight, cibles);
 				break;
-			case 293://Augmente les dégÃ¢ts de base du sort X de Y
+			case 293://Augmente les dï¿½gÃ¢ts de base du sort X de Y
 				applyEffect_293(fight);
 				break;
 			case 320://Vol de PO
 				applyEffect_320(fight, cibles);
 				break;
-			case 400://Créer un  piÃ¨ge
+			case 400://Crï¿½er un  piÃ¨ge
 				applyEffect_400(fight);
 				break;
-			case 401://Créer une glyphe
+			case 401://Crï¿½er une glyphe
 				applyEffect_401(fight);
 				break;
 			case 402://Glyphe des Blop
@@ -783,7 +783,7 @@ public class SpellEffect {
 			case 611:
 				applyEffect_606To611(cibles, fight);
 				break;*/
-			case 666://Pas d'effet complémentaire
+			case 666://Pas d'effet complï¿½mentaire
 				break;
 			case 671://Dommages : X% de la vie de l'attaquant (neutre)
 				applyEffect_671(cibles, fight);
@@ -800,13 +800,13 @@ public class SpellEffect {
 			case 780://laisse spirituelle
 				applyEffect_780(fight);
 				break;
-			case 781://Minimize les effets aléatoires
+			case 781://Minimize les effets alï¿½atoires
 				applyEffect_781(cibles, fight);
 				break;
-			case 782://Maximise les effets aléatoires
+			case 782://Maximise les effets alï¿½atoires
 				applyEffect_782(cibles, fight);
 				break;
-			case 783://Pousse jusqu'a la case visé
+			case 783://Pousse jusqu'a la case visï¿½
 				applyEffect_783(cibles, fight);
 				break;
 			case 784://Raulebaque
@@ -888,10 +888,10 @@ public class SpellEffect {
 
 		if (turns <= 0) {
 			switch (spell) {
-				case 73://Piége répulsif
-				case 418://Fléche de dispersion
+				case 73://Piï¿½ge rï¿½pulsif
+				case 418://Flï¿½che de dispersion
 				case 151://Soufle
-				case 165://FlÃ¨che enflammé
+				case 165://FlÃ¨che enflammï¿½
 					cibles = this.trierCibles(cibles, fight);
 					break;
 			}
@@ -927,7 +927,7 @@ public class SpellEffect {
 					if (finalDmg > target.getPdv()) finalDmg = target.getPdv();
 
 					if (target.hasBuff(184)) {
-						finalDmg = finalDmg - target.getBuff(184).getValue();//Réduction physique
+						finalDmg = finalDmg - target.getBuff(184).getValue();//Rï¿½duction physique
 						SocketManager.GAME_SEND_GA_PACKET_TO_FIGHT(fight, 7, 105, caster.getId() + "", target.getId() + "," + target.getBuff(184).getValue());
 					}
 					if (target.hasBuff(105)) {
@@ -1107,15 +1107,15 @@ public class SpellEffect {
 		Fighter target = caster.getIsHolding();
 		if (target == null) return;
 		
-		//on ajoute le porté a sa case
+		//on ajoute le portï¿½ a sa case
 		target.setCell(cell);
 		target.getCell().addFighter(target);
 		
-		//on enleve les états
+		//on enleve les ï¿½tats
 		target.setState(Constant.ETAT_PORTE,0,caster.getId()); //infinite duration
 	    caster.setState(Constant.ETAT_PORTEUR,0,caster.getId()); //infinite duration
 	    
-		//on dé-lie les 2 Fighter
+		//on dï¿½-lie les 2 Fighter
 		target.setHoldedBy(null);
 		caster.setIsHolding(null);
 		
@@ -4804,11 +4804,11 @@ public class SpellEffect {
 	}
 
 	private void applyEffect_783(ArrayList<Fighter> cibles, Fight fight) {
-		//Pousse jusqu'a la case visée
+		//Pousse jusqu'a la case visï¿½e
 		GameCase ccase = caster.getCell();
 		//On calcule l'orientation entre les 2 cases
 		char dir = PathFinding.getDirBetweenTwoCase(ccase.getId(), cell.getId(), fight.getMap(), true);
-		//On calcule l'id de la case a coté du lanceur dans la direction obtenue
+		//On calcule l'id de la case a cotï¿½ du lanceur dans la direction obtenue
 		int tcellID = PathFinding.GetCaseIDFromDirrection(ccase.getId(), dir, fight.getMap(), true);
 		//on prend la case corespondante
 		GameCase tcase = fight.getMap().getCase(tcellID);
@@ -4818,9 +4818,9 @@ public class SpellEffect {
 		//S'il n'y a personne sur la case, on arrete
 		if (tcase.getFighters().isEmpty())
 			return;
-		//On prend le Fighter ciblé
+		//On prend le Fighter ciblï¿½
 		Fighter target = tcase.getFirstFighter();
-		//On verifie qu'il peut aller sur la case ciblé en ligne droite
+		//On verifie qu'il peut aller sur la case ciblï¿½ en ligne droite
 		int c1 = tcellID, limite = 0;
 		if (target.getMob() != null)
 			for (int i : Constant.STATIC_INVOCATIONS)
@@ -4851,7 +4851,7 @@ public class SpellEffect {
 	}
 
 	private void applyEffect_784(ArrayList<Fighter> cibles, Fight fight) {
-		Map<Integer, GameCase> origPos = fight.getRholBack(); // les positions de début de combat
+		Map<Integer, GameCase> origPos = fight.getRholBack(); // les positions de dï¿½but de combat
 
 		ArrayList<Fighter> list = fight.getFighters(3); // on copie la liste des fighters
 		for (int i = 1; i < list.size(); i++)   // on boucle si tout le monde est Ã  la place

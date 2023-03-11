@@ -13,10 +13,7 @@ import org.starloco.locos.game.world.World;
 import org.starloco.locos.object.ObjectTemplate;
 import org.starloco.locos.util.RandomStats;
 
-import java.util.ArrayList;
-import java.util.Map;
-import java.util.HashMap;
-import java.util.Random;
+import java.util.*;
 
 public class Constant {
 	
@@ -401,6 +398,7 @@ public class Constant {
     public static final int STATS_SPELL_PO = 281;
     public static final int STATS_SPELL_PO_MODIF = 282;
     public static final int STATS_SPELL_ADD_DOM = 283;
+    public static final int STATS_SPELL_ADD_HEAL = 284;
     public static final int STATS_SPELL_REM_PA = 285;
     public static final int STATS_SPELL_REM_DELAY = 286;
     public static final int STATS_SPELL_ADD_CRIT = 287;
@@ -416,6 +414,8 @@ public class Constant {
     public static int[] EXCEPTION_GLADIATROOL_BOSS = {404,423,1159};
     public static int[] EXCEPTION_GLADIATROOL_ARCHI = {404,423,1159};
     public static int[] EXCEPTION_GLADIATROOL_MONSTRES = {258,260,404,424,1090,1091,1092,1094};
+
+    public static final List<Integer> GLADIATROOL_FULLMORPHID = Arrays.asList(101,102,103,104,105,106,107,108,109,110,111,112);
 
     //Monstre
     public static final int[] MONSTRE_TYPE_DIVERS = {-1,29,32,18,28,27,0,1,68,50,79};
@@ -2328,7 +2328,6 @@ public class Constant {
         }
 
     }
-
 
     public static int getGlyphColor(int spell) {
         switch (spell) {

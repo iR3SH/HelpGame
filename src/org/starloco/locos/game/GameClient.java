@@ -26,6 +26,7 @@ import org.starloco.locos.entity.pet.Pet;
 import org.starloco.locos.entity.pet.PetEntry;
 import org.starloco.locos.fight.Fight;
 import org.starloco.locos.fight.Fighter;
+import org.starloco.locos.fight.spells.GladiatroolSpells;
 import org.starloco.locos.fight.spells.Spell;
 import org.starloco.locos.game.action.ExchangeAction;
 import org.starloco.locos.game.action.GameAction;
@@ -227,6 +228,7 @@ public class GameClient {
     private void Deconnection() {
         //TODO : Faut géré ce cas de changement de perso en version 1.39.8
        exchangeClient.send("HS" + this.getSession().getId() + ";");
+
     }
 
     private void parseGladiatroolPacket(String packet) {
@@ -6157,8 +6159,8 @@ public class GameClient {
                 final int effect = Integer.parseInt(val[0], 16);
                 final int spell = Integer.parseInt(val[1], 16);
                 final int modif = Integer.parseInt(val[3], 16);
-                final String modifi = effect + ";" + spell + ";" + modif;
-                SocketManager.SEND_SB_SPELL_BOOST(this.player, modifi);
+                /*final String modifi = effect + ";" + spell + ";" + modif;
+                SocketManager.SEND_SB_SPELL_BOOST(this.player, modifi);*/
                 this.player.addItemClasseSpell(spell, effect, modif);
             }
             this.player.addItemClasse(objTemplate.getId());
@@ -7188,6 +7190,26 @@ public class GameClient {
             Spell.SortStats Spell = this.player.getSortStatBySortIfHas(SpellID);
             if (Spell != null) {
                 this.player.set_SpellPlace(SpellID, Integer.toHexString(Position));
+            }
+            if(this.player.getMorphMode())
+            {
+                int fullMorphId = this.player.getMorphId();
+                if(Constant.GLADIATROOL_FULLMORPHID.contains(fullMorphId))
+                {
+                    GladiatroolSpells gladiatroolSpells = World.world.getGladiatroolSpellsFromPlayer(this.player, fullMorphId);
+                    if(gladiatroolSpells != null)
+                    {
+                        gladiatroolSpells.setSpells(this.player.parseSpellToDB(false));
+                        World.world.addGladiatroolSpells(this.player, gladiatroolSpells);
+                        Database.getDynamics().getGladiatroolSpellsData().update(gladiatroolSpells);
+                    }
+                    else
+                    {
+                        GladiatroolSpells newGladiatroolSpells = new GladiatroolSpells(this.player, fullMorphId,this.player.parseSpellToDB(false));
+                        World.world.addGladiatroolSpells(this.player, newGladiatroolSpells);
+                        Database.getDynamics().getGladiatroolSpellsData().add(newGladiatroolSpells);
+                    }
+                }
             }
             SocketManager.GAME_SEND_BN(this);
         } catch (Exception e) {

@@ -20,6 +20,7 @@ import org.starloco.locos.entity.npc.Npc;
 import org.starloco.locos.entity.npc.NpcTemplate;
 import org.starloco.locos.fight.Challenge;
 import org.starloco.locos.fight.Fight;
+import org.starloco.locos.fight.spells.Spell;
 import org.starloco.locos.game.GameClient;
 import org.starloco.locos.game.GameServer;
 import org.starloco.locos.game.action.ExchangeAction;
@@ -40,11 +41,8 @@ import org.starloco.locos.quest.Quest.QuestPlayer;
 
 import org.starloco.locos.quest.Quest_Etape;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 import java.util.Map.Entry;
-import java.util.Random;
-import java.util.Set;
 
 public class CommandAdmin extends AdminUser {
 
@@ -1791,7 +1789,7 @@ public class CommandAdmin extends AdminUser {
                 return;
             }
             boolean useMax = false;
-            if (infos.length == 3)
+            if (infos.length >= 3)
                 useMax = infos[2].equals("MAX");//Si un jet est specifie
 
             for (ObjectTemplate t : IS.getItemTemplates()) {
@@ -1819,7 +1817,7 @@ public class CommandAdmin extends AdminUser {
                 return;
             }
             int qua = 1;
-            if (infos.length == 3)//Si une quantite est specifiee
+            if (infos.length >= 3)//Si une quantite est specifiee
             {
                 try {
                     qua = Integer.parseInt(infos[2]);
@@ -1827,8 +1825,17 @@ public class CommandAdmin extends AdminUser {
                     // ok
                 }
             }
+            Player target = this.getPlayer();
+            if(infos.length >= 4)
+            {
+                Player findHim = World.world.getPlayerByName(infos[3]);
+                if(findHim != null)
+                {
+                    target = findHim;
+                }
+            }
             boolean useMax = false;
-            if (infos.length == 4)//Si un jet est specifie
+            if (infos.length >= 5)//Si un jet est specifie
             {
                 if (infos[3].equalsIgnoreCase("MAX"))
                     useMax = true;
@@ -1851,10 +1858,10 @@ public class CommandAdmin extends AdminUser {
 
             if(t.getType() == Constant.ITEM_TYPE_CERTIF_MONTURE) {
                 //obj.setMountStats(this.getPlayer(), null);
-                Mount mount = new Mount(Constant.getMountColorByParchoTemplate(obj.getTemplate().getId()), this.getPlayer().getId(), false);
+                Mount mount = new Mount(Constant.getMountColorByParchoTemplate(obj.getTemplate().getId()), target.getId(), false);
                 obj.clearStats();
                 obj.getStats().addOneStat(995, - (mount.getId()));
-                obj.getTxtStat().put(996, this.getPlayer().getName());
+                obj.getTxtStat().put(996, target.getName());
                 obj.getTxtStat().put(997, mount.getName());
                 mount.setToMax();
                 // Pour g�n�rer une monture niveau 100 :
@@ -1862,14 +1869,14 @@ public class CommandAdmin extends AdminUser {
                 mount.energy = 2000;
                 mount.stats = Constant.getMountStats(mount.color, mount.level);
             }
-            if (this.getPlayer().addObjet(obj, true))//Si le joueur n'avait pas d'item similaire
+            if (target.addObjet(obj, true))//Si le joueur n'avait pas d'item similaire
                 World.world.addGameObject(obj, true);
             String str = "Cr�ation de l'item " + tID + " r�ussie";
             if (useMax)
                 str += " avec des stats maximums";
             str += ".";
             this.sendMessage(str);
-            SocketManager.GAME_SEND_Ow_PACKET(this.getPlayer());
+            SocketManager.GAME_SEND_Ow_PACKET(target);
             return;
         } else if (command.equalsIgnoreCase("SPELLPOINT")) {
             int pts = -1;
@@ -1955,7 +1962,22 @@ public class CommandAdmin extends AdminUser {
                     + perso.getName() + ".";
             this.sendMessage(str);
             return;
-        } else if (command.equalsIgnoreCase("CAPITAL")) {
+        } else if (command.equalsIgnoreCase("REFRESHSPELL")) {
+            Collection< Spell.SortStats> spells = this.getPlayer().getSorts();
+            for(Spell.SortStats spell : spells)
+            {
+                this.getPlayer().forgetSpell(spell.getSpellID());
+            }
+            this.getPlayer().setSpells(Constant.getStartSorts(this.getPlayer().getClasse()));
+            this.getPlayer().setSpellsPlace(true);
+            for (int i = 3; i < this.getPlayer().getLevel() + 1; i++) {
+                Constant.onLevelUpSpells(this.getPlayer(), i, true);
+            }
+            this.getPlayer().set_spellPts(this.getPlayer().getLevel() - 1);
+            SocketManager.GAME_SEND_SPELL_LIST(this.getPlayer());
+            SocketManager.GAME_SEND_STATS_PACKET(this.getPlayer());
+
+        }else if (command.equalsIgnoreCase("CAPITAL")) {
             int pts = -1;
             try {
                 pts = Integer.parseInt(infos[1]);

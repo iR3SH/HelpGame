@@ -494,7 +494,7 @@ public class Action {
 
                         player.setToniqueEquilibrage(player.generateStatsTonique(fullMorph));
 
-                    } else {// Tourmenteur ; on d?morphe
+                    } else {// Tourmenteur ; on démorphe
                         if (Constant.isIncarnationWeapon(object.getTemplate().getId()))
                             player.unsetFullMorph();
                     }
@@ -509,7 +509,7 @@ public class Action {
                                 + "~" + obj2.getTemplate().getId());
                         World.world.addGameObject(obj2, true);
                     }
-
+                    player.setPdv(player.getMaxPdv());
                     SocketManager.GAME_SEND_STATS_PACKET(player);
 
                 } catch (Exception e) {

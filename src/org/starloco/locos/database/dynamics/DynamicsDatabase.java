@@ -70,6 +70,7 @@ public class DynamicsDatabase {
     private PlayerCommandData playerCommandData;
     private GuildData guildData;
     private QuestPlayerData questPlayerData;
+    private GladiatroolSpellsData gladiatroolSpellsData;
 
     public void initializeData() {
         this.areaData = new AreaData(dataSource);
@@ -131,6 +132,7 @@ public class DynamicsDatabase {
         this.playerCommandData = new PlayerCommandData(this.dataSource);
         this.guildData = new GuildData(this.dataSource);
         this.questPlayerData = new QuestPlayerData(this.dataSource);
+        this.gladiatroolSpellsData = new GladiatroolSpellsData(this.dataSource);
     }
 
     public boolean initializeConnection() {
@@ -373,4 +375,6 @@ public class DynamicsDatabase {
 	public QuestPlayerData getQuestPlayerData() {
 		return questPlayerData;
 	}
+
+    public GladiatroolSpellsData getGladiatroolSpellsData() {return gladiatroolSpellsData;}
 }
