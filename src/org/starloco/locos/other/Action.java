@@ -3034,6 +3034,7 @@ public class Action {
                 if (!Constant.isInGladiatorDonjon(player.getCurMap().getId()) && player.getCurMap().getId() != 15080)
                     return true;
                 player.teleport((short) 3451, 267);
+                player.setPdv(player.getMaxPdv());
                 if(nbjeton>0){
                     GameObject Jetons = World.world.getObjTemplate(16000).createNewItem(nbjeton, false);
                     if (player.addObjet(Jetons, true))

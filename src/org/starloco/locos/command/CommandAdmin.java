@@ -1837,7 +1837,7 @@ public class CommandAdmin extends AdminUser {
             boolean useMax = false;
             if (infos.length >= 5)//Si un jet est specifie
             {
-                if (infos[3].equalsIgnoreCase("MAX"))
+                if (infos[4].equalsIgnoreCase("MAX"))
                     useMax = true;
             }
             ObjectTemplate t = World.world.getObjTemplate(tID);

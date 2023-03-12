@@ -35,17 +35,17 @@ public class IAHandler {
                     ia = new IA2(fight, fighter, (byte) 6); break;
                 case 5://IA Bloqueuse : Avancer vers ennemis
                     ia = new IA5(fight, fighter, (byte) 5); break;
-                case 6://IA type invocations (Coffre animé)
+                case 6://IA type invocations (Coffre animï¿½)
                     ia = new IA6(fight, fighter, (byte) 5); break;
                 case 8://IA Surpuissante : Invocation, Buff, Fuite
                     ia = new IA8(fight, fighter, (byte) 4); break;
                 case 9://IA La Fourbe : Attaque[], Fuite
                     ia = new IA9(fight, fighter, (byte) 4); break;
-                case 10://IA Tonneau : Attaque[], Soin si Etat portée
+                case 10://IA Tonneau : Attaque[], Soin si Etat portï¿½e
                     ia = new IA10(fight, fighter, (byte) 8); break;
                 case 12://IA Tofus
                     ia = new IA12(fight, fighter, (byte) 4); break;
-                case 14://IA Tonneau : Attaque[], Soin si Etat portée
+                case 14://IA Tonneau : Attaque[], Soin si Etat portï¿½e
                     ia = new IA14(fight, fighter, (byte) 8); break;
                 case 15://IA BASIQUE buff sois meme,attaque,pm,attaque,pm
                     ia = new IA30(fight, fighter, (byte) 4); break;
@@ -65,7 +65,7 @@ public class IAHandler {
                     ia = new IA22(fight, fighter, (byte) 4); break;
                 case 23: // IA Rasboul mineur
                     ia = new IA23(fight, fighter, (byte) 3); break;
-                case 24: // IA Sac animé
+                case 24: // IA Sac animï¿½
                     ia = new IA24(fight, fighter, (byte) 3); break;
                 case 25: // IA Sacrifier
                     ia = new IA25(fight, fighter, (byte) 4); break;
@@ -160,70 +160,73 @@ public class IAHandler {
                 case 70: //Element Spark AI
                     ia=new IA70(fight,fighter,(byte)8);
                     break;
-                  case 71: //Regenerative AI with anti-summon clause
+                case 71: //Regenerative AI with anti-summon clause
                     ia=new IA71(fight,fighter,(byte)8);
                     break;
-                  case 72: //Healing AI with anti-summon clause with only close-combat damage spells and abolition
+                case 72: //Healing AI with anti-summon clause with only close-combat damage spells and abolition
                     ia=new IA72(fight,fighter,(byte)5); // Bouf royal
                     break;
-                  case 73: //Bomberfu AI
+                case 73: //Bomberfu AI
                     ia=new IA73(fight,fighter,(byte)8);
                     break;
-                  case 74: //Osamodas dopple summon AI
+                case 74: //Osamodas dopple summon AI
                     ia=new IA74(fight,fighter,(byte)8);
                     break;
-                  case 75: //Osamodas dopple selfbuff summon AI
+                case 75: //Osamodas dopple selfbuff summon AI
                     ia=new IA75(fight,fighter,(byte)8);
                     break;
-                  case 76: //Royal Tofu AI
+                case 76: //Royal Tofu AI
                     ia=new IA76(fight,fighter,(byte)8);
                     break;
-                  case 77: //Tofukaz AI
+                case 77: //Tofukaz AI
                     ia=new IA77(fight,fighter,(byte)8);
                     break;
-                  case 78: //Tofoone AI
+                case 78: //Tofoone AI
                     ia=new IA78(fight,fighter,(byte)8);
                     break;
-                  case 79: //Tofurby AI
+                case 79: //Tofurby AI
                     ia=new IA79(fight,fighter,(byte)8);
                     break;
-                  case 85: //Ougaa
-                      ia=new IA85(fight,fighter,(byte)4);
-                      break;
-                  case 100: //Alpha Invocation Dopeul Féca (+Enu)
-                      ia=new IA100(fight,fighter,(byte)4);
-                      break;
-                  case 101: //Alpha Invocation Dopeul Iop
-                      ia=new IA101(fight,fighter,(byte)6);
-                      break;
-                  case 102: //Alpha Invocation Dopeul Cra
-                      ia=new IA102(fight,fighter,(byte)4);
-                      break;
-                  case 103: //Alpha Invocation Dopeul Xélor (+Eni)
-                      ia=new IA103(fight,fighter,(byte)4);
-                      break;
-                  case 104: //Alpha Invocation Dopeul Sadi
-                      ia=new IA104(fight,fighter,(byte)4);
-                      break;
-                      // Sacri IA 67
-                      // Reste Panda(Done), Osa(Done), Eni(ok), Sram(pas ok), Sadi(Done)
-                  case 105: //Alpha Invocation Dopeul Panda (parti de l'IA 68)
-                	  // Ajouter fuite ?
-                      ia=new IA105(fight,fighter,(byte)4);
-                      break;
-                  case 106: //Alpha Invocation Dopeul Eca
-                      ia=new IA106(fight,fighter,(byte)4);
-                      break;
-                  case 107: //Alpha Invocation MAGE (Compagnon)
-                      ia=new IA107(fight,fighter,(byte)4);
-                      break; 
+                case 80:
+                    ia = new IA80(fight, fighter, (byte)8);
+                    break;
+                case 85: //Ougaa
+                    ia=new IA85(fight,fighter,(byte)4);
+                    break;
+                case 100: //Alpha Invocation Dopeul Fï¿½ca (+Enu)
+                    ia=new IA100(fight,fighter,(byte)4);
+                    break;
+                case 101: //Alpha Invocation Dopeul Iop
+                    ia=new IA101(fight,fighter,(byte)6);
+                    break;
+                case 102: //Alpha Invocation Dopeul Cra
+                    ia=new IA102(fight,fighter,(byte)4);
+                    break;
+                case 103: //Alpha Invocation Dopeul Xï¿½lor (+Eni)
+                    ia=new IA103(fight,fighter,(byte)4);
+                    break;
+                case 104: //Alpha Invocation Dopeul Sadi
+                    ia=new IA104(fight,fighter,(byte)4);
+                    break;
+                    // Sacri IA 67
+                // Reste Panda(Done), Osa(Done), Eni(ok), Sram(pas ok), Sadi(Done)
+                case 105: //Alpha Invocation Dopeul Panda (parti de l'IA 68)
+                    // Ajouter fuite ?
+                    ia=new IA105(fight,fighter,(byte)4);
+                    break;
+                case 106: //Alpha Invocation Dopeul Eca
+                    ia=new IA106(fight,fighter,(byte)4);
+                    break;
+                case 107: //Alpha Invocation MAGE (Compagnon)
+                    ia=new IA107(fight,fighter,(byte)4);
+                    break;
             }
         }
 
         final IA finalIA = ia;
         ia.addNext(() -> {
             finalIA.apply();
-            finalIA.addNext(finalIA::endTurn, 0); // 1000 to 0 by coding mestre (vérifier si ça induit des bugs)
+            finalIA.addNext(finalIA::endTurn, 0); // 1000 to 0 by coding mestre (vï¿½rifier si ï¿½a induit des bugs)
         }, 0);
     }
 }
