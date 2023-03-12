@@ -37,3 +37,112 @@
 [16 : 25 : 50] : Starting logger..
 [16 : 25 : 50] : 127.0.0.1 : iop > Blue-Shot > infos
 [16 : 26 : 20] : 127.0.0.1 : iop > Blue-Shot > infos
+[16 : 30 : 20] : Starting logger..
+[16 : 30 : 20] : 127.0.0.1 : ir3sh > Hydro > infos
+[16 : 30 : 21] : 127.0.0.1 : iop > Blue-Shot > infos
+[16 : 44 : 44] : 127.0.0.1 : ir3sh > Hydro > ENDFIGHT 1
+[16 : 47 : 54] : 127.0.0.1 : ir3sh > Hydro > LSPELL 1074
+[16 : 48 : 43] : 127.0.0.1 : ir3sh > Hydro > infos
+[16 : 48 : 56] : 127.0.0.1 : ir3sh > Hydro > REFRESHSPELL
+[16 : 49 : 02] : 127.0.0.1 : ir3sh > Hydro > LSPELL 1074
+[16 : 57 : 09] : Starting logger..
+[16 : 57 : 09] : 127.0.0.1 : ir3sh > Hydro > infos
+[17 : 04 : 26] : Starting logger..
+[17 : 04 : 26] : 127.0.0.1 : ir3sh > Hydro > infos
+[17 : 05 : 06] : 127.0.0.1 : ir3sh > Hydro > ENDFIGHT
+[17 : 05 : 08] : 127.0.0.1 : ir3sh > Hydro > ENDFIGHT 1
+[17 : 05 : 15] : 127.0.0.1 : ir3sh > Hydro > REFRESHSPELL
+[17 : 06 : 37] : 127.0.0.1 : ir3sh > Hydro > CAPITAL 10000
+[17 : 07 : 12] : 127.0.0.1 : ir3sh > Hydro > SPAWN 1045,950,950
+[17 : 30 : 52] : Starting logger..
+[17 : 30 : 52] : 127.0.0.1 : ir3sh > Hydro > infos
+[17 : 30 : 57] : 127.0.0.1 : ir3sh > Hydro > SPAWN 1045,950,950
+[17 : 31 : 50] : Starting logger..
+[17 : 31 : 50] : 127.0.0.1 : ir3sh > Hydro > infos
+[17 : 31 : 55] : 127.0.0.1 : ir3sh > Hydro > SPAWN 1045,950,950
+[17 : 56 : 20] : Starting logger..
+[17 : 56 : 20] : 127.0.0.1 : ir3sh > Hydro > infos
+[17 : 56 : 25] : 127.0.0.1 : ir3sh > Hydro > SPAWN 1045,950,950
+[17 : 58 : 27] : Starting logger..
+[17 : 58 : 27] : 127.0.0.1 : ir3sh > Hydro > infos
+[17 : 58 : 30] : 127.0.0.1 : ir3sh > Hydro > SPAWN 1045,950,950
+[18 : 01 : 43] : Starting logger..
+[18 : 01 : 43] : 127.0.0.1 : ir3sh > Hydro > infos
+[18 : 01 : 47] : 127.0.0.1 : ir3sh > Hydro > SPAWN 1045,950,950
+[18 : 05 : 28] : Starting logger..
+[18 : 05 : 28] : 127.0.0.1 : ir3sh > Hydro > infos
+[18 : 05 : 33] : 127.0.0.1 : ir3sh > Hydro > SPAWN 1045,950,950
+[18 : 07 : 10] : 127.0.0.1 : ir3sh > Hydro > ENDFIGHT 1
+[18 : 07 : 14] : 127.0.0.1 : ir3sh > Hydro > ENDFIGHT 1
+[18 : 07 : 16] : 127.0.0.1 : ir3sh > Hydro > SPAWN 1045,950,950
+[18 : 07 : 52] : Starting logger..
+[18 : 07 : 52] : 127.0.0.1 : ir3sh > Hydro > infos
+[18 : 07 : 56] : 127.0.0.1 : ir3sh > Hydro > SPAWN 1045,950,950
+[18 : 09 : 18] : Starting logger..
+[18 : 09 : 18] : 127.0.0.1 : ir3sh > Hydro > infos
+[18 : 09 : 23] : 127.0.0.1 : ir3sh > Hydro > SPAWN 1045,950,950
+[18 : 14 : 31] : Starting logger..
+[18 : 14 : 31] : 127.0.0.1 : ir3sh > Hydro > infos
+[18 : 14 : 35] : 127.0.0.1 : ir3sh > Hydro > SPAWN 1045,950,950
+[18 : 18 : 13] : Starting logger..
+[18 : 18 : 13] : 127.0.0.1 : ir3sh > Hydro > infos
+[18 : 18 : 17] : 127.0.0.1 : ir3sh > Hydro > SPAWN 1045,950,950
+[18 : 20 : 28] : Starting logger..
+[18 : 20 : 28] : 127.0.0.1 : ir3sh > Hydro > infos
+[18 : 20 : 32] : 127.0.0.1 : ir3sh > Hydro > SPAWN 1045,950,950
+[18 : 25 : 18] : Starting logger..
+[18 : 25 : 18] : 127.0.0.1 : ir3sh > Hydro > infos
+[18 : 25 : 23] : 127.0.0.1 : ir3sh > Hydro > SPAWN 1045,950,950
+[18 : 26 : 12] : Starting logger..
+[18 : 26 : 12] : 127.0.0.1 : ir3sh > Hydro > infos
+[18 : 26 : 16] : 127.0.0.1 : ir3sh > Hydro > SPAWN 1045,950,950
+[18 : 27 : 36] : 127.0.0.1 : ir3sh > Hydro > SPAWN 1045,950,950
+[18 : 45 : 30] : Starting logger..
+[18 : 45 : 30] : 127.0.0.1 : iop > Blue-Shot > infos
+[18 : 46 : 32] : 127.0.0.1 : iop > Blue-Shot > LSPELL 415
+[19 : 22 : 49] : Starting logger..
+[19 : 22 : 49] : 127.0.0.1 : iop > Blue-Shot > infos
+[19 : 37 : 58] : 127.0.0.1 : iop > Blue-Shot > LEARNSPELL
+[19 : 38 : 30] : 127.0.0.1 : iop > Blue-Shot > REFRESHSPELL
+[19 : 38 : 44] : 127.0.0.1 : iop > Blue-Shot > LSPELL 415
+[19 : 47 : 18] : Starting logger..
+[19 : 47 : 18] : 127.0.0.1 : iop > Blue-Shot > infos
+[19 : 57 : 38] : Starting logger..
+[19 : 57 : 38] : 127.0.0.1 : iop > Blue-Shot > infos
+[20 : 00 : 57] : Starting logger..
+[20 : 00 : 57] : 127.0.0.1 : iop > Blue-Shot > infos
+[20 : 02 : 37] : Starting logger..
+[20 : 02 : 37] : 127.0.0.1 : iop > Blue-Shot > infos
+[20 : 05 : 56] : Starting logger..
+[20 : 05 : 56] : 127.0.0.1 : iop > Blue-Shot > infos
+[20 : 13 : 51] : Starting logger..
+[20 : 13 : 51] : 127.0.0.1 : iop > Blue-Shot > infos
+[20 : 18 : 53] : Starting logger..
+[20 : 18 : 53] : 127.0.0.1 : iop > Blue-Shot > infos
+[20 : 24 : 40] : Starting logger..
+[20 : 24 : 40] : 127.0.0.1 : iop > Blue-Shot > infos
+[20 : 29 : 20] : Starting logger..
+[20 : 29 : 20] : 127.0.0.1 : iop > Blue-Shot > infos
+[20 : 32 : 04] : Starting logger..
+[20 : 32 : 04] : 127.0.0.1 : iop > Blue-Shot > infos
+[20 : 34 : 37] : 127.0.0.1 : iop > Blue-Shot > LSPELL 133
+[20 : 44 : 34] : Starting logger..
+[20 : 44 : 34] : 127.0.0.1 : iop > Blue-Shot > infos
+[21 : 08 : 00] : Starting logger..
+[21 : 08 : 00] : 127.0.0.1 : iop > Blue-Shot > infos
+[21 : 12 : 27] : Starting logger..
+[21 : 12 : 27] : 127.0.0.1 : ir3sh > Hydro > infos
+[21 : 12 : 28] : 127.0.0.1 : iop > Blue-Shot > infos
+[21 : 31 : 47] : Starting logger..
+[21 : 31 : 47] : 127.0.0.1 : ir3sh > Hydro > infos
+[21 : 31 : 50] : 127.0.0.1 : iop > Blue-Shot > infos
+[22 : 15 : 20] : Starting logger..
+[22 : 15 : 20] : 127.0.0.1 : ir3sh > Hydro > infos
+[22 : 15 : 22] : 127.0.0.1 : iop > Blue-Shot > infos
+[22 : 28 : 38] : 127.0.0.1 : ir3sh > Hydro > kick Hydro
+[22 : 28 : 45] : 127.0.0.1 : ir3sh > Hydro > infos
+[22 : 32 : 46] : Starting logger..
+[22 : 32 : 46] : 127.0.0.1 : iop > Blue-Shot > infos
+[22 : 41 : 36] : Starting logger..
+[22 : 41 : 36] : 127.0.0.1 : iop > Blue-Shot > infos
+[22 : 41 : 43] : 127.0.0.1 : iop > Blue-Shot > REFRESHSPELL

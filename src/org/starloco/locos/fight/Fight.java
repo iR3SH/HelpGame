@@ -1793,8 +1793,10 @@ public class Fight {
         }
       }
 
-      if(current.getPdv()<=0)
-        onFighterDie(current,getInit0());
+      if(current.getPdv()<=0) {
+          onFighterDie(current, getInit0());
+      }
+
 
       if((getType()==Constant.FIGHT_TYPE_PVM)&&(getAllChallenges().size()>0)&&!current.isInvocation()&&!current.isDouble()&&!current.isCollector()&&current.getTeam()==0||getType()==Constant.FIGHT_TYPE_DOPEUL&&(getAllChallenges().size()>0)&&!current.isInvocation()&&!current.isDouble()&&!current.isCollector()&&current.getTeam()==0)
       {
@@ -3052,7 +3054,7 @@ public class Fight {
             });
         }
 
-        for (Fighter fighter : getFighters(3)) {
+        /*for (Fighter fighter : getFighters(3)) {
             ArrayList<SpellEffect> newBuffs = new ArrayList<>();
             for (SpellEffect entry : fighter.getFightBuff()) {
                 switch(entry.getSpell()) {
@@ -3069,6 +3071,12 @@ public class Fight {
             }
             fighter.getFightBuff().clear();
             fighter.getFightBuff().addAll(newBuffs);
+        }*/
+        for (Fighter fighter : this.getFighters(target.getOtherTeam())) {
+            fighter.debuffOnFighterDie(target);
+        }
+        for (Fighter fighter : this.getFighters(target.getTeam())) {
+            fighter.debuffOnFighterDie(target);
         }
         SocketManager.GAME_SEND_GTL_PACKET_TO_FIGHT(this, 7);
         this.verifIfTeamAllDead();

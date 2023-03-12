@@ -3033,6 +3033,7 @@ public class Action {
                 int nbjeton = Integer.parseInt(args);
                 if (!Constant.isInGladiatorDonjon(player.getCurMap().getId()) && player.getCurMap().getId() != 15080)
                     return true;
+                player.unsetFullMorph();
                 player.teleport((short) 3451, 267);
                 player.setPdv(player.getMaxPdv());
                 if(nbjeton>0){

@@ -1342,6 +1342,49 @@ public class Function {
         return false;
       return true;
     }
+    public boolean invocIfPossibleKimbo(Fight fight, Fighter fighter, SortStats spell)
+    {
+        if(fight==null||fighter==null)
+            return false;
+        if(fighter.nbInvocation()>=fighter.getTotalStats().getEffect(Constant.STATS_ADD_SUM))
+            return false;
+        Fighter nearest=getNearestEnnemy(fight,fighter);
+        if(nearest==null)
+            return false;
+        int nearestCell=-1;
+        int limit=30;
+        int _loc0_=0;
+        if(spell==null)
+            return false;
+        ArrayList<GameCase> possibleCases = PathFinding.getCellListFromAreaString2(fight.getMap(), nearest.getCell().getId(), fighter.getCell().getId(), spell.getPorteeType(), spell.getMinPO()-1, false);
+        if(possibleCases.size() > 0)
+        {
+            for(GameCase gameCase : possibleCases)
+            {
+                if(gameCase != null) {
+                    if (gameCase.isWalkable(false) && gameCase.getFirstFighter() == null) {
+                        int distBetweenCasterAndCell = PathFinding.getDistanceBetween(fight.getMap(), gameCase.getId(), fighter.getCell().getId());
+                        if (nearestCell == -1 && distBetweenCasterAndCell == spell.getMaxPO()) {
+                            nearestCell = gameCase.getId();
+                        }
+                        else {
+                            int distNew = PathFinding.getDistanceBetween(fight.getMap(), gameCase.getId(), nearest.getCell().getId());
+                            int distActuBestCell = PathFinding.getDistanceBetween(fight.getMap(), nearestCell, nearest.getCell().getId());
+                            if (distNew < distActuBestCell && distBetweenCasterAndCell == spell.getMaxPO()) {
+                                nearestCell = gameCase.getId();
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        if(nearestCell==-1)
+            return false;
+        int invoc=fight.tryCastSpell(fighter,spell,nearestCell);
+        if(invoc!=0)
+            return false;
+        return true;
+    }
     
     public boolean checkIfInvocPossible(Fight fight, Fighter fighter, List<SortStats> Spelllist)
 	{

@@ -1104,7 +1104,7 @@ public class PathFinding {
         cases.add(map.getCase(cellID));
 
         if(zoneStr.length() < (c + 2)) return cases;
-        int taille = World.world.getCryptManager().getIntByHashedValue(zoneStr.charAt(c + 1));
+        int taille = CryptManager.getIntByHashedValue(zoneStr.charAt(c + 1));
         switch (zoneStr.charAt(c)) {
             case 'C':// Cercle
                 for (int a = 0; a < taille; a++) {
@@ -1146,7 +1146,75 @@ public class PathFinding {
                 break;
 
             case 'P':// Player?
+                break;
 
+            default:
+                GameServer.a();
+                break;
+        }
+        return cases;
+    }
+    public static ArrayList<GameCase> getCellListFromAreaString2(GameMap map,
+                                                                int cellID, int castCellID, String zoneStr, int PONum, boolean isCC) {
+        ArrayList<GameCase> cases = new ArrayList<GameCase>();
+        int c = PONum;
+        if (map == null || map.getCase(cellID) == null)
+            return cases;
+        cases.add(map.getCase(cellID));
+
+        int taille = CryptManager.getIntByHashedValue(zoneStr.charAt(0));
+        switch (zoneStr.charAt(0)) {
+            case 'C':// Cercle
+                for (int a = 0; a < taille; a++) {
+                    char[] dirs = {'b', 'd', 'f', 'h'};
+                    ArrayList<GameCase> cases2 = new ArrayList<GameCase>();// on �vite les
+                    // modifications
+                    // concurrentes
+                    cases2.addAll(cases);
+                    for (GameCase aCell : cases2) {
+                        if(aCell == null) continue;
+                        for (char d : dirs) {
+                            GameCase cell = map.getCase(PathFinding.GetCaseIDFromDirrection(aCell.getId(), d, map, true));
+                            if (cell == null)
+                                continue;
+                            if (!cases.contains(cell))
+                                cases.add(cell);
+                        }
+                    }
+                }
+                break;
+
+            case 'X':// Croix
+                char[] dirs = {'b', 'd', 'f', 'h'};
+                for (char d : dirs) {
+                    int cID = cellID;
+                    for (int a = 0; a < taille; a++) {
+                        cases.add(map.getCase(GetCaseIDFromDirrection(cID, d, map, true)));
+                        cID = GetCaseIDFromDirrection(cID, d, map, true);
+                    }
+                }
+                break;
+
+            case 'L':// Ligne
+                char dir = PathFinding.getDirBetweenTwoCase(castCellID, cellID, map, true);
+                for (int a = 0; a < taille; a++) {
+                    cases.add(map.getCase(GetCaseIDFromDirrection(cellID, dir, map, true)));
+                    cellID = GetCaseIDFromDirrection(cellID, dir, map, true);
+                }
+                break;
+
+            case 'P':// Player?
+                char[] direc = {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'};
+                for (char d : direc) {
+                    cellID = castCellID;
+                    for (int i = 0; i < PONum; i++) {
+                        cellID = GetCaseIDFromDirrection(cellID, d, map, true);
+                    }
+                    int caseId = GetCaseIDFromDirrection(cellID, d, map, true);
+                    GameCase newCase = map.getCase(caseId);
+                    if(newCase != null)
+                        cases.add(newCase);
+                }
                 break;
 
             default:
