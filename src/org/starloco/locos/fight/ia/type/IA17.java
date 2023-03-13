@@ -35,12 +35,7 @@ public class IA17 extends AbstractNeedSpell
 
       if(this.fighter.getCurPa(this.fight)>0)
       {
-        if(Function.getInstance().invocIfPossibleloin(this.fight,this.fighter,this.invocations))
-        {
-          time=3000;
-          action=true;
-        }
-        else if(Function.getInstance().invocIfPossible(this.fight,this.fighter))
+        if(Function.getInstance().invocIfPossibleKimbo(this.fight,this.fighter, this.fighter.getMob().getSpells().get(1074)))
         {
           time=3000;
           action=true;

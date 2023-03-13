@@ -32,7 +32,7 @@ public class IA46 extends AbstractNeedSpell
       Fighter L=Function.getInstance().getNearestAminoinvocnbrcasemax(this.fight,this.fighter,1,maxPo+1);// pomax +1;
       if(this.fighter.getCurPa(this.fight)>0&&(L!=null||A!=null)&&!this.boost)
       {
-        if(Function.getInstance().buffIfPossible(this.fight,this.fighter,(L==null ? A : L),this.buffs))
+        if(Function.getInstance().buffIfPossible(this.fight,this.fighter,this.fighter.getInvocator(),this.buffs))
         {
           time=1000;
           action=true;

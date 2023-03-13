@@ -18,11 +18,8 @@ import org.starloco.locos.util.TimerWaiter.DataType;
 import org.starloco.locos.entity.monster.Monster;
 import org.starloco.locos.fight.spells.Spell;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.Map;
+import java.util.*;
 import java.util.Map.Entry;
-import java.util.HashMap;
 import java.util.stream.Collectors;
 
 public class Fighter implements Comparable<Fighter> {
@@ -616,7 +613,43 @@ public class Fighter implements Comparable<Fighter> {
                 break;
         }
     }
+    public void debuffOnFighterDie(Fighter fighter) {
+        ArrayList<SpellEffect> it = this.fightBuffs;
+        ArrayList<SpellEffect> effectToDebuff = new ArrayList<>();
+        for (SpellEffect effect : it) {
 
+            if (effect.isDebuffabe() && effect.getCaster() == fighter) {
+                effectToDebuff.add(effect);
+                //On envoie les Packets si besoin
+                switch (effect.getEffectID()) {
+                    case Constant.STATS_ADD_PA:
+                    case Constant.STATS_ADD_PA2:
+                        SocketManager.GAME_SEND_GA_PACKET_TO_FIGHT(this.fight, 7, 101, getId()
+                                + "", getId() + ",-" + effect.getValue());
+                        break;
+
+                    case Constant.STATS_ADD_PM:
+                    case Constant.STATS_ADD_PM2:
+                        SocketManager.GAME_SEND_GA_PACKET_TO_FIGHT(this.fight, 7, 127, getId()
+                                + "", getId() + ",-" + effect.getValue());
+                        break;
+                    case Constant.STATS_REM_PO:
+                            SocketManager.GAME_SEND_GA_PACKET_TO_FIGHT(fight, 7, Constant.STATS_ADD_PO, getId()
+                            +"", getId()+","+ effect.getValue() + "," + effect.getDuration());
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }
+        for(SpellEffect effect : effectToDebuff)
+        {
+            it.remove(effect);
+        }
+        this.fightBuffs = it;
+        if (this.perso != null && !this.hasLeft) // Envoie les stats au joueurs
+            SocketManager.GAME_SEND_STATS_PACKET(this.perso);
+    }
     public void debuff() {
         Iterator<SpellEffect> it = this.fightBuffs.iterator();
         while (it.hasNext()) {
@@ -735,7 +768,7 @@ public class Fighter implements Comparable<Fighter> {
 
     public void initBuffStats() {
         if (this.type == 1)
-            this.fightBuffs.addAll(this.perso.get_buff().values().stream().collect(Collectors.toList()));
+            this.fightBuffs.addAll(new ArrayList<>(this.perso.get_buff().values()));
     }
 
     public void applyBeginningTurnBuff(Fight fight) {

@@ -39,14 +39,23 @@ public class IA50 extends AbstractNeedSpell
         if(L.isHide())
           L=null;
 
-      if(this.fighter.getCurPa(this.fight)>0&&!this.fighter.haveInvocation())
+      if(this.fighter.getCurPa(this.fight)>0)
       {
         if(Function.getInstance().invocIfPossibleloin(this.fight,this.fighter,this.invocations))
         {
           time=2000;
           action=true;
         }
+        else
+        {
+          if(Function.getInstance().invocIfPossible(this.fight, this.fighter, this.invocations))
+          {
+            time=2000;
+            action=true;
+          }
+        }
       }
+
       if(this.fighter.getCurPm(this.fight)>0&&L==null&&C==null)
       {
         int nbrcase=Function.getInstance().moveautourIfPossible(this.fight,this.fighter,ennemy);
@@ -60,7 +69,7 @@ public class IA50 extends AbstractNeedSpell
             L=null;
         }
       }
-      if(this.fighter.getCurPa(this.fight)>0&&!action)
+      if(this.fighter.getCurPa(this.fight)>0 && !action)
       {
         if(Function.getInstance().buffIfPossible(this.fight,this.fighter,this.fighter,this.buffs))
         {

@@ -5335,13 +5335,21 @@ public class Player {
             _itemClasseSpell.remove(spell);
         }
     }
+    public String verifModifItemClassSpell(int spellId, int effect, HashMap<Integer, Integer> mapEffect)
+    {
+        Spell spellToCheck = null;
+        String modifi = "";
+        modifi = effect + ";" + spellId + ";" +  mapEffect.get(effect);
+
+        return modifi;
+    }
 
     public void addItemClasseSpell(int spell, int effect, int modif) {
         if (!_itemClasseSpell.containsKey(spell)) {
             HashMap<Integer, Integer> newMap = new HashMap<>();
             newMap.put(effect, modif);
             _itemClasseSpell.put(spell, newMap);
-            String modifi = effect + ";" + spell + ";" + modif;
+            String modifi = verifModifItemClassSpell(spell, effect, newMap);
             SocketManager.SEND_SB_SPELL_BOOST(this, modifi);
         }
         else
@@ -5357,28 +5365,8 @@ public class Player {
             {
                 map.put(effect, modif);
             }
-            String modifi = effect + ";" + spell + ";" + map.get(effect);
-            Spell spellToCheck = null;
-            if(effect == Constant.STATS_SPELL_REM_PA)
-            {
-                spellToCheck = World.world.getSort(spell);
-                int paCost = spellToCheck.getSortsStats().get(6).getPACost() - map.get(effect);
-                if(paCost <= 0)
-                {
-                    paCost = 1;
-                }
-                modifi = effect + ";" + spell + ";" + paCost;
-            }
-            else if(effect == Constant.STATS_SPELL_REM_DELAY)
-            {
-                spellToCheck = World.world.getSort(spell);
-                int delay = spellToCheck.getSortsStats().get(6).getCoolDown() - map.get(effect);
-                if(delay < 0)
-                {
-                    delay = 0;
-                }
-                modifi = effect + ";" + spell + ";" + delay;
-            }
+            String modifi = verifModifItemClassSpell(spell, effect, map);
+
             SocketManager.SEND_SB_SPELL_BOOST(this, modifi);
             _itemClasseSpell.remove(spell);
             _itemClasseSpell.put(spell, map);
@@ -5398,6 +5386,7 @@ public class Player {
     }
 
     public void refreshItemClasse() {
+        _itemClasseSpell.clear();
         for (int j = 2; j < 8; j++) {
             if (getObjetByPos(j) == null)
                 continue;

@@ -24,6 +24,7 @@ import org.starloco.locos.fight.traps.Trap;
 import org.starloco.locos.fight.turn.Turn;
 import org.starloco.locos.game.action.GameAction;
 import org.starloco.locos.game.GameClient;
+import org.starloco.locos.kernel.Logging;
 import org.starloco.locos.other.Action;
 import org.starloco.locos.game.world.World;
 import org.starloco.locos.game.world.World.Couple;
@@ -1792,8 +1793,10 @@ public class Fight {
         }
       }
 
-      if(current.getPdv()<=0)
-        onFighterDie(current,getInit0());
+      if(current.getPdv()<=0) {
+          onFighterDie(current, getInit0());
+      }
+
 
       if((getType()==Constant.FIGHT_TYPE_PVM)&&(getAllChallenges().size()>0)&&!current.isInvocation()&&!current.isDouble()&&!current.isCollector()&&current.getTeam()==0||getType()==Constant.FIGHT_TYPE_DOPEUL&&(getAllChallenges().size()>0)&&!current.isInvocation()&&!current.isDouble()&&!current.isCollector()&&current.getTeam()==0)
       {
@@ -2429,168 +2432,146 @@ public class Fight {
 
     public synchronized int tryCastSpell(Fighter fighter, SortStats spell, int cell) //0 = success, 5 = crit fail, 10 = error
     {
-      final Fighter current=this.getFighterByOrdreJeu();
+        try {
+            final Fighter current = this.getFighterByOrdreJeu();
 
-      if(current==null||spell==null||this.isCurAction()||this.isTraped()||current!=fighter)
-        return 10;
+            if (current == null || spell == null || this.isCurAction() || this.isTraped() || current != fighter)
+                return 10;
 
-      //v2.8 - Carrying lockout fix
-      if(fighter.getHoldedBy()!=null&&(spell.getSpellID()==686||spell.getSpellID()==699||spell.getSpellID()==701))
-        return 10;
+            //v2.8 - Carrying lockout fix
+            if (fighter.getHoldedBy() != null && (spell.getSpellID() == 686 || spell.getSpellID() == 699 || spell.getSpellID() == 701))
+                return 10;
 
-      GameCase Cell=getMap().getCase(cell);
-      Player player=fighter.getPersonnage();
+            GameCase Cell = getMap().getCase(cell);
+            Player player = fighter.getPersonnage();
 
-      //test
-      if(Cell.getFirstFighter()!=null)
-          for(SpellEffect effect : spell.getEffects())
-            if(effect.getEffectID()==181||effect.getEffectID()==185||effect.getEffectID()==400||effect.getEffectID()==401||effect.getEffectID()==4) //summons, static summons, traps, glyphs, teleportation
-            {
-              for(Fighter f : this.getFighters(3))
-                if(f.getTeam()==fighter.getTeam())
-                  if(f.getPersonnage()!=null)
-                    SocketManager.GAME_SEND_MESSAGE(f.getPersonnage(),"<b>"+player.getName()+"</b> ne peut pas lancer <b>"+spell.getSpell().getNombre()+"</b> � cause d'un obstacle invisible !");
-              setCurAction(false);
-              SocketManager.GAME_SEND_GA_PACKET_TO_FIGHT(this,7,102,fighter.getId()+"",fighter.getId()+",-0");
-              return 10;
+            //test
+            if (Cell.getFirstFighter() != null)
+                for (SpellEffect effect : spell.getEffects())
+                    if (effect.getEffectID() == 181 || effect.getEffectID() == 185 || effect.getEffectID() == 400 || effect.getEffectID() == 401 || effect.getEffectID() == 4) //summons, static summons, traps, glyphs, teleportation
+                    {
+                        for (Fighter f : this.getFighters(3))
+                            if (f.getTeam() == fighter.getTeam())
+                                if (f.getPersonnage() != null)
+                                    SocketManager.GAME_SEND_MESSAGE(f.getPersonnage(), "<b>" + player.getName() + "</b> ne peut pas lancer <b>" + spell.getSpell().getNombre() + "</b> � cause d'un obstacle invisible !");
+                        setCurAction(false);
+                        SocketManager.GAME_SEND_GA_PACKET_TO_FIGHT(this, 7, 102, fighter.getId() + "", fighter.getId() + ",-0");
+                        return 10;
+                    }
+
+
+            setCurAction(true);
+
+            if (canCastSpell1(fighter, spell, Cell, -1)) {
+                if (fighter.getPersonnage() != null)
+                    SocketManager.GAME_SEND_STATS_PACKET(fighter.getPersonnage()); // envoi des stats du lanceur
+                if (fighter.getType() == 1 && player.getItemClasseSpell().containsKey(spell.getSpellID())) {
+                    int modi = player.getItemClasseModif(spell.getSpellID(), Constant.STATS_SPELL_REM_PA);
+                    if (modi < 0) {
+                        modi = 0;
+                    }
+                    setCurFighterPa(getCurFighterPa() - (spell.getPACost() - modi));
+                    setCurFighterUsedPa(getCurFighterUsedPa() + (spell.getPACost() - modi));
+                } else {
+                    setCurFighterPa(getCurFighterPa() - spell.getPACost());
+                    setCurFighterUsedPa(getCurFighterUsedPa() + spell.getPACost());
+                }
+
+                boolean isEc = Formulas.isCriticalFail(spell.getTauxEC(), fighter);
+                if (isEc)
+                    SocketManager.GAME_SEND_GA_PACKET_TO_FIGHT(this, 7, 302, fighter.getId() + "", spell.getSpellID() + ""); // envoi de  l'EC
+
+                else {
+                    if ((getType() == Constant.FIGHT_TYPE_PVM) && (getAllChallenges().size() > 0) && !current.isInvocation() && !current.isDouble() && !current.isCollector()) {
+                        for (Entry<Integer, Challenge> c : getAllChallenges().entrySet()) {
+                            if (c.getValue() == null)
+                                continue;
+                            c.getValue().onPlayerAction(current, spell.getSpellID());
+                            if (spell.getSpell().getSpellID() == 0)
+                                continue;
+                            c.getValue().onPlayerSpell(current, spell);
+                        }
+                    }
+
+
+                    boolean isCC = fighter.testIfCC(spell.getTauxCC(), spell, fighter);
+                    String sort = spell.getSpellID() + "," + cell + "," + spell.getSpriteID() + "," + spell.getLevel() + "," + spell.getSpriteInfos();
+                    SocketManager.GAME_SEND_GA_PACKET_TO_FIGHT(this, 7, 300, fighter.getId() + "", sort); // xx lance le sort
+
+                    if (isCC)
+                        SocketManager.GAME_SEND_GA_PACKET_TO_FIGHT(this, 7, 301, fighter.getId() + "", sort); // CC !
+                    if (fighter.isHide()) // Si le joueur est invi, on montre la case
+                    {
+                        if (spell.getSpellID() == 0)// Si le coup est Coup de Poing alors on refait apparaitre le personnage
+                            fighter.unHide(cell);
+                        else {
+                            showCaseToAll(fighter.getId(), fighter.getCell().getId());
+                            fighter.lastInvisCell = fighter.getCell();
+                            fighter.lastInvisMP = fighter.getCurPm(this);
+                        }
+                    }
+                    spell.applySpellEffectToFight(this, fighter, Cell, isCC, false); // on applique les effets de l'arme
+                }
+
+                if (fighter.getType() == 1 && player.getItemClasseSpell().containsKey(spell.getSpellID())) {
+                    int modi = player.getItemClasseModif(spell.getSpellID(), Constant.STATS_SPELL_REM_PA);
+                    if (modi < 0) {
+                        modi = 0;
+                    }
+                    SocketManager.GAME_SEND_GA_PACKET_TO_FIGHT(this, 7, 102, fighter.getId() + "", fighter.getId() + ",-" + (spell.getPACost() - modi));
+                } else
+                    SocketManager.GAME_SEND_GA_PACKET_TO_FIGHT(this, 7, 102, fighter.getId() + "", fighter.getId() + ",-" + spell.getPACost());
+
+                if (!isEc)
+                    fighter.addLaunchedSort(Cell.getFirstFighter(), spell, fighter);
+
+                if ((isEc && spell.isEcEndTurn())) {
+                    try {
+                        Thread.sleep(250); //2.0 - Crit fail delay reduction
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    setCurAction(false);
+
+                    if (fighter.getMob() != null || fighter.isInvocation())
+                        return 5;
+                    else {
+                        endTurn(false, current);
+                        return 5;
+                    }
+                }
+            } else if (fighter.getMob() != null || fighter.isInvocation()) {
+                try {
+                    Thread.sleep(100);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                setCurAction(false);
+                return 10;
             }
-      
-      
-      
 
-      setCurAction(true);
-
-      if(canCastSpell1(fighter,spell,Cell,-1))
-      {
-        if(fighter.getPersonnage()!=null)
-          SocketManager.GAME_SEND_STATS_PACKET(fighter.getPersonnage()); // envoi des stats du lanceur
-        if(fighter.getType()==1&&player.getItemClasseSpell().containsKey(spell.getSpellID()))
-        {
-          int modi = player.getItemClasseModif(spell.getSpellID(),Constant.STATS_SPELL_REM_PA);
-          if(modi < 0) {
-              modi = 0;
-          }
-          setCurFighterPa(getCurFighterPa() - (spell.getPACost() - modi));
-          setCurFighterUsedPa(getCurFighterUsedPa() + (spell.getPACost() - modi));
-        }
-        else
-        {
-          setCurFighterPa(getCurFighterPa() - spell.getPACost());
-          setCurFighterUsedPa(getCurFighterUsedPa() + spell.getPACost());
-        }
-
-        boolean isEc = Formulas.isCriticalFail(spell.getTauxEC(),fighter);
-        if(isEc)
-          SocketManager.GAME_SEND_GA_PACKET_TO_FIGHT(this,7,302,fighter.getId()+"",spell.getSpellID()+""); // envoi de  l'EC
-
-        else
-        {
-          if((getType()==Constant.FIGHT_TYPE_PVM)&&(getAllChallenges().size()>0)&&!current.isInvocation()&&!current.isDouble()&&!current.isCollector())
-          {
-            for(Entry<Integer, Challenge> c : getAllChallenges().entrySet())
-            {
-              if(c.getValue()==null)
-                continue;
-              c.getValue().onPlayerAction(current,spell.getSpellID());
-              if(spell.getSpell().getSpellID()==0)
-                continue;
-              c.getValue().onPlayerSpell(current,spell);
+            this.verifIfTeamAllDead();
+            if (fighter.getPersonnage() != null) {
+                TimerWaiter.addNext(() -> {
+                    setCurAction(false);
+                    SocketManager.GAME_SEND_GA_PACKET_TO_FIGHT(this, 7, 102, fighter.getId() + "", fighter.getId() + ",-0");
+                }, 1000, TimerWaiter.DataType.FIGHT);
+            } else {
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                setCurAction(false);
             }
-          }
 
-
-          boolean isCC = fighter.testIfCC(spell.getTauxCC(),spell,fighter);
-          String sort = spell.getSpellID()+","+cell+","+spell.getSpriteID()+","+spell.getLevel()+","+spell.getSpriteInfos();
-          SocketManager.GAME_SEND_GA_PACKET_TO_FIGHT(this,7,300,fighter.getId()+"",sort); // xx lance le sort
-
-          if(isCC)
-            SocketManager.GAME_SEND_GA_PACKET_TO_FIGHT(this,7,301,fighter.getId()+"",sort); // CC !
-          if(fighter.isHide()) // Si le joueur est invi, on montre la case
-          {
-            if(spell.getSpellID()==0)// Si le coup est Coup de Poing alors on refait apparaitre le personnage
-              fighter.unHide(cell);
-            else
-            {
-              showCaseToAll(fighter.getId(),fighter.getCell().getId());
-              fighter.lastInvisCell=fighter.getCell();
-              fighter.lastInvisMP=fighter.getCurPm(this);
-            }
-          }
-          spell.applySpellEffectToFight(this,fighter,Cell,isCC,false); // on applique les effets de l'arme
+            return 0;
         }
-
-        if(fighter.getType()==1&&player.getItemClasseSpell().containsKey(spell.getSpellID()))
+        catch (Exception ex)
         {
-          int modi = player.getItemClasseModif(spell.getSpellID(),Constant.STATS_SPELL_REM_PA);
-          if(modi < 0)
-          {
-              modi = 0;
-          }
-          SocketManager.GAME_SEND_GA_PACKET_TO_FIGHT(this,7,102,fighter.getId() + "",fighter.getId() + ",-" + (spell.getPACost() -modi) );
+            Logging.getInstance().write("Error", ex.getMessage() + "\n" + Arrays.toString(ex.getStackTrace()));
+            return 10;
         }
-        else
-          SocketManager.GAME_SEND_GA_PACKET_TO_FIGHT(this,7,102,fighter.getId() + "",fighter.getId() + ",-" + spell.getPACost());
-
-        if(!isEc)
-          fighter.addLaunchedSort(Cell.getFirstFighter(),spell,fighter);
-        
-        if((isEc&&spell.isEcEndTurn()))
-        {
-          try
-          {
-            Thread.sleep(250); //2.0 - Crit fail delay reduction
-          }
-          catch(InterruptedException e)
-          {
-            e.printStackTrace();
-          }
-          setCurAction(false);
-
-          if(fighter.getMob()!=null||fighter.isInvocation())
-            return 5;
-          else
-          {
-            endTurn(false,current);
-            return 5;
-          }
-        }
-      }
-      else if(fighter.getMob()!=null||fighter.isInvocation())
-      {
-        try
-        {
-          Thread.sleep(100);
-        }
-        catch(InterruptedException e)
-        {
-          e.printStackTrace();
-        }
-        setCurAction(false);
-        return 10;
-      }
-
-      this.verifIfTeamAllDead();
-      if(fighter.getPersonnage()!=null)
-      {
-    	  TimerWaiter.addNext(() -> {
-          setCurAction(false);
-          SocketManager.GAME_SEND_GA_PACKET_TO_FIGHT(this,7,102,fighter.getId()+"",fighter.getId()+",-0");
-        },1000, TimerWaiter.DataType.FIGHT);
-      }
-      else
-      {
-        try
-        {
-          Thread.sleep(1000);
-        }
-        catch(InterruptedException e)
-        {
-          e.printStackTrace();
-        }
-        setCurAction(false);
-      }
-
-      return 0;
     }
 	
 	public boolean checkIfTrapCanBePlaced(SortStats ss, Fighter caster, GameCase cell) {
@@ -2610,163 +2591,169 @@ public class Fight {
 
     public boolean canCastSpell1(Fighter caster, SortStats SS, GameCase cell,
                                  int targetCell) {
-        final Fighter current = this.getFighterByOrdreJeu();
-        if (current == null)
-            return false;
-		
-		if (!checkIfTrapCanBePlaced(SS, caster, cell)) return false;
+        try {
+            final Fighter current = this.getFighterByOrdreJeu();
+            if (current == null)
+                return false;
 
-        int casterCell;
-        if (targetCell <= -1)
-            casterCell = caster.getCell().getId();
-        else
-            casterCell = targetCell;
+            if (!checkIfTrapCanBePlaced(SS, caster, cell)) return false;
 
-        Player perso = caster.getPersonnage();
+            int casterCell;
+            if (targetCell <= -1)
+                casterCell = caster.getCell().getId();
+            else
+                casterCell = targetCell;
 
-        if (SS == null) {
-            if (perso != null) {
+            Player perso = caster.getPersonnage();
+
+            if (SS == null) {
+                if (perso != null) {
             	/*
                 SocketManager.GAME_SEND_GA_CLEAR_PACKET_TO_FIGHT(this, 7);
                 SocketManager.GAME_SEND_Im_PACKET(perso, "1169");
                 SocketManager.GAME_SEND_GAF_PACKET_TO_FIGHT(this, 7, 0, perso.getId());*/
-            }
-            return false;
-        }
-
-        if (current.getId() != caster.getId()) {
-            if (perso != null)
-                SocketManager.GAME_SEND_Im_PACKET(perso, "1175");
-            return false;
-        }
-
-        int usedPA;
-        if (caster.getType() == 1
-                && perso.getItemClasseSpell().containsKey(SS.getSpellID())) {
-            int modi = perso.getItemClasseModif(SS.getSpellID(), Constant.STATS_SPELL_REM_PA);
-            usedPA = SS.getPACost() - modi;
-        } else {
-            usedPA = SS.getPACost();
-        }
-        if(usedPA <= 0)
-        {
-            usedPA = 1;
-        }
-
-        if (getCurFighterPa() < usedPA) {
-            if (perso != null)
-                SocketManager.GAME_SEND_Im_PACKET(perso, "1170;"
-                        + getCurFighterPa() + "~" + SS.getPACost());
-            return false;
-        }
-
-        if (cell == null) {
-            if (perso != null)
-                SocketManager.GAME_SEND_Im_PACKET(perso, "1172");
-            return false;
-        }
-
-        if (caster.getType() == 1
-                && perso.getItemClasseSpell().containsKey(SS.getSpellID())) {
-            int modi = perso.getItemClasseModif(SS.getSpellID(), Constant.STATS_SPELL_LINE_LAUNCH);
-            boolean modif = modi == 1;
-            if (SS.isLineLaunch()
-                    && !modif
-                    && !PathFinding.casesAreInSameLine(getMap(), casterCell, cell.getId(), 'z', 70)) {
-                SocketManager.GAME_SEND_Im_PACKET(perso, "1173");
+                }
                 return false;
             }
-        } else if (SS.isLineLaunch()
-                && !PathFinding.casesAreInSameLine(getMap(), casterCell, cell.getId(), 'z', 70)) {
-            if (perso != null)
-                SocketManager.GAME_SEND_Im_PACKET(perso, "1173");
-            return false;
-        }
 
-        char dir = PathFinding.getDirBetweenTwoCase(casterCell, cell.getId(), getMap(), true);
+            if (current.getId() != caster.getId()) {
+                if (perso != null)
+                    SocketManager.GAME_SEND_Im_PACKET(perso, "1175");
+                return false;
+            }
 
-        if (SS.getSpellID() == 67) {
-            if (!PathFinding.checkLoS(getMap(), PathFinding.GetCaseIDFromDirrection(casterCell, dir, getMap(), true), cell.getId(), null)) {
+            int usedPA;
+            if (caster.getType() == 1
+                    && perso.getItemClasseSpell().containsKey(SS.getSpellID())) {
+                int modi = perso.getItemClasseModif(SS.getSpellID(), Constant.STATS_SPELL_REM_PA);
+                usedPA = SS.getPACost() - modi;
+            } else {
+                usedPA = SS.getPACost();
+            }
+            if (usedPA <= 0) {
+                usedPA = 1;
+            }
+
+            if (getCurFighterPa() < usedPA) {
+                if (perso != null)
+                    SocketManager.GAME_SEND_Im_PACKET(perso, "1170;"
+                            + getCurFighterPa() + "~" + SS.getPACost());
+                return false;
+            }
+
+            if (cell == null) {
+                if (perso != null)
+                    SocketManager.GAME_SEND_Im_PACKET(perso, "1172");
+                return false;
+            }
+
+            if (caster.getType() == 1
+                    && perso.getItemClasseSpell().containsKey(SS.getSpellID())) {
+                int modi = perso.getItemClasseModif(SS.getSpellID(), Constant.STATS_SPELL_LINE_LAUNCH);
+                boolean modif = modi == 1;
+                if (SS.isLineLaunch()
+                        && !modif
+                        && !PathFinding.casesAreInSameLine(getMap(), casterCell, cell.getId(), 'z', 70)) {
+                    SocketManager.GAME_SEND_Im_PACKET(perso, "1173");
+                    return false;
+                }
+            } else if (SS.isLineLaunch()
+                    && !PathFinding.casesAreInSameLine(getMap(), casterCell, cell.getId(), 'z', 70)) {
+                if (perso != null)
+                    SocketManager.GAME_SEND_Im_PACKET(perso, "1173");
+                return false;
+            }
+
+            char dir = PathFinding.getDirBetweenTwoCase(casterCell, cell.getId(), getMap(), true);
+
+            if (SS.getSpellID() == 67) {
+                if (!PathFinding.checkLoS(getMap(), PathFinding.GetCaseIDFromDirrection(casterCell, dir, getMap(), true), cell.getId(), null)) {
+                    if (perso != null)
+                        SocketManager.GAME_SEND_Im_PACKET(perso, "1174");
+                    return false;
+                }
+            }
+
+            if (caster.getType() == 1
+                    && perso.getItemClasseSpell().containsKey(SS.getSpellID())) {
+                int modi = perso.getItemClasseModif(SS.getSpellID(), Constant.STATS_SPELL_LOS);
+                boolean modif = modi == 1;
+                if (SS.hasLDV()
+                        && !PathFinding.checkLoS(getMap(), casterCell, cell.getId(), caster)
+                        && !modif) {
+                    SocketManager.GAME_SEND_Im_PACKET(perso, "1174");
+                    return false;
+                }
+            } else if (SS.hasLDV()
+                    && !PathFinding.checkLoS(getMap(), casterCell, cell.getId(), caster)) {
                 if (perso != null)
                     SocketManager.GAME_SEND_Im_PACKET(perso, "1174");
                 return false;
             }
-        }
 
-        if (caster.getType() == 1
-                && perso.getItemClasseSpell().containsKey(SS.getSpellID())) {
-            int modi = perso.getItemClasseModif(SS.getSpellID(), Constant.STATS_SPELL_LOS);
-            boolean modif = modi == 1;
-            if (SS.hasLDV()
-                    && !PathFinding.checkLoS(getMap(), casterCell, cell.getId(), caster)
-                    && !modif) {
-                SocketManager.GAME_SEND_Im_PACKET(perso, "1174");
-                return false;
-            }
-        } else if (SS.hasLDV()
-                && !PathFinding.checkLoS(getMap(), casterCell, cell.getId(), caster)) {
-            if (perso != null)
-                SocketManager.GAME_SEND_Im_PACKET(perso, "1174");
-            return false;
-        }
+            int dist = PathFinding.getDistanceBetween(getMap(), casterCell, cell.getId());
+            int maxAlc = SS.getMaxPO();
+            int minAlc = SS.getMinPO();
+            // + alcance
+            if (caster.getType() == 1
+                    && perso.getItemClasseSpell().containsKey(SS.getSpellID())) {
+                int modi = perso.getItemClasseModif(SS.getSpellID(), Constant.STATS_SPELL_PO);
+                maxAlc = maxAlc + modi;
+            }// alcance modificable
 
-        int dist = PathFinding.getDistanceBetween(getMap(), casterCell, cell.getId());
-        int maxAlc = SS.getMaxPO();
-        int minAlc = SS.getMinPO();
-        // + alcance
-        if (caster.getType() == 1
-                && perso.getItemClasseSpell().containsKey(SS.getSpellID())) {
-            int modi = perso.getItemClasseModif(SS.getSpellID(), Constant.STATS_SPELL_PO);
-            maxAlc = maxAlc + modi;
-        }// alcance modificable
-
-        if (caster.getType() == 1
-                && perso.getItemClasseSpell().containsKey(SS.getSpellID())) {
-            int modi = perso.getItemClasseModif(SS.getSpellID(), Constant.STATS_SPELL_PO_MODIF);
-            boolean modif = modi == 1;
-            if (SS.isModifPO() || modif) {
+            if (caster.getType() == 1
+                    && perso.getItemClasseSpell().containsKey(SS.getSpellID())) {
+                int modi = perso.getItemClasseModif(SS.getSpellID(), Constant.STATS_SPELL_PO_MODIF);
+                boolean modif = modi == 1;
+                if (SS.isModifPO() || modif) {
+                    maxAlc += caster.getTotalStats().getEffect(117);
+                    if (maxAlc <= minAlc)
+                        maxAlc = minAlc + 1;
+                }
+            } else if (SS.isModifPO()) {
                 maxAlc += caster.getTotalStats().getEffect(117);
                 if (maxAlc <= minAlc)
                     maxAlc = minAlc + 1;
             }
-        } else if (SS.isModifPO()) {
-            maxAlc += caster.getTotalStats().getEffect(117);
-            if (maxAlc <= minAlc)
-                maxAlc = minAlc + 1;
-        }
 
-        if (maxAlc < minAlc)
-            maxAlc = minAlc;
-        if (dist < minAlc || dist > maxAlc) {
-            if (perso != null)
-                SocketManager.GAME_SEND_Im_PACKET(perso, "1171;" + minAlc + "~"
-                        + maxAlc + "~" + dist);
+            if (maxAlc < minAlc)
+                maxAlc = minAlc;
+            if (dist < minAlc || dist > maxAlc) {
+                if (perso != null)
+                    SocketManager.GAME_SEND_Im_PACKET(perso, "1171;" + minAlc + "~"
+                            + maxAlc + "~" + dist);
+                return false;
+            }
+
+            if (!LaunchedSpell.cooldownGood(caster, SS.getSpellID())) {
+                return false;
+            }
+
+            int numLunch = SS.getMaxLaunchbyTurn();
+
+            if (caster.getType() == 1
+                    && perso.getItemClasseSpell().containsKey(SS.getSpellID()))
+                numLunch += perso.getItemClasseModif(SS.getSpellID(), Constant.STATS_SPELL_ADD_LAUNCH);
+
+            if (numLunch - LaunchedSpell.getNbLaunch(caster, SS.getSpellID()) <= 0
+                    && numLunch > 0) {
+                return false;
+            }
+
+            Fighter t = cell.getFirstFighter();
+            int numLunchT = SS.getMaxLaunchByTarget();
+
+            if (caster.getType() == 1 && perso.getItemClasseSpell().containsKey(SS.getSpellID())) {
+                numLunchT += perso.getItemClasseModif(SS.getSpellID(), Constant.STATS_SPELL_ADD_PER_TARGET);
+            }
+
+            return !(numLunchT - LaunchedSpell.getNbLaunchTarget(caster, t, SS.getSpellID()) <= 0 && numLunchT > 0);
+        }
+        catch (Exception ex)
+        {
+            Logging.getInstance().write("Error", ex.getMessage() + "\n" + Arrays.toString(ex.getStackTrace()));
             return false;
         }
-
-        if (!LaunchedSpell.cooldownGood(caster, SS.getSpellID())) {
-            return false;
-        }
-
-        int numLunch = SS.getMaxLaunchbyTurn();
-
-        if (caster.getType() == 1
-                && perso.getItemClasseSpell().containsKey(SS.getSpellID()))
-            numLunch += perso.getItemClasseModif(SS.getSpellID(), Constant.STATS_SPELL_ADD_LAUNCH);
-
-        if (numLunch - LaunchedSpell.getNbLaunch(caster, SS.getSpellID()) <= 0
-                && numLunch > 0) {
-            return false;
-        }
-
-        Fighter t = cell.getFirstFighter();
-        int numLunchT = SS.getMaxLaunchByTarget();
-
-        if (caster.getType() == 1 && perso.getItemClasseSpell().containsKey(SS.getSpellID())) {
-            numLunchT += perso.getItemClasseModif(SS.getSpellID(), Constant.STATS_SPELL_ADD_PER_TARGET);
-        }
-
-        return !(numLunchT - LaunchedSpell.getNbLaunchTarget(caster, t, SS.getSpellID()) <= 0 && numLunchT > 0);
     }
 
     public boolean onFighterDeplace(Fighter fighter, GameAction GA)
@@ -3067,7 +3054,7 @@ public class Fight {
             });
         }
 
-        for (Fighter fighter : getFighters(3)) {
+        /*for (Fighter fighter : getFighters(3)) {
             ArrayList<SpellEffect> newBuffs = new ArrayList<>();
             for (SpellEffect entry : fighter.getFightBuff()) {
                 switch(entry.getSpell()) {
@@ -3084,6 +3071,12 @@ public class Fight {
             }
             fighter.getFightBuff().clear();
             fighter.getFightBuff().addAll(newBuffs);
+        }*/
+        for (Fighter fighter : this.getFighters(target.getOtherTeam())) {
+            fighter.debuffOnFighterDie(target);
+        }
+        for (Fighter fighter : this.getFighters(target.getTeam())) {
+            fighter.debuffOnFighterDie(target);
         }
         SocketManager.GAME_SEND_GTL_PACKET_TO_FIGHT(this, 7);
         this.verifIfTeamAllDead();

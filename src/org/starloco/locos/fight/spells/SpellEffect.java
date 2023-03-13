@@ -1295,7 +1295,13 @@ public class SpellEffect {
 			if (spell == 95) {
 				target.addBuff(Constant.STATS_REM_PA, val, 1, 1, true, spell, args, caster, false);
 			} else {
-				target.addBuff(Constant.STATS_REM_PA, val, turns, 0, true, spell, args, caster, false);
+				if(turns == 0 || duration == 0) {
+					target.addBuff(Constant.STATS_REM_PA, val, 1, 1, true, spell, args, caster, false);
+				}
+				else
+				{
+					target.addBuff(Constant.STATS_REM_PA, val, turns, 0, true, spell, args, caster, false);
+				}
 			}
 			SocketManager.GAME_SEND_GA_PACKET_TO_FIGHT(fight, 7, Constant.STATS_REM_PA, caster.getId()
 					+ "", target.getId() + ",-" + val + "," + turns);
@@ -4090,16 +4096,20 @@ public class SpellEffect {
 			e.printStackTrace();
 		}
 
-		MobGrade MG;
+		MobGrade MG = null;
 		try {
-			MG = World.world.getMonstre(id).getGradeByLevel(level).getCopy();
-		} catch (Exception e1) {
-			try {
-				MG = World.world.getMonstre(id).getRandomGrade().getCopy();
-			} catch (Exception e2) {
-				e2.printStackTrace();
-				return;
+			MG = World.world.getMonstre(id).getGradeByLevel(level);
+			if(MG == null){
+				MG = World.world.getMonstre(id).getGrade(level);
+				if(MG == null)
+				{
+					MG = World.world.getMonstre(id).getRandomGrade().getCopy();
+				}
 			}
+			if(MG != null) {
+				MG = MG.getCopy();
+			}
+		} catch (Exception e1) {
 			e1.printStackTrace();
 		}
 

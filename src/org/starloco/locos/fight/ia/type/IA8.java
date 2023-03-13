@@ -35,13 +35,7 @@ public class IA8 extends AbstractNeedSpell
 
       if(PM>0&&target==null)
       {
-        int num=Function.getInstance().moveautourIfPossible(this.fight,this.fighter,ennemy);
-        if(num!=0)
-        {
-          time=num;
-          action=true;
           target=Function.getInstance().getNearestInvocnbrcasemax(this.fight,this.fighter,0,maxPo);//2 = po min 1 + 1;
-        }
       }
 
       PA=this.fighter.getCurPa(this.fight);
