@@ -2697,7 +2697,7 @@ public class Fight {
             // + alcance
             if (caster.getType() == 1
                     && perso.getItemClasseSpell().containsKey(SS.getSpellID())) {
-                int modi = perso.getItemClasseModif(SS.getSpellID(), Constant.STATS_SPELL_PO);
+                int modi = perso.getItemClasseModif(SS.getSpellID(), Constant.STATS_SPELL_ADD_PO);
                 maxAlc = maxAlc + modi;
             }// alcance modificable
 
@@ -3379,7 +3379,7 @@ public class Fight {
       // + alcance
       if(caster.getType()==1&&perso.getItemClasseSpell().containsKey(SS.getSpellID()))
       {
-        int modi=perso.getItemClasseModif(SS.getSpellID(),Constant.STATS_SPELL_PO);
+        int modi=perso.getItemClasseModif(SS.getSpellID(),Constant.STATS_SPELL_ADD_PO);
         maxAlc=maxAlc+modi;
       } // alcance modificable
 

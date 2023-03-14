@@ -360,6 +360,7 @@ public class Constant {
     public static final int STATS_REM_INVO = 2112;
     public static final int STATS_REM_TRAPDOM = 2113;
     public static final int STATS_REM_TRAPPER = 2114;
+    public static final int STATS_CHATI_SHARED_DAMAGE = 788;
 
     //Effets ID & Buffs
     public static final int EFFECT_PASS_TURN = 140;
@@ -395,7 +396,7 @@ public class Constant {
     public static final int ERR_STATS_XP = 1000;
 
     // Buff de Sort Classe
-    public static final int STATS_SPELL_PO = 281;
+    public static final int STATS_SPELL_ADD_PO = 281;
     public static final int STATS_SPELL_PO_MODIF = 282;
     public static final int STATS_SPELL_ADD_DOM = 283;
     public static final int STATS_SPELL_ADD_HEAL = 284;
@@ -406,6 +407,9 @@ public class Constant {
     public static final int STATS_SPELL_LOS = 289;
     public static final int STATS_SPELL_ADD_LAUNCH = 290;
     public static final int STATS_SPELL_ADD_PER_TARGET = 291;
+    public static final int STATS_SPELL_FIXE_DURATION_DELAY = 292;
+    public static final int STATS_SPELL_ADD_BASE_DAMAGE = 293;
+    public static final int STATS_SPELL_REM_PO = 294;
 
 
 

@@ -120,6 +120,10 @@ public class World {
     public void addAccount(Account account) {
         accounts.put(account.getId(), account);
     }
+    public void removeAccount(Account account)
+    {
+        accounts.remove(account.getId());
+    }
 
     public Account getAccount(int id) {
         return accounts.get(id);

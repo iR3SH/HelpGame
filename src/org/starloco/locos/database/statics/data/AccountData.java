@@ -28,7 +28,7 @@ public class AccountData extends AbstractDAO<Account> {
                 if (a != null && a.isOnline())
                     continue;
 
-                Account C = new Account(RS.getInt("guid"), RS.getString("account").toLowerCase(), RS.getString("pseudo"), RS.getString("reponse"), (RS.getInt("banned") == 1), RS.getString("lastIP"), RS.getString("lastConnectionDate"), RS.getString("friends"), RS.getString("enemy"), RS.getInt("points"), RS.getLong("subscribe"), RS.getLong("muteTime"), RS.getString("mutePseudo"), RS.getString("lastVoteIP"), RS.getString("heurevote"), RS.getBoolean("vip"));
+                Account C = new Account(RS.getInt("guid"), RS.getString("account").toLowerCase(), RS.getString("pseudo"), RS.getString("reponse"), (RS.getInt("banned") == 1), RS.getString("lastIP"), RS.getString("lastConnectionDate"), RS.getString("friends"), RS.getString("enemy"), RS.getInt("points"), RS.getLong("subscribe"), RS.getLong("muteTime"), RS.getString("mutePseudo"), RS.getString("lastVoteIP"), RS.getString("heurevote"), RS.getBoolean("vip"), RS.getString("switchPacketKey"));
                 World.world.addAccount(C);
             }
         } catch (Exception e) {
@@ -45,7 +45,7 @@ public class AccountData extends AbstractDAO<Account> {
             ResultSet RS = result.resultSet;
             while (RS.next()) {
                 if(RS.getString("pseudo").isEmpty()) continue;
-                Account a = new Account(RS.getInt("guid"), RS.getString("account").toLowerCase(), RS.getString("pseudo"), RS.getString("reponse"), (RS.getInt("banned") == 1), RS.getString("lastIP"), RS.getString("lastConnectionDate"), RS.getString("friends"), RS.getString("enemy"), RS.getInt("points"), RS.getLong("subscribe"), RS.getLong("muteTime"), RS.getString("mutePseudo"), RS.getString("lastVoteIP"), RS.getString("heurevote"), RS.getBoolean("vip"));
+                Account a = new Account(RS.getInt("guid"), RS.getString("account").toLowerCase(), RS.getString("pseudo"), RS.getString("reponse"), (RS.getInt("banned") == 1), RS.getString("lastIP"), RS.getString("lastConnectionDate"), RS.getString("friends"), RS.getString("enemy"), RS.getInt("points"), RS.getLong("subscribe"), RS.getLong("muteTime"), RS.getString("mutePseudo"), RS.getString("lastVoteIP"), RS.getString("heurevote"), RS.getBoolean("vip"), RS.getString("switchPacketKey"));
                 World.world.addAccount(a);
             }
         } catch (Exception e) {
@@ -69,6 +69,23 @@ public class AccountData extends AbstractDAO<Account> {
             }
         } catch (SQLException e) {
             super.sendError("AccountData updateVoteAll", e);
+        } finally {
+            close(result);
+        }
+    }
+    public void reload(Account account) {
+        Result result = null;
+        try {
+            result = super.getData("SELECT * from accounts WHERE guid='"+ account.getId() +"'");
+            ResultSet RS = result.resultSet;
+            while (RS.next()) {
+                if(RS.getString("pseudo").isEmpty()) continue;
+                Account a = new Account(RS.getInt("guid"), RS.getString("account").toLowerCase(), RS.getString("pseudo"), RS.getString("reponse"), (RS.getInt("banned") == 1), RS.getString("lastIP"), RS.getString("lastConnectionDate"), RS.getString("friends"), RS.getString("enemy"), RS.getInt("points"), RS.getLong("subscribe"), RS.getLong("muteTime"), RS.getString("mutePseudo"), RS.getString("lastVoteIP"), RS.getString("heurevote"), RS.getBoolean("vip"), RS.getString("switchPacketKey"));
+                World.world.removeAccount(account);
+                World.world.addAccount(a);
+            }
+        } catch (Exception e) {
+            super.sendError("AccountData load", e);
         } finally {
             close(result);
         }

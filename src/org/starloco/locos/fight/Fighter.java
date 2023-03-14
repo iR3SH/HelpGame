@@ -624,19 +624,25 @@ public class Fighter implements Comparable<Fighter> {
                 switch (effect.getEffectID()) {
                     case Constant.STATS_ADD_PA:
                     case Constant.STATS_ADD_PA2:
-                        SocketManager.GAME_SEND_GA_PACKET_TO_FIGHT(this.fight, 7, 101, getId()
-                                + "", getId() + ",-" + effect.getValue());
+                        SocketManager.GAME_SEND_GA_PACKET_TO_FIGHT(this.fight, 7, Constant.STATS_REM_PA, getId()
+                            + "", getId() + ",-" + effect.getValue() + "," + effect.getDuration());
                         break;
 
                     case Constant.STATS_ADD_PM:
                     case Constant.STATS_ADD_PM2:
-                        SocketManager.GAME_SEND_GA_PACKET_TO_FIGHT(this.fight, 7, 127, getId()
-                                + "", getId() + ",-" + effect.getValue());
+                        SocketManager.GAME_SEND_GA_PACKET_TO_FIGHT(this.fight, 7, Constant.STATS_REM_PM, getId()
+                        + "", getId() + ",-" + effect.getValue() + "," + effect.getDuration());
                         break;
                     case Constant.STATS_REM_PO:
-                            SocketManager.GAME_SEND_GA_PACKET_TO_FIGHT(fight, 7, Constant.STATS_ADD_PO, getId()
-                            +"", getId()+","+ effect.getValue() + "," + effect.getDuration());
+                        SocketManager.GAME_SEND_GA_PACKET_TO_FIGHT(fight, 7, Constant.STATS_ADD_PO, getId()
+                            + "", getId()+","+ effect.getValue() + "," + effect.getDuration());
                         break;
+                    case Constant.STATS_REM_PA:
+                        SocketManager.GAME_SEND_GA_PACKET_TO_FIGHT(fight, 7, Constant.STATS_ADD_PA, getId() + ""
+                        , getId() + "," + effect.getValue() + "," + effect.getDuration());
+                    case Constant.STATS_REM_PM:
+                        SocketManager.GAME_SEND_GA_PACKET_TO_FIGHT(fight, 7, Constant.STATS_ADD_PM, getId() + ""
+                                , getId() + "," + effect.getValue() + "," + effect.getDuration());
                     default:
                         break;
                 }
