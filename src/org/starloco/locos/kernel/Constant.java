@@ -84,6 +84,7 @@ public class Constant {
     public static final int ITEM_POS_DOFUS6 = 14;
     public static final int ITEM_POS_BOUCLIER = 15;
     public static final int ITEM_POS_DRAGODINDE = 16;
+
     // Positions Consommable
     public static final int CONSO_POS_1 = 35;
     public static final int CONSO_POS_14 = 48;
@@ -221,6 +222,16 @@ public class Constant {
     public static final int ITEM_TYPE_ARME_MAGIQUE = 114;
     public static final int ITEM_TYPE_FRAGM_AME_SHUSHU = 115;
     public static final int ITEM_TYPE_POTION_FAMILIER = 116;
+    public static final int ITEM_TYPE_CARTE_COMMUN = 119;
+    public static final int ITEM_TYPE_CARTE_RARE = 120;
+    public static final int ITEM_TYPE_CARTE_EPIQUE = 121;
+    public static final int ITEM_TYPE_CARTE_ULTIME = 122;
+    public static final int ITEM_TYPE_PAQUET_CARTE = 123;
+    public static final int ITEM_TYPE_PIERRE_AME_BOSS = 124;
+    public static final int ITEM_TYPE_PIERRE_AME_ARCHI = 125;
+    public static final int ITEM_TYPE_TONIQUE = 126;
+    public static final int ITEM_TYPE_RESERVED = 127;
+
     //Alignement
     public static final int ALIGNEMENT_NEUTRE = -1;
     public static final int ALIGNEMENT_BONTARIEN = 1;
@@ -4634,6 +4645,46 @@ public class Constant {
         int randomNum = gemmespi.get(randomIndex);
 
         return randomNum;
+    }
+
+    public static int[] getPositionByItemType(int type) {
+        switch (type) {
+            case Constant.ITEM_TYPE_FAMILIER:
+                return new int[]{Constant.ITEM_POS_FAMILIER};
+            case Constant.ITEM_TYPE_COIFFE:
+                return new int[]{Constant.ITEM_POS_COIFFE};
+            case Constant.ITEM_TYPE_CAPE:
+                return new int[]{Constant.ITEM_POS_CAPE};
+            case Constant.ITEM_TYPE_ANNEAU:
+                return new int[]{Constant.ITEM_POS_ANNEAU1, Constant.ITEM_POS_ANNEAU2};
+            case Constant.ITEM_TYPE_CEINTURE:
+                return new int[]{Constant.ITEM_POS_CEINTURE};
+            case Constant.ITEM_TYPE_AMULETTE:
+                return new int[]{Constant.ITEM_POS_AMULETTE};
+            case Constant.ITEM_TYPE_BOTTES:
+                return new int[]{Constant.ITEM_POS_BOTTES};
+
+            case Constant.ITEM_TYPE_BOUCLIER:
+                return new int[]{Constant.ITEM_POS_BOUCLIER};
+
+            case Constant.ITEM_TYPE_DOFUS:
+                return new int[]{Constant.ITEM_POS_DOFUS1, Constant.ITEM_POS_DOFUS2, Constant.ITEM_POS_DOFUS3,
+                        Constant.ITEM_POS_DOFUS4, Constant.ITEM_POS_DOFUS5, Constant.ITEM_POS_DOFUS6};
+
+            case Constant.ITEM_TYPE_ARC:
+            case Constant.ITEM_TYPE_EPEE:
+            case Constant.ITEM_TYPE_DAGUES:
+            case Constant.ITEM_TYPE_BATON:
+            case Constant.ITEM_TYPE_FAUX:
+            case Constant.ITEM_TYPE_PELLE:
+            case Constant.ITEM_TYPE_HACHE:
+            case Constant.ITEM_TYPE_BAGUETTE:
+                return new int[]{Constant.ITEM_POS_ARME};
+            case Constant.ITEM_TYPE_TONIQUE:
+                return new int[]{Constant.ITEM_POS_TONIQUE_EQUILIBRAGE,Constant.ITEM_POS_TONIQUE1,Constant.ITEM_POS_TONIQUE2,Constant.ITEM_POS_TONIQUE3,Constant.ITEM_POS_TONIQUE4,Constant.ITEM_POS_TONIQUE5,Constant.ITEM_POS_TONIQUE6,Constant.ITEM_POS_TONIQUE7,Constant.ITEM_POS_TONIQUE8,Constant.ITEM_POS_TONIQUE9};
+            default:
+                return new int[]{};
+        }
     }
 
 }

@@ -71,6 +71,7 @@ public class DynamicsDatabase {
     private GuildData guildData;
     private QuestPlayerData questPlayerData;
     private GladiatroolSpellsData gladiatroolSpellsData;
+    private QuickSetData quicksetsData;
 
     public void initializeData() {
         this.areaData = new AreaData(dataSource);
@@ -133,6 +134,7 @@ public class DynamicsDatabase {
         this.guildData = new GuildData(this.dataSource);
         this.questPlayerData = new QuestPlayerData(this.dataSource);
         this.gladiatroolSpellsData = new GladiatroolSpellsData(this.dataSource);
+        this.quicksetsData = new QuickSetData(this.dataSource);
     }
 
     public boolean initializeConnection() {
@@ -377,4 +379,6 @@ public class DynamicsDatabase {
 	}
 
     public GladiatroolSpellsData getGladiatroolSpellsData() {return gladiatroolSpellsData;}
+
+    public QuickSetData getQuickSetsData() {return quicksetsData;}
 }

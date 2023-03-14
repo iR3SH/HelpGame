@@ -2,11 +2,7 @@ package org.starloco.locos.client;
 
 import org.starloco.locos.area.map.labyrinth.PigDragon;
 import org.starloco.locos.area.map.labyrinth.Minotoror;
-import org.starloco.locos.client.other.Maitre;    // LA
-import org.starloco.locos.client.other.Party;
-import org.starloco.locos.client.other.Restriction;
-import org.starloco.locos.client.other.Stalk;
-import org.starloco.locos.client.other.Stats;
+import org.starloco.locos.client.other.*;
 import org.starloco.locos.command.administration.Group;
 import org.starloco.locos.common.ConditionParser;
 import org.starloco.locos.common.Formulas;
@@ -1895,6 +1891,14 @@ public class Player {
         }
         if (this.getEnergy() == 0) this.setGhost();
         this.refreshItemClasse();
+
+        // On load les sets
+        List<QuickSet> sets = World.world.getPlayerQuickSet(this);
+        if(sets!=null) {
+            for (QuickSet quickset : sets) {
+                SocketManager.GAME_SEND_xC_PAQUET(this, quickset);
+            }
+        }
     }
 
     public void checkVote() {

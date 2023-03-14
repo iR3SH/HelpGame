@@ -10,6 +10,7 @@ import org.starloco.locos.area.map.labyrinth.Minotoror;
 import org.starloco.locos.client.Account;
 import org.starloco.locos.client.Player;
 import org.starloco.locos.client.Prestige;
+import org.starloco.locos.client.other.QuickSet;
 import org.starloco.locos.client.other.Stats;
 import org.starloco.locos.command.PlayerCommand;
 import org.starloco.locos.common.Formulas;
@@ -99,6 +100,7 @@ public class World {
     private Map<Integer, org.starloco.locos.area.map.entity.Tutorial> Tutorial = new HashMap<>();
     private CryptManager cryptManager=new CryptManager();
     private Map<Player, List<GladiatroolSpells>> gladiatroolSpells = new HashMap<>();
+    private Map<Player, List<QuickSet>> quickSets = new HashMap<>();
     private int nextObjectHdvId, nextLineHdvId;
     
     private Map<Short, Prestige> prestiges = new HashMap<>();
@@ -491,6 +493,9 @@ public class World {
 
         Database.getDynamics().getGladiatroolSpellsData().load();
         logger.debug("The gladiatrool spells of players were loaded successfully.");
+
+        Database.getDynamics().getQuickSetsData().load();
+        logger.debug("The Quick sets of players were loaded successfully.");
 
         Database.getStatics().getServerData().updateTime(time);
         logger.info("All data was loaded successfully at "
@@ -983,6 +988,7 @@ public class World {
         }
         return "";
     }
+
     public GladiatroolSpells getGladiatroolSpellsFromPlayer(Player owner, int fullMorpId)
     {
         if(gladiatroolSpells.containsKey(owner))
@@ -995,6 +1001,75 @@ public class World {
                 {
                     return gladia;
                 }
+            }
+        }
+        return null;
+    }
+
+    public void addQuickSet(Player owner, QuickSet quickset)
+    {
+        if(!quickSets.containsKey(owner)){
+            List<QuickSet> list = new ArrayList<>();
+            list.add(quickset);
+            quickSets.put(owner, list);
+        }
+        else{
+            List<QuickSet> list = quickSets.get(owner);
+            if(list.contains(quickset)){
+                list.remove(quickset);
+                list.add(quickset);
+            }
+            else {
+                list.add(quickset);
+            }
+
+            quickSets.remove(owner);
+            quickSets.put(owner, list);
+        }
+    }
+
+    public void deleteQuickSet(Player owner, QuickSet quickset)
+    {
+        if(!quickSets.containsKey(owner)){
+        }
+        else{
+            List<QuickSet> list = quickSets.get(owner);
+            if(list.contains(quickset)){
+                quickSets.remove(owner,quickset);
+            }
+        }
+    }
+
+
+    public Map<Player, List<QuickSet>> getAllQuickSets()
+    {
+        return quickSets;
+    }
+
+    public QuickSet getQuickSet(Player owner, int pos)
+    {
+        if(quickSets.containsKey(owner))
+        {
+            List<QuickSet> list = quickSets.get(owner);
+
+            for(QuickSet quickset : list)
+            {
+                if(quickset.getPosId() == pos)
+                {
+                    return quickset;
+                }
+            }
+        }
+        return null;
+    }
+
+    public List<QuickSet> getPlayerQuickSet(Player owner)
+    {
+        if(quickSets.containsKey(owner))
+        {
+            List<QuickSet> list = quickSets.get(owner);
+            if(list != null){
+                return list;
             }
         }
         return null;
@@ -2292,6 +2367,8 @@ public class World {
         int levelmoyen = monstre.getGrade(5).getLevel();
         return levelmoyen;
     }
+
+
 
     public static class Drop {
         private int objectId, ceil, action, level;
