@@ -15,7 +15,19 @@
 - Corailleur Magistral en roue libre
 - IA CM Bug (Attaque bien avec Complicité et Embranchement mais pas les deux autres et ne fait plus rien avec un ennemi au Cac)
 
+#Shortcut items
+PS : Ajouter une table dans la BDD game se nommant 'shortcuts'
+
+playerId int 11 Key NOT NULL
+position int 11 Key NOT NULL
+objectId int 11 NOT NULL
+
 # FIX
+
+### **15/03/2023**
+- Fix 2 NullExpointerException in Player.java
+- Fix 1 NullExpointerException in Fight.java
+- Fix Shortcut Items (Add / Move / Remove)
 
 ### **14/03/2023**
 - Correction changement de personnage

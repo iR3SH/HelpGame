@@ -71,19 +71,21 @@ public class WorldSave extends Updatable {
             World.world.getHouses().values().stream().filter(house -> house.getOwnerId() > 0).forEach(house -> Database.getDynamics().getHouseData().update(house));
 
             World.world.logger.info("-> of trunks.");
-            World.world.getTrunks().values().stream().forEach(trunk -> Database.getDynamics().getTrunkData().update(trunk));
+            World.world.getTrunks().values().forEach(trunk -> Database.getDynamics().getTrunkData().update(trunk));
 
             World.world.logger.info("-> of parks.");
             World.world.getMountparks().values().stream().filter(mp -> mp.getOwner() > 0 || mp.getOwner() == -1).forEach(mp -> Database.getDynamics().getMountParkData().update(mp));
 
             World.world.logger.info("-> of mounts.");
-            World.world.getMounts().values().stream().forEach(mount -> Database.getDynamics().getMountData().update(mount));
+            World.world.getMounts().values().forEach(mount -> Database.getDynamics().getMountData().update(mount));
 
             World.world.logger.info("-> of areas.");
-            World.world.getAreas().values().stream().forEach(area -> Database.getDynamics().getAreaData().update(area));
-            World.world.getSubAreas().values().stream().forEach(subArea -> Database.getDynamics().getSubAreaData().update(subArea));
+            World.world.getAreas().values().forEach(area -> Database.getDynamics().getAreaData().update(area));
+            World.world.getSubAreas().values().forEach(subArea -> Database.getDynamics().getSubAreaData().update(subArea));
             World.world.logger.info("-> of Gladiatrool Spell Places.");
-            World.world.getAllGladiatroolSpells().values().stream().forEach(gladiatroolSpells -> Database.getDynamics().getGladiatroolSpellsData().update(gladiatroolSpells));
+            World.world.getAllGladiatroolSpells().values().forEach(gladiatroolSpells -> Database.getDynamics().getGladiatroolSpellsData().update(gladiatroolSpells));
+            World.world.logger.info("-> of Quicksets.");
+            World.world.getAllQuickSets().values().forEach(quicksets -> Database.getDynamics().getQuickSetsData().update(quicksets));
             World.world.logger.info("-> of objects.");
             try {
                 for (GameObject object : new ArrayList<>(World.world.getGameObjects())) {
@@ -97,6 +99,8 @@ public class WorldSave extends Updatable {
             } catch(Exception e) {
                 e.printStackTrace();
             }
+            World.world.logger.info("-> of Shortcuts.");
+            World.world.getAllShortcuts().values().forEach(shortcuts -> Database.getDynamics().getShortcutsData().update(shortcuts));
 
             if(Config.getInstance().HEROIC) {
                 for (GameMap map : World.world.getMaps())

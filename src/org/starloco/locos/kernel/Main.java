@@ -17,6 +17,8 @@ import org.starloco.locos.game.scheduler.entity.WorldSave;
 import org.starloco.locos.game.world.World;
 
 import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -68,7 +70,7 @@ public class Main {
         try {
             System.setOut(new PrintStream(System.out, true, "IBM850"));
             if (!new File("Logs/Error").exists()) new File("Logs/Error").mkdir();
-            System.setErr(new PrintStream(new FileOutputStream("Logs/Error/" + new SimpleDateFormat("dd-MM-yyyy - HH-mm-ss", Locale.FRANCE).format(new Date()) + ".log")));
+            System.setErr(new PrintStream(Files.newOutputStream(Paths.get("Logs/Error/" + new SimpleDateFormat("dd-MM-yyyy - HH-mm-ss", Locale.FRANCE).format(new Date()) + ".log"))));
         } catch (Exception e) {
             e.printStackTrace();
         }

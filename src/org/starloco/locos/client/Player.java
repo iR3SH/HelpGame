@@ -1599,8 +1599,14 @@ public class Player {
             }
         }
         if (this.fight == null) {
-            if (!Constant.isGladiatroolWeapon(this.getObjetByPos(Constant.ITEM_POS_ARME).getTemplate().getId())) {
-                SocketManager.GAME_SEND_STATS_PACKET(this);
+            GameObject weaponObject = this.getObjetByPos(Constant.ITEM_POS_ARME);
+            if(weaponObject != null) {
+                ObjectTemplate weaponTemplate = weaponObject.getTemplate();
+                if(weaponTemplate != null) {
+                    if (!Constant.isGladiatroolWeapon(weaponTemplate.getId())) {
+                        SocketManager.GAME_SEND_STATS_PACKET(this);
+                    }
+                }
             }
         }
         if (!join)
@@ -1897,6 +1903,12 @@ public class Player {
         if(sets!=null) {
             for (QuickSet quickset : sets) {
                 SocketManager.GAME_SEND_xC_PAQUET(this, quickset);
+            }
+        }
+        List<Shortcuts> shortcuts = World.world.getShortcutsFromPlayer(this);
+        if(shortcuts != null) {
+            for(Shortcuts shortcut : shortcuts){
+                SocketManager.GAME_SEND_ADD_SHORTCUT(this, shortcut);
             }
         }
     }
@@ -3122,13 +3134,19 @@ public class Player {
             this.unsetFullMorph();
 
         if(deleteGladiaWeapon) {
-            if ( Constant.isGladiatroolWeapon(this.getObjetByPos(Constant.ITEM_POS_ARME).getTemplate().getId()) ) {
+            GameObject weaponObject = this.getObjetByPos(Constant.ITEM_POS_ARME);
+            if(weaponObject != null) {
+                ObjectTemplate weaponTemplate = weaponObject.getTemplate();
+                if(weaponTemplate != null) {
+                    if (Constant.isGladiatroolWeapon(weaponTemplate.getId())) {
 
-                this.removeByTemplateID(this.getObjetByPos(Constant.ITEM_POS_ARME).getTemplate().getId(),1);
-                /*this.getGameClient().destroyObject("Od"+this.getObjetByPos(Constant.ITEM_POS_ARME).getGuid()+"|1");*/
+                        this.removeByTemplateID(this.getObjetByPos(Constant.ITEM_POS_ARME).getTemplate().getId(), 1);
+                        /*this.getGameClient().destroyObject("Od"+this.getObjetByPos(Constant.ITEM_POS_ARME).getGuid()+"|1");*/
 
-                for(int i=Constant.ITEM_POS_TONIQUE_EQUILIBRAGE;i<= Constant.ITEM_POS_TONIQUE9;i++){
-                    this.removeTonique(i);
+                        for (int i = Constant.ITEM_POS_TONIQUE_EQUILIBRAGE; i <= Constant.ITEM_POS_TONIQUE9; i++) {
+                            this.removeTonique(i);
+                        }
+                    }
                 }
             }
         }

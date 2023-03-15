@@ -2576,13 +2576,15 @@ public class Fight {
 	
 	public boolean checkIfTrapCanBePlaced(SortStats ss, Fighter caster, GameCase cell) {
         boolean cellIsEmpty = true;
-        if (ss.isTrap()) {
-            boolean alreadyHasTrap = allTraps.stream().anyMatch(t -> t.getCell().getId() == cell.getId());
-            if (alreadyHasTrap) {
-                final Player personnage = caster.getPersonnage();
-                if (personnage != null) {
-                    SocketManager.GAME_SEND_Im_PACKET(personnage, "1229"); // Warn the player about existing trap on the desired cell
-                    cellIsEmpty = false;
+        if (ss != null) {
+            if (ss.isTrap()) {
+                boolean alreadyHasTrap = allTraps.stream().anyMatch(t -> t.getCell().getId() == cell.getId());
+                if (alreadyHasTrap) {
+                    final Player personnage = caster.getPersonnage();
+                    if (personnage != null) {
+                        SocketManager.GAME_SEND_Im_PACKET(personnage, "1229"); // Warn the player about existing trap on the desired cell
+                        cellIsEmpty = false;
+                    }
                 }
             }
         }

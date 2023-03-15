@@ -8,6 +8,7 @@ import org.starloco.locos.client.Account;
 import org.starloco.locos.client.Player;
 import org.starloco.locos.client.other.Party;
 import org.starloco.locos.client.other.QuickSet;
+import org.starloco.locos.client.other.Shortcuts;
 import org.starloco.locos.command.CommandAdmin;
 import org.starloco.locos.command.ExecuteCommandPlayer;
 import org.starloco.locos.command.administration.AdminUser;
@@ -6067,75 +6068,104 @@ public class GameClient {
                 setSkinObvi(packet);
                 break;
             case 'r':
-                addToShortcutObject(packet);
+                switch (packet.charAt(2)) {
+                    case 'A':
+                        addToShortcutObject(packet.substring(3));
+                        break;
+                    case 'M':
+                        //ShortcutMove
+                        moveShortcutObject(packet.substring(3));
+                        break;
+                    case 'R':
+                        //ShortcutDelete
+                        deleteShortcutObject(packet.substring(3));
+                        break;
+                    default:
+                        break;
+                }
                 break;
         }
     }
 
+    private void deleteShortcutObject(String packet){
+        int position = Integer.parseInt(packet);
+        Shortcuts shortcut = World.world.getShortcutsFromPlayerByPosition(getPlayer(), position);
+        if(shortcut != null){
+            SocketManager.GAME_SEND_REMOVE_SHORTCUT(getPlayer(), shortcut.getPosition());
+            Database.getDynamics().getShortcutsData().delete(shortcut);
+            World.world.removeShortcut(getPlayer(), shortcut);
+        }
+    }
+
+    private void moveShortcutObject(String packet){
+        String[] infos = packet.split(";");
+        int oldPos = Integer.parseInt(infos[0]);
+        int newPos = Integer.parseInt(infos[1]);
+
+        Shortcuts shortcut = World.world.getShortcutsFromPlayerByPosition(getPlayer(), oldPos);
+        if(shortcut != null){
+            Shortcuts shortcutsFromNewPos = World.world.getShortcutsFromPlayerByPosition(getPlayer(), newPos);
+            if(shortcutsFromNewPos == null){
+                shortcut.setPosition(newPos);
+                Database.getDynamics().getShortcutsData().updatePosition(shortcut);
+                SocketManager.GAME_SEND_REMOVE_SHORTCUT(getPlayer(), oldPos);
+                SocketManager.GAME_SEND_ADD_SHORTCUT(getPlayer(), shortcut);
+            }
+            else {
+                //On supprime les anciennes entrées
+                Database.getDynamics().getShortcutsData().delete(shortcut);
+                Database.getDynamics().getShortcutsData().delete(shortcutsFromNewPos);
+
+                // On met les nouvlles positions
+                shortcutsFromNewPos.setPosition(oldPos);
+                shortcut.setPosition(newPos);
+
+                // On remet les nouvelles entrées
+                Database.getDynamics().getShortcutsData().add(shortcut);
+                Database.getDynamics().getShortcutsData().add(shortcutsFromNewPos);
+
+                // On supprime les shortcuts
+                SocketManager.GAME_SEND_REMOVE_SHORTCUT(getPlayer(), oldPos);
+                SocketManager.GAME_SEND_REMOVE_SHORTCUT(getPlayer(), newPos);
+
+                // On place à nouveau les shortcuts
+                SocketManager.GAME_SEND_ADD_SHORTCUT(getPlayer(), shortcut);
+                SocketManager.GAME_SEND_ADD_SHORTCUT(getPlayer(), shortcutsFromNewPos);
+            }
+        }
+    }
+
     private void addToShortcutObject(String packet) {
-        String[] infos = packet.substring(2).split("\\|");
+        String[] infos = packet.split(";");
         try {
-            int guid = Integer.parseInt(infos[0]);
-            int qua = 1;
+            int position = Integer.parseInt(infos[0]);
+            int guid = 1;
             try {
-                qua = Integer.parseInt(infos[1]);
+                guid = Integer.parseInt(infos[1]);
             } catch (Exception e) {
                 e.printStackTrace();
             }
-            GameObject obj = World.world.getGameObject(guid);
-            if (obj == null || !this.player.hasItemGuid(guid) || qua <= 0
-                    || this.player.getFight() != null || this.player.isAway()) {
-                //SocketManager.GAME_SEND_DELETE_OBJECT_FAILED_PACKET(this);
+            GameObject object = World.world.getGameObject(guid);
+            if(object == null || !this.player.hasItemGuid(guid))
                 return;
+
+            ObjectTemplate objectTemplate = object.getTemplate();
+            if(objectTemplate == null)
+                return;
+            Shortcuts shortcut = World.world.getShortcutsFromPlayerByPosition(player, position);
+            if(shortcut == null) {
+                shortcut = new Shortcuts(getPlayer(), position, object);
+                SocketManager.GAME_SEND_ADD_SHORTCUT(getPlayer(), shortcut);
+                Database.getDynamics().getShortcutsData().add(shortcut);
             }
-            if (obj.getPosition() != Constant.ITEM_POS_NO_EQUIPED){
-                int idSetExObj = obj.getTemplate().getPanoId();
-                GameObject obj2;
-                ObjectTemplate exObjTpl = obj.getTemplate();
-                if ((obj2 = player.getSimilarItem(obj)) != null)//On le poss?de deja
-                {
-                    obj2.setQuantity(obj2.getQuantity()
-                            + obj.getQuantity());
-                    SocketManager.GAME_SEND_OBJECT_QUANTITY_PACKET(player, obj2);
-                    World.world.removeGameObject(obj.getGuid());
-                    player.removeItem(obj.getGuid());
-                    SocketManager.GAME_SEND_REMOVE_ITEM_PACKET(player, obj.getGuid());
-                } else
-                //On ne le poss?de pas
-                {
-                    obj.setPosition(Constant.ITEM_POS_NO_EQUIPED);
-                    if ((idSetExObj >= 81 && idSetExObj <= 92)
-                            || (idSetExObj >= 201 && idSetExObj <= 212)) {
-                        String[] stats = exObjTpl.getStrTemplate().split(",");
-                        for (String stat : stats) {
-                            String[] val = stat.split("#");
-                            String modifi = Integer.parseInt(val[0], 16)
-                                    + ";" + Integer.parseInt(val[1], 16)
-                                    + ";0";
-                            SocketManager.SEND_SB_SPELL_BOOST(player, modifi);
-                            //player.removeObjectClassSpell(Integer.parseInt(val[1], 16));
-                        }
-                        //player.removeObjectClass(exObjTpl.getId());
-                    }
-                    SocketManager.GAME_SEND_OBJET_MOVE_PACKET(player, obj);
-                }
+            else{
+                shortcut.setObject(object);
+                SocketManager.GAME_SEND_ADD_SHORTCUT(getPlayer(), shortcut);
+                Database.getDynamics().getShortcutsData().update(shortcut);
             }
-            if (qua > obj.getQuantity())
-                qua = obj.getQuantity();
-            int newQua = obj.getQuantity() - qua;
-            if (newQua <= 0) {
-                this.player.removeItem(guid);
-                World.world.removeGameObject(guid);
-                Database.getDynamics().getObjectData().delete(guid);
-                SocketManager.GAME_SEND_REMOVE_ITEM_PACKET(this.player, guid);
-            } else {
-                obj.setQuantity(newQua);
-                SocketManager.GAME_SEND_OBJECT_QUANTITY_PACKET(this.player, obj);
-            }
-            SocketManager.GAME_SEND_Ow_PACKET(this.player);
+            World.world.addShortcut(getPlayer(), shortcut);
         } catch (Exception e) {
             e.printStackTrace();
-            SocketManager.GAME_SEND_DELETE_OBJECT_FAILED_PACKET(this);
         }
     }
 

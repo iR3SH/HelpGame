@@ -7,8 +7,7 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" name="game" level="project" />
-    <orderEntry type="library" name="libs" level="project" />
     <orderEntry type="library" name="fastutil-7.0.6" level="project" />
+    <orderEntry type="library" name="commons-cli-1.2" level="project" />
   </component>
 </module>

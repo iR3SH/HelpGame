@@ -1,6 +1,7 @@
 package org.starloco.locos.client.other;
 
 import org.starloco.locos.client.Player;
+import org.starloco.locos.database.Database;
 import org.starloco.locos.fight.spells.SpellEffect;
 import org.starloco.locos.game.world.World;
 import org.starloco.locos.object.GameObject;
@@ -10,11 +11,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class QuickSet {
-
     private Player player;
     private int pos;
     private String objectsString;
-    private Map<Integer, GameObject> objectsArray = new HashMap<Integer, GameObject>();
+    private Map<Integer, GameObject> objectsArray = new HashMap<>();
     private int iconId;
     private String name;
 

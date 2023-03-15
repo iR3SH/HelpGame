@@ -11,6 +11,7 @@ import org.starloco.locos.client.Account;
 import org.starloco.locos.client.Player;
 import org.starloco.locos.client.Prestige;
 import org.starloco.locos.client.other.QuickSet;
+import org.starloco.locos.client.other.Shortcuts;
 import org.starloco.locos.client.other.Stats;
 import org.starloco.locos.command.PlayerCommand;
 import org.starloco.locos.common.Formulas;
@@ -105,6 +106,7 @@ public class World {
     
     private Map<Short, Prestige> prestiges = new HashMap<>();
     private List<PlayerCommand> playerCommand = new ArrayList<>();
+    private Map<Player, List<Shortcuts>> shortcuts = new HashMap<>();
 
     
     public CryptManager getCryptManager()
@@ -299,6 +301,53 @@ public class World {
     public Map<Short, Prestige> getPrestiges()
     {
     	return this.prestiges;
+    }
+    public Map<Player, List<Shortcuts>> getAllShortcuts()
+    {
+        return shortcuts;
+    }
+    public List<Shortcuts> getShortcutsFromPlayer(Player player)
+    {
+        return shortcuts.get(player);
+    }
+    public Shortcuts getShortcutsFromPlayerByPosition(Player player, int position)
+    {
+        List<Shortcuts> shortcutsList = shortcuts.get(player);
+        if(shortcutsList != null) {
+            for(Shortcuts shortcut : shortcutsList)
+            {
+                if(shortcut.getPosition() == position){
+                    return  shortcut;
+                }
+            }
+        }
+        return null;
+    }
+    public void addShortcut(Player player, Shortcuts shortcut)
+    {
+        if(shortcuts.containsKey(player))
+        {
+            List<Shortcuts> shortcutsList = shortcuts.get(player);
+            if(shortcutsList != null){
+                if(!shortcuts.get(player).contains(shortcut)) {
+                    shortcutsList.add(shortcut);
+                }
+            }
+        }
+        else
+        {
+            List<Shortcuts> shortcutsList = new ArrayList<>();
+            shortcutsList.add(shortcut);
+            shortcuts.put(player, shortcutsList);
+        }
+
+    }
+    public void removeShortcut(Player player, Shortcuts shortcut)
+    {
+        if(shortcuts.containsKey(player))
+        {
+            shortcuts.get(player).remove(shortcut);
+        }
     }
     /**
      * end region *
@@ -501,6 +550,9 @@ public class World {
         Database.getDynamics().getQuickSetsData().load();
         logger.debug("The Quick sets of players were loaded successfully.");
 
+        Database.getDynamics().getShortcutsData().load();
+        logger.debug("The Shortcuts of playes were loaded successfully.");
+
         Database.getStatics().getServerData().updateTime(time);
         logger.info("All data was loaded successfully at "
         + new SimpleDateFormat("dd/MM/yyyy - HH:mm:ss", Locale.FRANCE).format(new Date()) + " in "
@@ -508,26 +560,6 @@ public class World {
                 + new SimpleDateFormat("ss", Locale.FRANCE).format((System.currentTimeMillis() - time)) + " s"
         		+ new SimpleDateFormat("SS", Locale.FRANCE).format((System.currentTimeMillis() - time)) + " m.");
         logger.setLevel(Level.ALL);
-        
-        // Permet de g�n�rer le fichier itemstats pour les langs
-        /*try(PrintWriter p = new PrintWriter(new FileWriter("itemstats.txt"))) {
-        	
-        	p.print("FILE_BEGIN = true;\r\n"
-        			+ "System.security.allowDomain(_parent._url);\r\n"
-        			+ "VERSION = 1059;\r\n"
-        			+ "ISTA = new Array();\r\n");
-        	
-        	
-        	
-            for(ObjectTemplate temp : this.getObjectsTemplates().values()) 
-                p.print("ISTA["+temp.getId()+"] = \""+ temp.getStrTemplate() + "\";\n");
-            
-            p.print("FILE_END = true;");
-            
-            p.flush();
-          } catch (IOException e) {
-              System.out.println(e.getMessage());
-          }*/
     }
 
     public void addExtraMonster(int idMob, String superArea,
