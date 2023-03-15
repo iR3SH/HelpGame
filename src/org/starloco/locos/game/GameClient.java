@@ -7,6 +7,7 @@ import org.starloco.locos.area.map.entity.*;
 import org.starloco.locos.client.Account;
 import org.starloco.locos.client.Player;
 import org.starloco.locos.client.other.Party;
+import org.starloco.locos.client.other.QuickSet;
 import org.starloco.locos.command.CommandAdmin;
 import org.starloco.locos.command.ExecuteCommandPlayer;
 import org.starloco.locos.command.administration.AdminUser;
@@ -58,8 +59,10 @@ import org.starloco.locos.util.NameGenerator;
 import org.starloco.locos.util.TimerWaiter;
 import org.starloco.locos.util.lang.Lang;
 
+import javax.xml.crypto.Data;
 import java.net.InetSocketAddress;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.HashMap;
@@ -207,6 +210,9 @@ public class GameClient {
             case 'w':
                 parseGladiatroolPacket(packet);
                 break;
+            case 'x': //Equipement rapide
+                parseQuickSetPacket(packet);
+                break;
            /* default:
                 if(this.player != null)
                     if(this.player.isChangeName())
@@ -215,6 +221,179 @@ public class GameClient {
         }
     }
 
+    // Equipement rapide
+    private void parseQuickSetPacket(String packet) {
+        System.out.println(packet);
+        switch (packet.charAt(1)) {
+            case 'E': // création d'un equipement rapide
+                createQuickSet(packet);
+                // Packet a renvoyé  xC1|2|Test2|9b9bc46~979~1~0~76#3###0d0+3,7e#a###0d0+10;9b9bc47~970~1~1~63#4#8##1d5+3,61#4#8##1d5+3,b6#1###0d0+1;9b9bc48~973~1~2~7d#11###0d0+17;9b9bc49~97c~1~3~9e#179###0d0+377;9b9bc4a~64~1~4~7c#1###0d0+1;9b9bc4b~976~1~5~8a#a###0d0+10,7d#1b###0d0+27;9b9bc4c~96b~1~6~76#20###0d0+32,7e#22###0d0+34;9b9bc4d~96e~1~7~ae#70###0d0+112,7d#2c###0d0+44;9b9bc4e~6c0~1~8~320#5#12#4,328#28d#d5#3f5,326#1#0#7,327#0#0#842;9b9bc4f~3cc~1~e~7c#1d###0d0+29,;9b9bc50~1ba5~1~f~fb#1###0d0+1;|
+                break;
+            case 'S': // Modification d'un equipement rapide
+                modifyQuickSet(packet);
+                break;
+            case 'L': // On équipe un équipement rapide
+                applyQuickSet(packet);
+                //On enchaine le déséquipement de tous les objet et on rééquipe.
+                //OM162932797|
+                // Ow473|1802
+                // OS+1|2416;2419;2428;2422;2411;2414|76#28#0#0,7e#28#0#0,70#4#0#0
+                // OM162932798|
+                // Ow473|1737
+                // Oa130160136|,96b,96e,6c0,1ba5
+                // OS+1|2419;2428;2422;2411;2414|76#1e#0#0,7e#1e#0#0,70#4#0#0
+                //On fini par As394090946,392278000,404818000|1556741|2|4|0~0,0,0,0,0,0|868,868|10000,10000|291|100|7,1,0,0,8|3,0,0,0,3|0,85,0,0|0,88,0,0|231,50,0,0|0,0,0,0|0,0,0,0|0,94,0,0|0,0,0,0|1,1,0,0|0,5,0,0|0,0,0,0|0,0,0,0|0,10,0,0|0,0,0,0|0,0,0,0|0,0,0,0|0,0,0,0|0,0,0,0|0,0,0,0|57,13,0,0|57,13,0,0|0,0,0,0|0,0,0,0|0,0,0,0|0,0,0,0|0,0,0,0|0,0,0,0|0,0,0,0|0,0,0,0|0,0,0,0|0,0,0,0|0,0,0,0|0,1,0,0|0,0,0,0|0,0,0,0|0,0,0,0|0,0,0,0|0,0,0,0|0,0,0,0|0,0,0,0|0,0,0,0|40
+                break;
+            case 'D': // Suppression d'un equipement rapide
+                deleteQuickSet(packet);
+                break;
+            default:
+                break;
+        }
+    }
+
+    private void createQuickSet(String packet) {
+
+        packet = packet.substring(2);
+        final String[] datas = packet.split("\\|");
+        int posid = Integer.parseInt(datas[0]);
+        int iconid = Integer.parseInt(datas[1]);
+        String name = datas[2];
+        QuickSet oldQS = World.world.getQuickSet(this.player,posid);
+        Map<Integer, GameObject> newAO = new HashMap<Integer, GameObject>();
+        StringBuilder stringObj = new StringBuilder();
+        if(oldQS == null){
+            System.out.println("Création");
+            QuickSet newQS = new QuickSet(this.player,posid,iconid,"",name);
+            for(GameObject obj : this.player.GetequipedObjects().values()){
+                if(obj!=null) {
+                    if (obj.getPosition() >= Constant.CONSO_POS_1 && obj.getPosition() <= Constant.ITEM_POS_TONIQUE9)
+                        continue;
+                    newAO.put(obj.getPosition(),obj);
+                    stringObj.append(obj.getGuid()).append(",").append(obj.getPosition()).append(";");
+                }
+            }
+            newQS.setObjectsArray(newAO);
+            newQS.setObjectsString(stringObj.toString());
+            World.world.addQuickSet(this.player,newQS);
+            Database.getDynamics().getQuickSetsData().add(newQS);
+            SocketManager.GAME_SEND_xC_PAQUET(player,newQS);
+        }
+        else{
+            System.out.println("Modification");
+            oldQS.setName(name);
+            oldQS.setIconId(iconid);
+            for(GameObject obj : this.player.GetequipedObjects().values()){
+                if(obj!=null) {
+                    if (obj.getPosition() >= Constant.CONSO_POS_1 && obj.getPosition() <= Constant.ITEM_POS_TONIQUE9)
+                        continue;
+                    newAO.put(obj.getPosition(),obj);
+                    stringObj.append(obj.getGuid()).append(",").append(obj.getPosition()).append(";");
+                }
+            }
+            oldQS.setObjectsArray(newAO);
+            oldQS.setObjectsString(stringObj.toString());
+            Database.getDynamics().getQuickSetsData().update(oldQS);
+            SocketManager.GAME_SEND_xC_PAQUET(player,oldQS);
+        }
+    }
+
+    private void modifyQuickSet(String packet) {
+        packet = packet.substring(2);
+        int posid = Integer.parseInt(packet);
+        QuickSet oldQS = World.world.getQuickSet(this.player,posid);
+        if(oldQS!=null) {
+            Map<Integer, GameObject> newAO = new HashMap<Integer, GameObject>();
+            StringBuilder stringObj = new StringBuilder();
+            for (GameObject obj : this.player.GetequipedObjects().values()) {
+                if(obj != null) {
+                    if (obj.getPosition() >= Constant.CONSO_POS_1 && obj.getPosition() <= Constant.ITEM_POS_TONIQUE9)
+                        continue;
+
+                    newAO.put(obj.getPosition(),obj);
+                    stringObj.append(obj.getGuid()).append(",").append(obj.getPosition()).append(";");
+                }
+            }
+            oldQS.setObjectsArray(newAO);
+            oldQS.setObjectsString(stringObj.toString());
+            Database.getDynamics().getQuickSetsData().update(oldQS);
+        }
+        else {
+            this.player.sendMessage("Equipement rapide non trouvé");
+        }
+    }
+
+    private void applyQuickSet(String packet) {
+        packet = packet.substring(2);
+        int posid = Integer.parseInt(packet);
+        QuickSet oldQS = World.world.getQuickSet(this.player,posid);
+        ArrayList<GameObject> oldStuff = new ArrayList<GameObject>();
+        oldStuff.addAll(this.player.GetequipedObjects().values());
+
+        if(oldQS!=null) {
+            for (GameObject obj : oldStuff) {
+                if (obj != null) {
+                    if (obj.getPosition() >= Constant.CONSO_POS_1 && obj.getPosition() <= Constant.ITEM_POS_TONIQUE9)
+                        continue;
+
+                    int oldpos = obj.getPosition();
+                    this.player.unEquipItem(obj.getPosition());
+                    obj.setPosition(Constant.ITEM_POS_NO_EQUIPED);
+                    SocketManager.GAME_SEND_OBJET_MOVE_PACKET(player, obj);
+                    if (obj.getTemplate().getPanoId() > 0)
+                        SocketManager.GAME_SEND_OS_PACKET(this.player, obj.getTemplate().getPanoId());
+
+                    if(oldpos == Constant.ITEM_POS_CAPE || oldpos == Constant.ITEM_POS_COIFFE || oldpos == Constant.ITEM_POS_ARME )
+                        SocketManager.GAME_SEND_ON_EQUIP_ITEM(this.player.getCurMap(), this.player);
+                    SocketManager.GAME_SEND_Ow_PACKET(this.player);
+                }
+            }
+            SocketManager.GAME_SEND_ON_EQUIP_ITEM(this.player.getCurMap(), this.player);
+
+            SocketManager.GAME_SEND_STATS_PACKET(this.player);
+
+            for(Entry<Integer, GameObject> entry : oldQS.getObjectsArray().entrySet()){
+                GameObject newobj = entry.getValue();
+                int pos = entry.getKey();
+
+                if (newobj != null) {
+                    if (newobj.getPosition() >= Constant.CONSO_POS_1 && newobj.getPosition() <= Constant.ITEM_POS_TONIQUE9)
+                        continue;
+
+                    newobj.setPosition(pos);
+                    this.player.equipItem(newobj);
+                    SocketManager.GAME_SEND_OBJET_MOVE_PACKET(this.player, newobj);
+                    if (newobj.getTemplate().getPanoId() > 0)
+                        SocketManager.GAME_SEND_OS_PACKET(this.player, newobj.getTemplate().getPanoId());
+
+                    if(pos == Constant.ITEM_POS_CAPE || pos == Constant.ITEM_POS_COIFFE || pos == Constant.ITEM_POS_ARME )
+                        SocketManager.GAME_SEND_ON_EQUIP_ITEM(this.player.getCurMap(), this.player);
+                    SocketManager.GAME_SEND_Ow_PACKET(this.player);
+
+                }
+
+            }
+            SocketManager.GAME_SEND_ON_EQUIP_ITEM(player.getCurMap(), player);
+
+            SocketManager.GAME_SEND_STATS_PACKET(player);
+        }
+    }
+
+    private void deleteQuickSet(String packet) {
+        packet = packet.substring(2);
+        int posid = Integer.parseInt(packet);
+        QuickSet oldQS = World.world.getQuickSet(this.player,posid);
+        if(oldQS!=null) {
+            World.world.deleteQuickSet(this.player,oldQS);
+            Database.getDynamics().getQuickSetsData().delete(oldQS);
+            this.player.send("xC"+posid+"|-1");
+        }
+        else {
+            this.player.sendMessage("Equipement rapide non trouvé");
+        }
+    }
+
+    //
     private void parseDeconnectionPacket(String packet) {
         switch (packet.charAt(1)) {
             case 'S':

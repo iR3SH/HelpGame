@@ -1,6 +1,7 @@
 package org.starloco.locos.common;
 
 import org.starloco.locos.client.Player;
+import org.starloco.locos.client.other.QuickSet;
 import org.starloco.locos.entity.Collector;
 import org.starloco.locos.entity.mount.Mount;
 import org.starloco.locos.entity.Prism;
@@ -137,6 +138,12 @@ public class SocketManager {
         send(perso, "OCO" + item.parseItem());
 
     }
+
+    public static void GAME_SEND_xC_PAQUET(Player perso, QuickSet item) {
+        send(perso, "xC" + item.getPosId()+ "|" + item.getIconId() + "|" + item.getName() + "|" +item.getItemList()+ "|") ;
+
+    }
+
 
     public static void GAME_SEND_Re_PACKET(Player out, String sign,
                                            Mount DD) {
