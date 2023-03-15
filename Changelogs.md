@@ -9,11 +9,25 @@
 - Rat blanc Racasse ne fonctionne pas comme offi
 - Rat Noir Kackitu ne fonctionne pas comme offi
 - Chaferfu Lancier n'attaque qu'une seule fois
+- Corbac Apprivoisé ne marche pas correctement
+- Ia dragoss flingué
+- Bwork élémentaux ia flingué
+- Corailleur Magistral en roue libre
+- IA CM Bug (Attaque bien avec Complicité et Embranchement mais pas les deux autres et ne fait plus rien avec un ennemi au Cac)
 
 # FIX
 
 ### **14/03/2023**
 - Correction changement de personnage
+- Correction durée de Gain de Pa du Rasboul Majeur
+- Fix Sorts DragOeuf Immature + Archi
+- Fix EffectTarget du Sort Ruse Kitsoune
+- Fix EffectTarget du Sort Communion Elémentale
+- Fix EffectTarget du Sort Graines Magiques
+- Fix EffectTarget du Sort Buvette
+- Fix EffectTarget du Sort Kalik
+- Fix EffectTarget du Sort Meupette Choh
+- Fix EffectTarget du Sort Blop Zone
 
 ### **13/03/2023**
 - Correction Sort Bitouf des Plaines

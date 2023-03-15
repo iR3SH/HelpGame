@@ -55,7 +55,7 @@ public class PlayerData extends AbstractDAO<Player> {
              if (RS.getInt("server") != Main.serverId)
                  continue;
 
-             HashMap<Integer, Integer> stats = new HashMap<Integer, Integer>();
+             HashMap<Integer, Integer> stats = new HashMap<>();
              stats.put(Constant.STATS_ADD_VITA, RS.getInt("vitalite"));
              stats.put(Constant.STATS_ADD_FORC, RS.getInt("force"));
              stats.put(Constant.STATS_ADD_SAGE, RS.getInt("sagesse"));
