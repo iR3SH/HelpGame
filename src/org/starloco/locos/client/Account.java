@@ -36,6 +36,7 @@ public class Account {
     private Map<Integer, ArrayList<HdvEntry>> hdvsItems;
     private final Map<Integer, Player> players = new HashMap<>();
     private boolean vip;
+    private String switchPacketKey;
     
     private String clientVersion; // Coding Mestre
 
@@ -43,7 +44,7 @@ public class Account {
                    String answer, boolean banned,
                    String lastIp, String lastConnectionDate, String friends,
                    String enemy, int points, long subscriber, long muteTime, String mutePseudo,
-                   String lastVoteIP, String heureVote, boolean vip) {
+                   String lastVoteIP, String heureVote, boolean vip, String switchPacketKey) {
         this.id = guid;
         this.name = name;
         this.pseudo = pseudo;
@@ -58,6 +59,7 @@ public class Account {
         this.mutePseudo = mutePseudo;
         this.lastVoteIP = lastVoteIP;
         this.vip = vip;
+        this.switchPacketKey = switchPacketKey;
 
         if (heureVote.equalsIgnoreCase("")) this.heureVote = 0;
         else this.heureVote = Long.parseLong(heureVote);
@@ -586,4 +588,12 @@ public class Account {
     public boolean isVip() {
 		return vip;
 	}
+
+    public String getSwitchPacketKey() {
+        return switchPacketKey;
+    }
+
+    public void setSwitchPacketKey(String switchPacketKey) {
+        this.switchPacketKey = switchPacketKey;
+    }
 }

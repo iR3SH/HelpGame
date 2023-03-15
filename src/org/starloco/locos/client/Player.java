@@ -1663,8 +1663,8 @@ public class Player {
         setMorphId(0);
         if (this.getFight() == null) {
             SocketManager.GAME_SEND_SPELL_LIST(this);
-            SocketManager.GAME_SEND_STATS_PACKET(this);
             SocketManager.GAME_SEND_ALTER_GM_PACKET(this.curMap, this);
+            SocketManager.GAME_SEND_STATS_PACKET(this);
         }
         Database.getStatics().getPlayerData().update(this);
     }
@@ -5361,9 +5361,12 @@ public class Player {
             HashMap<Integer, Integer> map = _itemClasseSpell.get(spell);
             if(map.containsKey(effect))
             {
-                int newValue = map.get(effect) + modif;
-                map.remove(effect);
-                map.put(effect, newValue);
+                List<Integer> effetToNotAdd = Arrays.asList(Constant.STATS_SPELL_LOS, Constant.STATS_SPELL_LINE_LAUNCH, Constant.STATS_SPELL_PO_MODIF);
+                if(!effetToNotAdd.contains(effect)) {
+                    int newValue = map.get(effect) + modif;
+                    map.remove(effect);
+                    map.put(effect, newValue);
+                }
             }
             else
             {

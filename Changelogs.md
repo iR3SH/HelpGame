@@ -3,15 +3,34 @@
 - IA Gourlo à revoir n'invoque pas tout le temps surtout quand il est au cac d'un ennemi
 - IA Minotot manque attaque Lancer de Tofu
 - IA Gardienne des Egouts, n'attaque pas, aspire dans le vide, lance invisibilité à la fin de son tour et ne fuis pas
-- Kapota la Fraise mauvais sorts
+- Kapota la Fraise n'attaque pas
 - Craqueleur Légendaire ne fait pas peau de silex ni pierre de topaze sur invoc
 - Dragtula l'Ancien ne fait rien
 - Rat blanc Racasse ne fonctionne pas comme offi
 - Rat Noir Kackitu ne fonctionne pas comme offi
 - Chaferfu Lancier n'attaque qu'une seule fois
-
+- Corbac Apprivoisé ne marche pas correctement
+- Ia dragoss flingué
+- Bwork élémentaux ia flingué
+- Corailleur Magistral en roue libre
+- IA CM Bug (Attaque bien avec Complicité et Embranchement mais pas les deux autres et ne fait plus rien avec un ennemi au Cac)
 
 # FIX
+
+### **14/03/2023**
+- Correction changement de personnage
+- Correction durée de Gain de Pa du Rasboul Majeur
+- Fix Sorts DragOeuf Immature + Archi
+- Fix EffectTarget du Sort Ruse Kitsoune
+- Fix EffectTarget du Sort Communion Elémentale
+- Fix EffectTarget du Sort Graines Magiques
+- Fix EffectTarget du Sort Buvette
+- Fix EffectTarget du Sort Kalik
+- Fix EffectTarget du Sort Meupette Choh
+- Fix EffectTarget du Sort Blop Zone
+
+### **13/03/2023**
+- Correction Sort Bitouf des Plaines
 
 ### **12/03/2023**
 - Fix Bug effet de Sort +do parfois ça ajoute +dom par déco reco
@@ -22,6 +41,7 @@
 - Fix refreshBuff in Fight
 - Fix vol de PA Infini
 - Fix restauration des sorts en sortant du Gladiatrool
+- Fix des Effets Item Classe à ne pas ajouter 2 fois
 
 ### **11/03/2023**
 - Fix IA Lapino (Ne buffait pas tout le temps son invocateur)

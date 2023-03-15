@@ -371,6 +371,7 @@ public class Constant {
     public static final int STATS_REM_INVO = 2112;
     public static final int STATS_REM_TRAPDOM = 2113;
     public static final int STATS_REM_TRAPPER = 2114;
+    public static final int STATS_CHATI_SHARED_DAMAGE = 788;
 
     //Effets ID & Buffs
     public static final int EFFECT_PASS_TURN = 140;
@@ -406,7 +407,7 @@ public class Constant {
     public static final int ERR_STATS_XP = 1000;
 
     // Buff de Sort Classe
-    public static final int STATS_SPELL_PO = 281;
+    public static final int STATS_SPELL_ADD_PO = 281;
     public static final int STATS_SPELL_PO_MODIF = 282;
     public static final int STATS_SPELL_ADD_DOM = 283;
     public static final int STATS_SPELL_ADD_HEAL = 284;
@@ -417,14 +418,17 @@ public class Constant {
     public static final int STATS_SPELL_LOS = 289;
     public static final int STATS_SPELL_ADD_LAUNCH = 290;
     public static final int STATS_SPELL_ADD_PER_TARGET = 291;
+    public static final int STATS_SPELL_FIXE_DURATION_DELAY = 292;
+    public static final int STATS_SPELL_ADD_BASE_DAMAGE = 293;
+    public static final int STATS_SPELL_REM_PO = 294;
 
 
 
     public static int[] BOSS_ID = {58,85,86,107,113,121,147,173,180,225,226,230,232,251,252,257,289,295,374,375,377,382,404,423,430,457,478,568,605,612,669,670,673,675,677,681,780,792,797,799,800,827,854,926,939,940,943,1015,1027,1045,1051,1071,1072,1085,1086,1087,1159,1170,1184,1185,1186,1187,1188,1195};
 
-    public static int[] EXCEPTION_GLADIATROOL_BOSS = {295,404,423,1159};
-    public static int[] EXCEPTION_GLADIATROOL_ARCHI = {404,423,1159};
-    public static int[] EXCEPTION_GLADIATROOL_MONSTRES = {258,260,404,424,1090,1091,1092,1094};
+    public static int[] EXCEPTION_GLADIATROOL_BOSS = {261,295,404,423,1159};
+    public static int[] EXCEPTION_GLADIATROOL_ARCHI = {261,404,423,1159};
+    public static int[] EXCEPTION_GLADIATROOL_MONSTRES = {258,260,261,404,424,1090,1091,1092,1094};
 
     public static final List<Integer> GLADIATROOL_FULLMORPHID = Arrays.asList(101,102,103,104,105,106,107,108,109,110,111,112);
 

@@ -405,9 +405,17 @@ public class GameClient {
     }
 
     private void Deconnection() {
-        //TODO : Faut géré ce cas de changement de perso en version 1.39.8
-       exchangeClient.send("HS" + this.getSession().getId() + ";");
-
+        Database.getStatics().getAccountData().reload(this.account);
+        this.account = World.world.getAccount(this.getAccount().getId());
+        for(Player player : World.world.getPlayers())
+        {
+            if(player.getAccID() == this.account.getId())
+            {
+                this.account.addPlayer(player);
+                player.setAccount(this.account);
+            }
+        }
+        this.getSession().write("HS" + this.getAccount().getSwitchPacketKey());
     }
 
     private void parseGladiatroolPacket(String packet) {
