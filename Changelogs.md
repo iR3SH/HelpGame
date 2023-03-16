@@ -14,13 +14,7 @@
 - Bwork élémentaux ia flingué
 - Corailleur Magistral en roue libre
 - IA CM Bug (Attaque bien avec Complicité et Embranchement mais pas les deux autres et ne fait plus rien avec un ennemi au Cac)
-
-#Shortcut items
-PS : Ajouter une table dans la BDD game se nommant 'shortcuts'
-
-playerId int 11 Key NOT NULL
-position int 11 Key NOT NULL
-objectId int 11 NOT NULL
+- Vouloir équiper un item alors qu'il y a déjà un item sur cette place n'enlève que l'ancien item de la place
 
 # FIX
 
@@ -35,6 +29,7 @@ objectId int 11 NOT NULL
 - Fix SetToniqueInterface si le joueur n'a pas validé son tonique pendant un reboot ou déco / reco
 - Un joueur ne peut plus recevoir un tonique s'il n'est pas dans le gladiatrool
 - Fix commande joueur .restat
+- Fix onMovementObject réequipe correcte l'item après avoir enlevé l'ancien
 
 ### **15/03/2023**
 - Fix 2 NullExpointerException in Player.java

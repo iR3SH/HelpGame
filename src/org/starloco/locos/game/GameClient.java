@@ -6540,9 +6540,6 @@ public class GameClient {
     public synchronized void onMovementEquipUnequipItem(GameObject object, final int position, final int quantity, final boolean sendStats) {
     	final GameObject exObj = this.player.getObjetByPos(position);//Objet a l'ancienne position
         if(this.onMovementItemObvi(object, exObj, quantity, position)) return;
-        
-        if(exObj != null)
-        	object = exObj;
     	
         this.onMovementItemClass(object, position);
         
@@ -6552,10 +6549,17 @@ public class GameClient {
         // Si la position est de retirer
         // Ou bien
         // Si il y avait d�j� un item sur l'emplacement on le retire
-        if(position == Constant.ITEM_POS_NO_EQUIPED || exObj != null)
-        	this.onMovementUnEquipObject(object);
-        else
-        	this.onMovementEquipItem(object, position, isAConsumableItem, quantity);
+        if(exObj != null) {
+            if (exObj.getPosition() != Constant.ITEM_POS_NO_EQUIPED)
+                this.onMovementUnEquipObject(exObj);
+            this.onMovementEquipItem(exObj, Constant.ITEM_POS_NO_EQUIPED, isAConsumableItem, quantity);
+        }
+        if(position != Constant.ITEM_POS_NO_EQUIPED) {
+            this.onMovementEquipItem(object, position, isAConsumableItem, quantity);
+        }
+        else {
+            this.onMovementUnEquipObject(object);
+        }
         
         if(isAConsumableItem) return;
        

@@ -2692,8 +2692,10 @@ public class SocketManager {
 
     public static void GAME_SEND_ADD_SHORTCUT(Player player, Shortcuts shortcut)
     {
-        String packet = "OrA" + shortcut.getPosition() + ";" + shortcut.getObject().getTemplate().getId() + ";" + shortcut.getObject().parseToSave();
-        send(player, packet);
+        if(shortcut.getObject() != null) {
+            String packet = "OrA" + shortcut.getPosition() + ";" + shortcut.getObject().getTemplate().getId() + ";" + shortcut.getObject().parseToSave();
+            send(player, packet);
+        }
     }
     public static void GAME_SEND_REMOVE_SHORTCUT(Player player, int pos)
     {
