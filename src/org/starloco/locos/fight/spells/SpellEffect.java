@@ -112,9 +112,13 @@ public class SpellEffect {
 							int turns = target.getBuff(stats).getTurn();
 							int duration = target.getBuff(stats).getDurationFixed();
 							String args = target.getBuff(stats).getArgs();
-							for (int i : Constant.getOppositeStats(stats))
-								target.addBuff(i, val, turns, duration, true, buff.getSpell(), args, caster, false);
+							int[] oppositeStats = Constant.getOppositeStats(stats);
+							if(oppositeStats != null) {
+								for (int i : oppositeStats)
+									target.addBuff(i, val, turns, duration, true, buff.getSpell(), args, caster, false);
+							}
 							target.addBuff(stats, val, duration, turns, true, buff.getSpell(), args, caster, false);
+
 						}
 						break;
 					case 9://Derobade
@@ -397,6 +401,25 @@ public class SpellEffect {
 			if (turns != -1)//Si ce n'est pas un buff qu'on applique en d�but de tour
 				turns = Integer.parseInt(args.split(";")[3]);
 		} catch (NumberFormatException ignored) {}
+		if(acaster != null) {
+			if (acaster.isDead()) {
+				return;
+			}
+		}
+		else {
+			return;
+		}
+		if(cibles != null) {
+			ArrayList<Fighter> verifiedFighter = new ArrayList<>();
+			for (Fighter fighter : cibles) {
+				if (!fighter.isDead())
+					verifiedFighter.add(fighter);
+			}
+			cibles = verifiedFighter;
+		}
+		else{
+			return;
+		}
 		caster = acaster;
 		try {
 			jet = args.split(";")[5];
@@ -3416,7 +3439,7 @@ public class SpellEffect {
 					SocketManager.GAME_SEND_GA_PACKET_TO_FIGHT(fight, 7, 309, caster.getId()
 							+ "", target.getId() + "," + (value - retrait));
 				if (retrait > 0) {
-					if (turns <= 0)//Mot d'immobilisation
+					if (turns <= 0 || duration <= 0)//Mot d'immobilisation
 					{
 						target.addBuff(effectID, retrait, 1, 1, false, spell, args, caster, false);
 					} else {

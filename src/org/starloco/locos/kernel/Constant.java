@@ -426,9 +426,9 @@ public class Constant {
 
     public static int[] BOSS_ID = {58,85,86,107,113,121,147,173,180,225,226,230,232,251,252,257,289,295,374,375,377,382,404,423,430,457,478,568,605,612,669,670,673,675,677,681,780,792,797,799,800,827,854,926,939,940,943,1015,1027,1045,1051,1071,1072,1085,1086,1087,1159,1170,1184,1185,1186,1187,1188,1195};
 
-    public static int[] EXCEPTION_GLADIATROOL_BOSS = {261,295,404,423,1159};
-    public static int[] EXCEPTION_GLADIATROOL_ARCHI = {261,404,423,1159};
-    public static int[] EXCEPTION_GLADIATROOL_MONSTRES = {258,260,261,404,424,1090,1091,1092,1094};
+    public static int[] EXCEPTION_GLADIATROOL_BOSS = {251,295,404,423,1159};
+    public static int[] EXCEPTION_GLADIATROOL_ARCHI = {251,404,423,1159};
+    public static int[] EXCEPTION_GLADIATROOL_MONSTRES = {258,260,251,404,424,1090,1091,1092,1094};
 
     public static final List<Integer> GLADIATROOL_FULLMORPHID = Arrays.asList(101,102,103,104,105,106,107,108,109,110,111,112);
 
@@ -2784,13 +2784,6 @@ public class Constant {
                 break;
             //Armure
             case 88:
-                stats.addOneStat(STATS_ADD_PERDOM, lvl / 2);
-                stats.addOneStat(STATS_ADD_RP_AIR, lvl / 20);
-                stats.addOneStat(STATS_ADD_RP_EAU, lvl / 20);
-                stats.addOneStat(STATS_ADD_RP_TER, lvl / 20);
-                stats.addOneStat(STATS_ADD_RP_FEU, lvl / 20);
-                stats.addOneStat(STATS_ADD_RP_NEU, lvl / 20);
-                break;
             case 75:
                 stats.addOneStat(STATS_ADD_PERDOM, lvl / 2);
                 stats.addOneStat(STATS_ADD_RP_AIR, lvl / 20);
@@ -3381,17 +3374,18 @@ public class Constant {
         int lvl = target.getLevel();
         if (lvl <= 50)
             return 50;
-        if ((lvl <= 80) && (lvl > 50))
+        else if (lvl <= 80)
             return 80;
-        if ((lvl <= 110) && (lvl > 80))
+        else if (lvl <= 110)
             return 110;
-        if ((lvl <= 140) && (lvl > 110))
+        else if (lvl <= 140)
             return 140;
-        if ((lvl <= 170) && (lvl > 140))
+        else if (lvl <= 170)
             return 170;
-        if ((lvl <= 500) && (lvl > 170))
+        else if (lvl <= 500)
             return 200;
-        return 200;
+        else
+            return 200;
     }
 
     public static String getStatsOfCandy(int id, int turn) {
@@ -3683,10 +3677,10 @@ public class Constant {
         if(color2 == 75)
             color2 = 10;
 
-        if (color1 > color2) {
+        if (color1 >= color2) {
             A = color2;// moins
             B = color1;// supérieur
-        } else if (color1 <= color2) {
+        } else {
             A = color1;// moins
             B = color2;// supérieur
         }
@@ -4188,17 +4182,15 @@ public class Constant {
     public static int getArmeSoin(int idArme) {
         switch (idArme) {
             case 7172:
+            case 7182:
                 return 100;
             case 7156:
+            case 6539:
                 return 80;
             case 1355:
                 return 42;
-            case 7182:
-                return 100;
             case 7040:
                 return 10;
-            case 6539:
-                return 80;
             case 6519:
                 return 23;
             case 8118:
@@ -4492,8 +4484,7 @@ public class Constant {
     
     public static boolean isPanoIdClass(final int ObjPanoID) {
     	if(ObjPanoID >= 81 && ObjPanoID <= 92) return true;
-    	else if(ObjPanoID >= 201 && ObjPanoID <= 212) return true;
-    	return false;
+    	else return ObjPanoID >= 201 && ObjPanoID <= 212;
     }
     
     public static boolean isTypeForMimibiote(final int type) {
@@ -4581,8 +4572,8 @@ public class Constant {
 
 
     public static int getClasseByMorphWeapon(int MorphWeapon) {
-        int Classe = MorphWeapon-12781;
-        return Classe;
+        int classe = MorphWeapon-12781;
+        return classe;
     }
 
 
@@ -4634,7 +4625,7 @@ public class Constant {
     }
 
     public static Integer getRandomGemmesSpritiuels() {
-        ArrayList<Integer> gemmespi = new ArrayList<Integer>();
+        ArrayList<Integer> gemmespi = new ArrayList<>();
 
         for(int i= 10227; i<=10270;i++){
             gemmespi.add(i);

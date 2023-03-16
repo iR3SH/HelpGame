@@ -13,6 +13,7 @@ import org.starloco.locos.game.scheduler.Updatable;
 import org.starloco.locos.game.world.World;
 import org.starloco.locos.kernel.Main;
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class WorldSave extends Updatable {
 
@@ -42,13 +43,13 @@ public class WorldSave extends Updatable {
             SocketManager.GAME_SEND_Im_PACKET_TO_ALL("1164;");
             Main.isSaving = true;
 
-            /** Save of data **/
+            /* Save of data */
             World.world.logger.info("-> of accounts.");
-            World.world.getAccounts().stream().filter(account -> account != null).forEach(account -> Database.getStatics().getAccountData().update(account));
+            World.world.getAccounts().stream().filter(Objects::nonNull).forEach(account -> Database.getStatics().getAccountData().update(account));
 
             World.world.logger.info("-> of players.");
             World.world.logger.info("-> of members of guilds.");
-            World.world.getPlayers().stream().filter(player -> player != null).filter(Player::isOnline).forEach(player -> {
+            World.world.getPlayers().stream().filter(Objects::nonNull).filter(Player::isOnline).forEach(player -> {
                 Database.getStatics().getPlayerData().update(player);
                 if (player.getGuildMember() != null)
                     Database.getDynamics().getGuildMemberData().update(player);
@@ -62,7 +63,7 @@ public class WorldSave extends Updatable {
                     Database.getDynamics().getPrismData().update(prism);
 
             World.world.logger.info("-> of guilds.");
-            World.world.getGuilds().values().stream().forEach(guild -> Database.getDynamics().getGuildData().update(guild));
+            World.world.getGuilds().values().forEach(guild -> Database.getDynamics().getGuildData().update(guild));
 
             World.world.logger.info("-> of collectors.");
             World.world.getCollectors().values().stream().filter(collector -> collector.getInFight() <= 0).forEach(collector -> Database.getDynamics().getCollectorData().update(collector));
@@ -109,7 +110,7 @@ public class WorldSave extends Updatable {
                             .forEach(group -> Database.getDynamics().getHeroicMobsGroups().update(map.getId(), group));
                 Database.getDynamics().getHeroicMobsGroups().updateFix();
             }
-            /** end save of data **/
+            /* end save of data */
 
             World.world.logger.debug("The save has been doing successfully !");
             SocketManager.GAME_SEND_Im_PACKET_TO_ALL("1165;");

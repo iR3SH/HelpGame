@@ -2945,13 +2945,18 @@ public class Fight {
                     this.onFighterDie(entry, caster);
 
                     try {
-                        int index = this.getOrderPlaying().indexOf(entry);
-                        if (index != -1)
-                            this.getOrderPlaying().remove(index);
-                        if (this.getTeam0().containsKey(entry.getId()))
-                            this.getTeam0().remove(entry.getId());
-                        else if (this.getTeam1().containsKey(entry.getId()))
-                            this.getTeam1().remove(entry.getId());
+                        List<Fighter> orderPlaying = this.getOrderPlaying();
+                        if(orderPlaying != null) {
+                            if(orderPlaying.contains(entry)) {
+                                int index = orderPlaying.indexOf(entry);
+                                if (index != -1)
+                                    this.getOrderPlaying().remove(index);
+                                if (this.getTeam0().containsKey(entry.getId()))
+                                    this.getTeam0().remove(entry.getId());
+                                else if (this.getTeam1().containsKey(entry.getId()))
+                                    this.getTeam1().remove(entry.getId());
+                            }
+                        }
                     } catch (Exception e) {
                         e.printStackTrace();
                     }

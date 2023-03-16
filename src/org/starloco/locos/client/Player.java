@@ -403,7 +403,6 @@ public class Player {
                 this.curPdv = (this.maxPdv * pdvPer / 100);
             if (this.curPdv <= 0)
                 this.curPdv = 1;
-            parseSpells(spells);
             if (!morphMode.equals("")) {
                 if (morphMode.equals("0"))
                     morphMode = "0;0";
@@ -412,6 +411,7 @@ public class Player {
                 if (!i[1].equals(""))
                     _morphId = Integer.parseInt(i[1]);
             }
+            parseSpells(spells);
             if (_morphMode)
                 this._saveSpellPts = pts;
             else
@@ -450,7 +450,7 @@ public class Player {
             	}catch(NumberFormatException | ArrayIndexOutOfBoundsException e)
             	{
             		e.printStackTrace();
-            		Main.stop("Probl�me lors de la cr�ation de personnnage au niveau des artefact");
+            		Main.stop("Problême lors de la création de personnage au niveau des artefact");
             	}
             }
             if(saveSpells != null) {
@@ -466,6 +466,8 @@ public class Player {
                         savedSpells.put(spellId, spell.getSortsStats().get(spellLevel));
                         savedSpellsPlaces.put(spellId, spellPlace);
                     }
+                    _saveSorts = savedSpells;
+                    _saveSortsPlaces = savedSpellsPlaces;
                 }
             }
             _saveSpellPts = saveSpellPts;

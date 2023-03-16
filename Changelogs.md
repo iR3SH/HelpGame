@@ -24,6 +24,15 @@ objectId int 11 NOT NULL
 
 # FIX
 
+### **16/03/2023**
+- Fix effet de sort appliqué alors que la cible était morte
+- Fix EffectTarget du Sort Emmental
+- Fix EffectTarget du Sort Roblochon ancestral
+- Fix EffectTarget du Sort Fleur des Iles
+- Fix EffectTarget du Sort Ebranlement
+- Fix Animation du Sort Flèche Persécutrice
+- Fix NullExpointerException in Fight.java -> onFighterDie line 2948
+
 ### **15/03/2023**
 - Fix 2 NullExpointerException in Player.java
 - Fix 1 NullExpointerException in Fight.java
