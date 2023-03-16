@@ -32,6 +32,9 @@ objectId int 11 NOT NULL
 - Fix EffectTarget du Sort Ebranlement
 - Fix Animation du Sort Flèche Persécutrice
 - Fix NullExpointerException in Fight.java -> onFighterDie line 2948
+- Fix SetToniqueInterface si le joueur n'a pas validé son tonique pendant un reboot ou déco / reco
+- Un joueur ne peut plus recevoir un tonique s'il n'est pas dans le gladiatrool
+- Fix commande joueur .restat
 
 ### **15/03/2023**
 - Fix 2 NullExpointerException in Player.java

@@ -429,6 +429,7 @@ public class Constant {
     public static int[] EXCEPTION_GLADIATROOL_BOSS = {251,295,404,423,1159};
     public static int[] EXCEPTION_GLADIATROOL_ARCHI = {251,404,423,1159};
     public static int[] EXCEPTION_GLADIATROOL_MONSTRES = {258,260,251,404,424,1090,1091,1092,1094};
+    public static List<Integer> GLADIATROOL_MAPID = Arrays.asList(15000,15008,15016,15024,15032,15040,15048,15056,15064,15072);
 
     public static final List<Integer> GLADIATROOL_FULLMORPHID = Arrays.asList(101,102,103,104,105,106,107,108,109,110,111,112);
 
@@ -4516,20 +4517,7 @@ public class Constant {
     }
 
     public static boolean isInGladiatorDonjon(int id) {
-        switch (id) {
-            case 15000:
-            case 15008:
-            case 15016:
-            case 15024:
-            case 15032:
-            case 15040:
-            case 15048:
-            case 15056:
-            case 15064:
-            case 15072:
-                return true;
-        }
-        return false;
+        return GLADIATROOL_MAPID.contains(id);
     }
 
     public static int getPalierByNewMap(int Mapid) {

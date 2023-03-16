@@ -1913,8 +1913,29 @@ public class Player {
                 SocketManager.GAME_SEND_ADD_SHORTCUT(this, shortcut);
             }
         }
+        verifIfPlayerHasAllTonique();
     }
 
+    public void verifIfPlayerHasAllTonique()
+    {
+        if(_morphMode) {
+            List<GameObject> toniques = new ArrayList<>();
+            for (int i = Constant.ITEM_POS_TONIQUE1; i < Constant.ITEM_POS_TONIQUE9; i++) {
+                GameObject object = getObjetByPos(i);
+                if (object != null)
+                    toniques.add(object);
+            }
+            if (Constant.isInGladiatorDonjon(Integer.parseInt(String.valueOf(curMap.getId())))) {
+                int index = Constant.GLADIATROOL_MAPID.indexOf(Integer.parseInt(String.valueOf(curMap.getId())));
+                if (index != -1) {
+                    if(index != toniques.size())
+                    {
+                        SocketManager.GAME_SEND_wr(this, Constant.getPalierByNewMap(this.curMap.getId()));
+                    }
+                }
+            }
+        }
+    }
     public void checkVote() {
         String IP = this.getAccount().getLastIP();
         long now = System.currentTimeMillis() / 1000;
@@ -5433,7 +5454,7 @@ public class Player {
                 _itemClasse.add(template);
             
         }
-        for(int j = 65; j < 75; j++) {
+        for(int j = Constant.ITEM_POS_TONIQUE_EQUILIBRAGE; j < Constant.ITEM_POS_TONIQUE9; j++) {
             if (getObjetByPos(j) == null)
                 continue;
             final GameObject obj = getObjetByPos(j);
@@ -5838,6 +5859,7 @@ public class Player {
 		stats.addOneStat(Constant.STATS_ADD_CHAN, keep - stats.getEffect(Constant.STATS_ADD_CHAN));
 		final Prestige prestige = World.world.getPrestigeById(this.getPrestige());
 		if(prestige != null) prestige.getPrestigeBonus().giveBonusAfterRestat(this);
+
 	}
 	
 	public void restatKeepParcho()

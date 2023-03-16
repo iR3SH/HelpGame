@@ -431,12 +431,14 @@ public class GameClient {
     }
 
     private void createTonique(String packet) {
-        int ToniqueChoosedPos = Integer.parseInt(packet.substring(2));
-        int ToniqueTemplateID = this.player.LastTonicProposed[ToniqueChoosedPos];
-        int palier = Constant.getPalierByNewMap(this.player.getCurMap().getId());
-        int toniquePos = 64 + palier;
-        String StatsToadd = Constant.getStatStringbyPalier(palier);
-        this.player.setTonique(ToniqueTemplateID,toniquePos,StatsToadd);
+        if(Constant.isInGladiatorDonjon(Integer.parseInt(String.valueOf(player.getCurMap().getId())))) {
+            int ToniqueChoosedPos = Integer.parseInt(packet.substring(2));
+            int ToniqueTemplateID = this.player.LastTonicProposed[ToniqueChoosedPos];
+            int palier = Constant.getPalierByNewMap(this.player.getCurMap().getId());
+            int toniquePos = 64 + palier;
+            String StatsToadd = Constant.getStatStringbyPalier(palier);
+            this.player.setTonique(ToniqueTemplateID, toniquePos, StatsToadd);
+        }
     }
 
 

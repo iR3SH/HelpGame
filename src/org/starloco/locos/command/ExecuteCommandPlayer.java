@@ -166,7 +166,8 @@ public class ExecuteCommandPlayer {
 	        		removePoint = doIpDrop(msg, player);
 	        		break;
 	        	case 16:
-	        		player.restatAll(0);
+					player.restatKeepParcho();
+					SocketManager.GAME_SEND_STATS_PACKET(player);
 	        		removePoints(player, price);
 	        		break;
 	        	case 18:
