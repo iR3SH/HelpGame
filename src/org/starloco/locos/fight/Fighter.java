@@ -549,9 +549,9 @@ public class Fighter implements Comparable<Fighter> {
 
 
         //Si c'est le jouer actif qui s'autoBuff, on ajoute 1 a la dur�e
-        this.fightBuffs.add(new SpellEffect(effectID,val,(this.canPlay?duration+1:duration),turns,debuff,caster,args,spellID));
+        this.fightBuffs.add(new SpellEffect(effectID, val ,(this.canPlay ? duration + 1 : duration), turns, debuff, caster, args, spellID));
         if(Main.modDebug)
-            System.out.println("- Ajout du Buff "+effectID+" sur le personnage fighter ("+this.getId()+") val : "+val+" duration : "+duration+" turns : "+turns+" debuff : "+debuff+" spellid : "+spellID+" args : "+args+" !");
+            System.out.println("- Ajout du Buff "+ effectID +" sur le personnage fighter ("+ this.getId() +") val : "+val+" duration : "+duration+" turns : "+turns+" debuff : "+debuff+" spellid : "+spellID+" args : "+args+" !");
 
         sendGIE(args, spellID, effectID, val, duration);
         // Copier d'ici pour en-dessous

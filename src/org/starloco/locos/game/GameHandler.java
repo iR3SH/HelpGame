@@ -1,5 +1,6 @@
 package org.starloco.locos.game;
 
+import org.apache.mina.filter.FilterEvent;
 import org.starloco.locos.game.world.World;
 import org.starloco.locos.kernel.Main;
 import org.apache.mina.core.service.IoHandler;
@@ -39,10 +40,15 @@ public class GameHandler implements IoHandler {
 
     @Override
     public void sessionClosed(IoSession ioSession) throws Exception {
-        GameClient client = (GameClient) ioSession.getAttribute("client");
-        if(client != null)
-            client.disconnect();
-        World.world.logger.info("Session " + ioSession.getId() + " closed");
+        if(ioSession != null) {
+            GameClient client = (GameClient) ioSession.getAttribute("client");
+            if (client != null) {
+                client.disconnect();
+                ioSession.removeAttribute(client);
+            }
+            ioSession.closeNow();
+            World.world.logger.info("Session " + ioSession.getId() + " closed");
+        }
     }
 
     @Override
@@ -68,7 +74,20 @@ public class GameHandler implements IoHandler {
 
     @Override
     public void inputClosed(IoSession ioSession) throws Exception {
-        ioSession.close(true);
+        if(ioSession != null) {
+            GameClient client = (GameClient) ioSession.getAttribute("client");
+            if (client != null) {
+                client.disconnect();
+                ioSession.removeAttribute(client);
+            }
+            ioSession.closeNow();
+            World.world.logger.info("Input " + ioSession.getId() + " closed");
+        }
+    }
+
+    @Override
+    public void event(IoSession ioSession, FilterEvent filterEvent) throws Exception {
+
     }
 
     @Override

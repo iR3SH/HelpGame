@@ -426,9 +426,9 @@ public class Constant {
 
     public static int[] BOSS_ID = {58,85,86,107,113,121,147,173,180,225,226,230,232,251,252,257,289,295,374,375,377,382,404,423,430,457,478,568,605,612,669,670,673,675,677,681,780,792,797,799,800,827,854,926,939,940,943,1015,1027,1045,1051,1071,1072,1085,1086,1087,1159,1170,1184,1185,1186,1187,1188,1195};
 
-    public static int[] EXCEPTION_GLADIATROOL_BOSS = {251,295,404,423,1159};
-    public static int[] EXCEPTION_GLADIATROOL_ARCHI = {251,404,423,1159};
-    public static int[] EXCEPTION_GLADIATROOL_MONSTRES = {258,260,251,404,424,1090,1091,1092,1094};
+    public static int[] EXCEPTION_GLADIATROOL_BOSS = {251,295,404,423,450,1159};
+    public static int[] EXCEPTION_GLADIATROOL_ARCHI = {251,404,423,450,1159};
+    public static int[] EXCEPTION_GLADIATROOL_MONSTRES = {258,260,251,404,424,450,1090,1091,1092,1094};
     public static List<Integer> GLADIATROOL_MAPID = Arrays.asList(15000,15008,15016,15024,15032,15040,15048,15056,15064,15072);
 
     public static final List<Integer> GLADIATROOL_FULLMORPHID = Arrays.asList(101,102,103,104,105,106,107,108,109,110,111,112);
@@ -923,14 +923,8 @@ public class Constant {
                         return 3;
 
                     case CLASS_FECA:
-                        if (val < 50)
-                            return 2;
-                        if (val < 150)
-                            return 3;
-                        if (val < 250)
-                            return 4;
-                        return 5;
-
+                    case CLASS_ENIRIPSA:
+                    case CLASS_OSAMODAS:
                     case CLASS_XELOR:
                         if (val < 50)
                             return 2;
@@ -941,6 +935,8 @@ public class Constant {
                         return 5;
 
                     case CLASS_SRAM:
+                    case CLASS_IOP:
+                    case CLASS_ECAFLIP:
                         if (val < 100)
                             return 1;
                         if (val < 200)
@@ -948,24 +944,6 @@ public class Constant {
                         if (val < 300)
                             return 3;
                         if (val < 400)
-                            return 4;
-                        return 5;
-
-                    case CLASS_OSAMODAS:
-                        if (val < 50)
-                            return 2;
-                        if (val < 150)
-                            return 3;
-                        if (val < 250)
-                            return 4;
-                        return 5;
-
-                    case CLASS_ENIRIPSA:
-                        if (val < 50)
-                            return 2;
-                        if (val < 150)
-                            return 3;
-                        if (val < 250)
                             return 4;
                         return 5;
 
@@ -988,16 +966,6 @@ public class Constant {
                         return 5;
 
                     case CLASS_CRA:
-                        if (val < 50)
-                            return 1;
-                        if (val < 150)
-                            return 2;
-                        if (val < 250)
-                            return 3;
-                        if (val < 350)
-                            return 4;
-                        return 5;
-
                     case CLASS_ENUTROF:
                         if (val < 50)
                             return 1;
@@ -1008,44 +976,17 @@ public class Constant {
                         if (val < 350)
                             return 4;
                         return 5;
-
-                    case CLASS_ECAFLIP:
-                        if (val < 100)
-                            return 1;
-                        if (val < 200)
-                            return 2;
-                        if (val < 300)
-                            return 3;
-                        if (val < 400)
-                            return 4;
-                        return 5;
-
-                    case CLASS_IOP:
-                        if (val < 100)
-                            return 1;
-                        if (val < 200)
-                            return 2;
-                        if (val < 300)
-                            return 3;
-                        if (val < 400)
-                            return 4;
-                        return 5;
                 }
                 break;
             case 13://Chance
                 switch (classID) {
                     case CLASS_FECA:
-                        if (val < 20)
-                            return 1;
-                        if (val < 40)
-                            return 2;
-                        if (val < 60)
-                            return 3;
-                        if (val < 80)
-                            return 4;
-                        return 5;
-
                     case CLASS_XELOR:
+                    case CLASS_SRAM:
+                    case CLASS_IOP:
+                    case CLASS_ECAFLIP:
+                    case CLASS_ENIRIPSA:
+                    case CLASS_CRA:
                         if (val < 20)
                             return 1;
                         if (val < 40)
@@ -1059,18 +1000,8 @@ public class Constant {
                     case CLASS_SACRIEUR:
                         return 3;
 
-                    case CLASS_SRAM:
-                        if (val < 20)
-                            return 1;
-                        if (val < 40)
-                            return 2;
-                        if (val < 60)
-                            return 3;
-                        if (val < 80)
-                            return 4;
-                        return 5;
-
                     case CLASS_SADIDA:
+                    case CLASS_OSAMODAS:
                         if (val < 100)
                             return 1;
                         if (val < 200)
@@ -1087,17 +1018,6 @@ public class Constant {
                         if (val < 200)
                             return 2;
                         return 3;
-
-                    case CLASS_IOP:
-                        if (val < 20)
-                            return 1;
-                        if (val < 40)
-                            return 2;
-                        if (val < 60)
-                            return 3;
-                        if (val < 80)
-                            return 4;
-                        return 5;
 
                     case CLASS_ENUTROF:
                         if (val < 100)
@@ -1109,66 +1029,17 @@ public class Constant {
                         if (val < 330)
                             return 4;
                         return 5;
-
-                    case CLASS_OSAMODAS:
-                        if (val < 100)
-                            return 1;
-                        if (val < 200)
-                            return 2;
-                        if (val < 300)
-                            return 3;
-                        if (val < 400)
-                            return 4;
-                        return 5;
-
-                    case CLASS_ECAFLIP:
-                        if (val < 20)
-                            return 1;
-                        if (val < 40)
-                            return 2;
-                        if (val < 60)
-                            return 3;
-                        if (val < 80)
-                            return 4;
-                        return 5;
-
-                    case CLASS_ENIRIPSA:
-                        if (val < 20)
-                            return 1;
-                        if (val < 40)
-                            return 2;
-                        if (val < 60)
-                            return 3;
-                        if (val < 80)
-                            return 4;
-                        return 5;
-
-                    case CLASS_CRA:
-                        if (val < 20)
-                            return 1;
-                        if (val < 40)
-                            return 2;
-                        if (val < 60)
-                            return 3;
-                        if (val < 80)
-                            return 4;
-                        return 5;
                 }
                 break;
             case 14://Agilit�
                 switch (classID) {
                     case CLASS_FECA:
-                        if (val < 20)
-                            return 1;
-                        if (val < 40)
-                            return 2;
-                        if (val < 60)
-                            return 3;
-                        if (val < 80)
-                            return 4;
-                        return 5;
-
                     case CLASS_XELOR:
+                    case CLASS_SADIDA:
+                    case CLASS_ENIRIPSA:
+                    case CLASS_ENUTROF:
+                    case CLASS_IOP:
+                    case CLASS_OSAMODAS:
                         if (val < 20)
                             return 1;
                         if (val < 40)
@@ -1193,17 +1064,6 @@ public class Constant {
                             return 4;
                         return 5;
 
-                    case CLASS_SADIDA:
-                        if (val < 20)
-                            return 1;
-                        if (val < 40)
-                            return 2;
-                        if (val < 60)
-                            return 3;
-                        if (val < 80)
-                            return 4;
-                        return 5;
-
                     case CLASS_PANDAWA:
                         if (val < 50)
                             return 1;
@@ -1211,49 +1071,7 @@ public class Constant {
                             return 2;
                         return 3;
 
-                    case CLASS_ENIRIPSA:
-                        if (val < 20)
-                            return 1;
-                        if (val < 40)
-                            return 2;
-                        if (val < 60)
-                            return 3;
-                        if (val < 80)
-                            return 4;
-                        return 5;
-
-                    case CLASS_IOP:
-                        if (val < 20)
-                            return 1;
-                        if (val < 40)
-                            return 2;
-                        if (val < 60)
-                            return 3;
-                        if (val < 80)
-                            return 4;
-                        return 5;
-
-                    case CLASS_ENUTROF:
-                        if (val < 20)
-                            return 1;
-                        if (val < 40)
-                            return 2;
-                        if (val < 60)
-                            return 3;
-                        if (val < 80)
-                            return 4;
-                        return 5;
-
                     case CLASS_ECAFLIP:
-                        if (val < 50)
-                            return 1;
-                        if (val < 100)
-                            return 2;
-                        if (val < 150)
-                            return 3;
-                        if (val < 200)
-                            return 4;
-                        return 5;
 
                     case CLASS_CRA:
                         if (val < 50)
@@ -1265,33 +1083,15 @@ public class Constant {
                         if (val < 200)
                             return 4;
                         return 5;
-
-                    case CLASS_OSAMODAS:
-                        if (val < 20)
-                            return 1;
-                        if (val < 40)
-                            return 2;
-                        if (val < 60)
-                            return 3;
-                        if (val < 80)
-                            return 4;
-                        return 5;
                 }
                 break;
             case 15://Intelligence
                 switch (classID) {
                     case CLASS_XELOR:
-                        if (val < 100)
-                            return 1;
-                        if (val < 200)
-                            return 2;
-                        if (val < 300)
-                            return 3;
-                        if (val < 400)
-                            return 4;
-                        return 5;
-
                     case CLASS_FECA:
+                    case CLASS_SADIDA:
+                    case CLASS_ENIRIPSA:
+                    case CLASS_OSAMODAS:
                         if (val < 100)
                             return 1;
                         if (val < 200)
@@ -1311,17 +1111,6 @@ public class Constant {
                         if (val < 150)
                             return 3;
                         if (val < 250)
-                            return 4;
-                        return 5;
-
-                    case CLASS_SADIDA:
-                        if (val < 100)
-                            return 1;
-                        if (val < 200)
-                            return 2;
-                        if (val < 300)
-                            return 3;
-                        if (val < 400)
                             return 4;
                         return 5;
 
@@ -1344,6 +1133,7 @@ public class Constant {
                         return 3;
 
                     case CLASS_IOP:
+                    case CLASS_ECAFLIP:
                         if (val < 20)
                             return 1;
                         if (val < 40)
@@ -1351,17 +1141,6 @@ public class Constant {
                         if (val < 60)
                             return 3;
                         if (val < 80)
-                            return 4;
-                        return 5;
-
-                    case CLASS_ENIRIPSA:
-                        if (val < 100)
-                            return 1;
-                        if (val < 200)
-                            return 2;
-                        if (val < 300)
-                            return 3;
-                        if (val < 400)
                             return 4;
                         return 5;
 
@@ -1373,28 +1152,6 @@ public class Constant {
                         if (val < 250)
                             return 3;
                         if (val < 350)
-                            return 4;
-                        return 5;
-
-                    case CLASS_OSAMODAS:
-                        if (val < 100)
-                            return 1;
-                        if (val < 200)
-                            return 2;
-                        if (val < 300)
-                            return 3;
-                        if (val < 400)
-                            return 4;
-                        return 5;
-
-                    case CLASS_ECAFLIP:
-                        if (val < 20)
-                            return 1;
-                        if (val < 40)
-                            return 2;
-                        if (val < 60)
-                            return 3;
-                        if (val < 80)
                             return 4;
                         return 5;
                 }
