@@ -14,6 +14,10 @@
 - Bwork élémentaux ia flingué
 - Corailleur Magistral en roue libre
 - IA CM Bug (Attaque bien avec Complicité et Embranchement mais pas les deux autres et ne fait plus rien avec un ennemi au Cac)
+- Tofu Ventripotent ne fait rien
+- Pince de Corail refaire EffectTarget
+- Coraillement refaire EffectTarget
+- Refaire IA Kreuvet La Bwork Ingénieuse
 
 # FIX
 
