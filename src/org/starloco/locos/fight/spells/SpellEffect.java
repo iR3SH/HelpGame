@@ -1149,14 +1149,23 @@ public class SpellEffect {
 				SocketManager.GAME_SEND_GA_PACKET_TO_FIGHT(fight, 7, 309, caster.getId() + "", target.getId() + "," + (value - val));
 			if (val < 1)
 				continue;
-
-			target.addBuff(Constant.STATS_REM_PM, val, 1, 1, true, spell, args, caster, false);
+			if(duration <= 0) {
+				target.addBuff(Constant.STATS_REM_PM, val, 1, turns, true, spell, args, caster, false);
+			}
+			else {
+				target.addBuff(Constant.STATS_REM_PM, val, duration, turns, true, spell, args, caster, false);
+			}
 			SocketManager.GAME_SEND_GA_PACKET_TO_FIGHT(fight, 7, Constant.STATS_REM_PM, caster.getId() + "", target.getId() + ",-" + val + "," + turns);
 			num += val;
 		}
 		if (num != 0) {
 			SocketManager.GAME_SEND_GA_PACKET_TO_FIGHT(fight, 7, Constant.STATS_ADD_PM, caster.getId() + "", caster.getId() + "," + num + "," + turns);
-			caster.addBuff(Constant.STATS_ADD_PM, num, turns, 1, true, spell, args, caster, false);
+			if(duration <= 0) {
+				caster.addBuff(Constant.STATS_ADD_PM, num, 1, turns, true, spell, args, caster, false);
+			}
+			else {
+				caster.addBuff(Constant.STATS_ADD_PM, num, duration, turns, true, spell, args, caster, false);
+			}
 			//Gain de PM pendant le tour de jeu
 			if (caster.canPlay())
 				caster.setCurPm(fight, num);
@@ -1300,16 +1309,11 @@ public class SpellEffect {
 
 			if (val < 1)
 				continue;
-			if (spell == 95) {
-				target.addBuff(Constant.STATS_REM_PA, val, 1, 1, true, spell, args, caster, false);
-			} else {
-				if(turns == 0 || duration == 0) {
-					target.addBuff(Constant.STATS_REM_PA, val, 1, 1, true, spell, args, caster, false);
-				}
-				else
-				{
-					target.addBuff(Constant.STATS_REM_PA, val, turns, 0, true, spell, args, caster, false);
-				}
+			if(duration <= 0) {
+				target.addBuff(Constant.STATS_REM_PA, val, 1, turns, true, spell, args, caster, false);
+			}
+			else {
+				target.addBuff(Constant.STATS_REM_PA, val, duration, turns, true, spell, args, caster, false);
 			}
 			SocketManager.GAME_SEND_GA_PACKET_TO_FIGHT(fight, 7, Constant.STATS_REM_PA, caster.getId()
 					+ "", target.getId() + ",-" + val + "," + turns);
@@ -1318,7 +1322,12 @@ public class SpellEffect {
 		if (num != 0) {
 			SocketManager.GAME_SEND_GA_PACKET_TO_FIGHT(fight, 7, Constant.STATS_ADD_PA, caster.getId()
 					+ "", caster.getId() + "," + num + "," + turns);
-			caster.addBuff(Constant.STATS_ADD_PA, num, 1, 1, true, spell, args, caster, false);
+			if(duration <= 0) {
+				caster.addBuff(Constant.STATS_ADD_PA, num, 1, turns, true, spell, args, caster, false);
+			}
+			else {
+				caster.addBuff(Constant.STATS_ADD_PA, num, duration, turns, true, spell, args, caster, false);
+			}
 			//Gain de PA pendant le tour de jeu
 			if (caster.canPlay())
 				caster.setCurPa(fight, num);
@@ -2915,113 +2924,31 @@ public class SpellEffect {
 	}
 
 	private void applyEffect_101(ArrayList<Fighter> cibles, Fight fight) {
+		for (Fighter target : cibles) {
+			int remove = Formulas.getPointsLost('a', value, caster, target);
+			if ((value - remove) > 0)
+				SocketManager.GAME_SEND_GA_PACKET_TO_FIGHT(fight, 7, 308, caster.getId() + "", target.getId() + "," + (value - remove));
+			if (remove > 0) {
+				if (duration <= 0)
+					target.addBuff(Constant.STATS_REM_PA, remove, 1, turns, false, spell, args, caster, false);
+				else
+					target.addBuff(Constant.STATS_REM_PA, remove, duration, turns, false, spell, args, caster, false);
+				if (turns <= 1 || duration <= 1)
+					SocketManager.GAME_SEND_GA_PACKET_TO_FIGHT(fight, 7, Constant.STATS_REM_PA, target.getId() + "", target.getId() + ",-" + remove);
+			}
 
-		if (spell == 470) {
-			for (Fighter target : cibles) {
-				if (target.getTeam() == caster.getTeam())
-					continue;
+			if (fight.getFighterByOrdreJeu() == target)
+				fight.setCurFighterPa(fight.getCurFighterPa() - remove);
 
-				if (target.hasBuff(788)) {
-					if (target.getBuff(788) != null)
-						if (target.getBuff(788).getValue() == 101) {
-							SpellEffect SE = target.getBuff(788);
-							target.addBuff(111, value, SE.getDurationFixed(), SE.getDurationFixed(), true, target.getBuff(788).getSpell(), args, target, false);
-							SocketManager.GAME_SEND_GA_PACKET_TO_FIGHT(fight, 7, Constant.STATS_REM_PA, target.getId()
-									+ "", target.getId() + ",+" + value);
-						}
-				}
-				int retrait = Formulas.getPointsLost('a', value, caster, target);
-				if ((value - retrait) > 0)
-					SocketManager.GAME_SEND_GA_PACKET_TO_FIGHT(fight, 7, 308, caster.getId()
-							+ "", target.getId() + "," + (value - retrait));
-				if (retrait > 0) {
-					if(turns > 0)
-						target.addBuff(effectID, retrait, turns, turns, false, spell, args, caster, false);
-					else
-						target.addBuff(effectID, retrait, 1, 1, false, spell, args, caster, false);
-					if (turns <= 1 || duration <= 1)
-						SocketManager.GAME_SEND_GA_PACKET_TO_FIGHT(fight, 7, Constant.STATS_REM_PA, target.getId()
-								+ "", target.getId() + ",-" + retrait);
-				}
-
-				if (fight.getFighterByOrdreJeu() == target)
-					fight.setCurFighterPa(fight.getCurFighterPa() - retrait);
-
-				if (target.getMob() != null) {
-					if (target.getMob().getTemplate().getId() == 1071)// si Rasboul
-					{
-						target.addBuff(Constant.STATS_ADD_PA, 2, 4, 4, true, spell, args, target, false);
-						SocketManager.GAME_SEND_GA_PACKET_TO_FIGHT(fight, 7, Constant.STATS_ADD_PA, target.getId()
-								+ "", target.getId() + ",+" + 2);
-					}
+			if (target.getMob() != null) {
+				this.verifmobs(fight, target, Constant.STATS_REM_PA, 0);
+				if (target.getMob().getTemplate().getId() == 1071)// si Rasboul
+				{
+					target.addBuff(Constant.STATS_ADD_PA, 2, 4, 4, true, spell, args, target, false);
+					SocketManager.GAME_SEND_GA_PACKET_TO_FIGHT(fight, 7, Constant.STATS_ADD_PA, target.getId() + "", target.getId() + ",+" + value);
 				}
 			}
-			return;
 		}
-		if (turns <= 0) {
-			for (Fighter target : cibles) {
-				if (target.hasBuff(788)) {
-					if (target.getBuff(788) != null)
-						if (target.getBuff(788).getValue() == Constant.STATS_REM_PA) {
-							target.addBuff(Constant.STATS_ADD_PA, value, turns, turns, true, target.getBuff(788).getSpell(), args, target, false);
-							SocketManager.GAME_SEND_GA_PACKET_TO_FIGHT(fight, 7, Constant.STATS_REM_PA, target.getId() + "", target.getId() + ",+" + value);
-						}
-				}
-				int remove = Formulas.getPointsLost('a', value, caster, target);
-				if ((value - remove) > 0)
-					SocketManager.GAME_SEND_GA_PACKET_TO_FIGHT(fight, 7, 308, caster.getId() + "", target.getId() + "," + (value - remove));
-				if (remove > 0) {
-					if(turns <= 1)
-						target.addBuff(Constant.STATS_REM_PA, remove, 1, 1, false, spell, args, caster, false);
-					else
-						target.addBuff(Constant.STATS_REM_PA, remove, turns, turns, false, spell, args, caster, false);
-					if (turns <= 1 || duration <= 1)
-						SocketManager.GAME_SEND_GA_PACKET_TO_FIGHT(fight, 7, Constant.STATS_REM_PA, target.getId() + "", target.getId() + ",-" + remove);
-				}
-
-				if (fight.getFighterByOrdreJeu() == target)
-					fight.setCurFighterPa(fight.getCurFighterPa() - remove);
-
-				if (target.getMob() != null)
-					this.verifmobs(fight, target, Constant.STATS_REM_PA, 0);
-			}
-		} else {
-			if (cibles.size() > 0)
-				for (Fighter target : cibles) {
-					if (target.hasBuff(Constant.STATS_CHATI_SHARED_DAMAGE)) {
-						if (target.getBuff(Constant.STATS_CHATI_SHARED_DAMAGE) != null)
-							if (target.getBuff(Constant.STATS_CHATI_SHARED_DAMAGE).getValue() == Constant.STATS_REM_PA) {
-								SpellEffect SE = target.getBuff(Constant.STATS_CHATI_SHARED_DAMAGE);
-								target.addBuff(Constant.STATS_ADD_PA, value, SE.getDurationFixed(), 1, true, target.getBuff(Constant.STATS_CHATI_SHARED_DAMAGE).getSpell(), args, target, false);
-								SocketManager.GAME_SEND_GA_PACKET_TO_FIGHT(fight, 7, Constant.STATS_REM_PA, target.getId() + "", target.getId() + ",+" + value);
-							}
-					}
-					int retrait = Formulas.getPointsLost('a', value, caster, target);
-					if ((value - retrait) > 0)
-						SocketManager.GAME_SEND_GA_PACKET_TO_FIGHT(fight, 7, 308, caster.getId() + "", target.getId() + "," + (value - retrait));
-					if (retrait > 0) {
-						if(turns <= 1)
-							target.addBuff(effectID, retrait, 1, 1, false, spell, args, caster, false);
-						else
-							target.addBuff(effectID, retrait, turns, turns, false, spell, args, caster, false);
-						if (turns <= 1 || duration <= 1)
-							SocketManager.GAME_SEND_GA_PACKET_TO_FIGHT(fight, 7, Constant.STATS_REM_PA, target.getId() + "", target.getId() + ",-" + retrait);
-					}
-
-					if (fight.getFighterByOrdreJeu() == target)
-						fight.setCurFighterPa(fight.getCurFighterPa() - retrait);
-
-					if (target.getMob() != null) {
-						if (target.getMob().getTemplate().getId() == 1071)// si Rasboul
-						{
-							target.addBuff(Constant.STATS_ADD_PA, 2, 4, 4, true, spell, args, target, false);
-							SocketManager.GAME_SEND_GA_PACKET_TO_FIGHT(fight, 7, Constant.STATS_ADD_PA, target.getId() + "", target.getId() + ",+" + value);
-						}
-					}
-				}
-		}
-
-
 	}
 
 	private void applyEffect_105(ArrayList<Fighter> cibles, Fight fight) {
@@ -3402,57 +3329,24 @@ public class SpellEffect {
 	}
 
 	private void applyEffect_127(ArrayList<Fighter> cibles, Fight fight) {
-		if (this.spell == 907) {
-			for (Fighter target : cibles) {
-				final int remove = Formulas.getPointsLost('m', value, caster, target);
-				if ((value - remove) > 0) {
-					SocketManager.GAME_SEND_GA_PACKET_TO_FIGHT(fight, 7, 309, caster.getId()
-							+ "", target.getId() + "," + (value - remove));
+		for (Fighter target : cibles) {
+			int retrait = Formulas.getPointsLost('m', value, caster, target);
+			if ((value - retrait) > 0)
+				SocketManager.GAME_SEND_GA_PACKET_TO_FIGHT(fight, 7, 309, caster.getId()
+						+ "", target.getId() + "," + (value - retrait));
+			if (retrait > 0) {
+				if (duration <= 0) {
+					target.addBuff(effectID, retrait, 1, turns, false, spell, args, caster, false);
+				} else {
+					target.addBuff(effectID, retrait, duration, turns, false, spell, args, caster, false);
 				}
-				target.setCurPm(fight, -remove);
-				if (remove > 0) {
-					SocketManager.GAME_SEND_GA_PACKET_TO_FIGHT(fight, 7, Constant.STATS_REM_PM, target.getId() + "", target.getId() + ",-" + remove);
-					if (target.getMob() != null) this.verifmobs(fight, target, Constant.STATS_REM_PM, 0);
-				}
+				if (turns <= 1 || duration <= 1)
+					SocketManager.GAME_SEND_GA_PACKET_TO_FIGHT(fight, 7, Constant.STATS_REM_PM, target.getId()
+							+ "", target.getId() + ",-" + retrait);
 			}
-		} else if (turns <= 0) {
-			for (Fighter target : cibles) {
-				int retrait = Formulas.getPointsLost('m', value, caster, target);
-				if ((value - retrait) > 0) {
-					SocketManager.GAME_SEND_GA_PACKET_TO_FIGHT(fight, 7, 309, caster.getId()
-							+ "", target.getId() + "," + (value - retrait));
-				}
-				if (retrait > 0) {
-					target.addBuff(Constant.STATS_REM_PM, retrait, 1, 1, false, spell, args, caster, false);
-					if (turns <= 1 || duration <= 1)
-						SocketManager.GAME_SEND_GA_PACKET_TO_FIGHT(fight, 7, Constant.STATS_REM_PM, target.getId()
-								+ "", target.getId() + ",-" + retrait);
-					if (target.getMob() != null)
-						this.verifmobs(fight, target, 127, 0);
-				}
-
-			}
-		} else {
-			for (Fighter target : cibles) {
-				int retrait = Formulas.getPointsLost('m', value, caster, target);
-				if ((value - retrait) > 0)
-					SocketManager.GAME_SEND_GA_PACKET_TO_FIGHT(fight, 7, 309, caster.getId()
-							+ "", target.getId() + "," + (value - retrait));
-				if (retrait > 0) {
-					if (turns <= 0 || duration <= 0)//Mot d'immobilisation
-					{
-						target.addBuff(effectID, retrait, 1, 1, false, spell, args, caster, false);
-					} else {
-						target.addBuff(effectID, retrait, turns, turns, false, spell, args, caster, false);
-					}
-					if (turns <= 1 || duration <= 1)
-						SocketManager.GAME_SEND_GA_PACKET_TO_FIGHT(fight, 7, Constant.STATS_REM_PM, target.getId()
-								+ "", target.getId() + ",-" + retrait);
-				}
-				if (retrait > 0)
-					if (target.getMob() != null)
-						this.verifmobs(fight, target, Constant.STATS_REM_PM, 0);
-			}
+			if (retrait > 0)
+				if (target.getMob() != null)
+					this.verifmobs(fight, target, Constant.STATS_REM_PM, 0);
 		}
 	}
 
