@@ -214,11 +214,8 @@ public class GameClient {
             case 'x': //Equipement rapide
                 parseQuickSetPacket(packet);
                 break;
-           /* default:
-                if(this.player != null)
-                    if(this.player.isChangeName())
-                        this.changeName(packet);                
-                break;*/ // Removed by Coding Mestre - [FIX] Name changing potion is now working as expected Close #38
+           default:
+                break;
         }
     }
 

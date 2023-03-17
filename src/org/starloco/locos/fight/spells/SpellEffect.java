@@ -3451,7 +3451,7 @@ public class SpellEffect {
 				}
 				if (retrait > 0)
 					if (target.getMob() != null)
-						this.verifmobs(fight, target, 127, 0);
+						this.verifmobs(fight, target, Constant.STATS_REM_PM, 0);
 			}
 		}
 	}

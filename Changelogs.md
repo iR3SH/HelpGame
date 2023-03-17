@@ -14,7 +14,6 @@
 - Bwork élémentaux ia flingué
 - Corailleur Magistral en roue libre
 - IA CM Bug (Attaque bien avec Complicité et Embranchement mais pas les deux autres et ne fait plus rien avec un ennemi au Cac)
-- Vouloir équiper un item alors qu'il y a déjà un item sur cette place n'enlève que l'ancien item de la place
 
 # FIX
 

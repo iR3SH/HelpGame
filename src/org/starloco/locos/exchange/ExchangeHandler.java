@@ -7,6 +7,7 @@ import org.apache.mina.core.session.IoSession;
 
 import java.nio.charset.CharacterCodingException;
 import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 
 public class ExchangeHandler extends IoHandlerAdapter {
 
@@ -43,7 +44,7 @@ public class ExchangeHandler extends IoHandlerAdapter {
         ioBuffer.flip();
 
         try {
-            return ioBuffer.getString(Charset.forName("UTF-8").newDecoder());
+            return ioBuffer.getString(StandardCharsets.UTF_8.newDecoder());
         } catch (CharacterCodingException e) {
             e.printStackTrace();
         }
