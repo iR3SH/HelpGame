@@ -132,7 +132,7 @@ public class Hdv {
                 return false;
             toBuy.buy = true;
 
-            newOwner.addKamas(price * -1);//Retire l'argent � l'acheteur (prix et taxe de vente)
+            newOwner.addKamas(price * -1);//Retire l'argent à l'acheteur (prix et taxe de vente)
 
             if (toBuy.getOwner() != -1) {
                 Account C = World.world.getAccount(toBuy.getOwner());
@@ -142,7 +142,7 @@ public class Hdv {
             SocketManager.GAME_SEND_STATS_PACKET(newOwner);//Met a jour les kamas de l'acheteur
 
             toBuy.getGameObject().setPosition(Constant.ITEM_POS_NO_EQUIPED);
-            newOwner.addObjet(toBuy.getGameObject(), true);//Ajoute l'objet au nouveau propri�taire
+            newOwner.addObjet(toBuy.getGameObject(), true);//Ajoute l'objet au nouveau propriétaire
             toBuy.getGameObject().getTemplate().newSold(toBuy.getAmount(true), price);//Ajoute la ventes au statistiques
             try {
                 String name = "undefined";
@@ -180,7 +180,7 @@ public class Hdv {
             ObjectTemplate OT = World.world.getObjTemplate(templateID);
             HdvCategory Hdv = this.getCategorys().get(OT.getType());
             HdvTemplate HdvT = Hdv.getTemplate(templateID);
-            if (HdvT == null) // Il a pu �tre achet� avant et supprim� de l'HDV. getTemplate devient null.
+            if (HdvT == null) // Il a pu être acheté avant et supprimé de l'HDV. getTemplate devient null.
                 return "";
             return HdvT.parseToEHl();
         } catch (Exception e) {

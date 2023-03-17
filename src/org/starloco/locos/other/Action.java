@@ -107,7 +107,7 @@ public class Action {
         if (player == null)
             return true;
         if (player.getFight() != null) {
-            SocketManager.GAME_SEND_MESSAGE(player, "<b>Action impossible,</b> vous �tes en combat !", "000000");
+            SocketManager.GAME_SEND_MESSAGE(player, "<b>Action impossible,</b> vous êtes en combat !", "000000");
             return true;
         }
         if (!cond.equalsIgnoreCase("") && !cond.equalsIgnoreCase("-1") && !ConditionParser.validConditions(player, cond)) {
@@ -142,7 +142,7 @@ public class Action {
                     }
                 }
                 break;
-            case -11: //T�l�portation map d�part � la cr�ation d'un personnage (?)
+            case -11: //Téléportation map départ à la création d'un personnage (?)
                 player.teleport(Constant.getStartMap(player.getClasse()), Constant.getStartCell(player.getClasse()));
                 SocketManager.GAME_SEND_WELCOME(player);
                 break;
@@ -196,7 +196,7 @@ public class Action {
 
                 int LVLmob = Formulas.getLvlDopeuls(player.getLevel());
                 if (player.getLevel() < 11) {
-                    SocketManager.GAME_SEND_MESSAGE(player, "Il faut �tre niveau 11 minimum pour combattre les dopeuls des temples.");
+                    SocketManager.GAME_SEND_MESSAGE(player, "Il faut être niveau 11 minimum pour combattre les dopeuls des temples.");
                     return true;
                 }
                 int certificat = Constant.getCertificatByDopeuls(IDmob);
@@ -268,7 +268,7 @@ public class Action {
                     SocketManager.GAME_SEND_ALTER_GM_PACKET(player.getCurMap(), player);
                 }
                 break;
-            case -2://cr�er guilde
+            case -2://créer guilde
                 if (player.isAway())
                     return true;
                 if (player.get_guild() != null || player.getGuildMember() != null) {
@@ -281,7 +281,7 @@ public class Action {
                     SocketManager.GAME_SEND_Im_PACKET(player, "022;" + -1 + "~"
                             + 1575);
                 } else {
-                    SocketManager.GAME_SEND_MESSAGE(player, "Pour pouvoir cr�er une guilde, il faut poss�der une Guildalogemme.");
+                    SocketManager.GAME_SEND_MESSAGE(player, "Pour pouvoir créer une guilde, il faut posséder une Guildalogemme.");
                 }
                 break;
 
@@ -309,7 +309,7 @@ public class Action {
                             if (bankKamas >= cost) {
                                 player.setBankKamas(bankKamas - cost); //On modifie les kamas de la banque
                             } else if (totalKamas >= cost) {
-                                player.setKamas(0); //On puise l'enti�reter des kamas du joueurs. Ankalike ?
+                                player.setKamas(0); //On puise l'entièreter des kamas du joueurs. Ankalike ?
                                 player.setBankKamas(totalKamas - cost); //On modifie les kamas de la banque
                                 SocketManager.GAME_SEND_STATS_PACKET(player);
                                 SocketManager.GAME_SEND_Im_PACKET(player, "020;"
@@ -335,7 +335,7 @@ public class Action {
                 }
                 break;
 
-            case 0://T�l�portation
+            case 0://Téléportation
                 try {
                     short newMapID = Short.parseShort(args.split(",", 2)[0]);
                     int newCellID = Integer.parseInt(args.split(",", 2)[1]);
@@ -347,7 +347,7 @@ public class Action {
                         }
                     }
                 } catch (Exception e) {
-                    // Pas ok, mais il y a trop de dialogue de PNJ bugg� pour laisser cette erreur flood.
+                    // Pas ok, mais il y a trop de dialogue de PNJ buggé pour laisser cette erreur flood.
                     // e.printStackTrace();
                     return true;
                 }
@@ -379,7 +379,7 @@ public class Action {
                 }
                 break;
 
-            case 2://T�l�portation
+            case 2://Téléportation
                 try {
                     short newMapID = Short.parseShort(args.split(",")[0]);
                     int newCellID = Integer.parseInt(args.split(",")[1]);
@@ -575,7 +575,7 @@ public class Action {
                     GameServer.a();
                 }
                 break;
-            case 6://Apprendre un m�tier
+            case 6://Apprendre un métier
                 try {
                     if(client == null) return true;
                     player.setIsOnDialogAction(1);
@@ -585,14 +585,14 @@ public class Action {
                     int fail = Integer.parseInt(args.split(",")[3]);
                     if (World.world.getMetier(mID) == null)
                         return true;
-                    // Si c'est un m�tier 'basic' :
+                    // Si c'est un métier 'basic' :
                     if (mID == 2 || mID == 11 || mID == 13 || mID == 14
                             || mID == 15 || mID == 16 || mID == 17 || mID == 18
                             || mID == 19 || mID == 20 || mID == 24 || mID == 25
                             || mID == 26 || mID == 27 || mID == 28 || mID == 31
                             || mID == 36 || mID == 41 || mID == 56 || mID == 58
                             || mID == 60 || mID == 65) {
-                        if (player.getMetierByID(mID) != null)//M�tier d�j� appris
+                        if (player.getMetierByID(mID) != null)//Métier déjà appris
                         {
                             SocketManager.GAME_SEND_Im_PACKET(player, "111");
                             SocketManager.GAME_SEND_END_DIALOG_PACKET(client);
@@ -653,7 +653,7 @@ public class Action {
                                 SocketManager.send(client, "DQ" + fail + "|4840");
                             return true;
                         }
-                        if (player.totalJobBasic() > 2)//On compte les m�tiers d�ja acquis si c'est sup�rieur a 2 on ignore
+                        if (player.totalJobBasic() > 2)//On compte les métiers déja acquis si c'est supérieur a 2 on ignore
                         {
                             SocketManager.GAME_SEND_Im_PACKET(player, "19");
                             SocketManager.GAME_SEND_END_DIALOG_PACKET(client);
@@ -661,7 +661,7 @@ public class Action {
                             player.setIsOnDialogAction(-1);
                             return true;
                         } else
-                        //Si c'est < ou = � 2 on apprend
+                        //Si c'est < ou = à 2 on apprend
                         {
                             if (mID == 27) {
                                 if (!player.hasItemTemplate(966, 1))
@@ -689,7 +689,7 @@ public class Action {
 					 * if(mID == 43 || mID == 44 || mID == 45 || mID == 46 ||
 					 * mID == 47 || mID == 48 || mID == 49 || mID == 50 || mID
 					 * == 62 || mID == 63 || mID == 64) { //Si necessaire lvl
-					 * 65, enlev� les hide si ankalike
+					 * 65, enlevé les hide si ankalike
 					 * if(perso.getMetierByID(17) != null &&
 					 * perso.getMetierByID(17).get_lvl() < 65 && mID == 43 ||
 					 * perso.getMetierByID(11) != null &&
@@ -712,14 +712,14 @@ public class Action {
 					 * perso.getMetierByID(16).get_lvl() < 65 && mID == 63 ||
 					 * perso.getMetierByID(27) != null &&
 					 * perso.getMetierByID(27).get_lvl() < 65 && mID == 64) {
-					 * //On compte les specialisations d�ja acquis si c'est
-					 * sup�rieur a 2 on ignore if(perso.getMetierByID(mID) !=
-					 * null)//M�tier d�j� appris
+					 * //On compte les specialisations déja acquis si c'est
+					 * supérieur a 2 on ignore if(perso.getMetierByID(mID) !=
+					 * null)//Métier déjà appris
 					 * SocketManager.GAME_SEND_Im_PACKET(perso, "111");
-					 * if(perso.totalJobFM() > 2)//On compte les m�tiers d�ja
-					 * acquis si c'est sup�rieur a 2 on ignore
+					 * if(perso.totalJobFM() > 2)//On compte les métiers déjà
+					 * acquis si c'est supérieur a 2 on ignore
 					 * SocketManager.GAME_SEND_Im_PACKET(perso, "19"); else//Si
-					 * c'est < ou = � 2 on apprend
+					 * c'est < ou = à 2 on apprend
 					 * perso.learnJob(World.world.getMetier(mID)); }else {
 					 * SocketManager.GAME_SEND_Im_PACKET(perso, "12"); } }
 					 */
@@ -818,7 +818,7 @@ public class Action {
                     SoulStone pierrePleine = (SoulStone) World.world.getGameObject(itemID);
 
                     String groupData = pierrePleine.parseGroupData();
-                    String condition = "MiS = " + player.getId(); //Condition pour que le groupe ne soit lan�able que par le personnage qui � utiliser l'objet
+                    String condition = "MiS = " + player.getId(); //Condition pour que le groupe ne soit capturable que par le personnage qui a utilisé l'objet
                     player.getCurMap().spawnNewGroup(true, player.getCurCell().getId(), groupData, condition);
 
                     if (delObj)
@@ -839,29 +839,29 @@ public class Action {
                     player.setExchangeAction(new ExchangeAction<>(ExchangeAction.FORGETTING_SPELL, 0));
                     SocketManager.GAME_SEND_FORGETSPELL_INTERFACE('+', player);
                 } else {
-                    SocketManager.GAME_SEND_MESSAGE(player, "Ton niveau est sup�rieur � 30. Tu ne peux donc pas te restaurer !");
+                    SocketManager.GAME_SEND_MESSAGE(player, "Ton niveau est supérieur à 30. Tu ne peux donc pas te restaurer !");
                 }
                 break;
 
-            case 15://T�l�portation donjon
+            case 15://Téléportation donjon
                 try {
                     short newMapID = Short.parseShort(args.split(",")[0]);
                     int newCellID = Integer.parseInt(args.split(",")[1]);
                     int ObjetNeed = Integer.parseInt(args.split(",")[2]);
                     int MapNeed = Integer.parseInt(args.split(",")[3]);
                     if (ObjetNeed == 0) {
-                        //T�l�portation sans objets
+                        //Téléportation sans objets
                         player.teleport(newMapID, newCellID);
                     } else if (ObjetNeed > 0) {
                         if (MapNeed == 0) {
-                            //T�l�portation sans map
+                            //Téléportation sans map
                             player.teleport(newMapID, newCellID);
                         } else if (MapNeed > 0) {
                             if (player.hasItemTemplate(ObjetNeed, 1)
                                     && player.getCurMap().getId() == MapNeed) {
                                 //Le perso a l'item
                                 //Le perso est sur la bonne map
-                                //On t�l�porte, on supprime apr�s
+                                //On téléporte, on supprime après
                                 if(ObjetNeed == 12804){
                                     if(Constant.isGladiatroolWeapon(player.getObjetByPos(Constant.ITEM_POS_ARME).getTemplate().getId())){
                                         player.teleport(newMapID, newCellID);
@@ -879,10 +879,10 @@ public class Action {
                                 }
                             } else if (player.getCurMap().getId() != MapNeed) {
                                 //Le perso n'est pas sur la bonne map
-                                SocketManager.GAME_SEND_MESSAGE(player, "Vous n'�tes pas sur la bonne map du donjon pour �tre t�l�port�.", "009900");
+                                SocketManager.GAME_SEND_MESSAGE(player, "Vous n'êtes pas sur la bonne map du donjon pour être téléporté.", "009900");
                             } else {
-                                //Le perso ne poss�de pas l'item
-                                SocketManager.GAME_SEND_MESSAGE(player, "Vous ne poss�dez pas la clef n�cessaire.", "009900");
+                                //Le perso ne possède pas l'item
+                                SocketManager.GAME_SEND_MESSAGE(player, "Vous ne possédez pas la clef nécessaire.", "009900");
                             }
                         }
                     }
@@ -892,33 +892,33 @@ public class Action {
                 }
                 break;
 
-            case 16://T�l�portation donjon sans perte de clef
+            case 16://Téléportation donjon sans perte de clef
                 try {
                     short newMapID = Short.parseShort(args.split(",")[0]);
                     int newCellID = Integer.parseInt(args.split(",")[1]);
                     int ObjetNeed = Integer.parseInt(args.split(",")[2]);
                     int MapNeed = Integer.parseInt(args.split(",")[3]);
                     if (ObjetNeed == 0) {
-                        //T�l�portation sans objets
+                        //Téléportation sans objets
                         player.teleport(newMapID, newCellID);
                     } else if (ObjetNeed > 0) {
                         if (MapNeed == 0) {
-                            //T�l�portation sans map
+                            //Téléportation sans map
                             player.teleport(newMapID, newCellID);
                         } else if (MapNeed > 0) {
                             if (player.hasItemTemplate(ObjetNeed, 1)
                                     && player.getCurMap().getId() == MapNeed) {
                                 //Le perso a l'item
                                 //Le perso est sur la bonne map
-                                //On t�l�porte
+                                //On téléporte
                                 player.teleport(newMapID, newCellID);
                                 SocketManager.GAME_SEND_Ow_PACKET(player);
                             } else if (player.getCurMap().getId() != MapNeed) {
                                 //Le perso n'est pas sur la bonne map
-                                SocketManager.GAME_SEND_MESSAGE(player, "Vous n'�tes pas sur la bonne map du donjon pour �tre t�l�port�.", "009900");
+                                SocketManager.GAME_SEND_MESSAGE(player, "Vous n'êtes pas sur la bonne map du donjon pour être téléporté.", "009900");
                             } else {
-                                //Le perso ne poss�de pas l'item
-                                SocketManager.GAME_SEND_MESSAGE(player, "Vous ne possedez pas la clef n�cessaire.", "009900");
+                                //Le perso ne possède pas l'item
+                                SocketManager.GAME_SEND_MESSAGE(player, "Vous ne possedez pas la clef nécessaire.", "009900");
                             }
                         }
                     }
@@ -928,7 +928,7 @@ public class Action {
                 }
                 break;
 
-            case 17://Xp m�tier JobID,XpValue
+            case 17://Xp métier JobID,XpValue
                 try {
                     int JobID = Integer.parseInt(args.split(",")[0]);
                     int XpValue = Integer.parseInt(args.split(",")[1]);
@@ -941,7 +941,7 @@ public class Action {
                 }
                 break;
 
-            case 18://T�l�portation chez soi
+            case 18://Téléportation chez soi
                 if (House.alreadyHaveHouse(player))//Si il a une maison
                 {
                     GameObject obj2 = World.world.getGameObject(itemID);
@@ -955,7 +955,7 @@ public class Action {
                 }
                 break;
 
-            case 19://T�l�portation maison de guilde (ouverture du panneau de guilde)
+            case 19://Téléportation maison de guilde (ouverture du panneau de guilde)
                 SocketManager.GAME_SEND_GUILDHOUSE_PACKET(player);
                 break;
 
@@ -1041,7 +1041,7 @@ public class Action {
                 SocketManager.GAME_SEND_ADD_PLAYER_TO_MAP(player.getCurMap(), player);
                 break;
 
-            case 26://T�l�portation enclos de guilde (ouverture du panneau de guilde)
+            case 26://Téléportation enclos de guilde (ouverture du panneau de guilde)
                 SocketManager.GAME_SEND_GUILDENCLO_PACKET(player);
                 break;
 
@@ -1124,11 +1124,11 @@ public class Action {
                 break;
 
             case 31:// change classe(zobal)
-                SocketManager.GAME_SEND_MESSAGE(player, "Vous vous �tes fait enculer. Cordialement, le staff.");
+                SocketManager.GAME_SEND_MESSAGE(player, "Vous vous êtes fait enculer. Cordialement, le staff.");
 				/*
 				 * try { int classe = Integer.parseInt(args); if (classe ==
 				 * perso.getClasse()) { SocketManager.GAME_SEND_MESSAGE(perso,
-				 * "Vous �tes d�j� de cette classe."); return true; } int level
+				 * "Vous étes déjà de cette classe."); return true; } int level
 				 * = perso.getLevel(); perso.setClasse(classe); Stats baseStats
 				 * = perso.getStats(); baseStats.addOneStat(125,
 				 * -perso.getStats().getEffect(125)); baseStats.addOneStat(124,
@@ -1176,7 +1176,7 @@ public class Action {
                 Loterie.startLoterie(player, idLot);
                 break;
 
-            case 35: //Reset Carac condition : Map x�lor 741 et l'obre de recons 10563
+            case 35: //Reset Carac condition : Map xélor 741 et l'obre de recons 10563
                 try {
                     if (player.getCurMap().getId() != 741
                             || !player.hasItemTemplate(10563, 1))
@@ -1237,22 +1237,22 @@ public class Action {
                 Loterie.startLoteriePioute(player);
                 break;
 
-            case 38://Apprendre une �mote
+            case 38://Apprendre une émote
                 player.addStaticEmote(Integer.parseInt(args));
                 break;
 
-            case 40: //Donner une qu�te
+            case 40: //Donner une quête
                 int QuestID = Integer.parseInt(args);
                 boolean problem = false;
                 Quest quest0 = Quest.getQuestById(QuestID);
                 if (quest0 == null) {
-                    SocketManager.GAME_SEND_MESSAGE(player, "La qu�te est introuvable.");
+                    SocketManager.GAME_SEND_MESSAGE(player, "La quête est introuvable.");
                     problem = true;
                     break;
                 }
                 for (Quest.QuestPlayer qPerso : player.getQuestPerso().values()) {
                     if (qPerso.getQuest().getId() == QuestID) {
-                        SocketManager.GAME_SEND_MESSAGE(player, "Vous connaissez d�j� cette qu�te.");
+                        SocketManager.GAME_SEND_MESSAGE(player, "Vous connaissez déjà cette quête.");
                         problem = true;
                         break;
                     }
@@ -1265,10 +1265,10 @@ public class Action {
             case 41: //Confirm objective
                 break;
 
-            case 42: //Monte prochaine �tape quete ou termine
+            case 42: //Monte prochaine étape quete ou termine
                 break;
 
-            case 43: //T�l�portation de qu�te
+            case 43: //Téléportation de quête
                 String[] split = args.split(";");
                 int mapid = Integer.parseInt(split[0].split(",")[0]);
                 cellid = Integer.parseInt(split[0].split(",")[1]);
@@ -1380,7 +1380,7 @@ public class Action {
                             victimes.add(victime);
                     }
                     if (victimes.size() == 0) {
-                        SocketManager.GAME_SEND_MESSAGE(player, "Nous n'avons pas trouver de cible � ta hauteur, reviens plus tard.", "000000");
+                        SocketManager.GAME_SEND_MESSAGE(player, "Nous n'avons pas trouver de cible à ta hauteur, reviens plus tard.", "000000");
                         player.set_traque(null);
                         return true;
                     }
@@ -1388,7 +1388,7 @@ public class Action {
                         tempP = victimes.get(0);
                     else
                         tempP = victimes.get(Formulas.getRandomValue(0, victimes.size() - 1));
-                    SocketManager.GAME_SEND_MESSAGE(player, "Vous �tes d�sormais en chasse de : " + tempP.getName(), "000000");
+                    SocketManager.GAME_SEND_MESSAGE(player, "Vous êtes désormais en chasse de : " + tempP.getName(), "000000");
                     player.get_traque().setTraque(tempP);
                     player.get_traque().setTime(System.currentTimeMillis());
                     GameObject object = player.getItemTemplate(10085);
@@ -1408,7 +1408,7 @@ public class Action {
                 }
                 break;
 
-            case 53: //Suivre le d�placement pour une map pr�sice
+            case 53: //Suivre le déplacement pour une map précise
                 if (args == null)
                     break;
                 if (World.world.getMap(Short.parseShort(args)) == null)
@@ -1460,7 +1460,7 @@ public class Action {
 
 
 			/*
-			 * case 100://Donner l'abilit� 'args' � une dragodinde Dragodinde
+			 * case 100://Donner l'abilité 'args' à une dragodinde Dragodinde
 			 * mount = perso.getMount(); World.world.addDragodinde(new
 			 * Dragodinde(mount
 			 * .getId(),mount.get_color(),mount.get_sexe(),mount
@@ -1477,7 +1477,7 @@ public class Action {
 			 * SQLManager.UPDATE_MOUNT_INFOS(mount, false); break;
 			 */
 
-            case 100: //Donner l'abilit� 'args' � une dragodinde
+            case 100: //Donner l'abilité 'args' à une dragodinde
                 if (player.hasItemTemplate(361, 100)) {
                     player.removeByTemplateID(361, 100);
                     GameObject newObjAdded = World.world.getObjTemplate(9201).createNewItem(1, false);
@@ -1511,7 +1511,7 @@ public class Action {
                 }
                 break;
 
-            case 104: //T�l�portation mine + Animation
+            case 104: //Téléportation mine + Animation
                 if (player.getCurMap().getId() != (short) 10257)
                     return true;
 
@@ -1527,7 +1527,7 @@ public class Action {
 
             case 105: //Restat carac second pouvoir
                 if (!player.hasItemTemplate(10563, 1)) {
-                    player.sendMessage("Tu ne poss�de pas l'orbe reconstituant.");
+                    player.sendMessage("Tu ne possède pas l'orbe reconstituant.");
                     return true;
                 }
                 
@@ -1539,12 +1539,12 @@ public class Action {
                         && statsParcho.getEffect(Constant.STATS_ADD_AGIL) == 0
                         && statsParcho.getEffect(Constant.STATS_ADD_INTE) == 0
                         && statsParcho.getEffect(Constant.STATS_ADD_CHAN) == 0) {
-                	player.sendMessage("Tu ne peux pas restaurer tes caract�ristiques avec ce pouvoir car tu ne poss�des pas de parchotage.");
+                	player.sendMessage("Tu ne peux pas restaurer tes caractéristiques avec ce pouvoir car tu ne possèdes pas de parchotage.");
                 	return true;
                 }
                 player.restatKeepParcho();
                 SocketManager.GAME_SEND_STATS_PACKET(player);
-                player.sendMessage("Tu viens de restaurer tes caract�ristiques en conservant tes parchotages.");
+                player.sendMessage("Tu viens de restaurer tes caractéristiques en conservant tes parchotages.");
                 player.removeByTemplateID(10563, 1);
                 SocketManager.GAME_SEND_Im_PACKET(player, "022;" + 10563 + "~" + 1);
                 break;
@@ -1578,7 +1578,7 @@ public class Action {
                 }
                 break;
 
-            case 116://EPO donner de la nourriture � son familier
+            case 116://EPO donner de la nourriture à son familier
                 GameObject EPO = World.world.getGameObject(itemID);
                 if (EPO == null)
                     return true;
@@ -1598,7 +1598,7 @@ public class Action {
                     byte title1 = (byte) Integer.parseInt(args);
                     target = World.world.getPlayerByName(player.getName());
                     target.set_title(title1);
-                    SocketManager.GAME_SEND_MESSAGE(player, "Vous avez d�sormais un nouveau titre.");
+                    SocketManager.GAME_SEND_MESSAGE(player, "Vous avez désormais un nouveau titre.");
                     SocketManager.GAME_SEND_STATS_PACKET(player);
                     Database.getStatics().getPlayerData().update(player);
                     if (target.getFight() == null)
@@ -1634,7 +1634,7 @@ public class Action {
                 int mapId4 = Integer.parseInt(args);
                 if (player.getCurMap().getId() != mapId4)
                     return true;
-                if (player.totalJobBasic() > 2)//On compte les m�tiers d�ja acquis si c'est sup�rieur a 2 on ignore
+                if (player.totalJobBasic() > 2)//On compte les métiers déjà acquis si c'est supérieur a 2 on ignore
                 {
                     SocketManager.GAME_SEND_Im_PACKET(player, "19");
                     return true;
@@ -1700,7 +1700,7 @@ public class Action {
                 }
                 break;
 
-            case 220:// IDitem,quantit� pour IDitem's,quantit� pour teleport
+            case 220:// IDitem,quantité pour IDitem's,quantité pour teleport
                 try {
                     String remove0 = args.split(";")[0];
                     String add0 = args.split(";")[1];
@@ -1734,7 +1734,7 @@ public class Action {
                 }
                 return true;
 
-            case 221:// IDitem,quantit� pour IDitem's,quantit� pour teleport
+            case 221:// IDitem,quantité pour IDitem's,quantité pour teleport
                 try {
                     String remove0 = args.split(";")[0];
                     String remove1 = args.split(";")[1];
@@ -1767,7 +1767,7 @@ public class Action {
                 }
                 return true;
 
-            case 222:// IDitem,quantit� pour IDitem's,quantit� pour teleport
+            case 222:// IDitem,quantité pour IDitem's,quantité pour teleport
                 try {
                     String remove0 = args.split(";")[0];
                     String remove1 = args.split(";")[1];
@@ -1815,7 +1815,7 @@ public class Action {
                 }
                 return true;
 
-            case 223:// IDitem,quantit� pour IDitem's,quantit�
+            case 223:// IDitem,quantité pour IDitem's,quantité
                 try {
                     String remove0 = args.split(";")[0];
                     String remove1 = args.split(";")[1];
@@ -1869,7 +1869,7 @@ public class Action {
                 }
                 return true;
 
-            case 224:// IDitem,quantit� pour IDitem's,quantit�
+            case 224:// IDitem,quantité pour IDitem's,quantité
                 try {
                     String remove0 = args.split(";")[0];
                     String remove1 = args.split(";")[1];
@@ -1916,7 +1916,7 @@ public class Action {
                 }
                 return true;
 
-            case 225:// IDitem,quantit� pour IDitem's,quantit�
+            case 225:// IDitem,quantité pour IDitem's,quantité
                 try {
                     String remove0 = args.split(";")[0];
                     String remove1 = args.split(";")[1];
@@ -2016,7 +2016,7 @@ public class Action {
                 }
                 break;
 
-            case 229://Animation d'incarnam � astrub
+            case 229://Animation d'incarnam à astrub
                 short map = Constant.getClassStatueMap(player.getClasse());
                 int cell = Constant.getClassStatueCell(player.getClasse());
                 SocketManager.GAME_SEND_GA_PACKET(player.getGameClient(), "", "2", player.getId()
@@ -2037,9 +2037,9 @@ public class Action {
                     player.getAccount().setPoints(ptsTotal);
                     if (player.isOnline())
                         SocketManager.GAME_SEND_STATS_PACKET(player);
-                    SocketManager.GAME_SEND_MESSAGE(player, "Tu viens d'acqu�rir "
+                    SocketManager.GAME_SEND_MESSAGE(player, "Tu viens d'acquérir "
                             + pts
-                            + " Point(s). Tu poss�des donc "
+                            + " Point(s). Tu possèdes donc "
                             + ptsTotal
                             + "Point(s).");
                     return true;
@@ -2049,7 +2049,7 @@ public class Action {
                 }
                 break;
 
-            case 231:// IDitem,quantit� pour IDitem's,quantit�
+            case 231:// IDitem,quantité pour IDitem's,quantité
                 try {
                     String remove = args.split(";")[0];
                     String add = args.split(";")[1];
@@ -2107,11 +2107,11 @@ public class Action {
                         GameServer.a();
                     }
                 } else {
-                    SocketManager.GAME_SEND_MESSAGE(player, "Vous ne pouvez pas vous battre ici. Allez en ar�ne !");
+                    SocketManager.GAME_SEND_MESSAGE(player, "Vous ne pouvez pas vous battre ici. Allez en arène !");
                 }
                 break;
 
-            case 233: //Pierre d'ame en ar�ne
+            case 233: //Pierre d'ame en arène
                 try {
                     int tID = Integer.parseInt(args.split(",")[0]);
                     count = Integer.parseInt(args.split(",")[1]);
@@ -2166,11 +2166,11 @@ public class Action {
                     if(player.addObjet(newObjAdded, true))
                     	World.world.addGameObject(newObjAdded, true);
                 } else {
-                    SocketManager.GAME_SEND_MESSAGE(player, "Tu poss�des d�j� l'objet.");
+                    SocketManager.GAME_SEND_MESSAGE(player, "Tu possèdes déjà l'objet.");
                 }
                 break;
 
-            case 235:// IDitem,quantit� pour IDitem's,quantit�
+            case 235:// IDitem,quantité pour IDitem's,quantité
                 if (player.getCurMap().getId() == 713) {
                     if (player.hasItemTemplate(757, 1)
                             && player.hasItemTemplate(368, 1)
@@ -2230,7 +2230,7 @@ public class Action {
                             SocketManager.GAME_SEND_MESSAGE(player, "Ton ticket est bon.");
                             return true;
                         } else {
-                            SocketManager.GAME_SEND_MESSAGE(player, "Ton ticket est d�pass�, il faut que tu en rach�te un.");
+                            SocketManager.GAME_SEND_MESSAGE(player, "Ton ticket est dépassé, il faut que tu en rachète un.");
                             player.removeByTemplateID(6653, 1);
                         }
                     }
@@ -2277,7 +2277,7 @@ public class Action {
                 }
                 break;
 
-            case 451: //Employ� de l'agence Touriste
+            case 451: //Employé de l'agence Touriste
                 if (player.getKamas() >= 200
                         && player.getCurMap().getId() == 436) {
                     long rK = player.getKamas() - 200;
@@ -2373,7 +2373,7 @@ public class Action {
                 }
                 break;
 
-            case 455://Iss� Heau : peinture noire : fonctionnel
+            case 455://Issé Heau : peinture noire : fonctionnel
                 if (player.hasItemTemplate(1006, 1)
                         && player.hasItemTemplate(1007, 1)
                         && player.hasItemTemplate(1008, 1)
@@ -2446,7 +2446,7 @@ public class Action {
                 }
                 break;
 
-            case 457://Vente ticket �le moon
+            case 457://Vente ticket île moon
                 if (player.getKamas() >= 1000
                         && player.getCurMap().getId() == 1014) {
                     player.setKamas(player.getKamas() - 1000);
@@ -2461,7 +2461,7 @@ public class Action {
             /** Fin Ile Moon **/
 
             /** Donjon Condition **/
-            case 500:// Donjon Bouftou : R�compense.
+            case 500:// Donjon Bouftou : Récompense.
                 if (player.getCurMap().getId() != 2084)
                     return true;
                 player.teleport((short) 1856, 226);
@@ -2472,7 +2472,7 @@ public class Action {
                         + 1728);
                 break;
 
-            case 501:// Donjon Bwork : R�compense.
+            case 501:// Donjon Bwork : Récompense.
                 if (player.getCurMap().getId() != 9767)
                     return true;
                 player.teleport((short) 9470, 198);
@@ -2484,7 +2484,7 @@ public class Action {
                         + 8000);
                 break;
 
-            case 502://Entr� Donjon Cawotte
+            case 502://Entré Donjon Cawotte
                 if (player.hasEquiped(969) && player.hasEquiped(970)
                         && player.hasEquiped(971)
                         && player.getCurMap().getId() == 1781) {
@@ -2563,7 +2563,7 @@ public class Action {
                 }
                 break;
 
-            case 506://Entr� Donjon Koulosse
+            case 506://Entré Donjon Koulosse
                 if (player.getCurMap().getId() == 8905
                         && player.getCurCell().getId() == 213) {
                     if (player.hasItemTemplate(7908, 1)) {
@@ -2572,14 +2572,14 @@ public class Action {
                                 + "~" + 7908);
                         player.teleport((short) 8950, 408);
                     } else {
-                        SocketManager.GAME_SEND_MESSAGE(player, "Vous ne poss�dez pas la clef necc�ssaire.");
+                        SocketManager.GAME_SEND_MESSAGE(player, "Vous ne possèdez pas la clef neccéssaire.");
                     }
                 } else {
-                    SocketManager.GAME_SEND_MESSAGE(player, "Vous n'�tes pas devant le PNJ.");
+                    SocketManager.GAME_SEND_MESSAGE(player, "Vous n'êtes pas devant le PNJ.");
                 }
                 break;
 
-            case 507://Donjon Gel�e
+            case 507://Donjon Gelée
                 int type3 = 0;
                 if (player.getCurMap().getId() == 6823) {
                     try {
@@ -2693,7 +2693,7 @@ public class Action {
                                 SocketManager.GAME_SEND_MESSAGE(player, "Vous n'avez pas le bon nombre de flaque de Bleue.");
                             }
                             break;
-                        case 5://Gel�e x10 => 2433,2432,2431,2430
+                        case 5://Gelée x10 => 2433,2432,2431,2430
                             if (player.hasItemTemplate(2433, 10)
                                     && player.hasItemTemplate(2432, 10)
                                     && player.hasItemTemplate(2431, 10)
@@ -2716,7 +2716,7 @@ public class Action {
                                 player.removeByTemplateID(2433, player.getNbItemTemplate(2433));
                                 player.teleport((short) 6835, 422);
                             } else {
-                                SocketManager.GAME_SEND_MESSAGE(player, "Vous n'avez pas le bon nombre de flaque pour combattre 2 gel�es royales.");
+                                SocketManager.GAME_SEND_MESSAGE(player, "Vous n'avez pas le bon nombre de flaque pour combattre 2 gelées royales.");
                             }
                             break;
                         case 6://Menthe -> 2433
@@ -2742,14 +2742,14 @@ public class Action {
                                 player.removeByTemplateID(2433, player.getNbItemTemplate(2433));
                                 player.teleport((short) 6836, 422);
                             } else {
-                                SocketManager.GAME_SEND_MESSAGE(player, "Vous n'avez pas le bon nombre de flaque pour combattre 4 gel�es royales.");
+                                SocketManager.GAME_SEND_MESSAGE(player, "Vous n'avez pas le bon nombre de flaque pour combattre 4 gelées royales.");
                             }
                             break;
                     }
                 }
                 break;
 
-            case 508://Donjon Kitsoune : R�compense
+            case 508://Donjon Kitsoune : Récompense
                 if (player.getCurMap().getId() == 8317) {
                     player.teleport((short) 8236, 370);
                     GameObject newObjAdded11 = World.world.getObjTemplate(7415).createNewItem(1, false);
@@ -2760,7 +2760,7 @@ public class Action {
                 }
                 break;
 
-            case 509://Donjon Bworker : R�compense
+            case 509://Donjon Bworker : Récompense
                 player.teleport((short) 4786, 300);
                 GameObject newObjAdded11 = World.world.getObjTemplate(6885).createNewItem(1, false);
                 if(player.addObjet(newObjAdded11, true))
@@ -2797,7 +2797,7 @@ public class Action {
                         + cadeau);
                 break;
 
-            case 512://Rat Blanc : R�compense
+            case 512://Rat Blanc : Récompense
                 if (player.getCurMap().getId() == 10213) {
                     player.teleport((short) 6536, 273);
                     GameObject newObjAdded111 = World.world.getObjTemplate(8476).createNewItem(1, false);
@@ -2808,7 +2808,7 @@ public class Action {
                 }
                 break;
 
-            case 513://Rat noir : R�compense
+            case 513://Rat noir : Récompense
                 if (player.getCurMap().getId() == 10199) {
                     player.teleport((short) 6738, 213);
                     GameObject newObjAdded111 = World.world.getObjTemplate(8477).createNewItem(1, false);
@@ -2819,7 +2819,7 @@ public class Action {
                 }
                 break;
 
-            case 514://Splinter Cell : Entr�
+            case 514://Splinter Cell : Entré
                 if (player.getCurMap().getId() == 9638
                         && player.hasItemTemplate(8476, 1)
                         && player.hasItemTemplate(8477, 1)) {
@@ -2833,7 +2833,7 @@ public class Action {
                 }
                 break;
 
-            case 515://R�compense Pandikaze
+            case 515://Récompense Pandikaze
                 if (player.getCurMap().getId() == 8497) {
                     player.teleport((short) 8167, 252);
                     GameObject newObjAdded111 = World.world.getObjTemplate(7414).createNewItem(1, false);
@@ -2855,7 +2855,7 @@ public class Action {
                 }
                 break;
 
-            case 517://Entr�e donjon familier 9052,268 - O: 7 - Transformation donjon abra
+            case 517://Entrée donjon familier 9052,268 - O: 7 - Transformation donjon abra
                 mapId = Integer.parseInt(args.split(";")[0].split(",")[0]);
                 int cellId = Integer.parseInt(args.split(";")[0].split(",")[1]);
                 short mapSecu = Short.parseShort(args.split(";")[1]);
@@ -2867,7 +2867,7 @@ public class Action {
                             || player.get_orientation() != 7)
                         return true;
                     if (!player.hasItemType(90)) {
-                        SocketManager.GAME_SEND_MESSAGE(player, "Vous n'avez pas de fant�me de familier.");
+                        SocketManager.GAME_SEND_MESSAGE(player, "Vous n'avez pas de fantôme de familier.");
                         return true;
                     }
                 }
@@ -2875,7 +2875,7 @@ public class Action {
                 player.setFullMorph(id, false, false);
                 break;
 
-            case 518://D�morph + TP : Donjon abra, familier
+            case 518://Démorph + TP : Donjon abra, familier
                 mapId = Integer.parseInt(args.split(";")[0].split(",")[0]);
                 cellId = Integer.parseInt(args.split(";")[0].split(",")[1]);
                 mapSecu = Short.parseShort(args.split(";")[1]);
@@ -2945,7 +2945,7 @@ public class Action {
                 }
                 break;
 
-            case 522://P�ki p�ki
+            case 522://Péki péki
                 if (player.getCurMap().getId() != 8349)
                     return true;
 
@@ -2979,7 +2979,7 @@ public class Action {
                 }
                 break;
 
-            case 524://R�ponse Maitre corbac
+            case 524://Réponse Maitre corbac
                 if(client == null) return true;
                 int qID = Monster.MobGroup.MAITRE_CORBAC.check();
                 NpcQuestion quest = World.world.getNPCQuestion(qID);
@@ -3022,14 +3022,14 @@ public class Action {
                 player.teleport((short) 2985, 279);
                 break;
 
-            case 527://Donjon ensabl� fin
+            case 527://Donjon ensablé fin
                 if (player.getCurMap().getId() != 10165)
                     return true;
 
                 player.addStaticEmote(19);
                 player.teleport((short) 10155, 210);
                 break;
-            case 528:// Gladiatroll : R�compense.
+            case 528:// Gladiatroll : Récompense.
                 int nbjeton = Integer.parseInt(args);
                 if (!Constant.isInGladiatorDonjon(player.getCurMap().getId()) && player.getCurMap().getId() != 15080)
                     return true;
@@ -3066,12 +3066,12 @@ public class Action {
                     }
                 }
 
-                if (player.hasItemTemplate(9811, 1)) // Formulaire de neutralit�
+                if (player.hasItemTemplate(9811, 1)) // Formulaire de neutralité
                 {
                     player.removeByTemplateID(9811, 1);
                     SocketManager.GAME_SEND_Im_PACKET(player, "022;" + 1 + "~" + 9811);
                     player.modifAlignement(0);
-                } else if (player.hasItemTemplate(9812, 1)) // Formulaire de d�sertion
+                } else if (player.hasItemTemplate(9812, 1)) // Formulaire de désertion
                 {
                     if (player.hasItemTemplate(9488, 1)) {
                         player.removeByTemplateID(9488, 1);
@@ -3126,10 +3126,10 @@ public class Action {
                 }
 
                 boolean next = false;
-                if (player.hasItemTemplate(9811, 1)) // Formulaire de neutralit�
+                if (player.hasItemTemplate(9811, 1)) // Formulaire de neutralité
                 {
                     next = true;
-                } else if (player.hasItemTemplate(9812, 1)) // Formulaire de d�sertion
+                } else if (player.hasItemTemplate(9812, 1)) // Formulaire de désertion
                 {
                     int idTemp = -1;
                     if (player.get_align() == 2) // Brak, donc passer bont
@@ -3165,7 +3165,7 @@ public class Action {
                 }
                 break;
 
-            case 963://Formulaire de d�sertion
+            case 963://Formulaire de désertion
                 if(client == null) return true;
                 if (player.getCurMap().getId() != 10255)
                     return true;
@@ -3204,7 +3204,7 @@ public class Action {
                 }
                 break;
 
-            case 966://Formulaire de neutralit�
+            case 966://Formulaire de neutralité
                 if(client == null) return true;
                 if (player.getCurMap().getId() != 10255)
                     return true;
@@ -3340,7 +3340,7 @@ public class Action {
                 }
                 break;
 
-            case 970://D�morph + TP : Donjon abra & CM
+            case 970://Démorph + TP : Donjon abra & CM
                 if (player.getCurMap().getId() == (short) 8719) // Abra
                 {
                     player.unsetFullMorph();
@@ -3352,7 +3352,7 @@ public class Action {
                 }
                 break;
 
-            case 971://Entr�e du donjon dragoeufs
+            case 971://Entrée du donjon dragoeufs
                 if (player.getCurMap().getId() == (short) 9788) {
                     boolean key0 = player.hasItemTemplate(8342, 1) && player.hasItemTemplate(8343, 1), key1 = false, key2 = false;
                     if (key0 || player.hasItemTemplate(10207, 1)) {
@@ -3505,7 +3505,7 @@ public class Action {
                 player.learnSpell(364, 1, true, true, true);
                 break;
 
-            case 975://Entr�e salle skeunk
+            case 975://Entrée salle skeunk
                 if (player.getCurMap().getId() != (short) 8973)
                     return true;
                 if (!player.hasItemTemplate(7935, 1) || !player.hasItemTemplate(7936, 1) || !player.hasItemTemplate(7937, 1) || !player.hasItemTemplate(7938, 1))
@@ -3513,7 +3513,7 @@ public class Action {
 
                 player.teleport((short) 8977, 448);
                 break;
-            case 976://T�l�portation en Minotoror
+            case 976://Téléportation en Minotoror
                 try {
                     if (player.getCurMap().getId() != (short) 9557)
                         return true;
@@ -3540,7 +3540,7 @@ public class Action {
                 }
                 break;
 
-            case 977://T�l�portation en salle des dalles Toror
+            case 977://Téléportation en salle des dalles Toror
                 try {
                     switch (player.getCurMap().getId()) {
                         case 9553:
@@ -3576,7 +3576,7 @@ public class Action {
                 }
                 break;
 
-            case 978://T�l�portation en salle des dalles DC
+            case 978://Téléportation en salle des dalles DC
                 try {
                     switch (player.getCurMap().getId()) {
                         case 9372:
@@ -3610,7 +3610,7 @@ public class Action {
                     return true;
                 }
                 break;
-            case 979://T�l�portation labyrinth DC
+            case 979://Téléportation labyrinth DC
                 try {
                     short newMapID = Short.parseShort(args.split(",", 2)[0]);
                     final GameMap newMap = World.world.getMap(newMapID);
@@ -3648,7 +3648,7 @@ public class Action {
                 }
                 break;
 
-            case 980: // t�l�portation avec mapsecu, et deux itemssecu supprim�s : donjon dc
+            case 980: // téléportation avec mapsecu, et deux itemssecu supprimés : donjon dc
                 try {
                     mapId = Integer.parseInt(args.split(",")[0]);
                     cellId = Integer.parseInt(args.split(",")[1]);
@@ -3671,7 +3671,7 @@ public class Action {
                 }
                 break;
 
-            case 981: // t�l�portation avec mapsecu et itemsecu : donjon dc
+            case 981: // téléportation avec mapsecu et itemsecu : donjon dc
                 try {
                     mapId = Integer.parseInt(args.split(",")[0]);
                     cellId = Integer.parseInt(args.split(",")[1]);
@@ -3769,7 +3769,7 @@ public class Action {
                         player.setExchangeAction(null);
                         player.setIsOnDialogAction(-1);
                         SocketManager.GAME_SEND_Im_PACKET(player, "111");
-                        return true; // Si on a d�j� le m�tier
+                        return true; // Si on a déjà le métier
                     }
 
                     ObjectTemplate t = World.world.getObjTemplate(item2);
@@ -3829,7 +3829,7 @@ public class Action {
                         player.setExchangeAction(null);
                         player.setIsOnDialogAction(-1);
                         SocketManager.GAME_SEND_Im_PACKET(player, "111");
-                        return true; // Si on a d�j� le m�tier
+                        return true; // Si on a déjà le métier
                     }
 
                     if (player.hasItemTemplate(item, 1)) {
@@ -3876,7 +3876,7 @@ public class Action {
                         player.setExchangeAction(null);
                         player.setIsOnDialogAction(-1);
                         SocketManager.GAME_SEND_Im_PACKET(player, "111");
-                        return true; // Si on a d�j� le m�tier
+                        return true; // Si on a déjà le métier
                     }
 
                     if (player.hasItemTemplate(item, 1)
@@ -3906,7 +3906,7 @@ public class Action {
                 }
                 break;
 
-            case 988: // devenir p�cheur
+            case 988: // devenir pêcheur
                 if(client == null) return true;
                 try {
                     if (player.hasItemTemplate(2107, 1)) {
@@ -3928,13 +3928,13 @@ public class Action {
                         if (success) {
                             Job metierArgs = World.world.getMetier(36);
                             if (metierArgs == null)
-                                return true; // Si le m�tier n'existe pas
+                                return true; // Si le métier n'existe pas
                             if (player.getMetierByID(36) != null) {
                                 SocketManager.GAME_SEND_END_DIALOG_PACKET(client);
                                 player.setExchangeAction(null);
                                 player.setIsOnDialogAction(-1);
                                 SocketManager.GAME_SEND_Im_PACKET(player, "111");
-                                return true; // Si on a d�j� le m�tier
+                                return true; // Si on a déjà le métier
                             }
 
                             for (Entry<Integer, JobStat> entry : player.getMetiers().entrySet()) {
@@ -3980,7 +3980,7 @@ public class Action {
                         player.setExchangeAction(null);
                         player.setIsOnDialogAction(-1);
                         SocketManager.GAME_SEND_Im_PACKET(player, "111");
-                        return true; // Si on a d�j� le m�tier
+                        return true; // Si on a déjà le métier
                     }
 
                     if (player.hasItemTemplate(item, 1)) {
@@ -4029,13 +4029,13 @@ public class Action {
                             if (success) {
                                 Job metierArgs = World.world.getMetier(41);
                                 if (metierArgs == null)
-                                    return true; // Si le m�tier n'existe pas
+                                    return true; // Si le métier n'existe pas
                                 if (player.getMetierByID(41) != null) {
                                     SocketManager.GAME_SEND_END_DIALOG_PACKET(client);
                                     player.setExchangeAction(null);
                                     player.setIsOnDialogAction(-1);
                                     SocketManager.GAME_SEND_Im_PACKET(player, "111");
-                                    return true; // Si on a d�j� le m�tier
+                                    return true; // Si on a déjà le métier
                                 }
 
                                 for (Entry<Integer, JobStat> entry : player.getMetiers().entrySet()) {
@@ -4065,7 +4065,7 @@ public class Action {
                 }
                 break;
 
-            case 991: // Poss�der un item, lancer un combat contre un monstre
+            case 991: // Posséder un item, lancer un combat contre un monstre
                 try {
                     int mapCurId = Integer.parseInt(args.split(",")[0]);
                     int item = Integer.parseInt(args.split(",")[1]);
@@ -4084,7 +4084,7 @@ public class Action {
                 }
                 break;
 
-            case 992: // Supprime deux items & apprends un m�tier
+            case 992: // Supprime deux items & apprends un métier
                 if(client == null) return true;
                 try {
                     int item1 = Integer.parseInt(args.split(",")[0]);
@@ -4154,7 +4154,7 @@ public class Action {
                 }
                 break;
 
-            case 994: // donn� un item si on ne l'a pas d�j�
+            case 994: // donné un item si on ne l'a pas déjà
                 try {
                     int mapID = Integer.parseInt(args.split(",")[0]);
                     int item = Integer.parseInt(args.split(",")[1]);
@@ -4198,7 +4198,7 @@ public class Action {
                     e.printStackTrace();
                 }
                 break;
-            case 995: // t�l�portation passage vers brakmar
+            case 995: // téléportation passage vers brakmar
                 GameMap curMap2 = player.getCurMap();
                 if (!player.isInPrison()) {
                     if (curMap2.getId() == (short) 11866) {
@@ -4216,7 +4216,7 @@ public class Action {
                 }
                 break;
 
-            case 996: // t�l�portation mine chariot + Animation
+            case 996: // téléportation mine chariot + Animation
                 GameMap curMap = player.getCurMap();
                 ArrayList<Integer> mapSecure = new ArrayList<Integer>();
                 for (String i : args.split("\\,"))
@@ -4247,17 +4247,17 @@ public class Action {
                 }
                 break;
 
-            case 997: // Apprendre un m�tier de forgemagie
+            case 997: // Apprendre un métier de forgemagie
                 try {
                     int metierID = Integer.parseInt(args.split(",")[0]);
                     int mapIdargs = Integer.parseInt(args.split(",")[1]);
                     Job metierArgs = World.world.getMetier(metierID);
 
                     if (metierArgs == null)
-                        return true; // Si le m�tier n'existe pas
+                        return true; // Si le métier n'existe pas
                     if (player.getMetierByID(metierID) != null) {
                         SocketManager.GAME_SEND_Im_PACKET(player, "111");
-                        return true; // Si on a d�j� le m�tier
+                        return true; // Si on a déjà le métier
                     }
 
                     GameMap curMapPerso = player.getCurMap();
@@ -4274,7 +4274,7 @@ public class Action {
                             return true; // Si la base n'est pas assez hl
                         } else if (player.totalJobFM() > 2) {
                             SocketManager.GAME_SEND_Im_PACKET(player, "19");
-                            return true; // On compte les m�tiers d�ja acquis si c'est sup�rieur a 2 on ignore
+                            return true; // On compte les métiers déja acquis si c'est supérieur a 2 on ignore
                         } else {
                             player.learnJob(World.world.getMetier(metierID));
                         }
@@ -4290,7 +4290,7 @@ public class Action {
                         && player.getCurCell().getId() == 142) {
                     player.teleport((short) 8721, 395);
                 } else {
-                    SocketManager.GAME_SEND_MESSAGE(player, "Vous n'�tes pas devant le PNJ.");
+                    SocketManager.GAME_SEND_MESSAGE(player, "Vous n'êtes pas devant le PNJ.");
                 }
                 break;
 
@@ -4317,7 +4317,7 @@ public class Action {
             	long yKamas = player.getKamas();
             	long ynewKamas = yKamas + 500000;
             	player.setKamas(ynewKamas);
-            	SocketManager.GAME_SEND_MESSAGE(player, "Tu as gagn� 500000 kamas.", "009900");
+            	SocketManager.GAME_SEND_MESSAGE(player, "Tu as gagné 500000 kamas.", "009900");
             	 if (player.isOnline())
                      SocketManager.GAME_SEND_STATS_PACKET(player);
                 break;

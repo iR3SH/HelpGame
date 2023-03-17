@@ -241,7 +241,7 @@ public class Config {
             		+ "HEROIC = false\r\n"
             		+ "\r\n"
             		+ "## CONFIGURATION\r\n"
-            		+ "MESSAGE = Bienvenue dans l'�mulation FREE d'entraide\r\n"
+            		+ "MESSAGE = Bienvenue dans l'émulation FREE d'entraide\r\n"
             		+ "URL = nashira\r\n"
             		+ "NAME = Eratz\r\n"
             		+ "AUTO_REBOOT = true\r\n"

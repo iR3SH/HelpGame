@@ -127,7 +127,7 @@ public class Trap {
 			final Trap trap = traps.get(i);
 			if(trap.isPushing())
 			{
-				// On prend le premier piège qui pousse. Cela permet de faire de gros reseau
+				// On prend le premier piÃ¨ge qui pousse. Cela permet de faire de gros reseau
 				if(idTrapPushing == -1 && PathFinding.getDistanceBetween(fight.getMap(), trap.getCell().getId(), currentCell) <= trap.getSize())
 					idTrapPushing = i;
 				continue;

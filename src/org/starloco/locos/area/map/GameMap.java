@@ -641,7 +641,7 @@ public class GameMap {
 
     public void addEndFightAction(int type, Action A) {
         if (this.endFightAction.get(type) == null)
-            this.endFightAction.put(type, new ArrayList<>()); // On retire l'action si elle existait d�j�
+            this.endFightAction.put(type, new ArrayList<>()); // On retire l'action si elle existait déjà
         delEndFightAction(type, A.getId());
         this.endFightAction.get(type).add(A);
     }
@@ -1091,7 +1091,7 @@ public class GameMap {
     
     //v2.7 - Tactical mode memory
     //v2.8 - Better follower system
-    //Pas encore ajout�:
+    //Pas encore ajouté:
     //v2.8 - Fixed follower teleporting
     //v2.8 - Fixed starting fights against newly spawned monsters
     //v2.8 - Save old map and cell
@@ -1103,7 +1103,7 @@ public class GameMap {
             return;
         }
         if (this.placesStr.isEmpty() || this.placesStr.equals("|")) {
-            perso.sendMessage("Poste sur le forum dans la cat�gorie ad�quat avec l'id de la map (/mapid dans le tchat) afin de pouvoir y mettre les cellules de combat. Merci.");
+            perso.sendMessage("Poste sur le forum dans la catégorie adéquat avec l'id de la map (/mapid dans le tchat) afin de pouvoir y mettre les cellules de combat. Merci.");
             return;
         }
         if (Main.fightAsBlocked||perso.isDead() == 1||perso.afterFight||!perso.canAggro())
@@ -1249,7 +1249,7 @@ public class GameMap {
         int id = 1;
 
         if (this.placesStr.isEmpty() || this.placesStr.equals("|")) {
-            perso.sendMessage("Poste sur le forum dans la cat�gorie ad�quat avec l'id de la map (/mapid dans le tchat) afin de pouvoir y mettre les cellules de combat. Merci.");
+            perso.sendMessage("Poste sur le forum dans la catégorie adéquat avec l'id de la map (/mapid dans le tchat) afin de pouvoir y mettre les cellules de combat. Merci.");
             return;
         }
         if(this.fights == null)
@@ -1387,7 +1387,7 @@ public class GameMap {
         return freecell.get(Formulas.getRandomValue(0, freecell.size() - 1));
     }
 
-    public int getRandomNearFreeCellId(int cellid)//obtenir une cell al�atoire et proche
+    public int getRandomNearFreeCellId(int cellid)//obtenir une cell aléatoire et proche
     {
         ArrayList<Integer> freecell = new ArrayList<>();
         ArrayList<Integer> cases = new ArrayList<>();
@@ -1719,7 +1719,7 @@ public class GameMap {
                 SocketManager.GAME_SEND_Ow_PACKET(player);
             }
             if (obj != null && Main.mapAsBlocked)
-                SocketManager.GAME_SEND_MESSAGE(player, "L'Administrateur � bloqu� temporairement la r�colte des objets aux sols.");
+                SocketManager.GAME_SEND_MESSAGE(player, "L'Administrateur à bloqué temporairement la récolte des objets aux sols.");
         }
         InteractiveDoor.check(player, this);
         this.getCase(id).applyOnCellStopActions(player);

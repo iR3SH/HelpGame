@@ -81,84 +81,84 @@ public class Minotoror {
     public static void ouvrirHaut(GameMap map) {
         closeAll();
         switch (map.getId()) {
-            case 9566: // 11�me
-                openTimer(World.world.getMap((short) 9560), (short) 302); // 6�me
+            case 9566: // 11ème
+                openTimer(World.world.getMap((short) 9560), (short) 302); // 6ème
                 break;
-            case 9560: // 12�me
-                openTimer(World.world.getMap((short) 9555), (short) 332); // 7�me
+            case 9560: // 12ème
+                openTimer(World.world.getMap((short) 9555), (short) 332); // 7ème
                 break;
-            case 9555: // 13�me
-                openTimer(World.world.getMap((short) 9574), (short) 273); // 8�me
+            case 9555: // 13ème
+                openTimer(World.world.getMap((short) 9574), (short) 273); // 8ème
                 break;
-            case 9574: // 14�me
-                openTimer(World.world.getMap((short) 9553), (short) 288); // 9�me
-                break;
-
-
-            case 9567: // 15�me
-                openTimer(World.world.getMap((short) 9561), (short) 317); // 10�me
-                openTimer(World.world.getMap((short) 9561), (short) 306); // 5�me
-                break;
-            case 9561: // 16�me
-                openTimer(World.world.getMap((short) 9556), (short) 306); // 11�me
-                openTimer(World.world.getMap((short) 9556), (short) 332); // 6�me
-                break;
-            case 9556: // 17�me
-                openTimer(World.world.getMap((short) 9575), (short) 335); // 12�me
-                openTimer(World.world.getMap((short) 9575), (short) 331); // 7�me
-                break;
-            case 9575: // 18�me
-                openTimer(World.world.getMap((short) 9564), (short) 335); // 13�me
-                openTimer(World.world.getMap((short) 9564), (short) 259); // 8�me
+            case 9574: // 14ème
+                openTimer(World.world.getMap((short) 9553), (short) 288); // 9ème
                 break;
 
 
-            case 9568: // 19�me
-                openTimer(World.world.getMap((short) 9562), (short) 320); // 14�me
-                openTimer(World.world.getMap((short) 9562), (short) 303); // 9�me
+            case 9567: // 15ème
+                openTimer(World.world.getMap((short) 9561), (short) 317); // 10ème
+                openTimer(World.world.getMap((short) 9561), (short) 306); // 5ème
                 break;
-            case 9562: // 20�me
-                openTimer(World.world.getMap((short) 9557), (short) 230); // 15�me
-                openTimer(World.world.getMap((short) 9557), (short) 306); // 10�me
+            case 9561: // 16ème
+                openTimer(World.world.getMap((short) 9556), (short) 306); // 11ème
+                openTimer(World.world.getMap((short) 9556), (short) 332); // 6ème
                 break;
-            case 9557: // 21�me
-                openTimer(World.world.getMap((short) 9576), (short) 306); // 16�me
-                openTimer(World.world.getMap((short) 9576), (short) 317); // 11�me
+            case 9556: // 17ème
+                openTimer(World.world.getMap((short) 9575), (short) 335); // 12ème
+                openTimer(World.world.getMap((short) 9575), (short) 331); // 7ème
                 break;
-            case 9576: // 22�me
-                openTimer(World.world.getMap((short) 9571), (short) 277); // 17�me
-                openTimer(World.world.getMap((short) 9571), (short) 331); // 12�me
+            case 9575: // 18ème
+                openTimer(World.world.getMap((short) 9564), (short) 335); // 13ème
+                openTimer(World.world.getMap((short) 9564), (short) 259); // 8ème
+                break;
+
+
+            case 9568: // 19ème
+                openTimer(World.world.getMap((short) 9562), (short) 320); // 14ème
+                openTimer(World.world.getMap((short) 9562), (short) 303); // 9ème
+                break;
+            case 9562: // 20ème
+                openTimer(World.world.getMap((short) 9557), (short) 230); // 15ème
+                openTimer(World.world.getMap((short) 9557), (short) 306); // 10ème
+                break;
+            case 9557: // 21ème
+                openTimer(World.world.getMap((short) 9576), (short) 306); // 16ème
+                openTimer(World.world.getMap((short) 9576), (short) 317); // 11ème
+                break;
+            case 9576: // 22ème
+                openTimer(World.world.getMap((short) 9571), (short) 277); // 17ème
+                openTimer(World.world.getMap((short) 9571), (short) 331); // 12ème
                 break;
 
 
-            case 9569: // 23�me
-                openTimer(World.world.getMap((short) 9563), (short) 292); // 18�me
-                openTimer(World.world.getMap((short) 9563), (short) 288); // 13�me
+            case 9569: // 23ème
+                openTimer(World.world.getMap((short) 9563), (short) 292); // 18ème
+                openTimer(World.world.getMap((short) 9563), (short) 288); // 13ème
                 break;
-            case 9563: // 24�me
-                openTimer(World.world.getMap((short) 9558), (short) 277); // 19�me
-                openTimer(World.world.getMap((short) 9558), (short) 361); // 14�me
+            case 9563: // 24ème
+                openTimer(World.world.getMap((short) 9558), (short) 277); // 19ème
+                openTimer(World.world.getMap((short) 9558), (short) 361); // 14ème
                 break;
-            case 9558: // 25�me
-                openTimer(World.world.getMap((short) 9577), (short) 364); // 20�me
-                openTimer(World.world.getMap((short) 9577), (short) 390); // 15�me
+            case 9558: // 25ème
+                openTimer(World.world.getMap((short) 9577), (short) 364); // 20ème
+                openTimer(World.world.getMap((short) 9577), (short) 390); // 15ème
                 break;
-            case 9577: // 25�me
-                openTimer(World.world.getMap((short) 9572), (short) 263); // 20�me
-                openTimer(World.world.getMap((short) 9572), (short) 346); // 15�me
+            case 9577: // 25ème
+                openTimer(World.world.getMap((short) 9572), (short) 263); // 20ème
+                openTimer(World.world.getMap((short) 9572), (short) 346); // 15ème
                 break;
 
-            case 9570: // 25�me
-                openTimer(World.world.getMap((short) 9565), (short) 262); // 20�me
+            case 9570: // 25ème
+                openTimer(World.world.getMap((short) 9565), (short) 262); // 20ème
                 break;
-            case 9565: // 25�me
-                openTimer(World.world.getMap((short) 9559), (short) 277); // 20�me
+            case 9565: // 25ème
+                openTimer(World.world.getMap((short) 9559), (short) 277); // 20ème
                 break;
-            case 9559: // 25�me
-                openTimer(World.world.getMap((short) 9554), (short) 306); // 20�me
+            case 9559: // 25ème
+                openTimer(World.world.getMap((short) 9554), (short) 306); // 20ème
                 break;
-            case 9554: // 25�me
-                openTimer(World.world.getMap((short) 9573), (short) 219); // 20�me
+            case 9554: // 25ème
+                openTimer(World.world.getMap((short) 9573), (short) 219); // 20ème
                 break;
         }
     }
@@ -166,83 +166,83 @@ public class Minotoror {
     public static void ouvrirBas(GameMap map) {
         closeAll();
         switch (map.getId()) {
-            case 9553: // 1�re
-                openTimer(World.world.getMap((short) 9574), (short) 273); // 6�me
+            case 9553: // 1ère
+                openTimer(World.world.getMap((short) 9574), (short) 273); // 6ème
                 break;
-            case 9574: // 2�me
-                openTimer(World.world.getMap((short) 9555), (short) 332); // 7�me
+            case 9574: // 2ème
+                openTimer(World.world.getMap((short) 9555), (short) 332); // 7ème
                 break;
-            case 9555: // 3�me
-                openTimer(World.world.getMap((short) 9560), (short) 302); // 8�me
+            case 9555: // 3ème
+                openTimer(World.world.getMap((short) 9560), (short) 302); // 8ème
                 break;
-            case 9560: // 4�me
-                openTimer(World.world.getMap((short) 9566), (short) 332); // 9�me
-                break;
-
-            case 9564: // 5�me
-                openTimer(World.world.getMap((short) 9575), (short) 335); // 10�me
-                openTimer(World.world.getMap((short) 9575), (short) 331); // 15�me
-                break;
-            case 9575: // 6�me
-                openTimer(World.world.getMap((short) 9556), (short) 332); // 11�me
-                openTimer(World.world.getMap((short) 9556), (short) 306); // 16�me
-                break;
-            case 9556: // 7�me
-                openTimer(World.world.getMap((short) 9561), (short) 306); // 12�me
-                openTimer(World.world.getMap((short) 9561), (short) 317); // 17�me
-                break;
-            case 9561: // 8�me
-                openTimer(World.world.getMap((short) 9567), (short) 277); // 13�me
-                openTimer(World.world.getMap((short) 9567), (short) 346); // 18�me
+            case 9560: // 4ème
+                openTimer(World.world.getMap((short) 9566), (short) 332); // 9ème
                 break;
 
-
-            case 9571: // 5�me
-                openTimer(World.world.getMap((short) 9576), (short) 306); // 10�me
-                openTimer(World.world.getMap((short) 9576), (short) 317); // 15�me
+            case 9564: // 5ème
+                openTimer(World.world.getMap((short) 9575), (short) 335); // 10ème
+                openTimer(World.world.getMap((short) 9575), (short) 331); // 15ème
                 break;
-            case 9576: // 6�me
-                openTimer(World.world.getMap((short) 9557), (short) 230); // 11�me
-                openTimer(World.world.getMap((short) 9557), (short) 306); // 16�me
+            case 9575: // 6ème
+                openTimer(World.world.getMap((short) 9556), (short) 332); // 11ème
+                openTimer(World.world.getMap((short) 9556), (short) 306); // 16ème
                 break;
-            case 9557: // 7�me
-                openTimer(World.world.getMap((short) 9562), (short) 320); // 12�me
-                openTimer(World.world.getMap((short) 9562), (short) 303); // 17�me
+            case 9556: // 7ème
+                openTimer(World.world.getMap((short) 9561), (short) 306); // 12ème
+                openTimer(World.world.getMap((short) 9561), (short) 317); // 17ème
                 break;
-            case 9562: // 8�me
-                openTimer(World.world.getMap((short) 9568), (short) 277); // 13�me
-                openTimer(World.world.getMap((short) 9568), (short) 346); // 18�me
+            case 9561: // 8ème
+                openTimer(World.world.getMap((short) 9567), (short) 277); // 13ème
+                openTimer(World.world.getMap((short) 9567), (short) 346); // 18ème
                 break;
 
 
-            case 9572: // 5�me
-                openTimer(World.world.getMap((short) 9577), (short) 364); // 10�me
-                openTimer(World.world.getMap((short) 9577), (short) 390); // 15�me
+            case 9571: // 5ème
+                openTimer(World.world.getMap((short) 9576), (short) 306); // 10ème
+                openTimer(World.world.getMap((short) 9576), (short) 317); // 15ème
                 break;
-            case 9577: // 6�me
-                openTimer(World.world.getMap((short) 9558), (short) 361); // 11�me
-                openTimer(World.world.getMap((short) 9558), (short) 277); // 16�me
+            case 9576: // 6ème
+                openTimer(World.world.getMap((short) 9557), (short) 230); // 11ème
+                openTimer(World.world.getMap((short) 9557), (short) 306); // 16ème
                 break;
-            case 9558: // 7�me
-                openTimer(World.world.getMap((short) 9563), (short) 292); // 12�me
-                openTimer(World.world.getMap((short) 9563), (short) 288); // 17�me
+            case 9557: // 7ème
+                openTimer(World.world.getMap((short) 9562), (short) 320); // 12ème
+                openTimer(World.world.getMap((short) 9562), (short) 303); // 17ème
                 break;
-            case 9563: // 8�me
-                openTimer(World.world.getMap((short) 9569), (short) 291); // 13�me
-                openTimer(World.world.getMap((short) 9569), (short) 317); // 18�me
+            case 9562: // 8ème
+                openTimer(World.world.getMap((short) 9568), (short) 277); // 13ème
+                openTimer(World.world.getMap((short) 9568), (short) 346); // 18ème
                 break;
 
-            case 9573: // 5�me
-                openTimer(World.world.getMap((short) 9554), (short) 306); // 10�me
+
+            case 9572: // 5ème
+                openTimer(World.world.getMap((short) 9577), (short) 364); // 10ème
+                openTimer(World.world.getMap((short) 9577), (short) 390); // 15ème
                 break;
-            case 9554: // 6�me
-                openTimer(World.world.getMap((short) 9559), (short) 277); // 11�me
+            case 9577: // 6ème
+                openTimer(World.world.getMap((short) 9558), (short) 361); // 11ème
+                openTimer(World.world.getMap((short) 9558), (short) 277); // 16ème
                 break;
-            case 9559: // 7�me
-                openTimer(World.world.getMap((short) 9565), (short) 262); // 12�me
+            case 9558: // 7ème
+                openTimer(World.world.getMap((short) 9563), (short) 292); // 12ème
+                openTimer(World.world.getMap((short) 9563), (short) 288); // 17ème
                 break;
-            case 9565: // 8�me
-                openTimer(World.world.getMap((short) 9570), (short) 306); // 13�me
+            case 9563: // 8ème
+                openTimer(World.world.getMap((short) 9569), (short) 291); // 13ème
+                openTimer(World.world.getMap((short) 9569), (short) 317); // 18ème
+                break;
+
+            case 9573: // 5ème
+                openTimer(World.world.getMap((short) 9554), (short) 306); // 10ème
+                break;
+            case 9554: // 6ème
+                openTimer(World.world.getMap((short) 9559), (short) 277); // 11ème
+                break;
+            case 9559: // 7ème
+                openTimer(World.world.getMap((short) 9565), (short) 262); // 12ème
+                break;
+            case 9565: // 8ème
+                openTimer(World.world.getMap((short) 9570), (short) 306); // 13ème
                 break;
         }
     }
@@ -250,77 +250,77 @@ public class Minotoror {
     public static void ouvrirGauche(GameMap map) {
         closeAll();
         switch (map.getId()) {
-            case 9564: // 2�me
-                openTimer(World.world.getMap((short) 9564), (short) 428); // 1�me
+            case 9564: // 2ème
+                openTimer(World.world.getMap((short) 9564), (short) 428); // 1ème
                 break;
-            case 9571: // 3�me
-                openTimer(World.world.getMap((short) 9564), (short) 429); // 2�me
+            case 9571: // 3ème
+                openTimer(World.world.getMap((short) 9564), (short) 429); // 2ème
                 break;
-            case 9572: // 4�me
-                openTimer(World.world.getMap((short) 9571), (short) 428); // 3�me
+            case 9572: // 4ème
+                openTimer(World.world.getMap((short) 9571), (short) 428); // 3ème
                 break;
-            case 9573: // 5�me
-                openTimer(World.world.getMap((short) 9572), (short) 443); // 4�me
+            case 9573: // 5ème
+                openTimer(World.world.getMap((short) 9572), (short) 443); // 4ème
                 break;
-            case 9575: // 7�me
-                openTimer(World.world.getMap((short) 9574), (short) 51); // 6�me
-                openTimer(World.world.getMap((short) 9574), (short) 425); // 6�me
+            case 9575: // 7ème
+                openTimer(World.world.getMap((short) 9574), (short) 51); // 6ème
+                openTimer(World.world.getMap((short) 9574), (short) 425); // 6ème
                 break;
-            case 9576: // 8�me
-                openTimer(World.world.getMap((short) 9575), (short) 94); // 7�me
-                openTimer(World.world.getMap((short) 9575), (short) 427); // 7�me
+            case 9576: // 8ème
+                openTimer(World.world.getMap((short) 9575), (short) 94); // 7ème
+                openTimer(World.world.getMap((short) 9575), (short) 427); // 7ème
                 break;
-            case 9577: // 9�me
-                openTimer(World.world.getMap((short) 9576), (short) 67); // 8�me
-                openTimer(World.world.getMap((short) 9576), (short) 441); // 8�me
+            case 9577: // 9ème
+                openTimer(World.world.getMap((short) 9576), (short) 67); // 8ème
+                openTimer(World.world.getMap((short) 9576), (short) 441); // 8ème
                 break;
-            case 9554: // 10�me
-                openTimer(World.world.getMap((short) 9577), (short) 50); // 9�me
-                openTimer(World.world.getMap((short) 9577), (short) 426); // 9�me
+            case 9554: // 10ème
+                openTimer(World.world.getMap((short) 9577), (short) 50); // 9ème
+                openTimer(World.world.getMap((short) 9577), (short) 426); // 9ème
                 break;
-            case 9556: // 12�me
-                openTimer(World.world.getMap((short) 9555), (short) 64); // 11�me
-                openTimer(World.world.getMap((short) 9555), (short) 440); // 11�me
+            case 9556: // 12ème
+                openTimer(World.world.getMap((short) 9555), (short) 64); // 11ème
+                openTimer(World.world.getMap((short) 9555), (short) 440); // 11ème
                 break;
-            case 9557: // 13�me
-                openTimer(World.world.getMap((short) 9556), (short) 64); // 12�me
-                openTimer(World.world.getMap((short) 9556), (short) 428); // 12�me
+            case 9557: // 13ème
+                openTimer(World.world.getMap((short) 9556), (short) 64); // 12ème
+                openTimer(World.world.getMap((short) 9556), (short) 428); // 12ème
                 break;
-            case 9558: // 14�me
-                openTimer(World.world.getMap((short) 9557), (short) 51); // 13�me
-                openTimer(World.world.getMap((short) 9557), (short) 413); // 13�me
+            case 9558: // 14ème
+                openTimer(World.world.getMap((short) 9557), (short) 51); // 13ème
+                openTimer(World.world.getMap((short) 9557), (short) 413); // 13ème
                 break;
-            case 9559: // 15�me
-                openTimer(World.world.getMap((short) 9558), (short) 77); // 14�me
-                openTimer(World.world.getMap((short) 9558), (short) 427); // 14�me
+            case 9559: // 15ème
+                openTimer(World.world.getMap((short) 9558), (short) 77); // 14ème
+                openTimer(World.world.getMap((short) 9558), (short) 427); // 14ème
                 break;
-            case 9561: // 17�me
-                openTimer(World.world.getMap((short) 9560), (short) 52); // 16�me
-                openTimer(World.world.getMap((short) 9560), (short) 428); // 16�me
+            case 9561: // 17ème
+                openTimer(World.world.getMap((short) 9560), (short) 52); // 16ème
+                openTimer(World.world.getMap((short) 9560), (short) 428); // 16ème
                 break;
-            case 9562: // 18�me
-                openTimer(World.world.getMap((short) 9561), (short) 80); // 17�me
-                openTimer(World.world.getMap((short) 9561), (short) 441); // 17�me
+            case 9562: // 18ème
+                openTimer(World.world.getMap((short) 9561), (short) 80); // 17ème
+                openTimer(World.world.getMap((short) 9561), (short) 441); // 17ème
                 break;
-            case 9563: // 19�me
-                openTimer(World.world.getMap((short) 9562), (short) 52); // 18�me
-                openTimer(World.world.getMap((short) 9562), (short) 429); // 18�me
+            case 9563: // 19ème
+                openTimer(World.world.getMap((short) 9562), (short) 52); // 18ème
+                openTimer(World.world.getMap((short) 9562), (short) 429); // 18ème
                 break;
-            case 9565: // 20�me
-                openTimer(World.world.getMap((short) 9563), (short) 52); // 19�me
-                openTimer(World.world.getMap((short) 9563), (short) 429); // 19�me
+            case 9565: // 20ème
+                openTimer(World.world.getMap((short) 9563), (short) 52); // 19ème
+                openTimer(World.world.getMap((short) 9563), (short) 429); // 19ème
                 break;
-            case 9567: // 22�me
-                openTimer(World.world.getMap((short) 9566), (short) 51); // 21�me
+            case 9567: // 22ème
+                openTimer(World.world.getMap((short) 9566), (short) 51); // 21ème
                 break;
-            case 9568: // 23�me
-                openTimer(World.world.getMap((short) 9567), (short) 37); // 22�me
+            case 9568: // 23ème
+                openTimer(World.world.getMap((short) 9567), (short) 37); // 22ème
                 break;
-            case 9569: // 24�me
-                openTimer(World.world.getMap((short) 9568), (short) 51); // 23�me
+            case 9569: // 24ème
+                openTimer(World.world.getMap((short) 9568), (short) 51); // 23ème
                 break;
-            case 9570: // 25�me
-                openTimer(World.world.getMap((short) 9569), (short) 64); // 24�me
+            case 9570: // 25ème
+                openTimer(World.world.getMap((short) 9569), (short) 64); // 24ème
                 break;
         }
     }
@@ -328,85 +328,85 @@ public class Minotoror {
     public static void ouvrirDroite(GameMap map) {
         closeAll();
         switch (map.getId()) {
-            case 9553: // 1�re
-                openTimer(World.world.getMap((short) 9564), (short) 429); // 2�me
+            case 9553: // 1ère
+                openTimer(World.world.getMap((short) 9564), (short) 429); // 2ème
                 break;
-            case 9564: // 2�me
-                openTimer(World.world.getMap((short) 9571), (short) 428); // 3�me
+            case 9564: // 2ème
+                openTimer(World.world.getMap((short) 9571), (short) 428); // 3ème
                 break;
-            case 9571: // 3�me
-                openTimer(World.world.getMap((short) 9572), (short) 443); // 4�me
+            case 9571: // 3ème
+                openTimer(World.world.getMap((short) 9572), (short) 443); // 4ème
                 break;
-            case 9572: // 4�me
-                openTimer(World.world.getMap((short) 9573), (short) 440); // 5�me
+            case 9572: // 4ème
+                openTimer(World.world.getMap((short) 9573), (short) 440); // 5ème
                 break;
 
 
-            case 9574: // 6�me
+            case 9574: // 6ème
                 openTimer(World.world.getMap((short) 9575), (short) 94); // 7me
-                openTimer(World.world.getMap((short) 9575), (short) 427); // 7�me
+                openTimer(World.world.getMap((short) 9575), (short) 427); // 7ème
                 break;
-            case 9575: // 7�me
-                openTimer(World.world.getMap((short) 9576), (short) 67); // 8�me
-                openTimer(World.world.getMap((short) 9576), (short) 441); // 8�me
+            case 9575: // 7ème
+                openTimer(World.world.getMap((short) 9576), (short) 67); // 8ème
+                openTimer(World.world.getMap((short) 9576), (short) 441); // 8ème
                 break;
-            case 9576: // 8�me
-                openTimer(World.world.getMap((short) 9577), (short) 50); // 9�me
-                openTimer(World.world.getMap((short) 9577), (short) 426); // 9�me
+            case 9576: // 8ème
+                openTimer(World.world.getMap((short) 9577), (short) 50); // 9ème
+                openTimer(World.world.getMap((short) 9577), (short) 426); // 9ème
                 break;
-            case 9577: // 9�me
-                openTimer(World.world.getMap((short) 9554), (short) 138); // 10�me
-                openTimer(World.world.getMap((short) 9554), (short) 431); // 10�me
-                break;
-
-
-            case 9555: // 11�me
-                openTimer(World.world.getMap((short) 9556), (short) 64); // 12�me
-                openTimer(World.world.getMap((short) 9556), (short) 428); // 12�me
-                break;
-            case 9556: // 12�me
-                openTimer(World.world.getMap((short) 9557), (short) 51); // 13�me
-                openTimer(World.world.getMap((short) 9557), (short) 413); // 13�me
-                break;
-            case 9557: // 13�me
-                openTimer(World.world.getMap((short) 9558), (short) 77); // 14�me
-                openTimer(World.world.getMap((short) 9558), (short) 427); // 14�me
-                break;
-            case 9558: // 14�me
-                openTimer(World.world.getMap((short) 9559), (short) 65); // 15�me
-                openTimer(World.world.getMap((short) 9559), (short) 427); // 15�me
+            case 9577: // 9ème
+                openTimer(World.world.getMap((short) 9554), (short) 138); // 10ème
+                openTimer(World.world.getMap((short) 9554), (short) 431); // 10ème
                 break;
 
 
-            case 9560: // 16�me
-                openTimer(World.world.getMap((short) 9561), (short) 80); // 17�me
-                openTimer(World.world.getMap((short) 9561), (short) 441); // 17�me
+            case 9555: // 11ème
+                openTimer(World.world.getMap((short) 9556), (short) 64); // 12ème
+                openTimer(World.world.getMap((short) 9556), (short) 428); // 12ème
                 break;
-            case 9561: // 17�me
-                openTimer(World.world.getMap((short) 9562), (short) 52); // 18�me
-                openTimer(World.world.getMap((short) 9562), (short) 429); // 18�me
+            case 9556: // 12ème
+                openTimer(World.world.getMap((short) 9557), (short) 51); // 13ème
+                openTimer(World.world.getMap((short) 9557), (short) 413); // 13ème
                 break;
-            case 9562: // 18�me
-                openTimer(World.world.getMap((short) 9563), (short) 52); // 19�me
-                openTimer(World.world.getMap((short) 9563), (short) 429); // 19�me
+            case 9557: // 13ème
+                openTimer(World.world.getMap((short) 9558), (short) 77); // 14ème
+                openTimer(World.world.getMap((short) 9558), (short) 427); // 14ème
                 break;
-            case 9563: // 19�me
-                openTimer(World.world.getMap((short) 9565), (short) 51); // 20�me
-                openTimer(World.world.getMap((short) 9565), (short) 414); // 20�me
+            case 9558: // 14ème
+                openTimer(World.world.getMap((short) 9559), (short) 65); // 15ème
+                openTimer(World.world.getMap((short) 9559), (short) 427); // 15ème
                 break;
 
 
-            case 9566: // 21�me
-                openTimer(World.world.getMap((short) 9567), (short) 37); // 22�me
+            case 9560: // 16ème
+                openTimer(World.world.getMap((short) 9561), (short) 80); // 17ème
+                openTimer(World.world.getMap((short) 9561), (short) 441); // 17ème
                 break;
-            case 9567: // 22�me
-                openTimer(World.world.getMap((short) 9568), (short) 51); // 23�me
+            case 9561: // 17ème
+                openTimer(World.world.getMap((short) 9562), (short) 52); // 18ème
+                openTimer(World.world.getMap((short) 9562), (short) 429); // 18ème
                 break;
-            case 9568: // 23�me
-                openTimer(World.world.getMap((short) 9569), (short) 64); // 24�me
+            case 9562: // 18ème
+                openTimer(World.world.getMap((short) 9563), (short) 52); // 19ème
+                openTimer(World.world.getMap((short) 9563), (short) 429); // 19ème
                 break;
-            case 9569: // 24�me
-                openTimer(World.world.getMap((short) 9570), (short) 51); // 25�me
+            case 9563: // 19ème
+                openTimer(World.world.getMap((short) 9565), (short) 51); // 20ème
+                openTimer(World.world.getMap((short) 9565), (short) 414); // 20ème
+                break;
+
+
+            case 9566: // 21ème
+                openTimer(World.world.getMap((short) 9567), (short) 37); // 22ème
+                break;
+            case 9567: // 22ème
+                openTimer(World.world.getMap((short) 9568), (short) 51); // 23ème
+                break;
+            case 9568: // 23ème
+                openTimer(World.world.getMap((short) 9569), (short) 64); // 24ème
+                break;
+            case 9569: // 24ème
+                openTimer(World.world.getMap((short) 9570), (short) 51); // 25ème
                 break;
 
         }
@@ -628,7 +628,7 @@ public class Minotoror {
     }
 
     private static void openTimer(final GameMap map, final short cellId) {
-        if (map.getCase(cellId).isWalkable(false)) // Elle est d�j� ouverte
+        if (map.getCase(cellId).isWalkable(false)) // Elle est déjà ouverte
             return;
         open(map, cellId);
         TimerWaiter.addNext(() -> close(map, cellId), time, TimeUnit.MINUTES, TimerWaiter.DataType.MAP);
@@ -641,7 +641,7 @@ public class Minotoror {
     }
 
     private static void close(GameMap map, short cellId) {
-        if (!map.getCase(cellId).isWalkable(false)) // Elle est d�j� ferm�.
+        if (!map.getCase(cellId).isWalkable(false)) // Elle est déjà fermé.
             return;
         sendClose(map, cellId);
         map.removeCase(cellId);

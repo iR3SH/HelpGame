@@ -48,7 +48,7 @@ public class SocketManager {
             client.send(packet);
     }
 
-    public static void GAME_SEND_UPDATE_ITEM(Player P, GameObject obj) // Utilis� pour tours bonbon
+    public static void GAME_SEND_UPDATE_ITEM(Player P, GameObject obj) // Utilisé pour tours bonbon
     {
         String packet = "OC|" + obj.parseItem();
         send(P, packet);
@@ -1150,7 +1150,7 @@ public class SocketManager {
                                                    int guid, String name, String msg) {
         String packet = "cMK" + suffix + "|" + guid + "|" + name + "|" + msg;
         if (perso.getLevel() < 6) {
-            SocketManager.GAME_SEND_MESSAGE(perso, "Ce canal n'est accessible qu'� partir du niveau <b>6</b>.");
+            SocketManager.GAME_SEND_MESSAGE(perso, "Ce canal n'est accessible qu'à partir du niveau <b>6</b>.");
             GAME_SEND_BN(perso);
             return;
         }
@@ -1801,7 +1801,7 @@ public class SocketManager {
                 StringBuilder items = new StringBuilder();
                 //Pour chaque objet de la pano
                 for (ObjectTemplate OT : IS.getItemTemplates()) {
-                    //Si le joueur l'a �quip�
+                    //Si le joueur l'a équipé
                     if (perso.hasEquiped(OT.getId())) {
                         //On l'ajoute au packet
                         if (items.length() > 0)
@@ -2021,7 +2021,7 @@ public class SocketManager {
 
     }
 
-    public static void REALM_SEND_REQUIRED_APK(GameClient out)//FIXME:G�n�rateur de nom
+    public static void REALM_SEND_REQUIRED_APK(GameClient out)//FIXME:Générateur de nom
     {
         String pass = "";
         String noms = "fantasy;mr;beau;fort;dark;knight;sword;big;boss;chuck;norris;wood;rick;roll;food;play;volt;rick;ven;bana;sam;ron;fou;pui;to;fu;lo;rien;bank;cap;chap;fort;dou;soleil;gentil;mechant;bad;killer;fight;gra;evil;dark;jerry;fatal;haut;bas;arc;epe;cac;ec;mai;invo;tro;com;koi;bou;let;top;fun;fai;sony;kani;meulou;faur;asus;choa;chau;cho;miel;beur;pain;cry;big;sma;to;day;bi;cih;geni;bou;che;scania;dave;swi;cas;que;chi;er;de;nul;do;a;b;c;d;e;f;g;h;i;j;k;l;m;n;o;p;q;r;s;t;u;v;w;x;y;z;a;e;i;o;u;y";
@@ -2186,7 +2186,7 @@ public class SocketManager {
 
     }
 
-    public static void GAME_SEND_EHP_PACKET(Player out, int templateID) //Packet d'envoie du prix moyen du template (En r�ponse a un packet EHP)
+    public static void GAME_SEND_EHP_PACKET(Player out, int templateID) //Packet d'envoie du prix moyen du template (En réponse a un packet EHP)
     {
 
         String packet = "EHP" + templateID + "|"
@@ -2205,7 +2205,7 @@ public class SocketManager {
     }
 
     public static void GAME_SEND_EHL_PACKET(Player out, int categ,
-                                            String templates) //Packet de listage des templates dans une cat�gorie (En r�ponse au packet EHT)
+                                            String templates) //Packet de listage des templates dans une catégorie (En réponse au packet EHT)
     {
         String packet = "EHL" + categ + "|" + templates;
 
@@ -2223,7 +2223,7 @@ public class SocketManager {
 
     public static void GAME_SEND_HDVITEM_SELLING(Player perso) {
         String packet = "EL";
-        HdvEntry[] entries = perso.getAccount().getHdvEntries(Math.abs(((Integer) perso.getExchangeAction().getValue()))); //R�cup�re un tableau de tout les items que le personnage � en vente dans l'HDV o� il est
+        HdvEntry[] entries = perso.getAccount().getHdvEntries(Math.abs(((Integer) perso.getExchangeAction().getValue()))); //Récupère un tableau de tout les items que le personnage à en vente dans l'HDV où il est
         boolean isFirst = true;
         for (HdvEntry curEntry : entries) {
             if (curEntry == null)

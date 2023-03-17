@@ -1059,7 +1059,7 @@ public class Mount {
 				SocketManager.GAME_SEND_Ew_PACKET(P, this.getActualPods(), this.getMaxPods());
 				str = "O+"+TrunkObj.getGuid()+"|"+TrunkObj.getQuantity()+"|"+TrunkObj.getTemplate().getId()+"|"+TrunkObj.parseStatsString();
 			}
-		}else // Le joueur avait deja� un item similaire
+		}else // Le joueur avait déjà un item similaire
 		{
 			//S'il ne reste rien dans le coffre
 			if(newQua <= 0)
@@ -1067,7 +1067,7 @@ public class Mount {
 				//On retire l'item du coffre
 				this.objects.remove(TrunkObj.getGuid());
 				World.world.removeGameObject(TrunkObj.getGuid());
-				//On Modifie la quantite de l'item du sac du joueur
+				//On Modifie la quantité de l'item du sac du joueur
 				playerObj.setQuantity(playerObj.getQuantity() + TrunkObj.getQuantity());
 				
 				//On envoie les packets

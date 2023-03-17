@@ -333,7 +333,7 @@ public class Account {
             return;
         }
 
-        Player player = account.getCurrentPlayer(); // Il est arriv� que le personnage soit null alors que ... non !
+        Player player = account.getCurrentPlayer(); // Il est arrivé que le personnage soit null alors que ... non !
 
         if (player == null) {
             SocketManager.GAME_SEND_MESSAGE(this.currentPlayer, "Le joueur n'existe pas.");
@@ -389,7 +389,7 @@ public class Account {
             if (C == null)
                 continue;
             str.append("|").append(C.getPseudo());
-            //on s'arrete la si aucun perso n'est connect�
+            //on s'arrete la si aucun perso n'est connecté
             if (!C.isOnline())
                 continue;
             Player P = C.getCurrentPlayer();
@@ -448,7 +448,7 @@ public class Account {
             if (C == null)
                 continue;
             str.append("|").append(C.getPseudo());
-            //on s'arrete la si aucun perso n'est connect�
+            //on s'arrete la si aucun perso n'est connecté
             if (!C.isOnline())
                 continue;
             Player P = C.getCurrentPlayer();
@@ -465,14 +465,14 @@ public class Account {
         if ((Integer) this.currentPlayer.getExchangeAction().getValue() >= 0)
             return false;
 
-        int hdvID = Math.abs((Integer) this.currentPlayer.getExchangeAction().getValue());//R�cup�re l'ID de l'HDV
+        int hdvID = Math.abs((Integer) this.currentPlayer.getExchangeAction().getValue());//Récupère l'ID de l'HDV
 
         HdvEntry entry = null;
         try {
             ArrayList<HdvEntry> entries = this.hdvsItems.get(hdvID);
             if (entries == null || entries.isEmpty())
                 return false;
-            for (HdvEntry tempEntry : entries) {//Boucle dans la liste d'entry de l'HDV pour trouver un entry avec le meme cheapestID que sp�cifi�
+            for (HdvEntry tempEntry : entries) {//Boucle dans la liste d'entry de l'HDV pour trouver un entry avec le meme cheapestID que spécifié
                 if (tempEntry.getLineId() == lineId) {//Si la boucle trouve un objet avec le meme cheapestID, arrete la boucle
                     entry = tempEntry;
                     break;
@@ -483,7 +483,7 @@ public class Account {
             return false;
         }
 
-        if (entry == null)//Si entry == null cela veut dire que la boucle s'est effectu� sans trouver d'item avec le meme cheapestID
+        if (entry == null)//Si entry == null cela veut dire que la boucle s'est effectué sans trouver d'item avec le meme cheapestID
             return false;
         if(entry.buy)
             return false;

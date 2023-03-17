@@ -47,24 +47,24 @@ public class JobConstant {
     public static final int IOBJECT_STATE_EMPTY2 = 4;
     public static final int IOBJECT_STATE_FULLING = 5;
 
-    //Action de M�tier {skillID,objetRecolt�,objSp�cial}
+    //Action de Métier {skillID,objetRecolté,objSpécial}
     public static final int[][] JOB_ACTION = {
             //Bucheron
             {101}, {6, 303}, {39, 473}, {40, 476}, {10, 460}, {141, 2357}, {139, 2358}, {37, 471}, {154, 7013}, {33, 461}, {41, 474}, {34, 449}, {174, 7925}, {155, 7016}, {38, 472}, {35, 470}, {158, 7014},
             //Mineur
             {48}, {32}, {24, 312}, {25, 441}, {26, 442}, {28, 443}, {56, 445}, {162, 7032}, {55, 444}, {29, 350}, {31, 446}, {30, 313}, {161, 7033},
-            //P�cheur
+            //Pêcheur
             {133},
-            //Rivi�re
+            //Rivière
             {124, 1782, 1844, 603},  // Petit poissons (riv)
             {125, 1844, 603, 1847, 1794}, // Poisson (mer)
             {126, 603, 1847, 1794, 1779}, // Gros poisson (riv)
-            {127, 1847, 1794, 1779, 1801}, // Poisson g�ant (riv)
+            {127, 1847, 1794, 1779, 1801}, // Poisson géant (riv)
             //Mer
             {128, 598, 1757, 1750}, // Petit Poissons (mer)
             {129, 1757, 1805, 600}, // Poisson (mer)
             {130, 1805, 1750, 1784, 600}, // Gros poisson (mer)
-            {131, 600, 1805, 602, 1784}, // Poisson g�ant (mer)
+            {131, 600, 1805, 602, 1784}, // Poisson géant (mer)
             //OTHER
             {136, 2187}, {140, 1759}, {140, 1799},
             //Alchi
@@ -85,7 +85,7 @@ public class JobConstant {
             {11}, {12},
             //Cordonnier
             {13}, {14},
-            //Forgeur Ep�e
+            //Forgeur Epée
             {145}, {20},
             //Forgeur Marteau
             {144}, {19},
@@ -101,7 +101,7 @@ public class JobConstant {
             {1},
             //Forgemage de marteau
             {116},
-            //Forgemage d'�p�e
+            //Forgemage d'épée
             {113},
             //Forgemage Pelle
             {117},
@@ -127,7 +127,7 @@ public class JobConstant {
             {16}, {148},
             //Forgeur de bouclier
             {156},
-            //F�e d'artifice
+            //Fée d'artifice
             {151},
             //Etabli moon
             {110},
@@ -298,9 +298,9 @@ public class JobConstant {
                 list.add(new JobAction(166, 3, 0, true, lvl, 0));
                 break;
             case JOB_F_EPEE:
-                //Forger Ep�e
+                //Forger Epée
                 list.add(new JobAction(20, getTotalCaseByJobLevel(lvl), 0, true, getChanceForMaxCase(lvl), -1));
-                //Reforger Ep�e
+                //Reforger Epée
                 list.add(new JobAction(145, 3, 0, true, getChanceForMaxCase(lvl), -1));
                 break;
             case JOB_F_DAGUE:
@@ -336,7 +336,7 @@ public class JobConstant {
                 list.add(new JobAction(1, 3, 0, true, lvl, 0));
                 break;
             case JOB_FM_EPEE:
-                //Reforger une �p�e
+                //Reforger une épée
                 list.add(new JobAction(113, 3, 0, true, lvl, 0));
                 break;
             case JOB_FM_MARTEAU:
@@ -360,11 +360,11 @@ public class JobConstant {
                 list.add(new JobAction(119, 3, 0, true, lvl, 0));
                 break;
             case JOB_CHASSEUR:
-                //Pr�parer
+                //Préparer
                 list.add(new JobAction(132, getTotalCaseByJobLevel(lvl), 0, true, getChanceForMaxCase(lvl), -1));
                 break;
             case JOB_BOUCHER:
-                //Pr�parer une Viande
+                //Préparer une Viande
                 list.add(new JobAction(134, getTotalCaseByJobLevel(lvl), 0, true, getChanceForMaxCase(lvl), -1));
                 break;
             case JOB_POISSONNIER:
@@ -401,7 +401,7 @@ public class JobConstant {
                     list.add(new JobAction(162, min, -8 + dropWin, false, 12000 - timeWin, 35));
                 }
                 if (lvl > 39) {
-                    //Miner Mangan�se
+                    //Miner Manganèse
                     list.add(new JobAction(56, min, -6 + dropWin, false, 12000 - timeWin, 30));
                 }
                 if (lvl > 29) {
@@ -425,36 +425,36 @@ public class JobConstant {
                 break;
             case JOB_PECHEUR:
                 if (lvl > 74) {
-                    //P�cher Poissons g�ants de mer
+                    //Pêcher Poissons géants de mer
                     list.add(new JobAction(131, 0, 1, false, 12000 - timeWin, 35));
                 }
                 if (lvl > 69) {
-                    //P�cher Poissons g�ants de rivi�re
+                    //Pêcher Poissons géants de rivière
                     list.add(new JobAction(127, 0, 1, false, 12000 - timeWin, 35));
                 }
                 if (lvl > 49) {
-                    //P�cher Gros poissons de mers
+                    //Pêcher Gros poissons de mers
                     list.add(new JobAction(130, 0, 1, false, 12000 - timeWin, 30));
                 }
                 if (lvl > 39) {
-                    //P�cher Gros poissons de rivi�re
+                    //Pêcher Gros poissons de rivière
                     list.add(new JobAction(126, 0, 1, false, 12000 - timeWin, 25));
                 }
                 if (lvl > 19) {
-                    //P�cher Poissons de mer
+                    //Pêcher Poissons de mer
                     list.add(new JobAction(129, 0, 1, false, 12000 - timeWin, 20));
                 }
                 if (lvl > 9) {
-                    //P�cher Poissons de rivi�re
+                    //Pêcher Poissons de rivière
                     list.add(new JobAction(125, 0, 1, false, 12000 - timeWin, 15));
                 }
-                //P�cher Ombre Etrange
+                //Pêcher Ombre Etrange
                 list.add(new JobAction(140, 0, 1, false, 12000 - timeWin, 50));
-                //P�cher Pichon
+                //Pêcher Pichon
                 list.add(new JobAction(136, 1, 1, false, 12000 - timeWin, 5));
-                //P�cher Petits poissons de rivi�re
+                //Pêcher Petits poissons de rivière
                 list.add(new JobAction(124, 0, 1, false, 12000 - timeWin, 10));
-                //P�cher Petits poissons de mer
+                //Pêcher Petits poissons de mer
                 list.add(new JobAction(128, 0, 1, false, 12000 - timeWin, 10));
                 //Vider
                 list.add(new JobAction(133, getTotalCaseByJobLevel(lvl), 0, true, getChanceForMaxCase(lvl), -1));
@@ -467,7 +467,7 @@ public class JobConstant {
                     list.add(new JobAction(74, min, -8 + dropWin, false, 12000 - timeWin, 35));
                 }
                 if (lvl > 39) {
-                    //Cueillir Orchid�e
+                    //Cueillir Orchidée
                     list.add(new JobAction(73, min, -6 + dropWin, false, 12000 - timeWin, 30));
                 }
                 if (lvl > 29) {
@@ -475,7 +475,7 @@ public class JobConstant {
                     list.add(new JobAction(72, min, -4 + dropWin, false, 12000 - timeWin, 25));
                 }
                 if (lvl > 19) {
-                    //Cueillir Tr�fle
+                    //Cueillir Trèfle
                     list.add(new JobAction(71, min, -2 + dropWin, false, 12000 - timeWin, 20));
                 }
                 if (lvl > 9) {
@@ -489,7 +489,7 @@ public class JobConstant {
                 break;
             case JOB_BUCHERON:
                 if (lvl > 99) {
-                    //Couper Bambou Sacr�
+                    //Couper Bambou Sacré
                     list.add(new JobAction(158, min, -18 + dropWin, false, 12000 - timeWin, 75));
                 }
                 if (lvl > 89) {
@@ -507,7 +507,7 @@ public class JobConstant {
                     list.add(new JobAction(174, min, -13 + dropWin, false, 12000 - timeWin, 55));
                 }
                 if (lvl > 69) {
-                    //Couper Eb�ne
+                    //Couper Ebène
                     list.add(new JobAction(34, min, -12 + dropWin, false, 12000 - timeWin, 50));
                 }
                 if (lvl > 59) {
@@ -531,7 +531,7 @@ public class JobConstant {
                     list.add(new JobAction(141, min, -5 + dropWin, false, 12000 - timeWin, 30));
                 }
                 if (lvl > 29) {
-                    //Couper Ch�ne
+                    //Couper Chêne
                     list.add(new JobAction(10, min, -4 + dropWin, false, 12000 - timeWin, 25));
                 }
                 if (lvl > 19) {
@@ -539,10 +539,10 @@ public class JobConstant {
                     list.add(new JobAction(40, min, -2 + dropWin, false, 12000 - timeWin, 20));
                 }
                 if (lvl > 9) {
-                    //Couper Ch�taignier
+                    //Couper Châtaignier
                     list.add(new JobAction(39, min, dropWin, false, 12000 - timeWin, 15));
                 }
-                //Couper Fr�ne
+                //Couper Frène
                 list.add(new JobAction(6, min, 2 + dropWin, false, 12000 - timeWin, 10));
                 //Scie
                 list.add(new JobAction(101, getTotalCaseByJobLevel(lvl), 0, true, getChanceForMaxCase(lvl), -1));
@@ -579,7 +579,7 @@ public class JobConstant {
                     //Faucher Orge
                     list.add(new JobAction(53, min, dropWin, false, 12000 - timeWin, 15));
                 }
-                //Faucher bl�
+                //Faucher blé
                 list.add(new JobAction(45, min, 2 + dropWin, false, 12000 - timeWin, 10));
                 //Moudre
                 list.add(new JobAction(47, getTotalCaseByJobLevel(lvl), 0, true, getChanceForMaxCase(lvl), -1));
@@ -628,7 +628,7 @@ public class JobConstant {
                 return 1853;
             case 603: // Poisson Chaton
                 return 1762;
-            case 1750: // Poisson Pan�
+            case 1750: // Poisson Pané
                 return 1754;
             case 1757: // Crabe Sourimi
                 return 1759;

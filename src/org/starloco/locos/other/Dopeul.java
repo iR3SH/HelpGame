@@ -27,7 +27,7 @@ public class Dopeul {
         GameMap curMap = player.getCurMap();
         int idMap = World.world.getTempleByClasse(player.getClasse());
         switch (type) {
-            case 1://Sort sp�cial
+            case 1://Sort spécial
                 if (!player.hasItemTemplate(getDoplonByClasse(player.getClasse()), 1)) { // Si on a pas le doplon de classe
                     SocketManager.GAME_SEND_Im_PACKET(player, "14");
                     return;
@@ -35,9 +35,9 @@ public class Dopeul {
                 {
                     SocketManager.GAME_SEND_MESSAGE(player, "Tu n'es pas dans ton temple de classe !");
                     return;
-                } else if (player.hasSpell(Constant.getSpecialSpellByClasse(player.getClasse()))) // Si on a d�j� le sort
+                } else if (player.hasSpell(Constant.getSpecialSpellByClasse(player.getClasse()))) // Si on a déjà le sort
                 {
-                    SocketManager.GAME_SEND_MESSAGE(player, "Tu as d�j� appris le sort !");
+                    SocketManager.GAME_SEND_MESSAGE(player, "Tu as déjà appris le sort !");
                     return;
                 }
 
@@ -45,9 +45,9 @@ public class Dopeul {
                 removeObject(player, getDoplonByClasse(player.getClasse()), 1);
                 break;
 
-            case 2://Trousseau de cl�s
+            case 2://Trousseau de clés
                 if (player.hasItemTemplate(10207, 1)) {
-                    SocketManager.GAME_SEND_MESSAGE(player, "Tu poss�des d�j� un Trousseau de clef !");
+                    SocketManager.GAME_SEND_MESSAGE(player, "Tu possèdes déjà un Trousseau de clef !");
                     return;
                 }
                 int doplon = hasOneDoplon(player);
@@ -80,7 +80,7 @@ public class Dopeul {
                 SocketManager.GAME_SEND_FORGETSPELL_INTERFACE('+', player);
                 break;
 
-            case 4://Reset caract�ristiques
+            case 4://Reset caractéristiques
                 if (!player.hasItemTemplate(getDoplonByClasse(player.getClasse()), 1)) {
                     SocketManager.GAME_SEND_Im_PACKET(player, "14");
                     return;
@@ -116,7 +116,7 @@ public class Dopeul {
                     removeObject(player, id, 1);
                 break;
 
-            case 6://Parchemin de caract�ristique
+            case 6://Parchemin de caractéristique
                 SocketManager.GAME_SEND_MESSAGE(player, "Prochainement..");
                 break;
         }

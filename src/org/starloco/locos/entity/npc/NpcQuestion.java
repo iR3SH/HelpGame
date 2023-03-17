@@ -57,7 +57,7 @@ public class NpcQuestion {
                         continue;
                     Integer ans = Integer.parseInt(loc1);
                     NpcAnswer answer = World.world.getAnswers().get(ans);
-                    // answer.getActions() avec id = 40, on r�cup�re l'id de qu�te. Si on a la qu�te alors on affiche pas !
+                    // answer.getActions() avec id = 40, on récupère l'id de quête. Si on a la quête alors on affiche pas !
                     if (answer == null)
                         continue;
                     boolean ok = true;
@@ -76,7 +76,7 @@ public class NpcQuestion {
                                 if (!player.hasItemTemplate(clef, 1))
                                     ok = false;
                                 break;
-                            case 6: // Si on apprend un m�tier
+                            case 6: // Si on apprend un métier
                                 int mId = Integer.parseInt(action.getArgs().split(",")[0]);
                                 int cId = Integer.parseInt(action.getArgs().split(",")[1]);
                                 if (player.getCurMap().getId() != (short) cId)
@@ -84,14 +84,14 @@ public class NpcQuestion {
                                 else if (player.totalJobBasic() > 2)
                                     ok = false;
                                 else if (player.getMetierByID(mId) != null)
-                                    ok = false; // S'il a d�j� le m�tier, alors on d�gage
+                                    ok = false; // S'il a déjà le métier, alors on dégage
                                 break;
 
-                            case 40: // Si on apprend une qu�te
+                            case 40: // Si on apprend une quête
                                 if (!player.getQuestPerso().isEmpty()) {
                                     for (QuestPlayer QP : player.getQuestPerso().values()) {
                                         if (QP.getQuest().getId() == Integer.parseInt(action.getArgs()))
-                                            ok = false; // S'il a la qu�te on d�gage
+                                            ok = false; // S'il a la quête on dégage
                                     }
                                 }
                                 break;
@@ -102,24 +102,24 @@ public class NpcQuestion {
                                 if (player.getCurMap().getId() != (short) cId2)
                                     ok = false;
                                 else if (player.getMetierByID(mId2) != null)
-                                    ok = false; // S'il a d�j� le m�tier, alors on d�gage
+                                    ok = false; // S'il a déjà le métier, alors on dégage
                                 else if (player.totalJobFM() > 2)
                                     ok = false;
-                                else if (World.world.getMetier(mId2).isMaging()) // Sinon si c'est un m�tier de FM
+                                else if (World.world.getMetier(mId2).isMaging()) // Sinon si c'est un métier de FM
                                 {
-                                    JobStat metier = player.getMetierByID(World.world.getMetierByMaging(mId2)); // On r�cup�re le m�tier associ�
+                                    JobStat metier = player.getMetierByID(World.world.getMetierByMaging(mId2)); // On récupère le métier associé
                                     if (metier != null) // S'il existe
                                     {
                                         if (metier.get_lvl() < 65)
-                                            ok = false; // S'il n'a pas le niveau on d�gage
+                                            ok = false; // S'il n'a pas le niveau on dégage
                                     } else
-                                        ok = false; // S'il n'existe pas on d�gage
+                                        ok = false; // S'il n'existe pas on dégage
                                 }
                                 break;
                         }
                     }
 
-                    if (!player.getQuestPerso().isEmpty() && ok) // par qu�te
+                    if (!player.getQuestPerso().isEmpty() && ok) // par quête
                     {
                         for (QuestPlayer QP : player.getQuestPerso().values()) {
                             if (QP.isFinish() || QP.getQuest() == null)
@@ -147,11 +147,11 @@ public class NpcQuestion {
                     if (ok) {
                         String[][] s = Constant.HUNTING_QUESTS;
                         for (int v = 0; v < s.length; v++) {
-                            if (Integer.parseInt(s[v][6]) == answer.getId()) // Si la r�ponse est une traque de monstres
+                            if (Integer.parseInt(s[v][6]) == answer.getId()) // Si la réponse est une traque de monstres
                             {
                                 for (QuestPlayer QP : player.getQuestPerso().values()) {
                                     boolean k = true;
-                                    if (QP.getQuest().getId() == Integer.parseInt(s[v][5])) // S'il a la qu�te
+                                    if (QP.getQuest().getId() == Integer.parseInt(s[v][5])) // S'il a la quête
                                     {
                                         k = false;
                                         GameObject suiveur = player.getObjetByPos(Constant.ITEM_POS_PNJ_SUIVEUR);
@@ -169,7 +169,7 @@ public class NpcQuestion {
                         }
                     }
 
-                    if (ok) // En fonction des r�ponses
+                    if (ok) // En fonction des réponses
                     {
                         GameMap mapActuel = player.getCurMap();
                         Integer IDmob = null;
@@ -420,7 +420,7 @@ public class NpcQuestion {
                                 }
                                 break;
 
-                            case 6701: // Si on a d�j� le trousseau de clef
+                            case 6701: // Si on a déjà le trousseau de clef
                                 if (player.hasItemTemplate(10207, 1))
                                     ok = false;
                                 else if (Dopeul.hasOneDoplon(player) == -1)
@@ -440,7 +440,7 @@ public class NpcQuestion {
                             case 6599://Oublier un sort
 
                                 break;
-                            case 7326: // Reset caract�ristique
+                            case 7326: // Reset caractéristique
                                 GameMap curMap2 = player.getCurMap();
                                 int idMap2 = World.world.getTempleByClasse(player.getClasse());
                                 if (curMap2.getId() == (short) idMap2) // Si on est dans le temple de notre classe

@@ -34,7 +34,7 @@ public class Collector {
     //Les logs
     private java.util.Map<Integer, GameObject> logObjects = new HashMap<Integer, GameObject>();
     private java.util.Map<Integer, GameObject> objects = new HashMap<Integer, GameObject>();
-    //La d�fense
+    //La défense
     private java.util.Map<Integer, Player> defenserId = new HashMap<>();
 
     public Collector(int id, short map, int cell, byte orientation,
@@ -102,14 +102,14 @@ public class Collector {
     public static String parseToGuild(int GuildID) {
         /**
          * gITM + id;-10000 nameId1,14 nameId2,26 callerName,poney startDate,
-         * date a laquel tu as mis le perco lastHName, dernier r�colteur lastHD,
-         * date a laquel le perco a �t� r�colt� nextHD; date a laquel le perco
-         * pourra �tre r�colt� mapid; state; 0 r�colte, 1 attaque, 2 combat, �
+         * date a laquel tu as mis le perco lastHName, dernier récolteur lastHD,
+         * date a laquel le perco a été récolté nextHD; date a laquel le perco
+         * pourra être récolté mapid; state; 0 récolte, 1 attaque, 2 combat, à
          * la fin du timer, passe en combat automatiquement time;temps en ms
-         * quand le perco a �t� lanc� maxTimer;temps en ms quand le combat se
+         * quand le perco a été lancé maxTimer;temps en ms quand le combat se
          * lance numbPlayer: 1-7
          *
-         * les dates au dessus aucune conversion, juste un timestamp � mettre ?
+         * les dates au dessus aucune conversion, juste un timestamp à mettre ?
          * ouaip impec, grand merci :) !
          *
          * TEST : gITM+-10000;14,26,poney,0,tagada,55,6400000000000;5q6;1;
@@ -404,7 +404,7 @@ public class Collector {
 	        for (Entry<Integer, GameObject> entry : objects.entrySet()) {
 	            GameObject obj = entry.getValue();
 	            if (ConditionParser.stackIfSimilar(obj, newObj)) {
-	                obj.setQuantity(obj.getQuantity() + newObj.getQuantity());//On ajoute QUA item a la quantit� de l'objet existant
+	                obj.setQuantity(obj.getQuantity() + newObj.getQuantity());//On ajoute QUA item a la quantité de l'objet existant
 	                return false;
 	            }
 	        }
@@ -477,7 +477,7 @@ public class Collector {
             } else
             //S'il reste des this.objects
             {
-                //On cr�e une copy de l'item
+                //On crée une copy de l'item
                 PersoObj = GameObject.getCloneObjet(CollectorObj, qua);
                 //On l'ajoute au monde
                 World.world.addGameObject(PersoObj, true);
@@ -498,7 +498,7 @@ public class Collector {
                 //On retire l'item
                 this.removeObjet(id);
                 World.world.removeGameObject(CollectorObj.getGuid());
-                //On Modifie la quantit� de l'item du sac du joueur
+                //On Modifie la quantité de l'item du sac du joueur
                 PersoObj.setQuantity(PersoObj.getQuantity()
                         + CollectorObj.getQuantity());
 

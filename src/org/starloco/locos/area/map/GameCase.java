@@ -253,7 +253,7 @@ public class GameCase {
         if (this.object == null)
             return false;
         switch (id) {
-            //Atelier des Fées
+            //Atelier des FÃ©es
             case 151:
                 return this.object.getId() == 7028;
 
@@ -264,10 +264,10 @@ public class GameCase {
             case 122:
             case 47:
                 return this.object.getId() == 7007;
-            //Faucher Blé
+            //Faucher BlÃ©
             case 45:
                 switch (this.object.getId()) {
-                    case 7511://Blé
+                    case 7511://BlÃ©
                         return this.object.getState() == JobConstant.IOBJECT_STATE_FULL;
                 }
                 return false;
@@ -333,17 +333,17 @@ public class GameCase {
             //Scier - Bucheron
             case 101:
                 return this.object.getId() == 7003;
-            //Couper Fréne
+            //Couper FrÃªne
             case 6:
                 switch (this.object.getId()) {
-                    case 7500://Fréne
+                    case 7500://FrÃªne
                         return this.object.getState() == JobConstant.IOBJECT_STATE_FULL;
                 }
                 return false;
-            //Couper Chétaignier
+            //Couper ChÃ¢taignier
             case 39:
                 switch (this.object.getId()) {
-                    case 7501://Chétaignier
+                    case 7501://ChÃ¢taignier
                         return this.object.getState() == JobConstant.IOBJECT_STATE_FULL;
                 }
                 return false;
@@ -354,10 +354,10 @@ public class GameCase {
                         return this.object.getState() == JobConstant.IOBJECT_STATE_FULL;
                 }
                 return false;
-            //Couper Chéne
+            //Couper ChÃªne
             case 10:
                 switch (this.object.getId()) {
-                    case 7503://Chéne
+                    case 7503://ChÃªne
                         return this.object.getState() == JobConstant.IOBJECT_STATE_FULL;
                 }
                 return false;
@@ -403,10 +403,10 @@ public class GameCase {
                         return this.object.getState() == JobConstant.IOBJECT_STATE_FULL;
                 }
                 return false;
-            //Couper Ebéne
+            //Couper EbÃ¨ne
             case 34:
                 switch (this.object.getId()) {
-                    case 7507://Ebéne
+                    case 7507://EbÃ¨ne
                         return this.object.getState() == JobConstant.IOBJECT_STATE_FULL;
                 }
                 return false;
@@ -438,10 +438,10 @@ public class GameCase {
                         return this.object.getState() == JobConstant.IOBJECT_STATE_FULL;
                 }
                 return false;
-            //Couper Bambou Sacré
+            //Couper Bambou SacrÃ©
             case 158:
                 switch (this.object.getId()) {
-                    case 7552://Bambou Sacré
+                    case 7552://Bambou SacrÃ©
                         return this.object.getState() == JobConstant.IOBJECT_STATE_FULL;
                 }
                 return false;
@@ -543,10 +543,10 @@ public class GameCase {
             //Fabriquer potion - Alchimiste
             case 23:
                 return this.object.getId() == 7019;
-            //Cueillir Tréfle
+            //Cueillir TrÃ¨fle
             case 71:
                 switch (this.object.getId()) {
-                    case 7533://Tréfle
+                    case 7533://TrÃ¨fle
                         return this.object.getState() == JobConstant.IOBJECT_STATE_FULL;
                 }
                 return false;
@@ -557,10 +557,10 @@ public class GameCase {
                         return this.object.getState() == JobConstant.IOBJECT_STATE_FULL;
                 }
                 return false;
-            //Cueillir Orchidée
+            //Cueillir OrchidÃ©e
             case 73:
                 switch (this.object.getId()) {
-                    case 7535:// Orchidée
+                    case 7535:// OrchidÃ©e
                         return this.object.getState() == JobConstant.IOBJECT_STATE_FULL;
                 }
                 return false;
@@ -578,76 +578,76 @@ public class GameCase {
                         return this.object.getState() == JobConstant.IOBJECT_STATE_FULL;
                 }
                 return false;
-            //Vider - Pécheur
+            //Vider - PÃªcheur
             case 133:
                 return this.object.getId() == 7024;
-            //Pécher Petits poissons de mer
+            //PÃªcher Petits poissons de mer
             case 128:
                 switch (this.object.getId()) {
                     case 7530://Petits poissons de mer
                         return this.object.getState() == JobConstant.IOBJECT_STATE_FULL;
                 }
                 return false;
-            //Pécher Petits poissons de riviére
+            //PÃªcher Petits poissons de riviÃ¨re
             case 124:
                 switch (this.object.getId()) {
-                    case 7529://Petits poissons de riviére
+                    case 7529://Petits poissons de riviÃ¨re
                         return this.object.getState() == JobConstant.IOBJECT_STATE_FULL;
                 }
                 return false;
-            //Pécher Pichon
+            //PÃªcher Pichon
             case 136:
                 switch (this.object.getId()) {
                     case 7544://Pichon
                         return this.object.getState() == JobConstant.IOBJECT_STATE_FULL;
                 }
                 return false;
-            //Pécher Ombre Etrange
+            //PÃªcher Ombre Etrange
             case 140:
                 switch (this.object.getId()) {
                     case 7543://Ombre Etrange
                         return this.object.getState() == JobConstant.IOBJECT_STATE_FULL;
                 }
                 return false;
-            //Pécher Poissons de riviére
+            //PÃªcher Poissons de riviÃ¨re
             case 125:
                 switch (this.object.getId()) {
-                    case 7532://Poissons de riviére
+                    case 7532://Poissons de riviÃ¨re
                         return this.object.getState() == JobConstant.IOBJECT_STATE_FULL;
                 }
                 return false;
-            //Pécher Poissons de mer
+            //PÃªcher Poissons de mer
             case 129:
                 switch (this.object.getId()) {
                     case 7531://Poissons de mer
                         return this.object.getState() == JobConstant.IOBJECT_STATE_FULL;
                 }
                 return false;
-            //Pécher Gros poissons de riviére
+            //PÃªcher Gros poissons de riviÃ¨re
             case 126:
                 switch (this.object.getId()) {
-                    case 7537://Gros poissons de riviére
+                    case 7537://Gros poissons de riviÃ¨re
                         return this.object.getState() == JobConstant.IOBJECT_STATE_FULL;
                 }
                 return false;
-            //Pécher Gros poissons de mers
+            //PÃªcher Gros poissons de mers
             case 130:
                 switch (this.object.getId()) {
                     case 7538://Gros poissons de mers
                         return this.object.getState() == JobConstant.IOBJECT_STATE_FULL;
                 }
                 return false;
-            //Pécher Poissons géants de riviére
+            //PÃªcher Poissons gÃ©ants de riviÃ¨re
             case 127:
                 switch (this.object.getId()) {
-                    case 7539://Poissons géants de riviére
+                    case 7539://Poissons gÃ©ants de riviÃ¨re
                         return this.object.getState() == JobConstant.IOBJECT_STATE_FULL;
                 }
                 return false;
-            //Pécher Poissons géants de mer
+            //PÃªcher Poissons gÃ©ants de mer
             case 131:
                 switch (this.object.getId()) {
-                    case 7540://Poissons géants de mer
+                    case 7540://Poissons gÃ©ants de mer
                         return this.object.getState() == JobConstant.IOBJECT_STATE_FULL;
                 }
                 return false;
@@ -678,7 +678,7 @@ public class GameCase {
                 }
                 return false;
 
-            case 175://Accéder
+            case 175://AccÃ©der
             case 176://Acheter
             case 177://Vendre
             case 178://Modifier le prix de vente
@@ -694,7 +694,7 @@ public class GameCase {
 
             case 179://Levier
                 return this.object.getId() == 7045;
-            //Se rendre é incarnam
+            //Se rendre Ã  incarnam
             case 183:
                 switch (this.object.getId()) {
                     case 1845:
@@ -782,16 +782,16 @@ public class GameCase {
             case 149:
             case 15:
                 return this.object.getId() == 7013;
-            //TODO: Réparé
+            //TODO: RÃ©parÃ©
             //Tailleur (Haut)
             case 63:
                 return (this.object.getId() == 7014 || this.object.getId() == 7016);
-            //Atelier : Créer Amu // Anneau
+            //Atelier : CrÃ©er Amu // Anneau
             case 11:
             case 12:
                 return (this.object.getId() >= 7008 && this.object.getId() <= 7010);
             //Maison
-            case 81://Vérouiller
+            case 81://VÃ©rouiller
             case 84://Acheter
             case 97://Entrer
             case 98://Vendre
@@ -832,7 +832,7 @@ public class GameCase {
             return;
         }
         if (player.getDoAction()) {
-            SocketManager.GAME_SEND_MESSAGE(player, "Vous avez déjà une action en cours. Signaler si le problème persiste.");
+            SocketManager.GAME_SEND_MESSAGE(player, "Vous avez dÃ©jÃ  une action en cours. Signaler si le problÃ¨me persiste.");
             return;
         }
         if (JobConstant.isJobAction(actionID) && player.getFight() == null) {
@@ -854,13 +854,13 @@ public class GameCase {
             case 62://Fontaine de jouvence
                 if (player.getLevel() > 5)
                     return;
-                SocketManager.GAME_SEND_MESSAGE(player, "La magie opère et t'offre ta santé au maximum..");
+                SocketManager.GAME_SEND_MESSAGE(player, "La magie opÃ¨re et t'offre ta santÃ© au maximum..");
                 player.fullPDV();
                 break;
 
             case 42://Tas de patate
                 if (!this.object.isInteractive())
-                    return;//Si l'objet est utilisé
+                    return;//Si l'objet est utilisÃ©
                 if (this.object.getState() != JobConstant.IOBJECT_STATE_FULL)
                     return;//Si le puits est vide
                 this.object.setState(JobConstant.IOBJECT_STATE_EMPTYING);
@@ -895,7 +895,7 @@ public class GameCase {
 
             case 102://Puiser
                 if (!this.getObject().isInteractive())
-                    return;//Si l'objet est utilisé
+                    return;//Si l'objet est utilisÃ©
                 if (this.getObject().getState() != JobConstant.IOBJECT_STATE_FULL)
                     return;//Si le puits est vide
                 this.getObject().setState(JobConstant.IOBJECT_STATE_EMPTYING);
@@ -930,13 +930,13 @@ public class GameCase {
                 int count = 0;
                 int price = 20;
 
-                if (player.getCurMap().getSubArea().getArea().getId() == 7 && (player.get_align() == 1 || player.get_align() == 0 || player.get_align() == 3))//Ange, Neutre ou Sérianne
+                if (player.getCurMap().getSubArea().getArea().getId() == 7 && (player.get_align() == 1 || player.get_align() == 0 || player.get_align() == 3))//Ange, Neutre ou SÃ©rianne
                 {
                     Zaapis = Constant.ZAAPI.get(Constant.ALIGNEMENT_BONTARIEN).split(",");
                     if (player.get_align() == 1)
                         price = 10;
                 } else if (player.getCurMap().getSubArea().getArea().getId() == 11
-                        && (player.get_align() == 2 || player.get_align() == 0 || player.get_align() == 3))//Démons, Neutre ou Sérianne
+                        && (player.get_align() == 2 || player.get_align() == 0 || player.get_align() == 3))//DÃ©mons, Neutre ou SÃ©rianne
                 {
                     Zaapis = Constant.ZAAPI.get(Constant.ALIGNEMENT_BRAKMARIEN).split(",");
                     if (player.get_align() == 2)
@@ -1028,7 +1028,7 @@ public class GameCase {
                 player.teleport(mapID, cellID);
                 player.getGameClient().removeAction(GA);
                 break;
-            case 81://Vérouiller maison
+            case 81://VÃ©rouiller maison
                 House house = House.getHouseIdByCoord(player.getCurMap().getId(), CcellID);
                 if (house == null)
                     return;
@@ -1042,12 +1042,12 @@ public class GameCase {
 
                 GameMap mapHouse = World.world.getMap((short) house.getHouseMapId());
                 if (mapHouse == null) {
-                    SocketManager.GAME_SEND_MESSAGE(player, "La maison est cassée.. Contactez un administrateur sur le forum.");
+                    SocketManager.GAME_SEND_MESSAGE(player, "La maison est cassÃ©e.. Contactez un administrateur sur le forum.");
                     return;
                 }
                 GameCase caseHouse = mapHouse.getCase(house.getHouseCellId());
                 if (caseHouse == null || !caseHouse.isWalkable(true)) {
-                    SocketManager.GAME_SEND_MESSAGE(player, "La maison est cassée.. Contactez un administrateur sur le forum.");
+                    SocketManager.GAME_SEND_MESSAGE(player, "La maison est cassÃ©e.. Contactez un administrateur sur le forum.");
                     return;
                 }
                 if (player.isOnMount()) {
@@ -1065,7 +1065,7 @@ public class GameCase {
                 house.buyIt(player);
                 break;
 
-            case 104://Ouvrir coffre privé
+            case 104://Ouvrir coffre privÃ©
                 Trunk trunk = Trunk.getTrunkIdByCoord(player.getCurMap().getId(), CcellID);
 
                 if (trunk == null) {
@@ -1083,7 +1083,7 @@ public class GameCase {
 
                 trunk.enter(player);
                 break;
-            case 105://Vérouiller coffre
+            case 105://VÃ©rouiller coffre
                 Trunk t = Trunk.getTrunkIdByCoord(player.getCurMap().getId(), CcellID);
 
                 if (t == null)
@@ -1160,7 +1160,7 @@ public class GameCase {
         perso.setDoAction(false);
         switch (actionID) {
             case 44://Sauvegarder a un zaap
-            case 81://Vérouiller maison
+            case 81://VÃ©rouiller maison
             case 84://ouvrir maison
             case 97://Acheter maison.
             case 98://Vendre

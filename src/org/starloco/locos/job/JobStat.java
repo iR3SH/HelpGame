@@ -127,7 +127,7 @@ public class JobStat {
         this.posActions = JobConstant.getPosActionsToJob(this.template.getId(), this.lvl);
 
         if (send) {
-            //on cr�er la listes des JobStats a envoyer (Seulement celle ci)
+            //on créer la listes des JobStats a envoyer (Seulement celle ci)
             ArrayList<JobStat> list = new ArrayList<>();
             list.add(this);
             SocketManager.GAME_SEND_JS_PACKET(P, list);

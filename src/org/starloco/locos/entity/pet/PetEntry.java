@@ -183,7 +183,7 @@ public class PetEntry {
         if (pets == null)
             return;
 
-        if (this.corpulence <= 0)//Si il est maigrichon (X repas rat�s) on peu le nourrir plusieurs fois
+        if (this.corpulence <= 0)//Si il est maigrichon (X repas ratés) on peu le nourrir plusieurs fois
         {
             //Update du petsEntry
             this.lastEatDate = System.currentTimeMillis();
@@ -244,7 +244,7 @@ public class PetEntry {
                 this.quaEat = 0;
             }
         } else if (((this.lastEatDate + (min * 3600000)) < System.currentTimeMillis())
-                && this.corpulence >= 0)//Si il n'est pas maigrichon, et que le temps minimal est �coul�
+                && this.corpulence >= 0)//Si il n'est pas maigrichon, et que le temps minimal est écoulé
         {
             //Update du petsEntry
             this.lastEatDate = System.currentTimeMillis();
@@ -310,7 +310,7 @@ public class PetEntry {
         Pet pet = World.world.getPets(obj.getTemplate().getId());
         if (pet == null || pet.getType() != 1)
             return;
-        //Ajout a l'item les SoulStats tu�s
+        //Ajout a l'item les SoulStats tués
         try {
             for (Entry<Integer, Integer> entry : souls.entrySet()) {
                 int soul = entry.getKey();
@@ -328,7 +328,7 @@ public class PetEntry {
                     }
                 }
             }
-            //Re-Calcul des points gagn�s
+            //Re-Calcul des points gagnés
             for (Entry<Integer, ArrayList<Map<Integer, Integer>>> ent : pet.getMonsters().entrySet()) {
                 for (Map<Integer, Integer> entry : ent.getValue()) {
                     for (Entry<Integer, Integer> monsterEntry : entry.entrySet()) {
@@ -373,9 +373,8 @@ public class PetEntry {
 
         if (this.lastEatDate + (max * 3600000) < System.currentTimeMillis())//Oublier de le nourrir
         {
-            //On calcul le nombre de repas oublier arrondi au sup�rieur :
-            int nbrepas = (int) Math.floor((System.currentTimeMillis() - this.lastEatDate)
-                    / (max * 3600000));
+            //On calcul le nombre de repas oublier arrondi au supérieur :
+            int nbrepas = (int) Math.floor((System.currentTimeMillis() - this.lastEatDate) / (max * 3600000));
             //Perte corpulence
             this.corpulence = this.corpulence - nbrepas;
 

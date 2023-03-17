@@ -186,7 +186,7 @@ public class Trunk {
             player.setExchangeAction(new ExchangeAction<>(ExchangeAction.IN_TRUNK, this));
             open(player, "-", true);
         } else if (player.get_guild() == null && house.canDo(Constant.C_OCANTOPEN))
-            SocketManager.GAME_SEND_MESSAGE(player, "Ce coffre ne peut �tre ouvert que par les membres de la guilde !");
+            SocketManager.GAME_SEND_MESSAGE(player, "Ce coffre ne peut être ouvert que par les membres de la guilde !");
         else if (this.getOwnerId() > 0)
             SocketManager.GAME_SEND_KODE(player, "CK0|8");
     }
@@ -214,7 +214,7 @@ public class Trunk {
 
         if (this.object.size() >= 10000) // Le plus grand c'est pour si un admin ajoute des objets via la bdd...
         {
-            SocketManager.GAME_SEND_MESSAGE(P, "Le nombre d'objets maximal de ce coffre a �t� atteint !");
+            SocketManager.GAME_SEND_MESSAGE(P, "Le nombre d'objets maximal de ce coffre a été atteint !");
             return;
         }
 
@@ -227,7 +227,7 @@ public class Trunk {
             return;
         String str = "";
 
-        //Si c'est un item �quip� ...
+        //Si c'est un item équipé ...
         if (PersoObj.getPosition() != Constant.ITEM_POS_NO_EQUIPED)
             return;
 
@@ -239,7 +239,7 @@ public class Trunk {
             if (newQua <= 0) {
                 //On enleve l'objet du sac du joueur
                 P.removeItem(PersoObj.getGuid());
-                //On met l'objet du sac dans le coffre, avec la meme quantit�
+                //On met l'objet du sac dans le coffre, avec la meme quantité
                 this.object.put(PersoObj.getGuid(), PersoObj);
                 str = "O+" + PersoObj.getGuid() + "|" + PersoObj.getQuantity()
                         + "|" + PersoObj.getTemplate().getId() + "|"
@@ -248,7 +248,7 @@ public class Trunk {
             } else
             //S'il reste des objets au joueur
             {
-                //on modifie la quantit� d'item du sac
+                //on modifie la quantité d'item du sac
                 PersoObj.setQuantity(newQua);
                 //On ajoute l'objet au coffre et au monde
                 TrunkObj = GameObject.getCloneObjet(PersoObj, qua);
@@ -269,7 +269,7 @@ public class Trunk {
                 P.removeItem(PersoObj.getGuid());
                 //On enleve l'objet du monde
                 World.world.removeGameObject(PersoObj.getGuid());
-                //On ajoute la quantit� a l'objet dans le coffre
+                //On ajoute la quantité a l'objet dans le coffre
                 TrunkObj.setQuantity(TrunkObj.getQuantity()
                         + PersoObj.getQuantity());
                 //on envoie l'ajout au coffre de l'objet
@@ -281,7 +281,7 @@ public class Trunk {
             } else
             //S'il restait des objets
             {
-                //on modifie la quantit� d'item du sac
+                //on modifie la quantité d'item du sac
                 PersoObj.setQuantity(newQua);
                 TrunkObj.setQuantity(TrunkObj.getQuantity() + qua);
                 str = "O+" + TrunkObj.getGuid() + "|" + TrunkObj.getQuantity()
@@ -333,7 +333,7 @@ public class Trunk {
             } else
             //S'il reste des objets dans le coffre
             {
-                //On cr�e une copy de l'item dans le coffre
+                //On crée une copy de l'item dans le coffre
                 PersoObj = GameObject.getCloneObjet(TrunkObj, qua);
                 //On l'ajoute au monde
                 World.world.addGameObject(PersoObj, true);
@@ -356,7 +356,7 @@ public class Trunk {
                 this.object.remove(TrunkObj.getGuid());
 
                 World.world.removeGameObject(TrunkObj.getGuid());
-                //On Modifie la quantit� de l'item du sac du joueur
+                //On Modifie la quantité de l'item du sac du joueur
                 PersoObj.setQuantity(PersoObj.getQuantity()
                         + TrunkObj.getQuantity());
                 //On envoie les packets

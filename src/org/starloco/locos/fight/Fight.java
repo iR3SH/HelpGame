@@ -966,7 +966,7 @@ public class Fight {
 
                     TimerWaiter.addNext(() -> this.joinCollectorFight(player, collector.getId()), 1000, TimerWaiter.DataType.CLIENT);
                 } else {
-                    SocketManager.GAME_SEND_MESSAGE(player, "Vous n'avez pas pu rejoindre le combat du percepteur suite � votre indisponibilit.");
+                    SocketManager.GAME_SEND_MESSAGE(player, "Vous n'avez pas pu rejoindre le combat du percepteur suite à votre indisponibilité.");
                     collector.delDefenseFight(player);
                 }
             }
@@ -1533,7 +1533,7 @@ public class Fight {
       Fighter current=this.getFighterByOrdreJeu();
       /*if(getType() == Constant.FIGHT_TYPE_CHALLENGE || getType() == Constant.FIGHT_TYPE_AGRESSION ) 
       {
-    	  final short currentPa, currentPm; // Limiter les PA/PM � 12-6 en aggro & defi
+    	  final short currentPa, currentPm; // Limiter les PA/PM à 12-6 en aggro & defi
     	  currentPa = (short) (current.getPa() > 12? 12:current.getPa());
     	  currentPm = (short) (current.getPm() > 6?  6:current.getPm());
     	  setCurFighterPa(currentPa);
@@ -1818,7 +1818,7 @@ public class Fight {
 
       SocketManager.GAME_SEND_GTM_PACKET_TO_FIGHT(this,7);
       SocketManager.GAME_SEND_GTR_PACKET_TO_FIGHT(this,7,current.getId());
-      // Timer d'une seconde � la fin du tour
+      // Timer d'une seconde à la fin du tour
       this.startTurn();
     }
 
@@ -1854,7 +1854,7 @@ public class Fight {
                     if (perso.getAccount().getCurrentIp().compareTo(f.getPersonnage().getAccount().getCurrentIp()) == 0)
                         multiIp = true;
                 if (multiIp) {
-                    SocketManager.GAME_SEND_MESSAGE(perso, "Impossible de rejoindre ce combat, vous �tes dj� dans le combat avec une m�me IP !");
+                    SocketManager.GAME_SEND_MESSAGE(perso, "Impossible de rejoindre ce combat, vous êtes déjà dans le combat avec une même IP !");
                     return;
                 }
             }
@@ -1927,7 +1927,7 @@ public class Fight {
                     if (perso.getAccount().getCurrentIp().compareTo(f.getPersonnage().getAccount().getCurrentIp()) == 0)
                         multiIp = true;
                 if (multiIp) {
-                    SocketManager.GAME_SEND_MESSAGE(perso, "Impossible de rejoindre ce combat, vous �tes dj� dans le combat avec une m�me IP !");
+                    SocketManager.GAME_SEND_MESSAGE(perso, "Impossible de rejoindre ce combat, vous êtes déjà dans le combat avec une même IP !");
                     return;
                 }
             }
@@ -2453,7 +2453,7 @@ public class Fight {
                         for (Fighter f : this.getFighters(3))
                             if (f.getTeam() == fighter.getTeam())
                                 if (f.getPersonnage() != null)
-                                    SocketManager.GAME_SEND_MESSAGE(f.getPersonnage(), "<b>" + player.getName() + "</b> ne peut pas lancer <b>" + spell.getSpell().getNombre() + "</b> � cause d'un obstacle invisible !");
+                                    SocketManager.GAME_SEND_MESSAGE(f.getPersonnage(), "<b>" + player.getName() + "</b> ne peut pas lancer <b>" + spell.getSpell().getNombre() + "</b> à cause d'un obstacle invisible !");
                         setCurAction(false);
                         SocketManager.GAME_SEND_GA_PACKET_TO_FIGHT(this, 7, 102, fighter.getId() + "", fighter.getId() + ",-0");
                         return 10;
@@ -2824,13 +2824,13 @@ public class Fight {
       {
         if(current.getPersonnage()!=null)
         {
-          // On envoie le path qu'au joueur qui se d�place
+          // On envoie le path qu'au joueur qui se déplace
           GameClient out=current.getPersonnage().getGameClient();
           SocketManager.GAME_SEND_GA_PACKET(out,GA.id+"","1",current.getId()+"","a"+World.world.getCryptManager().cellID_To_Code(fighter.getCell().getId())+newPath);
         }
       }
 
-      // Si port�
+      // Si porté
       final Fighter po=current.getHoldedBy();
 
       if(po!=null)
@@ -2838,13 +2838,13 @@ public class Fight {
         // si le joueur va bouger
         if((short)nextCellID!=po.getCell().getId())
         {
-          // on retire les �tats
+          // on retire les états
           po.setState(Constant.ETAT_PORTEUR,0,po.getId());
           current.setState(Constant.ETAT_PORTE,0,po.getId());
-          // on retire d� lie les 2 fighters
+          // on retire dé lie les 2 fighters
           po.setIsHolding(null);
           current.setHoldedBy(null);
-          // La nouvelle case sera d�finie plus tard dans le code. On
+          // La nouvelle case sera définie plus tard dans le code. On
           // envoie les packets !
         }
       }
@@ -2853,7 +2853,7 @@ public class Fight {
       current.setCell(getMap().getCase(nextCellID));
       current.getCell().addFighter(current);
 
-      if(po!=null)// m�me erreur que tant�t, bug ou plus de fighter sur la
+      if(po!=null)// même erreur que tantôt, bug ou plus de fighter sur la
         // case
         po.getCell().addFighter(po);
       if(nStep<0)
@@ -2867,7 +2867,7 @@ public class Fight {
 
       if(po2!=null&&current.haveState(Constant.ETAT_PORTEUR)&&po2.haveState(Constant.ETAT_PORTE))
       {
-        // on d�place le port� sur la case
+        // on déplace le porté sur la case
         po2.setCell(current.getCell());
       }
 
@@ -3265,7 +3265,7 @@ public class Fight {
                     if (e.getPersonnage() == null || !e.getPersonnage().isOnline())
                         continue;
                     SocketManager.GAME_SEND_MESSAGE(e.getPersonnage(), f.getPacketsName()
-                            + " s'est dconnect plus de 5 fois dans le m�me combat, nous avons dcid de lui faire abandonner.", "A00000");
+                            + " s'est déconnecté plus de 5 fois dans le même combat, nous avons décidé de lui faire abandonner.", "A00000");
                 }
             }
             return false;
@@ -4270,7 +4270,7 @@ public class Fight {
                     }
                 }
             }
-            /** Capture d'�mes **/
+            /** Capture d'âmes **/
 
             /** Quest **/
             if (this.getType() == Constant.FIGHT_TYPE_PVM || this.getType() == Constant.FIGHT_TYPE_DOPEUL) {
@@ -4703,7 +4703,7 @@ public class Fight {
                                         ok = true;
                                     break;
                             }
-                            if (jet < chance || ok) { // item gagn�
+                            if (jet < chance || ok) { // item gagné
                                 ObjectTemplate objectTemplate = World.world.getObjTemplate(drop.getObjectId());
 
                                 if (objectTemplate == null)

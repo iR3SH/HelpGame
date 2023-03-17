@@ -20,22 +20,18 @@ public class ExchangePacketHandler {
             try {
                 switch (packet.charAt(0)) {
                     case 'F': //Free places
-                        switch (packet.charAt(1)) {
-                            case '?': //Required
-                                int i = GameServer.MAX_PLAYERS - World.world.getOnlinePlayers().size();
-                                Main.exchangeClient.send("F" + i);
-                                break;
+                        if (packet.charAt(1) == '?') { //Required
+                            int i = GameServer.MAX_PLAYERS - World.world.getOnlinePlayers().size();
+                            Main.exchangeClient.send("F" + i);
                         }
                         break;
 
                     case 'S': //Server
                         switch (packet.charAt(1)) {
                             case 'H': //Host
-                                switch (packet.charAt(2)) {
-                                    case 'K': //Ok
-                                        ExchangeClient.logger.info("The login server has validated the connection.");
-                                        GameServer.setState(1);
-                                        break;
+                                if (packet.charAt(2) == 'K') { //Ok
+                                    ExchangeClient.logger.info("The login server has validated the connection.");
+                                    GameServer.setState(1);
                                 }
                                 break;
 
@@ -104,11 +100,9 @@ public class ExchangePacketHandler {
                                     long count = Long.parseLong(split[0].substring(1));
                                     Queue<?> queue = DataQueue.queues.get(count);
 
-                                    switch (Byte.parseByte(String.valueOf(data.charAt(0)))) {
-                                        case 1: // Player
-                                            if (split.length > 1)
-                                                ((Queue<Integer>) queue).setValue(Integer.parseInt(split[1]));
-                                            break;
+                                    if (Byte.parseByte(String.valueOf(data.charAt(0))) == 1) { // Player
+                                        if (split.length > 1)
+                                            ((Queue<Integer>) queue).setValue(Integer.parseInt(split[1]));
                                     }
                                 }
                                 break;

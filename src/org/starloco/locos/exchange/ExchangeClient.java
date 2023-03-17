@@ -2,12 +2,8 @@ package org.starloco.locos.exchange;
 
 import ch.qos.logback.classic.Level;
 import ch.qos.logback.classic.Logger;
-import org.apache.mina.core.filterchain.IoFilterChain;
-import org.apache.mina.core.filterchain.IoFilterChainBuilder;
 import org.apache.mina.core.session.IoSession;
-import org.apache.mina.filter.codec.textline.LineDelimiter;
 import org.slf4j.LoggerFactory;
-import org.starloco.locos.game.GameServer;
 import org.starloco.locos.kernel.Main;
 import org.apache.mina.core.buffer.IoBuffer;
 import org.apache.mina.core.future.ConnectFuture;
@@ -77,7 +73,7 @@ public class ExchangeClient {
 
     public void stop() {
         if(this.ioSession != null)
-            this.ioSession.close(true);
+            this.ioSession.closeNow();
         if (this.connectFuture != null)
             this.connectFuture.cancel();
 

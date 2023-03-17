@@ -286,7 +286,7 @@ public class Monster {
 
             id = Aid;
             align = Aalign;
-            //D�termination du nombre de mob du groupe
+            //Détermination du nombre de mob du groupe
             int rand = 0;
             int nbr = 0;
             if (fixSize > 0 && fixSize < 9) {
@@ -645,7 +645,7 @@ public class Monster {
                 this.mobs.put(guid, extra);
                 guid--;
             }
-            //On v�rifie qu'il existe des monstres de l'alignement demand� pour �viter les boucles infinies
+            //On vérifie qu'il existe des monstres de l'alignement demandé pour éviter les boucles infinies
             for (MobGrade mob : possibles)
                 if (mob.getTemplate().getAlign() == this.align)
                     haveSameAlign = true;
@@ -831,7 +831,7 @@ public class Monster {
             if (!changeAgro) {
                 if (this.haveMineur()) {
                     // 29 : sous-terrain
-                    // 96 : exploitation mini�re d'astrub
+                    // 96 : exploitation minière d'astrub
                     // 31 : passage vers brakmar
                     if (this.subarea != 29 && this.subarea != 96
                             && this.subarea != 31) {
@@ -976,10 +976,10 @@ public class Monster {
             	colors.append(entry.getValue().getTemplate().getColors()).append(";0,1C3C,1C40,0;");
             else if (tst==547) // Pandalette ivre
             	colors.append(entry.getValue().getTemplate().getColors()).append(";0,1C3C,1C40,0;");
-            else if (tst==1213) // Mage C�leste
+            else if (tst==1213) // Mage Céleste
             	colors.append(entry.getValue().getTemplate().getColors()).append(";0,2BA,847,0;");
             
-            /*else if (tst==30063) // Yllib  -  Affiche le Flood derri�re la t�te ???
+            /*else if (tst==30063) // Yllib  -  Affiche le Flood derrière la tête ???
             {
             	colors.append(entry.getValue().getTemplate().getColors()).append(";0,0,2155,0;");
             }*/
@@ -989,7 +989,7 @@ public class Monster {
             }
             toreturn.append("+").append(this.cellId).append(";").append(this.orientation).append(";");
         	//a mettre dans monster/parsegm
-            toreturn.append(getStarBonus());// bonus en pourcentage (�toile/20%) // Actuellement 1%/min
+            toreturn.append(getStarBonus());// bonus en pourcentage (étoile/20%) // Actuellement 1%/min
             toreturn.append(";").append(this.id).append(";").append(mobIDs).append(";-3;").append(mobGFX).append(";").append(mobLevels).append(";").append(colors);
             return toreturn.toString();
         }
@@ -1022,12 +1022,12 @@ public class Monster {
             		 this.size = 120 + n * pSize; 
             	 if(template.getId()==30065) // Cramody
             		 this.size = 110 + n * pSize;  /*
-                 if(template.getId()==30071) // Envoy� des Abysses
+                 if(template.getId()==30071) // Envoyé des Abysses
                      this.size = 90 + n * pSize;
                      */
-                 if(template.getId()==30072) // Sorcier D�mon
+                 if(template.getId()==30072) // Sorcier Démon
                      this.size = 120 + n * pSize;/*
-                 if(template.getId()==30073) // Petit D�mon Rapide
+                 if(template.getId()==30073) // Petit Démon Rapide
                      this.size = 80 + n * pSize;*/
                  if(template.getId()==30074) // Sbire de Qu'Tan
                      this.size = 110 + n * pSize;

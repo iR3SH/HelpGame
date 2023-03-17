@@ -28,7 +28,7 @@ public class Guild {
     private int capital = 0;
     private int nbrPerco = 0;
     private Map<Integer, SortStats> spells = new HashMap<>();    //<ID, Level>
-    private Map<Integer, Integer> stats = new HashMap<>();        //<Effet, Quantit�>
+    private Map<Integer, Integer> stats = new HashMap<>();        //<Effet, Quantité>
     //Stats en combat
     private Map<Integer, Integer> statsFight = new HashMap<>();
     private long date;
@@ -387,7 +387,7 @@ public class Guild {
             this.rank = rank;
             this.pXpGive = xp;
 
-            if (right != this.rights && right != 1) //V�rifie si les droits sont pareille ou si des droits de meneur; pour ne pas faire la conversion pour rien
+            if (right != this.rights && right != 1) //Vérifie si les droits sont pareille ou si des droits de meneur; pour ne pas faire la conversion pour rien
                 parseIntToRight(right);
             this.rights = right;
 
@@ -419,11 +419,11 @@ public class Guild {
                 initRight();
             if (total == 1)
                 return;
-            if (haveRight.size() > 0)//Si les droits contiennent quelque chose -> Vidage (M�me si le HashMap supprimerais les entr�es doublon lors de l'ajout)
+            if (haveRight.size() > 0)//Si les droits contiennent quelque chose -> Vidage (Même si le HashMap supprimerais les entrées doublon lors de l'ajout)
                 haveRight.clear();
             initRight();//Remplissage des droits
 
-            Integer[] mapKey = haveRight.keySet().toArray(new Integer[haveRight.size()]); //R�cup�re les clef de map dans un tableau d'Integer
+            Integer[] mapKey = haveRight.keySet().toArray(new Integer[haveRight.size()]); //Récupère les clef de map dans un tableau d'Integer
 
             while (total > 0) {
                 for (int i = haveRight.size() - 1; i < haveRight.size(); i--) {

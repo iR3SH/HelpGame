@@ -535,7 +535,7 @@ public class Fighter implements Comparable<Fighter> {
         /*if(id == 606 || id == 607 || id == 608 || id == 609 || id == 611 || id == 125 || id == 114)
             debuff = true;*/
 
-        // Certains effects peuvent �tre d�buffable mais nous on veut que sur certains spell ils ne le soient pas.
+        // Certains effects peuvent être débuffable mais nous on veut que sur certains spell ils ne le soient pas.
         switch(spellID)
         {
             case 2144: case 2146: case 2149: case 2152: // Chatiment dopeul ( Cause : effect 776 )
@@ -548,7 +548,7 @@ public class Fighter implements Comparable<Fighter> {
             duration--;
 
 
-        //Si c'est le jouer actif qui s'autoBuff, on ajoute 1 a la dur�e
+        //Si c'est le jouer actif qui s'autoBuff, on ajoute 1 a la durée
         this.fightBuffs.add(new SpellEffect(effectID, val ,(this.canPlay ? duration + 1 : duration), turns, debuff, caster, args, spellID));
         if(Main.modDebug)
             System.out.println("- Ajout du Buff "+ effectID +" sur le personnage fighter ("+ this.getId() +") val : "+val+" duration : "+duration+" turns : "+turns+" debuff : "+debuff+" spellid : "+spellID+" args : "+args+" !");
@@ -565,7 +565,7 @@ public class Fighter implements Comparable<Fighter> {
                 SocketManager.GAME_SEND_FIGHT_GIE_TO_FIGHT(this.fight, 7, effectID, getId(), -1, val+"", "10", "", duration, spellID);
                 break;
 
-            case 79://Chance �ca
+            case 79://Chance éca
                 val = Integer.parseInt(args.split(";")[0]);
                 String valMax = args.split(";")[1];
                 String chance = args.split(";")[2];
@@ -594,9 +594,9 @@ public class Fighter implements Comparable<Fighter> {
                 break;
 
             case 98://Poison insidieux
-            case 107://Mot d'�pine (2à3), Contre(3)
-            case 100://Flèche Empoisonn�e, Tout ou rien
-            case 108://Mot de R�g�n�ration, Tout ou rien
+            case 107://Mot d'épine (2à3), Contre(3)
+            case 100://Flèche Empoisonnée, Tout ou rien
+            case 108://Mot de Régénération, Tout ou rien
             case 165://Maîtrises
             case 781://MAX
             case 782://MIN
@@ -667,9 +667,9 @@ public class Fighter implements Comparable<Fighter> {
                 case 431:
                 case 433:
                 case 443:
-                case 441://Ch�timents
+                case 441://Châtiments
                     continue;
-                case 52://Cupidit�
+                case 52://Cupidité
                 case 228://Etourderie mortelle (DC)
                     it.remove();
                     continue;
@@ -743,7 +743,7 @@ public class Fighter implements Comparable<Fighter> {
               }
               break;
 
-            case 150://Invisibilit�
+            case 150://Invisibilité
               SocketManager.GAME_SEND_GA_PACKET_TO_FIGHT(this.fight,7,150,entry.getCaster().getId()+"",getId()+",0");
               break;
 
@@ -927,7 +927,7 @@ public class Fighter implements Comparable<Fighter> {
             case 1: // personnage
                 return (getTotalStats().getEffect(Constant.STATS_ADD_PROS) + Math.round(getTotalStats().getEffect(Constant.STATS_ADD_CHAN) / 10) + Math.round(getBuffValue(Constant.STATS_ADD_CHAN) / 10));
             case 2: // mob
-                if (this.isInvocation()) // Si c'est un coffre anim�, la chance est �gale � 1000*(1+lvlinvocateur/100)
+                if (this.isInvocation()) // Si c'est un coffre animé, la chance est égale à 1000*(1+lvlinvocateur/100)
                     return (getTotalStats().getEffect(Constant.STATS_ADD_PROS) + (1000 * (1 + this.getInvocator().getLvl() / 100)) / 10);
                 else
                     return (getTotalStats().getEffect(Constant.STATS_ADD_PROS) + Math.round(getBuffValue(Constant.STATS_ADD_CHAN) / 10));
@@ -1102,15 +1102,15 @@ public class Fighter implements Comparable<Fighter> {
                 str.append(this.mob.getTemplate().getGfxId()).append("^").append(this.mob.getSize()).append(";");
                 str.append(this.mob.getGrade()).append(";");
                 str.append(this.mob.getTemplate().getColors().replace(",", ";")).append(";");
-                //Accessories Mobs (Qu'Tan & Ili) (Change taille d�mon + ajout item sur mobs en combat)
+                //Accessories Mobs (Qu'Tan & Ili) (Change taille démon + ajout item sur mobs en combat)
                 int tst = this.mob.getTemplate().getId();
                 if (tst==534) // Pandawa Ivre
                     str.append("0,1C3C,1C40,0;");
                 else if (tst==547) // Pandalette ivre
                     str.append("0,1C3C,1C40,0;");
-                else if (tst==1213)  // Mage C�leste
+                else if (tst==1213)  // Mage Céleste
                     str.append("0,2BA,847,0;");
-                /*else if (tst==30063) // Yllib - Affiche le Flood derri�re la t�te
+                /*else if (tst==30063) // Yllib - Affiche le Flood derrière la tête
                 {
                     str.append("0,0,2155,0;");
                 }*/
@@ -1129,7 +1129,7 @@ public class Fighter implements Comparable<Fighter> {
                 str.append(G.getLvl()).append(";");
                 str.append("1;");
                 str.append("2;4;");
-                str.append((int) Math.floor(G.getLvl() / 2)).append(";").append((int) Math.floor(G.getLvl() / 2)).append(";").append((int) Math.floor(G.getLvl() / 2)).append(";").append((int) Math.floor(G.getLvl() / 2)).append(";").append((int) Math.floor(G.getLvl() / 2)).append(";").append((int) Math.floor(G.getLvl() / 2)).append(";").append((int) Math.floor(G.getLvl() / 2)).append(";");//R�sistances
+                str.append((int) Math.floor(G.getLvl() / 2)).append(";").append((int) Math.floor(G.getLvl() / 2)).append(";").append((int) Math.floor(G.getLvl() / 2)).append(";").append((int) Math.floor(G.getLvl() / 2)).append(";").append((int) Math.floor(G.getLvl() / 2)).append(";").append((int) Math.floor(G.getLvl() / 2)).append(";").append((int) Math.floor(G.getLvl() / 2)).append(";");//Résistances
                 str.append(this.team);
                 break;
             case 7://Prisme

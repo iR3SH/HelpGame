@@ -128,7 +128,7 @@ public class Quest {
 
     public boolean haveRespectCondition(QuestPlayer qPerso, Quest_Etape qEtape) {
         switch (qEtape.getCondition()) {
-            case "1": //Valider les étapes d'avant
+            case "1": //Valider les Ã©tapes d'avant
                 boolean loc2 = true;
                 for (Quest_Etape aEtape : questEtapeList) {
                     if (aEtape == null)
@@ -158,7 +158,7 @@ public class Quest {
 
         StringBuilder str_prev = new StringBuilder();
         boolean loc4 = true;
-        // Il y a une exception dans le code ici pour la seconde étape de papotage
+        // Il y a une exception dans le code ici pour la seconde Ã©tape de papotage
         for (Quest_Etape qEtape : questEtapeList) {
             if (qEtape.getObjectif() != loc1)
                 continue;
@@ -172,7 +172,7 @@ public class Quest {
 			 * str_prev.append(";"); else if(qEtape.getType() != 10)
 			 * str_prev.append(";"); } if(qEtape.getType() == 10 &&
 			 * getQuestEtapeCurrent(qPerso).getId() == qEtape.getId()) //On
-			 * efface toute les questEtape passé avant str_prev.delete(0,
+			 * efface toute les questEtape passÃ© avant str_prev.delete(0,
 			 * str_prev.length());
 			 * str_prev.append(qEtape.getId()).append(",").append
 			 * (qPerso.isQuestEtapeIsValidate(qEtape) ? 1 : 0); if(loc4) loc4 =
@@ -247,7 +247,7 @@ public class Quest {
             switch (this.condition.first) {
                 case 1: // Niveau
                     if (perso.getLevel() < this.condition.second) {
-                        SocketManager.GAME_SEND_MESSAGE(perso, "Votre niveau est insuffisant pour apprendre la quête.");
+                        SocketManager.GAME_SEND_MESSAGE(perso, "Votre niveau est insuffisant pour apprendre la quÃªte.");
                         return;
                     }
                     break;
@@ -274,7 +274,7 @@ public class Quest {
                 continue;
 
             boolean refresh = false;
-            if (qPerso.isQuestEtapeIsValidate(qEtape)) //On a déjé validé la questEtape on passe
+            if (qPerso.isQuestEtapeIsValidate(qEtape)) //On a dÃ©jÃ  validÃ© la questEtape on passe
                 continue;
 
             if (qEtape.getObjectif() != getObjectifCurrent(qPerso))
@@ -290,7 +290,7 @@ public class Quest {
                 case 3://Donner item
                     if (perso.getExchangeAction() != null && perso.getExchangeAction().getType() == ExchangeAction.TALKING_WITH && perso.getCurMap().getNpc((Integer) perso.getExchangeAction().getValue()).getTemplate().getId() == qEtape.getNpc().getId()) {
                         for (Entry<Integer, Integer> entry : qEtape.getItemNecessaryList().entrySet()) {
-                            if (perso.hasItemTemplate(entry.getKey(), entry.getValue())) { //Il a l'item et la quantité
+                            if (perso.hasItemTemplate(entry.getKey(), entry.getValue())) { //Il a l'item et la quantitÃ©
                                 perso.removeByTemplateID(entry.getKey(), entry.getValue()); //On supprime donc
                                 refresh = true;
                             }

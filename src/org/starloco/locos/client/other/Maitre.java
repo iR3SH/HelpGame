@@ -36,8 +36,8 @@ public class Maitre
 		{
 			if(p.getExchangeAction() != null)
 				{
-					p.sendMessage("Vous n'avez pas pu être téléporté car vous êtes occupé.");
-					_maitre.sendMessage("Le héro "+p.getName()+" est occupé et n'a pas pu être téléporté.");
+					p.sendMessage("Vous n'avez pas pu Ãªtre tÃ©lÃ©portÃ© car vous Ãªtes occupÃ©.");
+					_maitre.sendMessage("Le hÃ©ro "+p.getName()+" est occupÃ© et n'a pas pu Ãªtre tÃ©lÃ©portÃ©.");
 					continue;
 				}
 			p.teleport(_maitre.getCurMap().getId(), _maitre.getCurCell().getId());
@@ -73,7 +73,7 @@ public class Maitre
 			if(!p.getAccount().getCurrentIp().equals(_maitre.getAccount().getCurrentIp()))continue;
 			
 			list.add(p);
-			//p.sendMessage("Félicitation ! Vous venez de rentrer dans l'escouade de "+_maitre.getName()+".");
+			//p.sendMessage("FÃ©licitation ! Vous venez de rentrer dans l'escouade de "+_maitre.getName()+".");
 			p.setEsclave(true);
 		}
 		

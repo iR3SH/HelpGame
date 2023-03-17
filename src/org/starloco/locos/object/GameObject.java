@@ -153,23 +153,23 @@ public class GameObject {
                         txtStats.put(Constant.STATS_DATE, split.substring(3) + "");
                         continue;
                     }
-                    if (split.substring(0, 3).equalsIgnoreCase("3dc")) {// Si c'est une rune de signature cr�e
+                    if (split.substring(0, 3).equalsIgnoreCase("3dc")) {// Si c'est une rune de signature crée
                         txtStats.put(Constant.STATS_SIGNATURE, split.split("#")[4]);
                         continue;
                     }
-                    if (split.substring(0, 3).equalsIgnoreCase("3d9")) {// Si c'est une rune de signature modifi�
+                    if (split.substring(0, 3).equalsIgnoreCase("3d9")) {// Si c'est une rune de signature modifié
                         txtStats.put(Constant.STATS_CHANGE_BY, split.split("#")[4]);
                         continue;
                     }
-                    if (split.substring(0, 3).equalsIgnoreCase("3d7")) {// Si c'est une rune de signature modifi�
+                    if (split.substring(0, 3).equalsIgnoreCase("3d7")) {// Si c'est une rune de signature modifié
                         txtStats.put(Constant.STATS_EXCHANGE_IN, split.split("#")[4]);
                         continue;
                     }
-                    if (split.substring(0, 3).equalsIgnoreCase("29d")) {// Si c'est une rune de signature modifi�
+                    if (split.substring(0, 3).equalsIgnoreCase("29d")) {// Si c'est une rune de signature modifié
                         txtStats.put(Constant.STATS_NIVEAU2, split.split("#")[4]);
                         continue;
                     }
-                    if (split.substring(0, 3).equalsIgnoreCase("844")) {// Si c'est une rune de signature modifi�
+                    if (split.substring(0, 3).equalsIgnoreCase("844")) {// Si c'est une rune de signature modifié
                         txtStats.put(Constant.STATS_BONUSADD, split.split("#")[4]);
                         continue;
                     }
@@ -198,7 +198,7 @@ public class GameObject {
                         continue;
                     }
                     if (id == Constant.STATS_PETS_SOUL) {
-                        SoulStats.put(Integer.parseInt(stats[1], 16), Integer.parseInt(stats[3], 16)); // put(id_monstre, nombre_tu�)
+                        SoulStats.put(Integer.parseInt(stats[1], 16), Integer.parseInt(stats[3], 16)); // put(id_monstre, nombre_tué)
                         continue;
                     }
                     if (id == Constant.STATS_NAME_DJ) {
@@ -225,7 +225,7 @@ public class GameObject {
                     }
                     
                     //Si stats avec Texte (Signature, apartenance, etc)//FIXME
-                    if (id != Constant.STATS_RESIST && (!stats[3].equals("") && (!stats[3].equals("0") || id == Constant.STATS_PETS_DATE || id == Constant.STATS_PETS_PDV || id == Constant.STATS_PETS_POIDS || id == Constant.STATS_PETS_EPO || id == Constant.STATS_PETS_REPAS))) {//Si le stats n'est pas vide et (n'est pas �gale � 0 ou est de type familier)
+                    if (id != Constant.STATS_RESIST && (!stats[3].equals("") && (!stats[3].equals("0") || id == Constant.STATS_PETS_DATE || id == Constant.STATS_PETS_PDV || id == Constant.STATS_PETS_POIDS || id == Constant.STATS_PETS_EPO || id == Constant.STATS_PETS_REPAS))) {//Si le stats n'est pas vide et (n'est pas égale à 0 ou est de type familier)
                         if (!(this.getTemplate().getType() == Constant.ITEM_TYPE_CERTIFICAT_CHANIL && id == Constant.STATS_PETS_DATE)) {
                             txtStats.put(id, stats[3]);
                             continue;
@@ -266,7 +266,7 @@ public class GameObject {
                         }
                     }
                     if (!follow2)
-                        continue;//Si c'�tait un effet Actif d'arme ou une signature
+                        continue;//Si c'était un effet Actif d'arme ou une signature
 
                     if(!isForFm)
                     	Stats.addOneStat(id, Integer.parseInt(stats[1], 16));
@@ -419,7 +419,7 @@ public class GameObject {
     }
 
     public String parseStatsString() {
-        if (getTemplate().getType() == 83) //Si c'est une pierre d'�me vide
+        if (getTemplate().getType() == 83) //Si c'est une pierre d'âme vide
             return getTemplate().getStrTemplate();
         StringBuilder stats = new StringBuilder();
         boolean isFirst = true;
@@ -603,7 +603,7 @@ public class GameObject {
     }
 
     public String parseStatsStringSansUserObvi() {
-        if (getTemplate().getType() == 83) //Si c'est une pierre d'�me vide
+        if (getTemplate().getType() == 83) //Si c'est une pierre d'âme vide
             return getTemplate().getStrTemplate();
 
         StringBuilder stats = new StringBuilder();
@@ -745,9 +745,9 @@ public class GameObject {
         if (obj == null)
             return;
         for (Entry<Integer, Integer> entry : Stats.getMap().entrySet()) {
-            if (entry.getKey().intValue() != 974) // on ne boost que la stat de l'exp�rience de l'obvi
+            if (entry.getKey().intValue() != 974) // on ne boost que la stat de l'expérience de l'obvi
                 continue;
-            if (entry.getValue().intValue() > 500) // si le boost a une valeur sup�rieure � 500 (irr�aliste)
+            if (entry.getValue().intValue() > 500) // si le boost a une valeur supérieure à 500 (irréaliste)
                 return;
             entry.setValue(Integer.valueOf(entry.getValue().intValue()
                     + obj.getTemplate().getLevel() / 3));
@@ -819,7 +819,7 @@ public class GameObject {
                 if (a == statID)
                     follow = false;
             if (!follow)
-                continue;//Si c'�tait un effet Actif d'arme
+                continue;//Si c'était un effet Actif d'arme
 
             String jet = "";
             int value = 1;
@@ -870,7 +870,7 @@ public class GameObject {
                         + (boost ? template.getBonusCC() : 0);
                 String jet = "1d" + (max - min + 1) + "+" + (min - 1);
                 //exCode: String newArgs = Integer.toHexString(min)+";"+Integer.toHexString(max)+";-1;-1;0;"+jet;
-                //osef du minMax, vu qu'on se sert du jet pour calculer les d�gats
+                //osef du minMax, vu qu'on se sert du jet pour calculer les dégats
                 String newArgs = "0;0;0;-1;0;" + jet;
                 effets.add(new SpellEffect(SE.getEffectID(), newArgs, 0, -1));
             } catch (Exception e) {
@@ -1153,7 +1153,7 @@ public class GameObject {
                 }
                 p++;
             }
-            if (key > 0) // On place l'OverFm en t�te de liste pour �tre niqu�
+            if (key > 0) // On place l'OverFm en tête de liste pour être niqué
             {
                 keys.remove(p);
                 keys.add(p, keys.get(0));
@@ -1178,7 +1178,7 @@ public class GameObject {
             } else if ((statID == 152) || (statID == 154) || (statID == 155)
                     || (statID == 157) || (statID == 116) || (statID == 153)) {
                 
-            	//System.out.println( " des stats n�gatif qu'on remet au max");
+            	//System.out.println( " des stats négatif qu'on remet au max");
             	float a = (float) (value * poid / 100.0D);
             	
                 if (a < 1.0F)
@@ -1223,15 +1223,15 @@ public class GameObject {
 				/*
 				 * if (obj.getPuit() > 0 && chutePwrFixe <= obj.getPuit()) //
 				 * S'il y a un puit positif, on annule la baisse { perte +=
-				 * chutePwr; chute = value; // On r�initialise
+				 * chutePwr; chute = value; // On réinitialise
 				 * obj.setPuit(obj.getPuit() - chutePwrFixe); // On descend le
 				 * puit } else if (obj.getPuit() > 0) // Si le puit est positif,
 				 * mais pas suffisant pour annuler { double pwr =
 				 * obj.getPuit()/World.getPwrPerEffet(statID); // On calcule
 				 * l'annulation possible de la chute chute += (int)
-				 * Math.floor(pwr); // On l'a r�ajoute perte +=
+				 * Math.floor(pwr); // On l'a réajoute perte +=
 				 * (value-chute)*World.getPwrPerEffet(statID); obj.setPuit(0);
-				 * // On fixe le puit � 0 } else { perte += chutePwr; }
+				 * // On fixe le puit à 0 } else { perte += chutePwr; }
 				 */
 
                 newstats = (int) Math.floor(chute);
@@ -1390,7 +1390,7 @@ public class GameObject {
                 this.clearStats();
                 this.refreshStatsObjet(statsStr);
             } else {
-                statsStr = this.parseFMStatsString(statsObjectFm, this, statsAdd, negative)// Ajout� this
+                statsStr = this.parseFMStatsString(statsObjectFm, this, statsAdd, negative)// Ajouté this
                         + ","
                         + statsObjectFm
                         + "#"

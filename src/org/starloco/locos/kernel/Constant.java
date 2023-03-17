@@ -53,12 +53,12 @@ public class Constant {
     public static final int ETAT_CHEVAUCHANT = 11;
     public static final int STATE_UNDODGEABLE=73;
     public static final int STATE_SOBER=20;
-    public static final int FIGHT_TYPE_CHALLENGE = 0;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            //D�fies
-    public static final int FIGHT_TYPE_AGRESSION = 1;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            //Aggros
-    public static final int FIGHT_TYPE_CONQUETE = 2;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            //Conquete
-    public static final int FIGHT_TYPE_DOPEUL = 3;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            //Dopeuls de temple
-    public static final int FIGHT_TYPE_PVM = 4;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            //PvM
-    public static final int FIGHT_TYPE_PVT = 5;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            //Percepteur
+    public static final int FIGHT_TYPE_CHALLENGE = 0; //Défies
+    public static final int FIGHT_TYPE_AGRESSION = 1; //Aggros
+    public static final int FIGHT_TYPE_CONQUETE = 2; //Conquete
+    public static final int FIGHT_TYPE_DOPEUL = 3; //Dopeuls de temple
+    public static final int FIGHT_TYPE_PVM = 4; //PvM
+    public static final int FIGHT_TYPE_PVT = 5; //Percepteur
     public static final int FIGHT_TYPE_STAKE=6; //Stakes // FRED .ipdrop
     public static final int FIGHT_STATE_INIT = 1;
     public static final int FIGHT_STATE_PLACE = 2;
@@ -88,7 +88,7 @@ public class Constant {
     // Positions Consommable
     public static final int CONSO_POS_1 = 35;
     public static final int CONSO_POS_14 = 48;
-    //Objets dons, mutations, mal�diction, ..
+    //Objets dons, mutations, malédiction, ..
     public static final int ITEM_POS_MUTATION = 20;
     public static final int ITEM_POS_ROLEPLAY_BUFF = 21;
     public static final int ITEM_POS_PNJ_SUIVEUR = 24;
@@ -262,17 +262,17 @@ public class Constant {
     public static final int SEX_FEMALE = 1;
     //GamePlay
     public static final int MAX_EFFECTS_ID = 2200;
-    //Buff a v�rifier en d�but de tour
+    //Buff a vérifier en début de tour
     public static final int[] BEGIN_TURN_BUFF = {91, 92, 93, 94, 95, 96, 97, 98, 99, 100, 108};
     //Buff des Armes
     public static final int[] ARMES_EFFECT_IDS = {91, 92, 93, 94, 95, 96, 97, 98, 99, 100, 101, 108};
     //Buff a ne pas booster en cas de CC
     public static final int[] NO_BOOST_CC_IDS = {101};
     //Invocation Statiques
-    public static final int[] STATIC_INVOCATIONS = {282, 556, 2750, 7000};                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    //Arbre et Cawotte s'tout :p
-    //Verif d'Etat au lancement d'un sort {spellID,stateID}, � completer avant d'activer
+    public static final int[] STATIC_INVOCATIONS = {282, 556, 2750, 7000};
+    //Verif d'Etat au lancement d'un sort {spellID,stateID}, à completer avant d'activer
     public static final int[][] STATE_REQUIRED = {{699, Constant.ETAT_SAOUL}, {690, Constant.ETAT_SAOUL}};
-    //Buff d�clench� en cas de frappe
+    //Buff déclenché en cas de frappe
     public static final int[] ON_HIT_BUFFS = {9, 79, 107, 788, 606, 607, 608, 609, 611};
     //Effects
     public static final int STATS_ADD_PM2 = 78;
@@ -385,7 +385,7 @@ public class Constant {
     public static final int STATS_PETS_DATE = 808;
     public static final int STATS_PETS_EPO = 940;
     public static final int STATS_PETS_SOUL = 717;
-    // Objet d'�levage
+    // Objet d'élevage
     public static final int STATS_RESIST = 812;
     // Other
     public static final int STATS_TURN = 811;
@@ -545,42 +545,41 @@ public class Constant {
     //ZAAP <mapID,cellID>
     public static Map<Integer, Integer> ZAAPS = new HashMap<Integer, Integer>();
     //Valeur des droits de guilde
-    public static int G_BOOST = 2;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            //G�rer les boost
-    public static int G_RIGHT = 4;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            //G�rer les droits
-    public static int G_INVITE = 8;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            //Inviter de nouveaux membres
-    public static int G_BAN = 16;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            //Bannir
-    public static int G_ALLXP = 32;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            //G�rer les r�partitions d'xp
-    public static int G_HISXP = 256;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            //G�rer sa r�partition d'xp
-    public static int G_RANK = 64;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            //G�rer les rangs
-    public static int G_POSPERCO = 128;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            //Poser un percepteur
-    public static int G_COLLPERCO = 512;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            //Collecter les percepteurs
-    public static int G_USEENCLOS = 4096;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            //Utiliser les enclos
-    public static int G_AMENCLOS = 8192;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            //Am�nager les enclos
-    public static int G_OTHDINDE = 16384;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        //G�rer les montures des autres membres
+    public static int G_BOOST = 2; //Gérer les boost
+    public static int G_RIGHT = 4;
+    public static int G_INVITE = 8;
+    public static int G_BAN = 16;
+    public static int G_ALLXP = 32;
+    public static int G_HISXP = 256;
+    public static int G_RANK = 64;
+    public static int G_POSPERCO = 128;
+    public static int G_COLLPERCO = 512;
+    public static int G_USEENCLOS = 4096;
+    public static int G_AMENCLOS = 8192;
+    public static int G_OTHDINDE = 16384;
     //Valeur des droits de maison
-    public static int H_GBLASON = 2;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            //Afficher blason pour membre de la guilde
-    public static int H_OBLASON = 4;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            //Afficher blason pour les autres
-    public static int H_GNOCODE = 8;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            //Entrer sans code pour la guilde
-    public static int H_OCANTOPEN = 16;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            //Entrer impossible pour les non-guildeux
-    public static int C_GNOCODE = 32;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            //Coffre sans code pour la guilde
-    public static int C_OCANTOPEN = 64;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            //Coffre impossible pour les non-guildeux
-    public static int H_GREPOS = 256;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            //Guilde droit au repos
-    public static int H_GTELE = 128;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            //Guilde droit a la TP
+    public static int H_GBLASON = 2;
+    public static int H_OBLASON = 4;
+    public static int H_GNOCODE = 8;
+    public static int H_OCANTOPEN = 16;
+    public static int C_GNOCODE = 32;
+    public static int C_OCANTOPEN = 64;
+    public static int H_GREPOS = 256;
+    public static int H_GTELE = 128;
     // Nom des documents (swfs) : Documents d'avis de recherche
-    public static String HUNT_DETAILS_DOC = "71_0706251229";                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                // PanMap d'explications
-    public static String HUNT_FRAKACIA_DOC = "63_0706251124";                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                // Frakacia Leukocythine
-    public static String HUNT_AERMYNE_DOC = "100_0706251214";                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            // Aermyne 'Braco' Scalptaras
-    public static String HUNT_MARZWEL_DOC = "96_0706251201";                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                // Marzwel le Gobelin
-    public static String HUNT_BRUMEN_DOC = "68_0706251126";                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                // Brumen Tinctorias
-    public static String HUNT_MUSHA_DOC = "94_0706251138";                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                // Musha l'Oni
-    public static String HUNT_OGIVOL_DOC = "69_0706251058";                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                // Ogivol Scarlacin
-    public static String HUNT_PADGREF_DOC = "61_0802081743";                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                // Padgref Demoel
-    public static String HUNT_QILBIL_DOC = "67_0706251223";                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                // Qil Bil
-    public static String HUNT_ROK_DOC = "93_0706251135";                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                // Rok Gnorok
-    public static String HUNT_ZATOISHWAN_DOC = "98_0706251211";                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                // Zatoïshwan
-    public static String HUNT_LETHALINE_DOC = "65_0706251123";                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                // Léthaline Sigisbul
-    //public static String HUNT_NERVOES_DOC    = "64_0706251123";  // Nervoes Brakdoun
-    public static String HUNT_FOUDUGLEN_DOC = "70_0706251122";                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                // Fouduglen l'�cureuil
+    public static String HUNT_DETAILS_DOC = "71_0706251229";
+    public static String HUNT_FRAKACIA_DOC = "63_0706251124";
+    public static String HUNT_AERMYNE_DOC = "100_0706251214";
+    public static String HUNT_MARZWEL_DOC = "96_0706251201";
+    public static String HUNT_BRUMEN_DOC = "68_0706251126";
+    public static String HUNT_MUSHA_DOC = "94_0706251138";
+    public static String HUNT_OGIVOL_DOC = "69_0706251058";
+    public static String HUNT_PADGREF_DOC = "61_0802081743";
+    public static String HUNT_QILBIL_DOC = "67_0706251223";
+    public static String HUNT_ROK_DOC = "93_0706251135";
+    public static String HUNT_ZATOISHWAN_DOC = "98_0706251211";
+    public static String HUNT_LETHALINE_DOC = "65_0706251123";
+    public static String HUNT_FOUDUGLEN_DOC = "70_0706251122";
 
     // {(int)BorneId, (int)CellId, (str)SwfDocName, (int)MobId, (int)ItemFollow, (int)QuestId, (int)reponseID
     public static String[][] HUNTING_QUESTS = {{"1988", "234", HUNT_DETAILS_DOC, "-1", "-1", "-1", "-1"}, {"1986", "161", HUNT_LETHALINE_DOC, "-1", "-1", "-1", "-1"}, {"1985", "119", HUNT_MARZWEL_DOC, "554", "7353", "117", "2552"}, {"1986", "120", HUNT_PADGREF_DOC, "459", "6870", "29", "2108"}, {"1985", "149", HUNT_FRAKACIA_DOC, "460", "6871", "30", "2109"}, {"1986", "150", HUNT_QILBIL_DOC, "481", "6873", "32", "2111"}, {"1986", "179", HUNT_BRUMEN_DOC, "464", "6874", "33", "2112"}, {"1986", "180", HUNT_OGIVOL_DOC, "462", "6876", "35", "2114"}, {"1985", "269", HUNT_MUSHA_DOC, "552", "7352", "116", "2551"}, {"1986", "270", HUNT_FOUDUGLEN_DOC, "463", "6875", "34", "2113"}, {"1985", "299", HUNT_ROK_DOC, "550", "7351", "115", "2550"}, {"1986", "300", HUNT_AERMYNE_DOC, "446", "7350", "119", "2554"}, {"1985", "329", HUNT_ZATOISHWAN_DOC, "555", "7354", "118", "2553"},};
@@ -786,7 +785,7 @@ public class Constant {
                 break;
             case CLASS_SRAM:
                 start.put(61, "1");//Sournoiserie
-                start.put(72, "2");//Invisibilit�
+                start.put(72, "2");//Invisibilité
                 start.put(65, "3");//Piege sournois
                 break;
             case CLASS_ENIRIPSA:
@@ -802,7 +801,7 @@ public class Constant {
             case CLASS_CRA:
                 start.put(161, "1");//Fleche Magique
                 start.put(169, "2");//Fleche de Recul
-                start.put(164, "3");//Fleche Empoisonn�e(ex Fleche chercheuse)
+                start.put(164, "3");//Fleche Empoisonnée(ex Fleche chercheuse)
                 break;
             case CLASS_IOP:
                 start.put(143, "1");//Intimidation
@@ -827,16 +826,16 @@ public class Constant {
             case CLASS_PANDAWA:
                 start.put(686, "1");//Picole
                 start.put(692, "2");//Gueule de bois
-                start.put(687, "3");//Poing enflamm�
+                start.put(687, "3");//Poing enflammé
                 break;
             case CLASS_ENUTROF:
                 start.put(51, "1");//Lancer de Piece
                 start.put(43, "2");//Lancer de Pelle
-                start.put(41, "3");//Sac anim�
+                start.put(41, "3");//Sac animé
                 break;
             case CLASS_SACRIEUR:
                 start.put(432, "1");//Pied du Sacrieur
-                start.put(431, "2");//Chatiment Os�
+                start.put(431, "2");//Chatiment Osé
                 start.put(434, "3");//Attirance
                 break;
         }
@@ -853,7 +852,7 @@ public class Constant {
                 break;
             case CLASS_SRAM:
                 start.put(61, World.world.getSort(61).getStatsByLevel(1));//Sournoiserie
-                start.put(72, World.world.getSort(72).getStatsByLevel(1));//Invisibilit�
+                start.put(72, World.world.getSort(72).getStatsByLevel(1));//Invisibilité
                 start.put(65, World.world.getSort(65).getStatsByLevel(1));//Piege sournois
                 break;
             case CLASS_ENIRIPSA:
@@ -869,7 +868,7 @@ public class Constant {
             case CLASS_CRA:
                 start.put(161, World.world.getSort(161).getStatsByLevel(1));//Fleche Magique
                 start.put(169, World.world.getSort(169).getStatsByLevel(1));//Fleche de Recul
-                start.put(164, World.world.getSort(164).getStatsByLevel(1));//Fleche Empoisonn�e(ex Fleche chercheuse)
+                start.put(164, World.world.getSort(164).getStatsByLevel(1));//Fleche Empoisonnée(ex Fleche chercheuse)
                 break;
             case CLASS_IOP:
                 start.put(143, World.world.getSort(143).getStatsByLevel(1));//Intimidation
@@ -894,16 +893,16 @@ public class Constant {
             case CLASS_PANDAWA:
                 start.put(686, World.world.getSort(686).getStatsByLevel(1));//Picole
                 start.put(692, World.world.getSort(692).getStatsByLevel(1));//Gueule de bois
-                start.put(687, World.world.getSort(687).getStatsByLevel(1));//Poing enflamm�
+                start.put(687, World.world.getSort(687).getStatsByLevel(1));//Poing enflammé
                 break;
             case CLASS_ENUTROF:
                 start.put(51, World.world.getSort(51).getStatsByLevel(1));//Lancer de Piece
                 start.put(43, World.world.getSort(43).getStatsByLevel(1));//Lancer de Pelle
-                start.put(41, World.world.getSort(41).getStatsByLevel(1));//Sac anim�
+                start.put(41, World.world.getSort(41).getStatsByLevel(1));//Sac animé
                 break;
             case CLASS_SACRIEUR:
                 start.put(432, World.world.getSort(432).getStatsByLevel(1));//Pied du Sacrieur
-                start.put(431, World.world.getSort(431).getStatsByLevel(1));//Chatiment Forc�
+                start.put(431, World.world.getSort(431).getStatsByLevel(1));//Chatiment Forcé
                 start.put(434, World.world.getSort(434).getStatsByLevel(1));//Attirance
                 break;
         }
@@ -1031,7 +1030,7 @@ public class Constant {
                         return 5;
                 }
                 break;
-            case 14://Agilit�
+            case 14://Agilité
                 switch (classID) {
                     case CLASS_FECA:
                     case CLASS_XELOR:
@@ -1188,7 +1187,7 @@ public class Constant {
 
                 else if (lvl == 21)
 
-                    perso.learnSpell(20, 1, save, false, false);//Immunit�
+                    perso.learnSpell(20, 1, save, false, false);//Immunité
 
                 else if (lvl == 26)
 
@@ -1200,15 +1199,15 @@ public class Constant {
 
                 else if (lvl == 36)
 
-                    perso.learnSpell(5, 1, save, false, false);//Tr�ve
+                    perso.learnSpell(5, 1, save, false, false);//Trêve
 
                 else if (lvl == 42)
 
-                    perso.learnSpell(16, 1, save, false, false);//Science du b�ton
+                    perso.learnSpell(16, 1, save, false, false);//Science du bâton
 
                 else if (lvl == 48)
 
-                    perso.learnSpell(8, 1, save, false, false);// falseur du b�ton
+                    perso.learnSpell(8, 1, save, false, false);// falseur du bâton
 
                 else if (lvl == 54)
 
@@ -1216,15 +1215,15 @@ public class Constant {
 
                 else if (lvl == 60)
 
-                    perso.learnSpell(11, 1, save, false, false);//T�l�portation
+                    perso.learnSpell(11, 1, save, false, false);//Téléportation
 
                 else if (lvl == 70)
 
-                    perso.learnSpell(10, 1, save, false, false);//Glyphe Enflamm�
+                    perso.learnSpell(10, 1, save, false, false);//Glyphe Enflammé
 
                 else if (lvl == 80)
 
-                    perso.learnSpell(7, 1, save, false, false);//Bouclier F�ca
+                    perso.learnSpell(7, 1, save, false, false);//Bouclier Féca
 
                 else if (lvl == 90)
 
@@ -1236,7 +1235,7 @@ public class Constant {
 
                 else if (lvl == 200)
 
-                    perso.learnSpell(1901, 1, save, false, false);//Invocation de Dopeul F�ca
+                    perso.learnSpell(1901, 1, save, false, false);//Invocation de Dopeul Féca
 
                 break;
 
@@ -1246,11 +1245,11 @@ public class Constant {
 
                 if (lvl == 3)
 
-                    perso.learnSpell(26, 1, save, false, false);//B�n�diction Animale
+                    perso.learnSpell(26, 1, save, false, false);//Bénédiction Animale
 
                 else if (lvl == 6)
 
-                    perso.learnSpell(22, 1, save, false, false);//D�placement F�lin
+                    perso.learnSpell(22, 1, save, false, false);//Déplacement Félin
 
                 else if (lvl == 9)
 
@@ -1270,7 +1269,7 @@ public class Constant {
 
                 else if (lvl == 26)
 
-                    perso.learnSpell(27, 1, save, false, false);//Piq�re Motivante
+                    perso.learnSpell(27, 1, save, false, false);//Piqûre Motivante
 
                 else if (lvl == 31)
 
@@ -1294,7 +1293,7 @@ public class Constant {
 
                 else if (lvl == 60)
 
-                    perso.learnSpell(32, 1, save, false, false);//R�sistance Naturelle
+                    perso.learnSpell(32, 1, save, false, false);//Résistance Naturelle
 
                 else if (lvl == 70)
 
@@ -1332,7 +1331,7 @@ public class Constant {
 
                 else if (lvl == 9)
 
-                    perso.learnSpell(47, 1, save, false, false);//Bo�te de Pandore
+                    perso.learnSpell(47, 1, save, false, false);//Boîte de Pandore
 
                 else if (lvl == 13)
 
@@ -1340,7 +1339,7 @@ public class Constant {
 
                 else if (lvl == 17)
 
-                    perso.learnSpell(45, 1, save, false, false);//Cl� R�ductrice
+                    perso.learnSpell(45, 1, save, false, false);//Clé Réductrice
 
                 else if (lvl == 21)
 
@@ -1348,11 +1347,11 @@ public class Constant {
 
                 else if (lvl == 26)
 
-                    perso.learnSpell(46, 1, save, false, false);//D�sinvocation
+                    perso.learnSpell(46, 1, save, false, false);//Désinvocation
 
                 else if (lvl == 31)
 
-                    perso.learnSpell(52, 1, save, false, false);//Cupidit�
+                    perso.learnSpell(52, 1, save, false, false);//Cupidité
 
                 else if (lvl == 36)
 
@@ -1368,7 +1367,7 @@ public class Constant {
 
                 else if (lvl == 54)
 
-                    perso.learnSpell(55, 1, save, false, false);//Acc�l�ration
+                    perso.learnSpell(55, 1, save, false, false);//Accélération
 
                 else if (lvl == 60)
 
@@ -1384,11 +1383,11 @@ public class Constant {
 
                 else if (lvl == 90)
 
-                    perso.learnSpell(57, 1, save, false, false);//Pelle Anim�e
+                    perso.learnSpell(57, 1, save, false, false);//Pelle Animée
 
                 else if (lvl == 100)
 
-                    perso.learnSpell(60, 1, save, false, false);//Coffre Anim�
+                    perso.learnSpell(60, 1, save, false, false);//Coffre Animé
 
                 else if (lvl == 200)
 
@@ -1418,19 +1417,19 @@ public class Constant {
 
                 else if (lvl == 17)
 
-                    perso.learnSpell(64, 1, save, false, false);//Rep�rage
+                    perso.learnSpell(64, 1, save, false, false);//Repérage
 
                 else if (lvl == 21)
 
-                    perso.learnSpell(79, 1, save, false, false);//Pi�ge de Masse
+                    perso.learnSpell(79, 1, save, false, false);//Piège de Masse
 
                 else if (lvl == 26)
 
-                    perso.learnSpell(78, 1, save, false, false);//Invisibilit� d'Autrui
+                    perso.learnSpell(78, 1, save, false, false);//Invisibilité d'Autrui
 
                 else if (lvl == 31)
 
-                    perso.learnSpell(71, 1, save, false, false);//Pi�ge Empoisonn�
+                    perso.learnSpell(71, 1, save, false, false);//Piège Empoisonné
 
                 else if (lvl == 36)
 
@@ -1438,15 +1437,15 @@ public class Constant {
 
                 else if (lvl == 42)
 
-                    perso.learnSpell(69, 1, save, false, false);//Pi�ge d'Immobilisation
+                    perso.learnSpell(69, 1, save, false, false);//Piège d'Immobilisation
 
                 else if (lvl == 48)
 
-                    perso.learnSpell(77, 1, save, false, false);//Pi�ge de Silence
+                    perso.learnSpell(77, 1, save, false, false);//Piège de Silence
 
                 else if (lvl == 54)
 
-                    perso.learnSpell(73, 1, save, false, false);//Pi�ge r�pulselse if
+                    perso.learnSpell(73, 1, save, false, false);//Piège répulsif
 
                 else if (lvl == 60)
 
@@ -1466,7 +1465,7 @@ public class Constant {
 
                 else if (lvl == 100)
 
-                    perso.learnSpell(80, 1, save, false, false);//Pi�ge Mortel
+                    perso.learnSpell(80, 1, save, false, false);//Piège Mortel
 
                 else if (lvl == 200)
 
@@ -1484,7 +1483,7 @@ public class Constant {
 
                 else if (lvl == 6)
 
-                    perso.learnSpell(100, 1, save, false, false);//Sablier de X�lor
+                    perso.learnSpell(100, 1, save, false, false);//Sablier de Xélor
 
                 else if (lvl == 9)
 
@@ -1492,11 +1491,11 @@ public class Constant {
 
                 else if (lvl == 13)
 
-                    perso.learnSpell(88, 1, save, false, false);//T�l�portation
+                    perso.learnSpell(88, 1, save, false, false);//Téléportation
 
                 else if (lvl == 17)
 
-                    perso.learnSpell(93, 1, save, false, false);//Fl�trissement
+                    perso.learnSpell(93, 1, save, false, false);//Flétrissement
 
                 else if (lvl == 21)
 
@@ -1504,7 +1503,7 @@ public class Constant {
 
                 else if (lvl == 26)
 
-                    perso.learnSpell(96, 1, save, false, false);//Poussi�re Temporelle
+                    perso.learnSpell(96, 1, save, false, false);//Poussière Temporelle
 
                 else if (lvl == 31)
 
@@ -1516,7 +1515,7 @@ public class Constant {
 
                 else if (lvl == 42)
 
-                    perso.learnSpell(89, 1, save, false, false);//D�vouement
+                    perso.learnSpell(89, 1, save, false, false);//Dévouement
 
                 else if (lvl == 48)
 
@@ -1524,7 +1523,7 @@ public class Constant {
 
                 else if (lvl == 54)
 
-                    perso.learnSpell(87, 1, save, false, false);//D�motivation
+                    perso.learnSpell(87, 1, save, false, false);//Démotivation
 
                 else if (lvl == 60)
 
@@ -1540,15 +1539,15 @@ public class Constant {
 
                 else if (lvl == 90)
 
-                    perso.learnSpell(91, 1, save, false, false);//Frappe de X�lor
+                    perso.learnSpell(91, 1, save, false, false);//Frappe de Xélor
 
                 else if (lvl == 100)
 
-                    perso.learnSpell(97, 1, save, false, false);//Cadran de X�lor
+                    perso.learnSpell(97, 1, save, false, false);//Cadran de Xélor
 
                 else if (lvl == 200)
 
-                    perso.learnSpell(1905, 1, save, false, false);//Invocation de Dopeul X�lor
+                    perso.learnSpell(1905, 1, save, false, false);//Invocation de Dopeul Xélor
 
                 break;
 
@@ -1570,7 +1569,7 @@ public class Constant {
 
                 else if (lvl == 13)
 
-                    perso.learnSpell(104, 1, save, false, false);//Tr�fle
+                    perso.learnSpell(104, 1, save, false, false);//Trèfle
 
                 else if (lvl == 17)
 
@@ -1586,7 +1585,7 @@ public class Constant {
 
                 else if (lvl == 31)
 
-                    perso.learnSpell(116, 1, save, false, false);//Langue R�peuse
+                    perso.learnSpell(116, 1, save, false, false);//Langue Râpeuse
 
                 else if (lvl == 36)
 
@@ -1598,7 +1597,7 @@ public class Constant {
 
                 else if (lvl == 48)
 
-                    perso.learnSpell(108, 1, save, false, false);//Esprit F�lin
+                    perso.learnSpell(108, 1, save, false, false);//Esprit Félin
 
                 else if (lvl == 54)
 
@@ -1606,7 +1605,7 @@ public class Constant {
 
                 else if (lvl == 60)
 
-                    perso.learnSpell(118, 1, save, false, false);//R�flexes
+                    perso.learnSpell(118, 1, save, false, false);//Réflexes
 
                 else if (lvl == 70)
 
@@ -1648,7 +1647,7 @@ public class Constant {
 
                 else if (lvl == 13)
 
-                    perso.learnSpell(127, 1, save, false, false);//Mot de Pr�vention
+                    perso.learnSpell(127, 1, save, false, false);//Mot de Prévention
 
                 else if (lvl == 17)
 
@@ -1660,7 +1659,7 @@ public class Constant {
 
                 else if (lvl == 26)
 
-                    perso.learnSpell(131, 1, save, false, false);//Mot de R�g�n�ration
+                    perso.learnSpell(131, 1, save, false, false);//Mot de Régénération
 
                 else if (lvl == 31)
 
@@ -1680,7 +1679,7 @@ public class Constant {
 
                 else if (lvl == 54)
 
-                    perso.learnSpell(129, 1, save, false, false);//Mot d'Amiti�
+                    perso.learnSpell(129, 1, save, false, false);//Mot d'Amitié
 
                 else if (lvl == 60)
 
@@ -1718,11 +1717,11 @@ public class Constant {
 
                 else if (lvl == 6)
 
-                    perso.learnSpell(145, 1, save, false, false);//Ep�e Divine
+                    perso.learnSpell(145, 1, save, false, false);//Epée Divine
 
                 else if (lvl == 9)
 
-                    perso.learnSpell(146, 1, save, false, false);//Ep�e du Destin
+                    perso.learnSpell(146, 1, save, false, false);//Epée du Destin
 
                 else if (lvl == 13)
 
@@ -1734,7 +1733,7 @@ public class Constant {
 
                 else if (lvl == 21)
 
-                    perso.learnSpell(154, 1, save, false, false);//Ep�e Destructrice
+                    perso.learnSpell(154, 1, save, false, false);//Epée Destructrice
 
                 else if (lvl == 26)
 
@@ -1746,11 +1745,11 @@ public class Constant {
 
                 else if (lvl == 36)
 
-                    perso.learnSpell(155, 1, save, false, false);//Vitalit�
+                    perso.learnSpell(155, 1, save, false, false);//Vitalité
 
                 else if (lvl == 42)
 
-                    perso.learnSpell(152, 1, save, false, false);//Ep�e du Jugement
+                    perso.learnSpell(152, 1, save, false, false);//Epée du Jugement
 
                 else if (lvl == 48)
 
@@ -1762,11 +1761,11 @@ public class Constant {
 
                 else if (lvl == 60)
 
-                    perso.learnSpell(156, 1, save, false, false);//Temp�te de Puissance
+                    perso.learnSpell(156, 1, save, false, false);//Tempête de Puissance
 
                 else if (lvl == 70)
 
-                    perso.learnSpell(157, 1, save, false, false);//Ep�e C�leste
+                    perso.learnSpell(157, 1, save, false, false);//Epée Céleste
 
                 else if (lvl == 80)
 
@@ -1774,11 +1773,11 @@ public class Constant {
 
                 else if (lvl == 90)
 
-                    perso.learnSpell(160, 1, save, false, false);//Ep�e de Iop
+                    perso.learnSpell(160, 1, save, false, false);//Epée de Iop
 
                 else if (lvl == 100)
 
-                    perso.learnSpell(159, 1, save, false, false);//Col�re de Iop
+                    perso.learnSpell(159, 1, save, false, false);//Colère de Iop
 
                 else if (lvl == 200)
 
@@ -1792,19 +1791,19 @@ public class Constant {
 
                 if (lvl == 3)
 
-                    perso.learnSpell(163, 1, save, false, false);//Fl�che Glac�e
+                    perso.learnSpell(163, 1, save, false, false);//Flèche Glacée
 
                 else if (lvl == 6)
 
-                    perso.learnSpell(165, 1, save, false, false);//Fl�che enflamm�e
+                    perso.learnSpell(165, 1, save, false, false);//Flèche enflammée
 
                 else if (lvl == 9)
 
-                    perso.learnSpell(172, 1, save, false, false);//Tir Eloign�
+                    perso.learnSpell(172, 1, save, false, false);//Tir Eloigné
 
                 else if (lvl == 13)
 
-                    perso.learnSpell(167, 1, save, false, false);//Fl�che d'Expiation
+                    perso.learnSpell(167, 1, save, false, false);//Flèche d'Expiation
 
                 else if (lvl == 17)
 
@@ -1816,11 +1815,11 @@ public class Constant {
 
                 else if (lvl == 26)
 
-                    perso.learnSpell(170, 1, save, false, false);//Fl�che d'Immobilisation
+                    perso.learnSpell(170, 1, save, false, false);//Flèche d'Immobilisation
 
                 else if (lvl == 31)
 
-                    perso.learnSpell(171, 1, save, false, false);//Fl�che Punitive
+                    perso.learnSpell(171, 1, save, false, false);//Flèche Punitive
 
                 else if (lvl == 36)
 
@@ -1828,35 +1827,36 @@ public class Constant {
 
                 else if (lvl == 42)
 
-                    perso.learnSpell(173, 1, save, false, false);//Fl�che Harcelante
+                    perso.learnSpell(173, 1, save, false, false);//Flèche Harcelante
 
                 else if (lvl == 48)
 
-                    perso.learnSpell(174, 1, save, false, false);//Fl�che Cinglante
+                    perso.learnSpell(174, 1, save, false, false);//Flèche Cinglante
 
                 else if (lvl == 54)
 
-                    perso.learnSpell(176, 1, save, false, false);//Fl�che Pers�cutrice
+
+                    perso.learnSpell(176, 1, save, false, false);//Flèche Persécutrice
 
                 else if (lvl == 60)
 
-                    perso.learnSpell(175, 1, save, false, false);//Fl�che Destructrice
+                    perso.learnSpell(175, 1, save, false, false);//Flèche Destructrice
 
                 else if (lvl == 70)
 
-                    perso.learnSpell(178, 1, save, false, false);//Fl�che Absorbante
+                    perso.learnSpell(178, 1, save, false, false);//Flèche Absorbante
 
                 else if (lvl == 80)
 
-                    perso.learnSpell(177, 1, save, false, false);//Fl�che Ralentissante
+                    perso.learnSpell(177, 1, save, false, false);//Flèche Ralentissante
 
                 else if (lvl == 90)
 
-                    perso.learnSpell(179, 1, save, false, false);//Fl�che Explosive
+                    perso.learnSpell(179, 1, save, false, false);//Flèche Explosive
 
                 else if (lvl == 100)
 
-                    perso.learnSpell(180, 1, save, false, false);//Ma�trise de l'Arc
+                    perso.learnSpell(180, 1, save, false, false);//Maîtrise de l'Arc
 
                 else if (lvl == 200)
 
@@ -1890,7 +1890,7 @@ public class Constant {
 
                 else if (lvl == 21)
 
-                    perso.learnSpell(189, 1, save, false, false);//Invocation de la Sacrelse ifi�e
+                    perso.learnSpell(189, 1, save, false, false);//Invocation de la Sacrifiée
 
                 else if (lvl == 26)
 
@@ -1898,7 +1898,7 @@ public class Constant {
 
                 else if (lvl == 31)
 
-                    perso.learnSpell(199, 1, save, false, false);//Connaissance des Poup�es
+                    perso.learnSpell(199, 1, save, false, false);//Connaissance des Poupées
 
                 else if (lvl == 36)
 
@@ -1910,7 +1910,7 @@ public class Constant {
 
                 else if (lvl == 48)
 
-                    perso.learnSpell(196, 1, save, false, false);//Vent Empoisonn�
+                    perso.learnSpell(196, 1, save, false, false);//Vent Empoisonné
 
                 else if (lvl == 54)
 
@@ -1948,11 +1948,11 @@ public class Constant {
 
                 if (lvl == 3)
 
-                    perso.learnSpell(444, 1, save, false, false);//D�robade
+                    perso.learnSpell(444, 1, save, false, false);//Dérobade
 
                 else if (lvl == 6)
 
-                    perso.learnSpell(449, 1, save, false, false);//D�tour
+                    perso.learnSpell(449, 1, save, false, false);//Détour
 
                 else if (lvl == 9)
 
@@ -1960,7 +1960,7 @@ public class Constant {
 
                 else if (lvl == 13)
 
-                    perso.learnSpell(437, 1, save, false, false);//Ch�timent Agile
+                    perso.learnSpell(437, 1, save, false, false);//Châtiment Agile
 
                 else if (lvl == 17)
 
@@ -1968,11 +1968,11 @@ public class Constant {
 
                 else if (lvl == 21)
 
-                    perso.learnSpell(433, 1, save, false, false);//Ch�timent Os�
+                    perso.learnSpell(433, 1, save, false, false);//Châtiment Osé
 
                 else if (lvl == 26)
 
-                    perso.learnSpell(443, 1, save, false, false);//Ch�timent Spirituel
+                    perso.learnSpell(443, 1, save, false, false);//Châtiment Spirituel
 
                 else if (lvl == 31)
 
@@ -1984,11 +1984,11 @@ public class Constant {
 
                 else if (lvl == 42)
 
-                    perso.learnSpell(441, 1, save, false, false);//Ch�timent Vilatesque
+                    perso.learnSpell(441, 1, save, false, false);//Châtiment Vilatesque
 
                 else if (lvl == 48)
 
-                    perso.learnSpell(445, 1, save, false, false);//Coop�ration
+                    perso.learnSpell(445, 1, save, false, false);//Coopération
 
                 else if (lvl == 54)
 
@@ -2004,7 +2004,7 @@ public class Constant {
 
                 else if (lvl == 80)
 
-                    perso.learnSpell(448, 1, save, false, false);//Ep�e Volante
+                    perso.learnSpell(448, 1, save, false, false);//Epée Volante
 
                 else if (lvl == 90)
 
@@ -2030,15 +2030,15 @@ public class Constant {
 
                 else if (lvl == 6)
 
-                    perso.learnSpell(690, 1, save, false, false);//Souffle Alcoolis�
+                    perso.learnSpell(690, 1, save, false, false);//Souffle Alcoolisé
 
                 else if (lvl == 9)
 
-                    perso.learnSpell(691, 1, save, false, false);//Vuln�rabilit� Aqueuse
+                    perso.learnSpell(691, 1, save, false, false);//Vulnérabilité Aqueuse
 
                 else if (lvl == 13)
 
-                    perso.learnSpell(688, 1, save, false, false);//Vuln�rabilit� Incandescente
+                    perso.learnSpell(688, 1, save, false, false);//Vulnérabilité Incandescente
 
                 else if (lvl == 17)
 
@@ -2046,7 +2046,7 @@ public class Constant {
 
                 else if (lvl == 21)
 
-                    perso.learnSpell(694, 1, save, false, false);//Vuln�rabilit� Venteuse
+                    perso.learnSpell(694, 1, save, false, false);//Vulnérabilité Venteuse
 
                 else if (lvl == 26)
 
@@ -2058,7 +2058,7 @@ public class Constant {
 
                 else if (lvl == 36)
 
-                    perso.learnSpell(697, 1, save, false, false);//Vuln�rabilit� Terrestre
+                    perso.learnSpell(697, 1, save, false, false);//Vulnérabilité Terrestre
 
                 else if (lvl == 42)
 
@@ -2070,11 +2070,11 @@ public class Constant {
 
                 else if (lvl == 54)
 
-                    perso.learnSpell(700, 1, save, false, false);//Vague � Lame
+                    perso.learnSpell(700, 1, save, false, false);//Vague à Lame
 
                 else if (lvl == 60)
 
-                    perso.learnSpell(701, 1, save, false, false);//Col�re de Zato�shwan
+                    perso.learnSpell(701, 1, save, false, false);//Colère de Zatoïshwan
 
                 else if (lvl == 70)
 
@@ -2104,7 +2104,7 @@ public class Constant {
 
     public static int getGlyphColor(int spell) {
         switch (spell) {
-            case 10://Enflamm�
+            case 10://Enflammé
             case 2033://Dopeul
                 return 4;//Rouge
             case 12://Aveuglement
@@ -2133,7 +2133,7 @@ public class Constant {
                 return 7;
             case 69://Immobilisation
                 return 10;
-            case 71://Empoisonn�e
+            case 71://Empoisonnée
             case 2068://Dopeul
                 return 9;
             case 73://Repulsif
@@ -2183,7 +2183,7 @@ public class Constant {
             case 20:
                 stats.addOneStat(STATS_ADD_INIT, lvl * 10); // 100*10 = 1000
                 break;
-            //Dor�e
+            //Dorée
             case 18:
                 stats.addOneStat(STATS_ADD_VITA, lvl / 2);
                 stats.addOneStat(STATS_ADD_SAGE, (int) (lvl / 2.50)); // 100/2.50 = 40
@@ -2194,12 +2194,12 @@ public class Constant {
                 stats.addOneStat(STATS_ADD_VITA, lvl);
                 stats.addOneStat(STATS_CREATURE, lvl / 50); // 100/50 = 2
                 break;
-            //Rousse-Dor�e
+            //Rousse-Dorée
             case 46:
                 stats.addOneStat(STATS_ADD_VITA, lvl);
                 stats.addOneStat(STATS_ADD_SAGE, lvl / 4); //100/4 = 25
                 break;
-            //Amande-Dor�e
+            //Amande-Dorée
             case 33:
                 stats.addOneStat(STATS_ADD_INIT, lvl * 5);
                 stats.addOneStat(STATS_ADD_SAGE, lvl / 4);
@@ -2216,7 +2216,7 @@ public class Constant {
                 stats.addOneStat(STATS_ADD_VITA, (int) (lvl * 1.50)); // 100*1.50 = 150
                 stats.addOneStat(STATS_ADD_CHAN, (int) (lvl / 1.65));
                 break;
-            //Rousse-Eb�ne
+            //Rousse-Ebène
             case 12:
                 stats.addOneStat(STATS_ADD_VITA, (int) (lvl * 1.50));
                 stats.addOneStat(STATS_ADD_AGIL, (int) (lvl / 1.65));
@@ -2233,12 +2233,12 @@ public class Constant {
                 stats.addOneStat(STATS_ADD_FORC, (int) (lvl / 1.25));
                 stats.addOneStat(STATS_ADD_VITA, lvl / 2);
                 break;
-            //Orchid�e
+            //Orchidée
             case 22:
                 stats.addOneStat(STATS_ADD_INTE, (int) (lvl / 1.25));
                 stats.addOneStat(STATS_ADD_VITA, lvl / 2);
                 break;
-            //Dor�e-Orchid�e |
+            //Dorée-Orchidée |
             case 48:
                 stats.addOneStat(STATS_ADD_VITA, (lvl));
                 stats.addOneStat(STATS_ADD_SAGE, lvl / 4);
@@ -2250,25 +2250,25 @@ public class Constant {
                 stats.addOneStat(STATS_ADD_CHAN, lvl / 2);
                 stats.addOneStat(STATS_ADD_FORC, lvl / 2);
                 break;
-            //Ivoire-Orchid�e
+            //Ivoire-Orchidée
             case 67:
                 stats.addOneStat(STATS_ADD_VITA, (lvl));
                 stats.addOneStat(STATS_ADD_PERDOM, lvl / 2);
                 stats.addOneStat(STATS_ADD_INTE, lvl / 2);
                 break;
-            //Eb�ne-Pourpre
+            //Ebène-Pourpre
             case 54:
                 stats.addOneStat(STATS_ADD_VITA, (lvl));
                 stats.addOneStat(STATS_ADD_FORC, lvl / 2);
                 stats.addOneStat(STATS_ADD_AGIL, lvl / 2);
                 break;
-            //Eb�ne-Orchid�e
+            //Ebène-Orchidée
             case 53:
                 stats.addOneStat(STATS_ADD_VITA, (lvl));
                 stats.addOneStat(STATS_ADD_AGIL, lvl / 2);
                 stats.addOneStat(STATS_ADD_INTE, lvl / 2);
                 break;
-            //Pourpre-Orchid�e
+            //Pourpre-Orchidée
             case 76:
                 stats.addOneStat(STATS_ADD_VITA, (lvl));
                 stats.addOneStat(STATS_ADD_INTE, lvl / 2);
@@ -2287,13 +2287,13 @@ public class Constant {
                 stats.addOneStat(STATS_ADD_SAGE, lvl / 4);
                 stats.addOneStat(STATS_ADD_CHAN, (int) (lvl / 1.65));
                 break;
-            // Dor�e-Eb�ne
+            // Dorée-Ebène
             case 42:
                 stats.addOneStat(STATS_ADD_VITA, lvl);
                 stats.addOneStat(STATS_ADD_SAGE, lvl / 4);
                 stats.addOneStat(STATS_ADD_AGIL, (int) (lvl / 1.65));
                 break;
-            // Indigo-Eb�ne
+            // Indigo-Ebène
             case 51:
                 stats.addOneStat(STATS_ADD_VITA, lvl);
                 stats.addOneStat(STATS_ADD_CHAN, lvl / 2);
@@ -2304,7 +2304,7 @@ public class Constant {
                 stats.addOneStat(STATS_ADD_VITA, (int) (lvl * 1.5));
                 stats.addOneStat(STATS_ADD_FORC, (int) (lvl / 1.65));
                 break;
-            // Rousse-Orchid�e
+            // Rousse-Orchidée
             case 70:
                 stats.addOneStat(STATS_ADD_VITA, (int) (lvl * 1.5));
                 stats.addOneStat(STATS_ADD_INTE, (int) (lvl / 1.65));
@@ -2316,14 +2316,14 @@ public class Constant {
                 stats.addOneStat(STATS_ADD_FORC, (int) (lvl / 1.65));
                 stats.addOneStat(STATS_CREATURE, lvl / 100);
                 break;
-            // Amande-Orchid�e
+            // Amande-Orchidée
             case 40:
                 stats.addOneStat(STATS_ADD_INIT, lvl * 5);
                 stats.addOneStat(STATS_ADD_VITA, lvl / 2);
                 stats.addOneStat(STATS_ADD_INTE, (int) (lvl / 1.65));
                 stats.addOneStat(STATS_CREATURE, lvl / 100);
                 break;
-            // Dor�e-Pourpre
+            // Dorée-Pourpre
             case 49:
                 stats.addOneStat(STATS_ADD_VITA, lvl);
                 stats.addOneStat(STATS_ADD_SAGE, lvl / 4);
@@ -2356,13 +2356,13 @@ public class Constant {
                 stats.addOneStat(STATS_ADD_PROS, (int) (lvl / 2.50));
                 stats.addOneStat(STATS_CREATURE, lvl / 100);
                 break;
-            //Dor�e-Ivoire
+            //Dorée-Ivoire
             case 45:
                 stats.addOneStat(STATS_ADD_VITA, lvl);
                 stats.addOneStat(STATS_ADD_PERDOM, (int) (lvl / 2.5));
                 stats.addOneStat(STATS_ADD_SAGE, lvl / 4);
                 break;
-            //Dor�e-Turquoise
+            //Dorée-Turquoise
             case 47:
                 stats.addOneStat(STATS_ADD_VITA, lvl);
                 stats.addOneStat(STATS_ADD_PROS, (int) (lvl / 2.50));
@@ -2380,13 +2380,13 @@ public class Constant {
                 stats.addOneStat(STATS_ADD_CHAN, (int) (lvl / 1.65));
                 stats.addOneStat(STATS_ADD_PROS, (int) (lvl / 2.5));
                 break;
-            //Eb�ne-Ivoire
+            //Ebène-Ivoire
             case 9:
                 stats.addOneStat(STATS_ADD_VITA, lvl);
                 stats.addOneStat(STATS_ADD_AGIL, (int) (lvl / 2.50));
                 stats.addOneStat(STATS_ADD_PERDOM, (int) (lvl / 2.5));
                 break;
-            //Eb�ne-Turquoise
+            //Ebène-Turquoise
             case 52:
                 stats.addOneStat(STATS_ADD_VITA, lvl);
                 stats.addOneStat(STATS_ADD_AGIL, (int) (lvl / 1.65));
@@ -2404,7 +2404,7 @@ public class Constant {
                 stats.addOneStat(STATS_ADD_FORC, (int) (lvl / 1.65));
                 stats.addOneStat(STATS_ADD_PROS, (int) (lvl / 2.50));
                 break;
-            //Orchid�e-Turquoise
+            //Orchidée-Turquoise
             case 72:
                 stats.addOneStat(STATS_ADD_VITA, lvl);
                 stats.addOneStat(STATS_ADD_INTE, (int) (lvl / 1.65));
@@ -2450,13 +2450,13 @@ public class Constant {
                 stats.addOneStat(STATS_ADD_PO, lvl / 100);
                 stats.addOneStat(STATS_CREATURE, lvl / 100);
                 break;
-            //Dor�e-Emeraude
+            //Dorée-Emeraude
             case 43:
                 stats.addOneStat(STATS_ADD_VITA, lvl);
                 stats.addOneStat(STATS_ADD_SAGE, lvl / 4);
                 stats.addOneStat(STATS_ADD_PM, lvl / 100);
                 break;
-            //Dor�e-Prune
+            //Dorée-Prune
             case 78:
                 stats.addOneStat(STATS_ADD_VITA, lvl * 2);
                 stats.addOneStat(STATS_ADD_SAGE, lvl / 4);
@@ -2474,13 +2474,13 @@ public class Constant {
                 stats.addOneStat(STATS_ADD_CHAN, (int) (lvl / 1.65));
                 stats.addOneStat(STATS_ADD_PO, lvl / 100);
                 break;
-            //Eb�ne-Emeraude
+            //Ebène-Emeraude
             case 50:
                 stats.addOneStat(STATS_ADD_VITA, lvl);
                 stats.addOneStat(STATS_ADD_AGIL, (int) (lvl / 3.33));
                 stats.addOneStat(STATS_ADD_PM, lvl / 100);
                 break;
-            //Eb�ne-Prune
+            //Ebène-Prune
             case 79:
                 stats.addOneStat(STATS_ADD_VITA, lvl * 2);
                 stats.addOneStat(STATS_ADD_AGIL, (int) (lvl / 1.65));
@@ -2498,13 +2498,13 @@ public class Constant {
                 stats.addOneStat(STATS_ADD_FORC, (int) (lvl / 1.65));
                 stats.addOneStat(STATS_ADD_PO, lvl / 100);
                 break;
-            //Orchid�e-Emeraude
+            //Orchidée-Emeraude
             case 59:
                 stats.addOneStat(STATS_ADD_VITA, lvl);
                 stats.addOneStat(STATS_ADD_INTE, (int) (lvl / 3.33));
                 stats.addOneStat(STATS_ADD_PM, lvl / 100);
                 break;
-            //Orchid�e-Prune
+            //Orchidée-Prune
             case 86:
                 stats.addOneStat(STATS_ADD_VITA, lvl * 2);
                 stats.addOneStat(STATS_ADD_INTE, (int) (lvl / 1.65));
@@ -2596,7 +2596,7 @@ public class Constant {
             //Indigo
             case 17:
                 return World.world.getObjTemplate(7816);
-            //Dor�e
+            //Dorée
             case 18:
                 return World.world.getObjTemplate(7817);
             //Pourpre
@@ -2608,13 +2608,13 @@ public class Constant {
             //Emeraude
             case 21:
                 return World.world.getObjTemplate(7820);
-            //Orchid�e
+            //Orchidée
             case 22:
                 return World.world.getObjTemplate(7821);
             //Prune
             case 23:
                 return World.world.getObjTemplate(7822);
-            //Amande-Dor�e
+            //Amande-Dorée
             case 33:
                 return World.world.getObjTemplate(7823);
             //Amande-Ebene
@@ -2635,49 +2635,49 @@ public class Constant {
             //Amande-Turquoise
             case 39:
                 return World.world.getObjTemplate(7829);
-            //Amande-Orchid�e
+            //Amande-Orchidée
             case 40:
                 return World.world.getObjTemplate(7830);
             //Amande-Pourpre
             case 41:
                 return World.world.getObjTemplate(7831);
-            //Dor�e-Eb�ne
+            //Dorée-Ebène
             case 42:
                 return World.world.getObjTemplate(7832);
-            //Dor�e-Emeraude
+            //Dorée-Emeraude
             case 43:
                 return World.world.getObjTemplate(7833);
-            //Dor�e-Indigo
+            //Dorée-Indigo
             case 44:
                 return World.world.getObjTemplate(7834);
-            //Dor�e-Ivoire
+            //Dorée-Ivoire
             case 45:
                 return World.world.getObjTemplate(7835);
-            //Dor�e-Rousse | Page 2
+            //Dorée-Rousse | Page 2
             case 46:
                 return World.world.getObjTemplate(7836);
-            //Dor�e-Turquoise
+            //Dorée-Turquoise
             case 47:
                 return World.world.getObjTemplate(7837);
-            //Dor�e-Orchid�e
+            //Dorée-Orchidée
             case 48:
                 return World.world.getObjTemplate(7838);
-            //Dor�e-Pourpre
+            //Dorée-Pourpre
             case 49:
                 return World.world.getObjTemplate(7839);
-            //Eb�ne-Emeraude
+            //Ebène-Emeraude
             case 50:
                 return World.world.getObjTemplate(7840);
-            //Eb�ne-Indigo
+            //Ebène-Indigo
             case 51:
                 return World.world.getObjTemplate(7841);
-            //Eb�ne-Turquoise
+            //Ebène-Turquoise
             case 52:
                 return World.world.getObjTemplate(7842);
-            //Eb�ne-Orchid�e
+            //Ebène-Orchidée
             case 53:
                 return World.world.getObjTemplate(7843);
-            //Eb�ne-Pourpre
+            //Ebène-Pourpre
             case 54:
                 return World.world.getObjTemplate(7844);
             //Emeraude-Indigo
@@ -2692,7 +2692,7 @@ public class Constant {
             //Emeraude-Turquoise
             case 58:
                 return World.world.getObjTemplate(7848);
-            //Emeraude-Orchid�e
+            //Emeraude-Orchidée
             case 59:
                 return World.world.getObjTemplate(7849);
             //Emeraude-Pourpre
@@ -2707,7 +2707,7 @@ public class Constant {
             //Indigo-Turquoise
             case 63:
                 return World.world.getObjTemplate(7853);
-            //Indigo-Orchid�e
+            //Indigo-Orchidée
             case 64:
                 return World.world.getObjTemplate(7854);
             //Indigo-Pourpre
@@ -2716,7 +2716,7 @@ public class Constant {
             //Ivoire-Turquoise
             case 66:
                 return World.world.getObjTemplate(7856);
-            //Ivoire-Ochid�e
+            //Ivoire-Ochidée
             case 67:
                 return World.world.getObjTemplate(7857);
             //Ivoire-Pourpre
@@ -2725,34 +2725,34 @@ public class Constant {
             //Turquoise-Rousse
             case 69:
                 return World.world.getObjTemplate(7859);
-            //Ochid�e-Rousse
+            //Ochidée-Rousse
             case 70:
                 return World.world.getObjTemplate(7860);
             //Pourpre-Rousse
             case 71:
                 return World.world.getObjTemplate(7861);
-            //Turquoise-Orchid�e
+            //Turquoise-Orchidée
             case 72:
                 return World.world.getObjTemplate(7862);
             //Turquoise-Pourpre
             case 73:
                 return World.world.getObjTemplate(7863);
-            //Dor�e sauvage
+            //Dorée sauvage
             case 74:
                 return World.world.getObjTemplate(7864);
             //Squelette
             case 75:
                 return World.world.getObjTemplate(7865);
-            //Orchid�e-Pourpre
+            //Orchidée-Pourpre
             case 76:
                 return World.world.getObjTemplate(7866);
             //Prune-Amande
             case 77:
                 return World.world.getObjTemplate(7867);
-            //Prune-Dor�e
+            //Prune-Dorée
             case 78:
                 return World.world.getObjTemplate(7868);
-            //Prune-Eb�ne
+            //Prune-Ebène
             case 79:
                 return World.world.getObjTemplate(7869);
             //Prune-Emeraude
@@ -2770,7 +2770,7 @@ public class Constant {
             //Prune-Turquoise
             case 85:
                 return World.world.getObjTemplate(7874);
-            //Prune-Orchid�e
+            //Prune-Orchidée
             case 86:
                 return World.world.getObjTemplate(7875);
             //Prune-Pourpre
@@ -3868,7 +3868,7 @@ public class Constant {
                 return 10307;
             case 1469: //Xel
                 return 10313;
-            case 487: //Eniripsa (dehors, puisque l'int�rieur n'est pas pr�sent dans l'emu)
+            case 487: //Eniripsa (dehors, puisque l'intérieur n'est pas présent dans l'emu)
                 return 10304;
             case 490: //Osamodas (idem qu'eniripsa)
                 return 10308;
@@ -4046,7 +4046,7 @@ public class Constant {
             case 10077:
                 return -1;//Terra Cogita
             case 10009:
-                return 90;//Xephir�s
+                return 90;//Xephirés
             case 9993:
                 return 71;//Sabine
             case 9096:
@@ -4056,9 +4056,9 @@ public class Constant {
             case 8563:
                 return 1076;//Titi gobelait
             case 7425:
-                return 1588;//Petite Larve Dor�e
+                return 1588;//Petite Larve Dorée
             case 7354:
-                return 1264;//Zato�shwan
+                return 1264;//Zatoïshwan
             case 7353:
                 return 1076;//Marzwell Le Gobelin
             case 7352:
@@ -4082,15 +4082,15 @@ public class Constant {
             case 6871:
                 return 1247;//Frakacia Leukocytine
             case 6870:
-                return 1246;//Padgref Demo�l
+                return 1246;//Padgref Demoël
             case 6869:
                 return 9043;//Pleur Nycheuz
             case 6832:
-                return -1;//Livreur de Bi�re
+                return -1;//Livreur de Bière
             case 6768:
                 return 9001;//Soki
             case 2272:
-                return 1577;//Larve Dor�e
+                return 1577;//Larve Dorée
             case 2169:
                 return 1205;//Raaga
             case 2152:
@@ -4098,7 +4098,7 @@ public class Constant {
             case 2134:
                 return 1205;//Trof Hapyus
             case 2132:
-                return 9004;//Hou� Dapyus
+                return 9004;//Houé Dapyus
             case 2130:
                 return 1001;//Colonel Lyeno
             case 2082:

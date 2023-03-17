@@ -113,7 +113,7 @@ public class InteractiveObject {
                 }
 
                 if (!player.hasItemTemplate(1570, 1)) {
-                    SocketManager.GAME_SEND_MESSAGE(player, "Vous ne possedez pas la clef n�cessaire.", "009900");
+                    SocketManager.GAME_SEND_MESSAGE(player, "Vous ne possedez pas la clef nécessaire.", "009900");
                 } else {
                     player.removeByTemplateID(1570, 1);
                     SocketManager.GAME_SEND_Im_PACKET(player, "022;" + 1 + "~"
@@ -131,7 +131,7 @@ public class InteractiveObject {
                 player.warpToSavePos();
                 break;
 
-            case 3000://Ep�e Crocoburio
+            case 3000://Epée Crocoburio
                 if (player.hasEquiped(1718)
                         && player.hasEquiped(1719)
                         && player.hasEquiped(1720)
@@ -142,7 +142,7 @@ public class InteractiveObject {
                         && player.getStats().getEffect(Constant.STATS_ADD_AGIL) == 0
                         && player.getStats().getEffect(Constant.STATS_ADD_CHAN) == 0) {
                     SocketManager.GAME_SEND_ACTION_TO_DOOR(player.getCurMap(), 237, true);
-                    SocketManager.GAME_SEND_MESSAGE(player, "Le crocoburio a �t� d�sactiv�.");
+                    SocketManager.GAME_SEND_MESSAGE(player, "Le crocoburio a été désactivé.");
                     /*perso.getWaiter().addNext(new Runnable()
 					{
 						public void run()
@@ -161,7 +161,7 @@ public class InteractiveObject {
                 SocketManager.send(player, "GDF|" + cell.getId() + ";3");
                 break;
 
-            case 1324:// Plot Rouge des �motes
+            case 1324:// Plot Rouge des émotes
                 switch (player.getCurMap().getId()) {
                     case 2196:
                         if (player.isAway())
@@ -182,7 +182,7 @@ public class InteractiveObject {
                     case 2025://Emote Applaudir
                         player.addStaticEmote(3);
                         break;
-                    case 2039://Emote Se mettre en Col�re
+                    case 2039://Emote Se mettre en Colère
                         player.addStaticEmote(4);
                         break;
                     case 2047://Emote Peur
@@ -199,12 +199,12 @@ public class InteractiveObject {
                         break;
                 }
                 break;
-            case 1694://Village brigandin tire �olienne
+            case 1694://Village brigandin tire éolienne
                 SocketManager.GAME_SEND_GA_PACKET(player.getGameClient(), "", "2", player.getId()
                         + "", "4");
                 player.teleport((short) 6848, 390);
                 break;
-            case 1695://Village brigandin tire �olienne
+            case 1695://Village brigandin tire éolienne
                 SocketManager.GAME_SEND_GA_PACKET(player.getGameClient(), "", "2", player.getId()
                         + "", "3");
                 player.teleport((short) 6844, 268);
