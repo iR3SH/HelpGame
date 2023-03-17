@@ -15,7 +15,7 @@ public class Loterie {
                     int objIdWin = getCadeau1();
                     //ObjectTemplate objWin = World.world.getObjTemplate(objIdWin);
                     //String objName = objWin.getName();
-                    //SocketManager.GAME_SEND_cMK_PACKET_TO_MAP(perso.getCurMap(), "", -5, "Roulette", "F�licitation "+perso.getName()+" ! Tu viens de gagn� : '"+objName+"'.");
+                    //SocketManager.GAME_SEND_cMK_PACKET_TO_MAP(perso.getCurMap(), "", -5, "Roulette", "Félicitation "+perso.getName()+" ! Tu viens de gagné : '"+objName+"'.");
                     perso.removeByTemplateID(15001, 1);
                     SocketManager.GAME_SEND_Im_PACKET(perso, "022;" + 1 + "~"
                             + 15001);
@@ -33,7 +33,7 @@ public class Loterie {
                     int objIdWin = getCadeau2();
                     //ObjectTemplate objWin = World.world.getObjTemplate(objIdWin);
                     //String objName = objWin.getName();
-                    //SocketManager.GAME_SEND_cMK_PACKET_TO_MAP(perso.getCurMap(), "", -5, "Roulette", "F�licitation "+perso.getName()+" ! Tu viens de gagn� : '"+objName+"'.");
+                    //SocketManager.GAME_SEND_cMK_PACKET_TO_MAP(perso.getCurMap(), "", -5, "Roulette", "Félicitation "+perso.getName()+" ! Tu viens de gagné : '"+objName+"'.");
                     perso.removeByTemplateID(19072, 1);
                     SocketManager.GAME_SEND_Im_PACKET(perso, "022;" + 1 + "~"
                             + 19072);

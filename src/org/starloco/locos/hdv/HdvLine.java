@@ -7,7 +7,7 @@ public class HdvLine {
 
     private int lineId;
     private int templateId;
-    private ArrayList<ArrayList<HdvEntry>> entries = new ArrayList<ArrayList<HdvEntry>>(3);    //La premi�re ArrayList est un tableau de 3 (0=1 1=10 2=100 de quantit�)
+    private ArrayList<ArrayList<HdvEntry>> entries = new ArrayList<ArrayList<HdvEntry>>(3);    //La première ArrayList est un tableau de 3 (0=1 1=10 2=100 de quantité)
     private String strStats;
 
     public HdvLine(int lineId, HdvEntry toAdd) {
@@ -38,7 +38,7 @@ public class HdvLine {
 
     public boolean haveSameStats(HdvEntry toAdd) {
         return this.getStrStats().equalsIgnoreCase(toAdd.getGameObject().parseStatsStringSansUserObvi())
-                && toAdd.getGameObject().getTemplate().getType() != 85;//R�cup�re les stats de l'objet et compare avec ceux de la ligne
+                && toAdd.getGameObject().getTemplate().getType() != 85;//Récupère les stats de l'objet et compare avec ceux de la ligne
     }
 
     public void sort(byte index) {
@@ -53,7 +53,7 @@ public class HdvLine {
         byte index = (byte) (toAdd.getAmount(false) - 1);
         this.getEntries().get(index).add(toAdd);
         this.sort(index);
-        return true;//Anonce que l'objet � �t� accept�
+        return true;//Anonce que l'objet à été accepté
     }
 
     public boolean delEntry(HdvEntry toDel) {
@@ -75,7 +75,7 @@ public class HdvLine {
         int[] toReturn = new int[3];
         for (int i = 0; i < this.getEntries().size(); i++) {
             try {
-                toReturn[i] = this.getEntries().get(i).get(0).getPrice();//R�cup�re le premier objet de chaque liste
+                toReturn[i] = this.getEntries().get(i).get(0).getPrice();//Récupère le premier objet de chaque liste
             } catch (IndexOutOfBoundsException e) {
                 // ok
                 toReturn[i] = 0;
@@ -87,11 +87,11 @@ public class HdvLine {
     public ArrayList<HdvEntry> getAll() {
         int totalSize = this.getEntries().get(0).size()
                 + this.getEntries().get(1).size()
-                + this.getEntries().get(2).size();//Additionne le nombre d'objet de chaque quantit�
+                + this.getEntries().get(2).size();//Additionne le nombre d'objet de chaque quantité
         ArrayList<HdvEntry> toReturn = new ArrayList<HdvEntry>(totalSize);
 
         for (int qte = 0; qte < this.getEntries().size(); qte++)
-            //Boucler dans les quantit�
+            //Boucler dans les quantité
             toReturn.addAll(this.getEntries().get(qte));
         return toReturn;
     }
@@ -103,7 +103,7 @@ public class HdvLine {
             try {
                 if (this.getEntries().get(i).isEmpty())
                     continue;
-                if (this.getEntries().get(i).get(0) != null)//V�rifie s'il existe un objet dans chacune des 3 quantit�
+                if (this.getEntries().get(i).get(0) != null)//Vérifie s'il existe un objet dans chacune des 3 quantité
                     return false;
             } catch (IndexOutOfBoundsException e) {
                 e.printStackTrace();

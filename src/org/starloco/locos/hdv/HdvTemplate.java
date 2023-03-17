@@ -30,8 +30,8 @@ public class HdvTemplate {
 
     public void addEntry(HdvEntry toAdd) {
         for (HdvLine line : this.getLines().values())
-            //Boucle dans toutes les lignes pour essayer de trouver des objets de m�mes stats
-            if (line.addEntry(toAdd))//Si une ligne l'accepte, arr�te la m�thode.
+            //Boucle dans toutes les lignes pour essayer de trouver des objets de mêmes stats
+            if (line.addEntry(toAdd))//Si une ligne l'accepte, arrête la méthode.
                 return;
         int lineId = World.world.getNextLineHdvId();
         this.getLines().put(lineId, new HdvLine(lineId, toAdd));

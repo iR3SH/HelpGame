@@ -119,19 +119,19 @@ public class Challenge {
         SocketManager.GAME_SEND_FIGHT_SHOW_CASE(Pws, _cible.getId(), _cible.getCell().getId());
     }
 
-    public void fightStart() {//D�finit les cibles au d�but du combat
+    public void fightStart() {//Définit les cibles au début du combat
         if (!challengeAlive)
             return;
         switch (Type) {
-            case 3://D�sign� Volontaire
+            case 3://Désigné Volontaire
             case 4://Sursis
             case 32://Elitiste
-            case 35://Tueur � gages
+            case 35://Tueur à gages
                 if (_cible == null && _ordreJeu.size() > 0)//Si aucun cible n'est choise on en choisie une
                 {
                     List<Fighter> Choix = new ArrayList<Fighter>();
                     Choix.addAll(_ordreJeu);
-                    Collections.shuffle(Choix);//M�lange l'ArrayList
+                    Collections.shuffle(Choix);//Mélange l'ArrayList
                     for (Fighter f : Choix) {
                         if (f.getPersonnage() != null)
                             continue;
@@ -159,9 +159,9 @@ public class Challenge {
                 if (_cible != null)
                     showCibleToFight();
                 break;
-            case 25://Ordonn�
+            case 25://Ordonné
                 int levelMax = 0;
-                for (Fighter fighter : fight.getFighters(2))//la cible sera le niveau le plus �lev�
+                for (Fighter fighter : fight.getFighters(2))//la cible sera le niveau le plus élevé
                 {
                     if (fighter.isInvocation() || fighter.isDouble())
                         continue;
@@ -179,7 +179,7 @@ public class Challenge {
         }
     }
 
-    public void fightEnd() {//V�rifie la validit� des challenges en fin de combat (si n�cessaire)
+    public void fightEnd() {//Vérifie la validité des challenges en fin de combat (si nécessaire)
         if (!challengeAlive)
             return;
         switch (Type) {
@@ -206,7 +206,7 @@ public class Challenge {
             return;
         switch (Type) {
             case 33: // survivant
-            case 49: // Prot�gez vos mules
+            case 49: // Protégez vos mules
                 if (fighter.getPersonnage() != null)
                     challengeLoose(fight.getFighterByOrdreJeu());
                 break;
@@ -224,7 +224,7 @@ public class Challenge {
         switch (Type) {
             case 17:// Intouchable
                 if (target.getTeam() == 0 && !target.isInvocation()) {
-                    if (target.getBuff(9) == null) // Si d�robade
+                    if (target.getBuff(9) == null) // Si dérobade
                         challengeLoose(target);
                     break;
                 }
@@ -285,7 +285,7 @@ public class Challenge {
                 }
 
                 break;
-            case 20: // El�mentaire
+            case 20: // Elémentaire
                 if ((caster.getTeam() == 0)
                         && DamagingEffects.contains("|" + effectID + "|")
                         && effectID != 141) {
@@ -294,7 +294,7 @@ public class Challenge {
                         case 149://Mutilation
                         case 106://Roue de la fortune
                         case 111://Contrecoup
-                        case 108://Esprit f�lin
+                        case 108://Esprit félin
                         case 435://Transfert de vie
                         case 135://Mot de sacrifice
                         case 123://Mot drainant
@@ -360,7 +360,7 @@ public class Challenge {
                 }
                 break;
             case 32: // Elitiste
-            case 34: // Impr�visible
+            case 34: // Imprévisible
                 if ((caster.getTeam() == 0)
                         && DamagingEffects.contains("|" + effectID + "|")) {
                     for (Fighter target : targets) {
@@ -386,7 +386,7 @@ public class Challenge {
                     }
                 }
                 break;
-            case 43: // Abn�gation
+            case 43: // Abnégation
                 if ((caster.getTeam() == 0) && HealingEffects.contains("|" + effectID + "|") && caster.getInvocator() == null)
                     for (Fighter target : targets)
                         if (target.getId() == caster.getId())
@@ -433,7 +433,7 @@ public class Challenge {
             return;
 
         switch (Type) {
-            case 3: // D�sign� Volontaire
+            case 3: // Désigné Volontaire
                 if (_cible == null)
                     return;
                 if(mob.isInvocation()) return;
@@ -488,7 +488,7 @@ public class Challenge {
                     challengeWin();
                 break;
 
-            case 34: // Impr�visible
+            case 34: // Imprévisible
                 _cible = null;
                 break;
             case 42: // Deux pour le prix d'un
@@ -518,7 +518,7 @@ public class Challenge {
                 }
                 break;
 
-            case 35: // Tueur � gages
+            case 35: // Tueur à gages
                 if (_cible == null)
                     return;
                 if (_cible.getId() != mob.getId()) {
@@ -580,7 +580,7 @@ public class Challenge {
                 }
                 break;
 
-            case 25: // Ordonn�
+            case 25: // Ordonné
                 if (_cible == null)
                     return;
                 if (killer.isMob() || mob.isInvocation() || mob.isDouble() || mob.getPersonnage() != null)
@@ -616,7 +616,7 @@ public class Challenge {
             return;
         switch (Type) {
             case 1: // Zombie
-                if (this.fight.getCurFighterUsedPm() > 1) // Si l'on a utilis� plus d'un PM
+                if (this.fight.getCurFighterUsedPm() > 1) // Si l'on a utilisé plus d'un PM
                     //if (fighter.getPm() - fighter.getCurPm(fight) > 1)
                     challengeLoose(fight.getFighterByOrdreJeu());
                 break;
@@ -637,7 +637,7 @@ public class Challenge {
                 lastActions += action.toString();
                 break;
 
-            case 24: // Born�
+            case 24: // Borné
                 if (!lastActions.contains(action.toString())
                         && lastActions.contains(";" + fighter.getId() + ","))
                     challengeLoose(fight.getFighterByOrdreJeu());
@@ -703,7 +703,7 @@ public class Challenge {
                         Args = "ok";
                     else Args = "cant";
                 break;
-            case 34: // Impr�visible
+            case 34: // Imprévisible
                 if (fighter.getTeam() == 1)
                     return;
                 try {
@@ -768,7 +768,7 @@ public class Challenge {
 
         switch (Type) {
             case 1: // Zombie
-                if (this.fight.getCurFighterUsedPm() <= 0) // Si l'on a pas boug�
+                if (this.fight.getCurFighterUsedPm() <= 0) // Si l'on a pas bougé
                     challengeLoose(fighter);
                 break;
 
@@ -823,7 +823,7 @@ public class Challenge {
                             hasFailed = false;
                 break;
 
-            case 39: // Anachor�te
+            case 39: // Anachorète
                 if (!fighters.isEmpty())
                     fighters.stream().filter(f -> f.getTeam() == fighter.getTeam()).forEach(f -> challengeLoose(fighter));
                 break;
@@ -833,7 +833,7 @@ public class Challenge {
                     fighters.stream().filter(f -> f.getTeam() != fighter.getTeam()).forEach(f -> challengeLoose(fighter));
                 break;
 
-            case 41: // P�tulant
+            case 41: // Pétulant
                 if (this.fight.getCurFighterPa() != 0)
                     challengeLoose(fighter);
                 break;

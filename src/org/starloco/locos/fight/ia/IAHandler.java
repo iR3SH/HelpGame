@@ -35,17 +35,17 @@ public class IAHandler {
                     ia = new IA2(fight, fighter, (byte) 6); break;
                 case 5://IA Bloqueuse : Avancer vers ennemis
                     ia = new IA5(fight, fighter, (byte) 5); break;
-                case 6://IA type invocations (Coffre anim�)
+                case 6://IA type invocations (Coffre animé)
                     ia = new IA6(fight, fighter, (byte) 5); break;
                 case 8://IA Surpuissante : Invocation, Buff, Fuite
                     ia = new IA8(fight, fighter, (byte) 4); break;
                 case 9://IA La Fourbe : Attaque[], Fuite
                     ia = new IA9(fight, fighter, (byte) 4); break;
-                case 10://IA Tonneau : Attaque[], Soin si Etat port�e
+                case 10://IA Tonneau : Attaque[], Soin si Etat portée
                     ia = new IA10(fight, fighter, (byte) 8); break;
                 case 12://IA Tofus
                     ia = new IA12(fight, fighter, (byte) 4); break;
-                case 14://IA Tonneau : Attaque[], Soin si Etat port�e
+                case 14://IA Tonneau : Attaque[], Soin si Etat portée
                     ia = new IA14(fight, fighter, (byte) 8); break;
                 case 15://IA BASIQUE buff sois meme,attaque,pm,attaque,pm
                     ia = new IA30(fight, fighter, (byte) 4); break;
@@ -65,7 +65,7 @@ public class IAHandler {
                     ia = new IA22(fight, fighter, (byte) 4); break;
                 case 23: // IA Rasboul mineur
                     ia = new IA23(fight, fighter, (byte) 3); break;
-                case 24: // IA Sac anim�
+                case 24: // IA Sac animé
                     ia = new IA24(fight, fighter, (byte) 3); break;
                 case 25: // IA Sacrifier
                     ia = new IA25(fight, fighter, (byte) 4); break;
@@ -193,7 +193,7 @@ public class IAHandler {
                 case 85: //Ougaa
                     ia=new IA85(fight,fighter,(byte)4);
                     break;
-                case 100: //Alpha Invocation Dopeul F�ca (+Enu)
+                case 100: //Alpha Invocation Dopeul Féca (+Enu)
                     ia=new IA100(fight,fighter,(byte)4);
                     break;
                 case 101: //Alpha Invocation Dopeul Iop
@@ -202,7 +202,7 @@ public class IAHandler {
                 case 102: //Alpha Invocation Dopeul Cra
                     ia=new IA102(fight,fighter,(byte)4);
                     break;
-                case 103: //Alpha Invocation Dopeul X�lor (+Eni)
+                case 103: //Alpha Invocation Dopeul Xélor (+Eni)
                     ia=new IA103(fight,fighter,(byte)4);
                     break;
                 case 104: //Alpha Invocation Dopeul Sadi
@@ -226,7 +226,7 @@ public class IAHandler {
         final IA finalIA = ia;
         ia.addNext(() -> {
             finalIA.apply();
-            finalIA.addNext(finalIA::endTurn, 0); // 1000 to 0 by coding mestre (v�rifier si �a induit des bugs)
+            finalIA.addNext(finalIA::endTurn, 0); // 1000 to 0 by coding mestre (vérifier si à induit des bugs)
         }, 0);
     }
 }

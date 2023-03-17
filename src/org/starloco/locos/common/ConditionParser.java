@@ -28,7 +28,7 @@ public class ConditionParser {
         req = req.replace("&", "&&").replace("=", "==").replace("|", "||").replace("!", "!=").replace("~", "==");
         if (req.contains("Sc"))
             return true;
-        if (req.contains("Pg")) // C'est les dons que l'on gagne lors des quêtes d'alignement, connaissance des potions etc ... ce n'est pas encore codê !
+        if (req.contains("Pg")) // C'est les dons que l'on gagne lors des quÃªtes d'alignement, connaissance des potions etc ... ce n'est pas encore codÃ© !
             return false;
         if (req.contains("RA"))
             return haveRA(req, perso);
@@ -94,7 +94,7 @@ public class ConditionParser {
             jep.addVariable("PW", perso.getMaxPod());//MaxPod
             if (perso.getCurMap().getSubArea() != null)
                 jep.addVariable("PB", perso.getCurMap().getSubArea().getId());//SubArea
-            jep.addVariable("PR", (perso.getWife() > 0 ? 1 : 0));//Mariê ou pas
+            jep.addVariable("PR", (perso.getWife() > 0 ? 1 : 0));//MariÃ© ou pas
             jep.addVariable("SI", perso.getCurMap().getId());//Mapid
             jep.addVariable("MiS", perso.getId());//Les pierres d'ames sont lancables uniquement par le lanceur.
             jep.addVariable("MA", perso.getAlignMap());//Pandala
@@ -157,7 +157,7 @@ public class ConditionParser {
         return false;
     }
 
-    //Avoir la quête en cours
+    //Avoir la quÃªte en cours
     private static boolean haveQa(String req, Player player) {
         int id = Integer.parseInt((req.contains("==") ? req.split("==")[1] : req.split("!=")[1]));
         Quest q = Quest.getQuestById(id);
@@ -172,7 +172,7 @@ public class ConditionParser {
 
     }
 
-    // être ê l'êtape id. Elle ne doit pas être validê et celle d'avant doivent l'être.
+    // Ãªtre Ã  l'Ã©tape id. Elle ne doit pas Ãªtre validÃ© et celle d'avant doivent l'Ãªtre.
     private static boolean haveQEt(String req, Player player) {
         int id = Integer.parseInt((req.contains("==") ? req.split("==")[1] : req.split("!=")[1]));
         Quest_Etape qe = Quest_Etape.getQuestEtapeById(id);
@@ -253,7 +253,7 @@ public class ConditionParser {
         return false;
     }
 
-    // Avoir la quête en cours.
+    // Avoir la quÃªte en cours.
     private static boolean haveQE(String req, Player player) {
         if (player == null)
             return false;
@@ -481,7 +481,7 @@ public class ConditionParser {
             }
         }
         if (CutFinalLenght) {
-            finalLength = (copyCond.length() - 2);//On retire les deux derniers carractêres (|| ou &&)
+            finalLength = (copyCond.length() - 2);//On retire les deux derniers carractÃ¨res (|| ou &&)
             copyCond = copyCond.substring(0, finalLength);
         }
         return copyCond;

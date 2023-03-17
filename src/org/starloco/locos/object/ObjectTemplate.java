@@ -192,7 +192,7 @@ public class ObjectTemplate {
                     break;
                 }
             }
-            if (!follow2) continue; //Si c'�tait un effet Actif d'arme ou une signature
+            if (!follow2) continue; //Si c'était un effet Actif d'arme ou une signature
             
             if(!firstStats)
             	statsBuilder.append(",");
@@ -548,7 +548,7 @@ public class ObjectTemplate {
                 //Si c'est un Effet Actif
                 if (a == statID)
                     follow = false;
-            if (!follow)//Si c'�tait un effet Actif d'arme
+            if (!follow)//Si c'était un effet Actif d'arme
                 continue;
             if (statID == Constant.STATS_RESIST)
                 continue;

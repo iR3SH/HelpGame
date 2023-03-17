@@ -110,7 +110,7 @@ public class Stats {
             //Si la stat n'existe pas dans l'autre map
             if (other.getMap().get(entry.getKey()) == null)
                 return false;
-            //Si la stat existe mais n'a pas la m�me valeur
+            //Si la stat existe mais n'a pas la même valeur
             if (other.getMap().get(entry.getKey()).compareTo(entry.getValue()) != 0)
                 return false;
         }
@@ -118,7 +118,7 @@ public class Stats {
             //Si la stat n'existe pas dans l'autre map
             if (this.effects.get(entry.getKey()) == null)
                 return false;
-            //Si la stat existe mais n'a pas la m�me valeur
+            //Si la stat existe mais n'a pas la même valeur
             if (this.effects.get(entry.getKey()).compareTo(entry.getValue()) != 0)
                 return false;
         }

@@ -78,7 +78,7 @@ public class House {
                                 && house.getValue().canDo(Constant.H_GBLASON))//meme guilde
                         {
                             packet.append(";").append(Gname).append(";").append(Gemblem);
-                        } else if (house.getValue().canDo(Constant.H_OBLASON))//Pas de guilde/guilde-diff�rente
+                        } else if (house.getValue().canDo(Constant.H_OBLASON))//Pas de guilde/guilde-différente
                         {
                             packet.append(";").append(Gname).append(";").append(Gemblem);
                         }
@@ -133,7 +133,7 @@ public class House {
         int kamas = 0;
         for (Trunk trunk : Trunk.getTrunksByHouse(house)) {
             if (house.getOwnerId() > 0)
-                trunk.moveTrunkToBank(World.world.getAccount(house.getOwnerId()));//D�placement des items vers la banque
+                trunk.moveTrunkToBank(World.world.getAccount(house.getOwnerId()));//Déplacement des items vers la banque
 
             kamas += trunk.getKamas();
             trunk.setKamas(0);//Retrait kamas
@@ -148,7 +148,7 @@ public class House {
             seller.setBankKamas(seller.getBankKamas() + house.getSale() + kamas);
 
             if (seller.getCurrentPlayer() != null)//FIXME: change the packet (Im)
-                SocketManager.GAME_SEND_MESSAGE(seller.getCurrentPlayer(), "Une maison vous appartenant a �t� vendue " + house.getSale() + " kamas.");
+                SocketManager.GAME_SEND_MESSAGE(seller.getCurrentPlayer(), "Une maison vous appartenant a été vendue " + house.getSale() + " kamas.");
             Database.getStatics().getAccountData().update(seller);
         }
 
@@ -171,7 +171,7 @@ public class House {
             SocketManager.GAME_SEND_hOUSE(P, "SK" + h.getId() + "|" + price);
             //Vente de la maison
             Database.getDynamics().getHouseData().sell(h, price);
-            //Rafraichir la map apr�s la mise en vente
+            //Rafraichir la map après la mise en vente
             for (Player z : P.getCurMap().getPlayers())
                 load(z, z.getCurMap().getId());
         }
@@ -403,10 +403,10 @@ public class House {
     public void enter(Player P) {//Entrer dans la maison
         if (P.getFight() != null || P.getExchangeAction() != null)
             return;
-        if (this.getOwnerId() == P.getAccID() || (P.get_guild() != null && P.get_guild().getId() == this.getGuildId() && canDo(Constant.H_GNOCODE)))//C'est sa maison ou m�me guilde + droits entrer sans pass
+        if (this.getOwnerId() == P.getAccID() || (P.get_guild() != null && P.get_guild().getId() == this.getGuildId() && canDo(Constant.H_GNOCODE)))//C'est sa maison ou même guilde + droits entrer sans pass
             open(P, "-", true);
         else if (this.getOwnerId() > 0) //Une personne autre la acheter, il faut le code pour rentrer
-            SocketManager.GAME_SEND_KODE(P, "CK0|8");//8 �tant le nombre de chiffre du code
+            SocketManager.GAME_SEND_KODE(P, "CK0|8");//8 étant le nombre de chiffre du code
         else if (this.getOwnerId() == 0)//Maison non acheter, mais achetable, on peut rentrer sans code
             open(P, "-", false);
     }
@@ -458,12 +458,12 @@ public class House {
         if (total == 1)
             return;
 
-        if (haveRight.size() > 0) //Si les droits contiennent quelque chose -> Vidage (M�me si le HashMap supprimerais les entr�es doublon lors de l'ajout)
+        if (haveRight.size() > 0) //Si les droits contiennent quelque chose -> Vidage (Même si le HashMap supprimerais les entrées doublon lors de l'ajout)
             haveRight.clear();
 
         initRight(); //Remplissage des droits
 
-        Integer[] mapKey = haveRight.keySet().toArray(new Integer[haveRight.size()]); //R�cup�re les clef de map dans un tableau d'Integer
+        Integer[] mapKey = haveRight.keySet().toArray(new Integer[haveRight.size()]); //Récupère les clef de map dans un tableau d'Integer
 
         while (total > 0) {
             for (int i = haveRight.size() - 1; i < haveRight.size(); i--) {

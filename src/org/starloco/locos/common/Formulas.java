@@ -465,7 +465,7 @@ public class Formulas {
                 //Ajout de la resist Magique
                 resfT = target.getTotalStats().getEffect(183);
                 break;
-            case Constant.ELEMENT_AIR://agilit�
+            case Constant.ELEMENT_AIR://agilité
                 statC = caster.getTotalStats().getEffect(Constant.STATS_ADD_AGIL);
                 resfT = target.getTotalStats().getEffect(Constant.STATS_ADD_R_AIR);
                 respT = target.getTotalStats().getEffect(Constant.STATS_ADD_RP_AIR);
@@ -523,7 +523,7 @@ public class Formulas {
         }
 
         num = a * mulT * (jet * ((100 + statC + perdomC + (multiplier * 100)) / 100))
-                + domC;//d�gats bruts
+                + domC;//dégats bruts
         //Poisons
         if (spellid != -1) {
             switch (spellid) {
@@ -613,15 +613,15 @@ public class Formulas {
                         + "", target.getId() + "," + armor);
         if (!isHeal)
             num -= resfT;//resis fixe
-        //d�gats finaux
+        //dégats finaux
         if (num < 1)
             num = 0;
         //Perte de 10% des PDV MAX par points de degat 10 PDV = 1PDV max en moins
         if (target.getPersonnage() != null)
             target.removePdvMax((int) Math.floor(num / 10));
-        // D�but Formule pour les MOBs
+        // Début Formule pour les MOBs
         if (caster.getPersonnage() == null && !caster.isCollector()) {
-            if (caster.getMob().getTemplate().getId() == 116)//Sacrifi� Dommage = PDV*2
+            if (caster.getMob().getTemplate().getId() == 116)//Sacrifié Dommage = PDV*2
             {
                 return (int) ((num / 25) * caster.getPdvMax());
             } else {
@@ -649,7 +649,7 @@ public class Formulas {
                     //Si pas element feu, on ignore l'armure
                     if (statID != Constant.ELEMENT_FEU)
                         continue;
-                    //Les stats du f�ca sont prises en compte
+                    //Les stats du féca sont prises en compte
                     fighter = SE.getCaster();
                     break;
                 case 6://Armure Terrestre
@@ -657,21 +657,21 @@ public class Formulas {
                     if (statID != Constant.ELEMENT_TERRE
                             && statID != Constant.ELEMENT_NEUTRE)
                         continue;
-                    //Les stats du f�ca sont prises en compte
+                    //Les stats du féca sont prises en compte
                     fighter = SE.getCaster();
                     break;
                 case 14://Armure Venteuse
                     //Si pas element air, on ignore l'armure
                     if (statID != Constant.ELEMENT_AIR)
                         continue;
-                    //Les stats du f�ca sont prises en compte
+                    //Les stats du féca sont prises en compte
                     fighter = SE.getCaster();
                     break;
                 case 18://Armure aqueuse
                     //Si pas element eau, on ignore l'armure
                     if (statID != Constant.ELEMENT_EAU)
                         continue;
-                    //Les stats du f�ca sont prises en compte
+                    //Les stats du féca sont prises en compte
                     fighter = SE.getCaster();
                     break;
 
@@ -728,6 +728,16 @@ public class Formulas {
     }
 
     public static int getPointsLost(final char type, final int value, final Fighter caster, final Fighter target) {
+        if(type == 'a') {
+            if(target.getCurPa(target.getFight()) == 0){
+                return 0;
+            }
+        }
+        else{
+            if(target.getCurPm(target.getFight()) == 0){
+                return 0;
+            }
+        }
         float esquiveC;
         float esquiveT;
         final float ptsMax = type == 'a' ? target.getTotalStatsLessBuff().getEffect(Constant.STATS_ADD_PA) : target.getTotalStatsLessBuff().getEffect(Constant.STATS_ADD_PM);
@@ -743,12 +753,22 @@ public class Formulas {
         int loose = 0;
         for (short i = 0; i < value; ++i) {
             final float pts = (type == 'a' ? target.getPa() : target.getPm()) - loose;
-            // Probabilit� de retirer 1 PA = 50 * (Retrait lanceur / esquive cible)* (PA actuels cible / PA totaux cibles) %
+            // Probabilité de retirer 1 PA = 50 * (Retrait lanceur / esquive cible)* (PA actuels cible / PA totaux cibles) %
             float chance = 50f * (esquiveC / esquiveT) * (pts / ptsMax);
             if(chance > 90f) chance = 90f;
             else if(chance < 10f) chance = 10f;
             
             if(Math.round(chance) >= random.nextInt(101)) ++loose;
+        }
+        if(type == 'a') {
+            if(target.getCurPa(target.getFight()) < loose){
+                loose = target.getCurPa(target.getFight());
+            }
+        }
+        else{
+            if(target.getCurPm(target.getFight()) < loose){
+                loose = target.getCurPm(target.getFight());
+            }
         }
         return loose;
     }
@@ -807,17 +827,17 @@ public class Formulas {
                 LvlGuild = perso.getPersonnage().get_guild().getLvl(),
                 pXpGive = (double) gm.getPXpGive() / 100;
 
-        double maxP = xp * pXpGive * 0.10; //Le maximum donn� � la guilde est 10% du montant pr�lev� sur l'xp du combat
-        double diff = Math.abs(Lvl - LvlGuild); //Calcul l'�cart entre le niveau du personnage et le niveau de la guilde
+        double maxP = xp * pXpGive * 0.10; //Le maximum donné à la guilde est 10% du montant prélevé sur l'xp du combat
+        double diff = Math.abs(Lvl - LvlGuild); //Calcul l'écart entre le niveau du personnage et le niveau de la guilde
         double toGuild;
         if (diff >= 70) {
-            toGuild = maxP * 0.10; //Si l'�cart entre les deux level est de 70 ou plus, l'experience donn�e a la guilde est de 10% la valeur maximum de don
+            toGuild = maxP * 0.10; //Si l'écart entre les deux level est de 70 ou plus, l'experience donnée a la guilde est de 10% la valeur maximum de don
         } else if (diff >= 31 && diff <= 69) {
             toGuild = maxP - ((maxP * 0.10) * (Math.floor((diff + 30) / 10)));
         } else if (diff >= 10 && diff <= 30) {
             toGuild = maxP - ((maxP * 0.20) * (Math.floor(diff / 10)));
         } else
-        //Si la diff�rence est [0,9]
+        //Si la différence est [0,9]
         {
             toGuild = maxP;
         }
@@ -1022,7 +1042,7 @@ public class Formulas {
         return 10;
     }
 
-    public static int getLvlDopeuls(int lvl)//Niveau du dopeul � combattre
+    public static int getLvlDopeuls(int lvl)//Niveau du dopeul à combattre
     {
         if (lvl < 20)
             return 20;
@@ -1072,7 +1092,7 @@ public class Formulas {
             c = 1 - ((1 - (m1 / m2)) / 2);
         if (c < 0)
             c = 0;
-        // la variable c reste � 1 si le jet ne depasse pas 80% sinon il diminue tr�s fortement. Si le jet d�passe 100% alors il diminue encore plus.
+        // la variable c reste à 1 si le jet ne depasse pas 80% sinon il diminue très fortement. Si le jet dépasse 100% alors il diminue encore plus.
 
         int moyenne = (int) Math.floor(WeightTotalBase
                 - ((WeightTotalBase - WeightTotalBaseMin) / 2));
@@ -1102,14 +1122,14 @@ public class Formulas {
         		p3 = 90;
         	} else {
             	p1 = 2; 							// On propose 2% de SC
-            	p2 = 78 - actualStat*217*weight/(statsAdd*100); 		// Base 80% de succes avec difficult� croissante -> Cale sur 25
+            	p2 = 78 - actualStat*217*weight/(statsAdd*100); 		// Base 80% de succes avec difficulté croissante -> Cale sur 25
             	// Cas d'un gelano + carac
-            	// On cherche que la proba tende vers 0 vers +36 dans un �l�ment (216/100 * 36 = 78 pour p2(SN) qui tend vers 0)
-            	// Le calcul a �t� arrang� pour ne pas �tre �ronn� malgr� les int
-            	// On y ajoute la constante poidRune/StatsAjout� pour permettre aux gelano vita d'�tre + coh�rants
-            	// FIXME: Ajouter la difficult� en f(poid des runes)
-            	// Le cas des runes �l�ments et vie a �t� g�r�, il faut ajouter les autres runes
-            	// Par exemple les runes vi passent + facilement de 0 � 30 en carac etc
+            	// On cherche que la proba tende vers 0 vers +36 dans un élément (216/100 * 36 = 78 pour p2(SN) qui tend vers 0)
+            	// Le calcul a été arrangé pour ne pas être éronné malgré les int
+            	// On y ajoute la constante poidRune/StatsAjouté pour permettre aux gelano vita d'être + cohérants
+            	// FIXME: Ajouter la difficulté en f(poid des runes)
+            	// Le cas des runes éléments et vie a été géré, il faut ajouter les autres runes
+            	// Par exemple les runes vi passent + facilement de 0 à 30 en carac etc
             	if(p2<0) {
             		p2 = 0;
             	}
@@ -1339,7 +1359,7 @@ public class Formulas {
         String alpha = "a b c d e f g h i j k l n o p q r s t u v w x y z é è à ç & û â ê ô î ä ë ü ï ö";
         for (String i : alpha.split(" "))
             msg = msg.replace(i, "m");
-        alpha = "A B C D E F G H I J K L M N O P Q R S T U V W X Y Z Ë Ü Ä � Ö Â Ê Û Î Ô";
+        alpha = "A B C D E F G H I J K L M N O P Q R S T U V W X Y Z Ë Ü Ä Ï Ö Â Ê Û Î Ô";
         for (String i : alpha.split(" "))
             msg = msg.replace(i, "H");
         return msg;
@@ -1362,7 +1382,7 @@ public class Formulas {
      * Les stats qui ne sont pas specifie dans le tableaux order seront mis a la fin par ordre croissant selon leur stat ID
      * 
      * @author Sarazar928Ghost Kevin#6537
-     * @param Stats de l'objet
+     * @param strStats Stats de l'objet
      * @return Stats sort by order
      */
     public static String sortStatsByOrder(final String strStats) {

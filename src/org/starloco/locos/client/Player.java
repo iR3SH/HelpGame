@@ -59,7 +59,7 @@ public class Player {
     public boolean isNew = false;
     public Maitre _maitre = null;
     //Job
-    //Disponibilit�
+    //Disponibilité
     public boolean _isAbsent = false;
     public boolean _isInvisible = false;
     //Double
@@ -71,7 +71,7 @@ public class Player {
     public boolean isInEnnemyFaction;
     public long enteredOnEnnemyFaction;
     public boolean donjon;
-    //Commande h�h�
+    //Commande
     public int thatMap = -1;
     public int thatCell = -1;
     public boolean walkFast = false;
@@ -416,7 +416,7 @@ public class Player {
                 this._saveSpellPts = pts;
             else
                 this._spellPts = pts;
-            //Chargement des m�tiers
+            //Chargement des métiers
             if (!jobs.equals("")) {
                 for (String aJobData : jobs.split(";")) {
                     String[] infos = aJobData.split(",");
@@ -1169,7 +1169,7 @@ public class Player {
         account = c;
     }
 
-	public Collection<SortStats> getSorts()   // m�thode ajout�e pour .spellmax
+	public Collection<SortStats> getSorts()   // méthode ajoutée pour .spellmax
 	{
 		 return _sorts.values();
 	}
@@ -1354,7 +1354,7 @@ public class Player {
         }
 
         if (_sorts.containsKey(spellID) && learn) {
-            SocketManager.GAME_SEND_MESSAGE(this, "Tu poss�des d�j� ce sort.");
+            SocketManager.GAME_SEND_MESSAGE(this, "Tu possèdes déjà ce sort.");
             return false;
         } else {
             _sorts.put(spellID, World.world.getSort(spellID).getStatsByLevel(level));
@@ -1848,7 +1848,7 @@ public class Player {
         World.world.showPrismes(this);
         //Actualisation dans la DB
         Database.getStatics().getAccountData().updateLastConnection(account);
-        if (!Config.getInstance().startMessage.equals(""))//Si le motd est notifi�
+        if (!Config.getInstance().startMessage.equals(""))//Si le motd est notifié
             SocketManager.GAME_SEND_MESSAGE(this, Config.getInstance().startMessage);
 
         for (GameObject object : this.objects.values()) {
@@ -2456,7 +2456,7 @@ public class Player {
             case 13://Chance
                 value = this.getStats().getEffect(Constant.STATS_ADD_CHAN);
                 break;
-            case 14://Agilit�
+            case 14://Agilité
                 value = this.getStats().getEffect(Constant.STATS_ADD_AGIL);
                 break;
             case 15://Intelligence
@@ -2483,7 +2483,7 @@ public class Player {
                 case 13://Chance
                     this.getStats().addOneStat(Constant.STATS_ADD_CHAN, 1);
                     break;
-                case 14://Agilit�
+                case 14://Agilité
                     this.getStats().addOneStat(Constant.STATS_ADD_AGIL, 1);
                     break;
                 case 15://Intelligence
@@ -2508,7 +2508,7 @@ public class Player {
                 case 13://Chance
                     value = this.getStats().getEffect(Constant.STATS_ADD_CHAN);
                     break;
-                case 14://Agilit�
+                case 14://Agilité
                     value = this.getStats().getEffect(Constant.STATS_ADD_AGIL);
                     break;
                 case 15://Intelligence
@@ -2533,7 +2533,7 @@ public class Player {
                     case 13://Chance
                         this.getStats().addOneStat(Constant.STATS_ADD_CHAN, 1);
                         break;
-                    case 14://Agilit�
+                    case 14://Agilité
                         this.getStats().addOneStat(Constant.STATS_ADD_AGIL, 1);
                         break;
                     case 15://Intelligence
@@ -2572,7 +2572,7 @@ public class Player {
 	    	for (Entry<Integer, GameObject> entry : objects.entrySet()) {
 	            GameObject obj = entry.getValue();
 	            if (ConditionParser.stackIfSimilar(obj, newObj)) {
-	                obj.setQuantity(obj.getQuantity() + newObj.getQuantity());//On ajoute QUA item a la quantit� de l'objet existant
+	                obj.setQuantity(obj.getQuantity() + newObj.getQuantity());//On ajoute QUA item a la quantité de l'objet existant
 	                if (isOnline)
 	                    SocketManager.GAME_SEND_OBJECT_QUANTITY_PACKET(this, obj);
 	                return false;
@@ -2682,7 +2682,7 @@ public class Player {
                 	this.unEquipItem(obj.getPosition());
                 if (deleteFromWorld)
                     World.world.removeGameObject(obj.getGuid());
-                //on envoie le packet si connect�
+                //on envoie le packet si connecté
                 if (send && isOnline)
                     SocketManager.GAME_SEND_REMOVE_ITEM_PACKET(this, obj.getGuid());
             }
@@ -2839,11 +2839,11 @@ public class Player {
 
     public int learnJob(Job m) {
         for (Entry<Integer, JobStat> entry : _metiers.entrySet()) {
-            if (entry.getValue().getTemplate().getId() == m.getId())//Si le joueur a d�j� le m�tier
+            if (entry.getValue().getTemplate().getId() == m.getId())//Si le joueur a déjà le métier
                 return -1;
         }
         int Msize = _metiers.size();
-        if (Msize == 6)//Si le joueur a d�j� 6 m�tiers
+        if (Msize == 6)//Si le joueur a déjà 6 métiers
             return -1;
         int pos = 0;
         if (JobConstant.isMageJob(m.getId())) {
@@ -2863,9 +2863,9 @@ public class Player {
         }
 
         JobStat sm = new JobStat(pos, m, 1, 0);
-        _metiers.put(pos, sm);//On apprend le m�tier lvl 1 avec 0 xp
+        _metiers.put(pos, sm);//On apprend le métier lvl 1 avec 0 xp
         if (isOnline) {
-            //on cr�er la listes des JobStats a envoyer (Seulement celle ci)
+            //on créer la listes des JobStats a envoyer (Seulement celle ci)
             ArrayList<JobStat> list = new ArrayList<JobStat>();
             list.add(sm);
 
@@ -3063,28 +3063,7 @@ public class Player {
             SocketManager.GAME_SEND_ADD_PLAYER_TO_MAP(this.curMap, this);
             return;
         }
-        /*
-        //Test Tp esclave
-        final Party party = ((Player) this.player).getParty();
-        final List<Player> players = ((Player) this.player).getParty().getPlayers();
-        final Player master = ((Player) this.player).getParty().getMaster();
-        if(party.getMaster() != null) {
-        	for (Player follower : players)
-    		{
-			if(follower.getExchangeAction() != null)
-    		{
-    		follower.sendMessage("Vous n'avez pas pu �tre t�l�port� car vous �tes occup�.");
-    		master.sendMessage("Le joueur "+follower.getName()+" est occup� et n'a pas pu �tre t�l�port�.");
-    	    continue;
-    		}
-    		if(master.getCurMap().getId() != follower.getCurMap().getId())
-    			follower.teleport(master.getCurMap().getId(), master.getCurCell().getId());
-    		}
-    		
-        }
-        // Fin test
-        */
-        
+
         this.setAway(false);
         boolean fullmorph = false , deleteGladiaWeapon = false;
         if (Constant.isInMorphDonjon(this.curMap.getId()))
@@ -3115,7 +3094,7 @@ public class Player {
         this.curMap = map;
         this.curCell = this.curMap.getCase(newCellID);
         // Verification de la Map
-        // Verifier la validit� du mountpark
+        // Verifier la validité du mountpark
         
         final MountPark currentPark = this.curMap.getMountPark();
         if(currentPark != null)
@@ -3123,16 +3102,7 @@ public class Player {
                 if(World.world.getGuild(currentPark.getGuild().getId()) == null)
                     GameMap.removeMountPark(currentPark.getGuild().getId());
         
-        /*if (this.curMap.getMountPark() != null
-                && this.curMap.getMountPark().getOwner() > 0
-                && this.curMap.getMountPark().getGuild().getId() != -1) {
-            if (World.world.getGuild(this.curMap.getMountPark().getGuild().getId()) == null) {// Ne devrait  pas  arriver
-                GameServer.a();
-                //FIXME : Map.MountPark.removeMountPark(curMap.getMountPark().get_guild().getId());
-            }
-        }*/
-
-        // Verifier la validit� du Collector
+        // Verifier la validité du Collector
         Collector col = Collector.getCollectorByMapId(this.curMap.getId());
         if (col != null) {
             if (World.world.getGuild(col.getGuildId()) == null)// Ne devrait pas arriver
@@ -3267,25 +3237,15 @@ public class Player {
         curMap = map;
         curCell = curMap.getCase(cell);
         // Verification de la Map
-        // Verifier la validit� du mountpark
-        /*
-        if (curMap.getMountPark() != null
-                && curMap.getMountPark().getOwner() > 0
-                && curMap.getMountPark().getGuild().getId() != -1) {
-            if (World.world.getGuild(curMap.getMountPark().getGuild().getId()) == null)// Ne devrait  pas  arriver
-            {
-                GameServer.a();
-                //FIXME : Map.MountPark.removeMountPark(curMap.getMountPark().get_guild().getId());
-            }
-        }*/
-        
+        // Verifier la validité du mountpark
+
         final MountPark currentPark = this.curMap.getMountPark();
         if(currentPark != null)
             if(currentPark.getOwner() > 0 && currentPark.getGuild() != null && currentPark.getGuild().getId() != -1)
                 if(World.world.getGuild(currentPark.getGuild().getId()) == null)
                     GameMap.removeMountPark(currentPark.getGuild().getId());
         
-        // Verifier la validit� du Collector
+        // Verifier la validité du Collector
         if (Collector.getCollectorByMapId(curMap.getId()) != null) {
             if (World.world.getGuild(Collector.getCollectorByMapId(curMap.getId()).getGuildId()) == null)// Ne devrait pas arriver
             {
@@ -3400,17 +3360,17 @@ public class Player {
         if (objects.get(guid) == null) // Si le joueur n'a pas l'item dans son sac ...
             return;
 
-        if (PersoObj.getPosition() != Constant.ITEM_POS_NO_EQUIPED) // Si c'est un item �quip� ...
+        if (PersoObj.getPosition() != Constant.ITEM_POS_NO_EQUIPED) // Si c'est un item équipé ...
             return;
 
         GameObject BankObj = getSimilarBankItem(PersoObj);
         int newQua = PersoObj.getQuantity() - qua;
         if (BankObj == null) // Ajout d'un nouvel objet dans la banque
         {
-            if (newQua <= 0) // Ajout de toute la quantit� disponible
+            if (newQua <= 0) // Ajout de toute la quantité disponible
             {
                 removeItem(PersoObj.getGuid()); // On enleve l'objet du sac du joueur
-                account.getBank().add(PersoObj); // On met l'objet du sac dans la banque, avec la meme quantit�
+                account.getBank().add(PersoObj); // On met l'objet du sac dans la banque, avec la meme quantité
                 String str = "O+" + PersoObj.getGuid() + "|"
                         + PersoObj.getQuantity() + "|"
                         + PersoObj.getTemplate().getId() + "|"
@@ -3420,7 +3380,7 @@ public class Player {
             } else
             //S'il reste des objets au joueur
             {
-                PersoObj.setQuantity(newQua); //on modifie la quantit� d'item du sac
+                PersoObj.setQuantity(newQua); //on modifie la quantité d'item du sac
                 BankObj = GameObject.getCloneObjet(PersoObj, qua); //On ajoute l'objet a la banque et au monde
                 World.world.addGameObject(BankObj, true);
                 account.getBank().add(BankObj);
@@ -3440,7 +3400,7 @@ public class Player {
                 removeItem(PersoObj.getGuid()); //On enleve l'objet du sac du joueur
                 World.world.removeGameObject(PersoObj.getGuid()); //On enleve l'objet du monde
                 BankObj.setQuantity(BankObj.getQuantity()
-                        + PersoObj.getQuantity()); //On ajoute la quantit� a l'objet en banque
+                        + PersoObj.getQuantity()); //On ajoute la quantité a l'objet en banque
                 String str = "O+" + BankObj.getGuid() + "|"
                         + BankObj.getQuantity() + "|"
                         + BankObj.getTemplate().getId() + "|"
@@ -3450,7 +3410,7 @@ public class Player {
             } else
             //S'il restait des objets
             {
-                PersoObj.setQuantity(newQua); //on modifie la quantit� d'item du sac
+                PersoObj.setQuantity(newQua); //on modifie la quantité d'item du sac
                 BankObj.setQuantity(BankObj.getQuantity() + qua);
                 String str = "O+" + BankObj.getGuid() + "|"
                         + BankObj.getQuantity() + "|"
@@ -3504,7 +3464,7 @@ public class Player {
             } else
             //S'il reste des objets en banque
             {
-                //On cr�e une copy de l'item en banque
+                //On crée une copy de l'item en banque
                 PersoObj = GameObject.getCloneObjet(BankObj, qua);
                 //On l'ajoute au monde
                 World.world.addGameObject(PersoObj, true);
@@ -3529,7 +3489,7 @@ public class Player {
                 //On retire l'item de la banque
                 account.getBank().remove(index);
                 World.world.removeGameObject(BankObj.getGuid());
-                //On Modifie la quantit� de l'item du sac du joueur
+                //On Modifie la quantité de l'item du sac du joueur
                 PersoObj.setQuantity(PersoObj.getQuantity()
                         + BankObj.getQuantity());
 
@@ -3669,7 +3629,7 @@ public class Player {
                     this.removeItem(obj.getGuid());
                     objects.remove(obj.getGuid());
                     World.world.removeGameObject(obj.getGuid());
-                    //on envoie le packet si connect�
+                    //on envoie le packet si connecté
                     if (isOnline)
                         SocketManager.GAME_SEND_REMOVE_ITEM_PACKET(this, obj.getGuid());
                 }
@@ -3691,12 +3651,12 @@ public class Player {
                         this.removeItem(o.getGuid());
                         objects.remove(o.getGuid());
                         World.world.removeGameObject(o.getGuid());
-                        //on envoie le packet si connect�
+                        //on envoie le packet si connecté
                         if (isOnline)
                             SocketManager.GAME_SEND_REMOVE_ITEM_PACKET(this, o.getGuid());
                     }
                 } else {
-                    // on r�duit le compteur
+                    // on réduit le compteur
                     tempCount -= obj.getQuantity();
                     remove.add(obj);
                 }
@@ -3767,7 +3727,7 @@ public class Player {
         int i = 0;
 
         for (JobStat SM : _metiers.values()) {
-            // Si c'est un m�tier 'basic' :
+            // Si c'est un métier 'basic' :
             if (SM.getTemplate().getId() == 2 || SM.getTemplate().getId() == 11
                     || SM.getTemplate().getId() == 13
                     || SM.getTemplate().getId() == 14
@@ -3799,7 +3759,7 @@ public class Player {
         int i = 0;
 
         for (JobStat SM : _metiers.values()) {
-            // Si c'est une sp�cialisation 'FM' :
+            // Si c'est une spécialisation 'FM' :
             if (SM.getTemplate().getId() == 43
                     || SM.getTemplate().getId() == 44
                     || SM.getTemplate().getId() == 45
@@ -4190,10 +4150,10 @@ public class Player {
         if (fight != null)
             return;//Si il combat
         if (!_zaaps.contains(id))
-            return;//S'il n'a pas le zaap demand�(ne devrais pas arriver)
+            return;//S'il n'a pas le zaap demandé(ne devrais pas arriver)
         int cost = Formulas.calculZaapCost(curMap, World.world.getMap(id));
         if (kamas < cost)
-            return;//S'il n'a pas les kamas (verif cot� client)
+            return;//S'il n'a pas les kamas (verif coté client)
         short mapID = id;
         int SubAreaID = curMap.getSubArea().getArea().getSuperArea();
         int cellID = World.world.getZaapCellIdByMapId(id);
@@ -4243,7 +4203,7 @@ public class Player {
         if (MapID == curMap.getId())
             costo = 0;
         if (kamas < costo) {
-            SocketManager.GAME_SEND_MESSAGE(this, "Vous n'avez pas suffisamment de Kamas pour r�aliser cette action.");
+            SocketManager.GAME_SEND_MESSAGE(this, "Vous n'avez pas suffisamment de Kamas pour réaliser cette action.");
             return;
         }
         kamas -= costo;
@@ -4475,7 +4435,7 @@ public class Player {
         if (p == null)
             return; // Ne devrait theoriquement jamais se produire.
 
-        if (this.getPodUsed() >= this.getMaxPod()) // Refuser la t�l�portation si on est full pods.
+        if (this.getPodUsed() >= this.getMaxPod()) // Refuser la téléportation si on est full pods.
         {
             SocketManager.GAME_SEND_Im_PACKET(this, "170");
             return;
@@ -4659,7 +4619,7 @@ public class Player {
         this.setCanAggro(true);
         this.setAway(false);
         this.setSpeed(0);
-        SocketManager.GAME_SEND_MESSAGE(this, "Tu as gagn� <b>1000</b> points d'�nergie.", "009900");
+        SocketManager.GAME_SEND_MESSAGE(this, "Tu as gagné <b>10000</b> points d'énergie.", "009900");
         SocketManager.GAME_SEND_STATS_PACKET(this);
         SocketManager.GAME_SEND_ALTER_GM_PACKET(this.curMap, this);
         SocketManager.send(this, "IH");
@@ -4764,7 +4724,7 @@ public class Player {
             return;
         }
 
-        //Si c'est un item �quip� ...
+        //Si c'est un item équipé ...
         if (PersoObj.getPosition() != Constant.ITEM_POS_NO_EQUIPED)
             return;
 
@@ -4776,14 +4736,14 @@ public class Player {
             if (newQua <= 0) {
                 //On enleve l'objet du sac du joueur
                 removeItem(PersoObj.getGuid());
-                //On met l'objet du sac dans le store, avec la meme quantit�
+                //On met l'objet du sac dans le store, avec la meme quantité
                 _storeItems.put(PersoObj.getGuid(), price);
                 SocketManager.GAME_SEND_REMOVE_ITEM_PACKET(this, PersoObj.getGuid());
                 SocketManager.GAME_SEND_ITEM_LIST_PACKET_SELLER(this, this);
             } else
             //S'il reste des objets au joueur
             {
-                //on modifie la quantit� d'item du sac
+                //on modifie la quantité d'item du sac
                 PersoObj.setQuantity(newQua);
                 //On ajoute l'objet a la banque et au monde
                 SimilarObj = GameObject.getCloneObjet(PersoObj, qua);
@@ -4804,7 +4764,7 @@ public class Player {
                 removeItem(PersoObj.getGuid());
                 //On enleve l'objet du monde
                 World.world.removeGameObject(PersoObj.getGuid());
-                //On ajoute la quantit� a l'objet en banque
+                //On ajoute la quantité a l'objet en banque
                 SimilarObj.setQuantity(SimilarObj.getQuantity() + PersoObj.getQuantity());
 
                 _storeItems.remove(SimilarObj.getGuid());
@@ -4817,7 +4777,7 @@ public class Player {
             } else
             //S'il restait des objets
             {
-                //on modifie la quantit� d'item du sac
+                //on modifie la quantité d'item du sac
                 PersoObj.setQuantity(newQua);
                 SimilarObj.setQuantity(SimilarObj.getQuantity() + qua);
 
@@ -4872,7 +4832,7 @@ public class Player {
                 //On retire l'item de la banque
                 _storeItems.remove(SimilarObj.getGuid());
                 World.world.removeGameObject(SimilarObj.getGuid());
-                //On Modifie la quantit� de l'item du sac du joueur
+                //On Modifie la quantité de l'item du sac du joueur
                 PersoObj.setQuantity(PersoObj.getQuantity()
                         + SimilarObj.getQuantity());
                 //On envoie les packets
@@ -4939,7 +4899,7 @@ public class Player {
             case 1:
                 if (compar >= 0) {
                     leaveFaction();
-                    this.sendMessage("Vous venez d'�tre lib�r� de prison apr�s 1 minute d'attente.");
+                    this.sendMessage("Vous venez d'être libéré de prison après 1 minute d'attente.");
                 } else {
                     long restant = -compar;
                     if (restant <= 1000)
@@ -4950,7 +4910,7 @@ public class Player {
             case 2:
                 if (compar >= 0) {
                     leaveFaction();
-                    this.sendMessage("Vous venez d'�tre lib�r� de prison apr�s 2 minutes d'attente.");
+                    this.sendMessage("Vous venez d'être libéré de prison après 2 minutes d'attente.");
                 } else {
                     long restant = -compar;
                     if (restant <= 1000)
@@ -4961,7 +4921,7 @@ public class Player {
             case 3:
                 if (compar >= 0) {
                     leaveFaction();
-                    this.sendMessage("Vous venez d'�tre lib�r� de prison apr�s 3 minutes d'attente.");
+                    this.sendMessage("Vous venez d'être libéré de prison après 3 minutes d'attente.");
                 } else {
                     long restant = -compar;
                     if (restant <= 1000)
@@ -4973,7 +4933,7 @@ public class Player {
             case 4:
                 if (compar >= 0) {
                     leaveFaction();
-                    this.sendMessage("Vous venez d'�tre lib�r� de prison apr�s 4 minutes d'attente.");
+                    this.sendMessage("Vous venez d'être libéré de prison après 4 minutes d'attente.");
                 } else {
                     long restant = -compar;
                     if (restant <= 1000)
@@ -4985,7 +4945,7 @@ public class Player {
             case 5:
                 if (compar >= 0) {
                     leaveFaction();
-                    this.sendMessage("Vous venez d'�tre lib�r� de prison apr�s 5 minutes d'attente.");
+                    this.sendMessage("Vous venez d'être libéré de prison après 5 minutes d'attente.");
                 } else {
                     long restant = -compar;
                     if (restant <= 1000)
@@ -4997,7 +4957,7 @@ public class Player {
             case 6:
                 if (compar >= 0) {
                     leaveFaction();
-                    this.sendMessage("Vous venez d'�tre lib�r� de prison apr�s 6 minutes d'attente.");
+                    this.sendMessage("Vous venez d'être libéré de prison après 6 minutes d'attente.");
                 } else {
                     long restant = -compar;
                     if (restant <= 1000)
@@ -5009,7 +4969,7 @@ public class Player {
             case 7:
                 if (compar >= 0) {
                     leaveFaction();
-                    this.sendMessage("Vous venez d'�tre lib�r� de prison apr�s 7 minutes d'attente.");
+                    this.sendMessage("Vous venez d'être libéré de prison après 7 minutes d'attente.");
                 } else {
                     long restant = -compar;
                     if (restant <= 1000)
@@ -5021,7 +4981,7 @@ public class Player {
             case 8:
                 if (compar >= 0) {
                     leaveFaction();
-                    this.sendMessage("Vous venez d'�tre lib�r� de prison apr�s 8 minutes d'attente.");
+                    this.sendMessage("Vous venez d'être libéré de prison après 8 minutes d'attente.");
                 } else {
                     long restant = -compar;
                     if (restant <= 1000)
@@ -5033,7 +4993,7 @@ public class Player {
             case 9:
                 if (compar >= 0) {
                     leaveFaction();
-                    this.sendMessage("Vous venez d'�tre lib�r� de prison apr�s 9 minutes d'attente.");
+                    this.sendMessage("Vous venez d'être libéré de prison après 9 minutes d'attente.");
                 } else {
                     long restant = -compar;
                     if (restant <= 1000)
@@ -5045,7 +5005,7 @@ public class Player {
             case 10:
                 if (compar >= 0) {
                     leaveFaction();
-                    this.sendMessage("Vous venez d'�tre lib�r� de prison apr�s 10 minutes d'attente.");
+                    this.sendMessage("Vous venez d'être libéré de prison après 10 minutes d'attente.");
                 } else {
                     long restant = -compar;
                     if (restant <= 1000)
@@ -5066,7 +5026,7 @@ public class Player {
         switch (pGrade) {
             case 1:
                 if (curKamas < 1000) {
-                    SocketManager.GAME_SEND_MESSAGE(perso, "Tu ne poss�des que "
+                    SocketManager.GAME_SEND_MESSAGE(perso, "Tu ne possèdes que "
                             + curKamas
                             + "Kamas. Tu n'as pas assez d'argent pour sortir !", "009900");
                 } else {
@@ -5084,7 +5044,7 @@ public class Player {
                 break;
             case 2:
                 if (curKamas < 2000) {
-                    SocketManager.GAME_SEND_MESSAGE(perso, "Tu ne poss�des que "
+                    SocketManager.GAME_SEND_MESSAGE(perso, "Tu ne possèdes que "
                             + curKamas
                             + "Kamas. Tu n'as pas assez d'argent pour sortir !", "009900");
                 } else {
@@ -5102,7 +5062,7 @@ public class Player {
                 break;
             case 3:
                 if (curKamas < 3000) {
-                    SocketManager.GAME_SEND_MESSAGE(perso, "Tu ne poss�des que "
+                    SocketManager.GAME_SEND_MESSAGE(perso, "Tu ne possèdes que "
                             + curKamas
                             + "Kamas. Tu n'as pas assez d'argent pour sortir !", "009900");
                 } else {
@@ -5120,7 +5080,7 @@ public class Player {
                 break;
             case 4:
                 if (curKamas < 4000) {
-                    SocketManager.GAME_SEND_MESSAGE(perso, "Tu ne poss�des que "
+                    SocketManager.GAME_SEND_MESSAGE(perso, "Tu ne possèdes que "
                             + curKamas
                             + "Kamas. Tu n'as pas assez d'argent pour sortir !", "009900");
                 } else {
@@ -5138,7 +5098,7 @@ public class Player {
                 break;
             case 5:
                 if (curKamas < 5000) {
-                    SocketManager.GAME_SEND_MESSAGE(perso, "Tu ne poss�des que "
+                    SocketManager.GAME_SEND_MESSAGE(perso, "Tu ne possèdes que "
                             + curKamas
                             + "Kamas. Tu n'as pas assez d'argent pour sortir !", "009900");
                 } else {
@@ -5156,7 +5116,7 @@ public class Player {
                 break;
             case 6:
                 if (curKamas < 7000) {
-                    SocketManager.GAME_SEND_MESSAGE(perso, "Tu ne poss�des que "
+                    SocketManager.GAME_SEND_MESSAGE(perso, "Tu ne possèdes que "
                             + curKamas
                             + "Kamas. Tu n'as pas assez d'argent pour sortir !", "009900");
                 } else {
@@ -5174,7 +5134,7 @@ public class Player {
                 break;
             case 7:
                 if (curKamas < 9000) {
-                    SocketManager.GAME_SEND_MESSAGE(perso, "Tu ne poss�des que "
+                    SocketManager.GAME_SEND_MESSAGE(perso, "Tu ne possèdes que "
                             + curKamas
                             + "Kamas. Tu n'as pas assez d'argent pour sortir !", "009900");
                 } else {
@@ -5192,7 +5152,7 @@ public class Player {
                 break;
             case 8:
                 if (curKamas < 12000) {
-                    SocketManager.GAME_SEND_MESSAGE(perso, "Tu ne poss�des que "
+                    SocketManager.GAME_SEND_MESSAGE(perso, "Tu ne possèdes que "
                             + curKamas
                             + "Kamas. Tu n'as pas assez d'argent pour sortir !", "009900");
                 } else {
@@ -5210,7 +5170,7 @@ public class Player {
                 break;
             case 9:
                 if (curKamas < 16000) {
-                    SocketManager.GAME_SEND_MESSAGE(perso, "Tu ne poss�des que "
+                    SocketManager.GAME_SEND_MESSAGE(perso, "Tu ne possèdes que "
                             + curKamas
                             + "Kamas. Tu n'as pas assez d'argent pour sortir !", "009900");
                 } else {
@@ -5228,7 +5188,7 @@ public class Player {
                 break;
             case 10:
                 if (curKamas < 25000) {
-                    SocketManager.GAME_SEND_MESSAGE(perso, "Tu ne poss�des que "
+                    SocketManager.GAME_SEND_MESSAGE(perso, "Tu ne possèdes que "
                             + curKamas
                             + "Kamas. Tu n'as pas assez d'argent pour sortir !", "009900");
                 } else {
@@ -5282,7 +5242,7 @@ public class Player {
         curCell = curMap.getCase(newCellID);
 
         //Verification de la Map
-        //Verifier la validit� du mountpark
+        //Verifier la validité du mountpark
         if (curMap.getMountPark() != null
                 && curMap.getMountPark().getOwner() > 0
                 && curMap.getMountPark().getGuild().getId() != -1) {
@@ -5292,7 +5252,7 @@ public class Player {
                 GameMap.removeMountPark(curMap.getMountPark().getGuild().getId());
             }
         }
-        //Verifier la validit� du Collector
+        //Verifier la validité du Collector
         if (Collector.getCollectorByMapId(curMap.getId()) != null) {
             if (World.world.getGuild(Collector.getCollectorByMapId(curMap.getId()).getGuildId()) == null)//Ne devrait pas arriver
             {
@@ -5344,7 +5304,7 @@ public class Player {
                 cellID = 297;
                 break;
         }
-        this.sendMessage("Vous �tes en prison !<br />\nVous devrez donc patientez quelques Minutes avant de pouvoir sortir.<br/>\nParlez au gardien de prison pour obtenir plus d'information.");
+        this.sendMessage("Vous êtes en prison !<br />\nVous devrez donc patientez quelques Minutes avant de pouvoir sortir.<br/>\nParlez au gardien de prison pour obtenir plus d'information.");
         if (this.getEnergy() <= 0) {
             if (isOnMount())
                 toogleOnMount();

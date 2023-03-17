@@ -188,11 +188,11 @@ public class PlayerExchange extends Exchange {
                 continue;
             if (!this.player1.hasItemGuid(couple.first))//Si le player n'a pas l'item (Ne devrait pas arriver : wpepro)
             {
-                couple.second = 0;//On met la quantité a 0 pour éviter les problemes
+                couple.second = 0;//On met la quantitÃ© a 0 pour Ã©viter les problemes
                 continue;
             }
             GameObject obj = World.world.getGameObject(couple.first);
-            if ((obj.getQuantity() - couple.second) < 1)//S'il ne reste plus d'item apres l'échange
+            if ((obj.getQuantity() - couple.second) < 1)//S'il ne reste plus d'item apres l'Ã©change
             {
                 this.player1.removeItem(couple.first);
                 couple.second = obj.getQuantity();
@@ -216,7 +216,7 @@ public class PlayerExchange extends Exchange {
                 continue;
             if (!this.player2.hasItemGuid(couple.first))//Si le player n'a pas l'item (Ne devrait pas arriver)
             {
-                couple.second = 0;//On met la quantité a 0 pour éviter les problemes
+                couple.second = 0;//On met la quantitÃ© a 0 pour Ã©viter les problemes
                 continue;
             }
             this.giveObject(couple, World.world.getGameObject(couple.first));
@@ -286,7 +286,7 @@ public class PlayerExchange extends Exchange {
 
             if (!tmp.contains(obj.getTemplate())) {
                 if (tmp.size() + 1 > ((CraftSecure) this).getMaxCase()) {
-                    SocketManager.GAME_SEND_MESSAGE((this.player1.getId() == pguid) ? this.player1 : this.player2, "Impossible d'ajouter plus d'ingrédients.", "B9121B");
+                    SocketManager.GAME_SEND_MESSAGE((this.player1.getId() == pguid) ? this.player1 : this.player2, "Impossible d'ajouter plus d'ingrÃ©dients.", "B9121B");
                     return;
                 }
             }
@@ -457,7 +457,7 @@ public class PlayerExchange extends Exchange {
                 if(couple.second == 0)continue;
                 if(World.world.getGameObject(couple.first).getPosition() != Constant.ITEM_POS_NO_EQUIPED)continue;
                 if(!this.player.hasItemGuid(couple.first)) {
-                    couple.second = 0;//On met la quantité a 0 pour éviter les problemes
+                    couple.second = 0;//On met la quantitÃ© a 0 pour Ã©viter les problemes
                     continue;
                 }
                 GameObject obj = World.world.getGameObject(couple.first);
@@ -659,12 +659,12 @@ public class PlayerExchange extends Exchange {
                     continue;
                 if (!player.hasItemGuid(couple.first))//Si le player n'a pas l'item (Ne devrait pas arriver)
                 {
-                    couple.second = 0;//On met la quantité a 0 pour éviter les problemes
+                    couple.second = 0;//On met la quantitÃ© a 0 pour Ã©viter les problemes
                     continue;
                 }
                 GameObject obj = World.world.getGameObject(couple.first);
                 objetToChange = obj;
-                if ((obj.getQuantity() - couple.second) < 1)//S'il ne reste plus d'item apres l'échange
+                if ((obj.getQuantity() - couple.second) < 1)//S'il ne reste plus d'item apres l'Ã©change
                 {
                     player.removeItem(couple.first);
                     couple.second = obj.getQuantity();

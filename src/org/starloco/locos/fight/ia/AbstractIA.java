@@ -51,14 +51,14 @@ public abstract class AbstractIA implements IA {
                 this.addNext(() -> {
                     this.fight.endTurn(false, this.fighter);
                     this.executor.shutdownNow();
-                }, 0); // 1000 to 0 by coding mestre (vérifier si ça induit des bugs)
+                }, 0); // 1000 to 0 by coding mestre (vÃ©rifier si Ã  induit des bugs)
             } else {
                 this.fight.endTurn(false, this.fighter);
                 this.executor.shutdownNow();
             }
         } else {
             if(!this.fight.isFinish())
-                this.addNext(this::endTurn, 0); // 500 to 0 by coding mestre (vérifier si ça induit des bugs)
+                this.addNext(this::endTurn, 0); // 500 to 0 by coding mestre (vÃ©rifier si Ã  induit des bugs)
             else
                 this.executor.shutdownNow();
         }

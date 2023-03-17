@@ -102,7 +102,7 @@ public class JobAction {
                 int dist = PathFinding.getDistanceBetween(P.getCurMap(), P.getCurCell().getId(), cell.getId());
                 int distItem = JobConstant.getDistCanne(P.getObjetByPos(Constant.ITEM_POS_ARME).getTemplate().getId());
                 if (distItem < dist) {
-                    SocketManager.GAME_SEND_MESSAGE(P, "Vous étes trop loin pour pouvoir pécher ce poisson !");
+                    SocketManager.GAME_SEND_MESSAGE(P, "Vous Ãªtes trop loin pour pouvoir pÃªcher ce poisson !");
                     SocketManager.GAME_SEND_GA_PACKET(P.getGameClient(), "", "0", "", "");
                     P.setExchangeAction(null);
                     P.setDoAction(false);
@@ -137,7 +137,7 @@ public class JobAction {
     public void endAction(Player player, InteractiveObject IO, GameAction GA, GameCase cell) {
         if(!this.isCraft && player.getGameClient().action != 0) {
             if(System.currentTimeMillis() - player.getGameClient().action < this.time - 500) {
-                player.getGameClient().kick();//FIXME: Ajouté le ban si aucune plainte.
+                player.getGameClient().kick();//FIXME: AjoutÃ© le ban si aucune plainte.
                 return;
             }
         }
@@ -212,7 +212,7 @@ public class JobAction {
 
 
         Map<Integer, Integer> items = new HashMap<>();
-        //on retire les items mis en ingrédients
+        //on retire les items mis en ingrÃ©dients
         for (Entry<Integer, Integer> e : this.ingredients.entrySet()) {
             if (!this.player.hasItemGuid(e.getKey())) {
                 SocketManager.GAME_SEND_Ec_PACKET(this.player, "EI");
@@ -264,7 +264,7 @@ public class JobAction {
         if (!isUnjobSkill) {
             JobStat SM = this.player.getMetierBySkill(this.id);
             int templateId = World.world.getObjectByIngredientForJob(SM.getTemplate().getListBySkill(this.id), items);
-            //Recette non existante ou pas adapté au métier
+            //Recette non existante ou pas adaptÃ© au mÃ©tier
             if (templateId == -1 || !SM.getTemplate().canCraft(this.id, templateId)) {
                 SocketManager.GAME_SEND_Ec_PACKET(this.player, "EI");
                 SocketManager.GAME_SEND_IO_PACKET_TO_MAP(this.player.getCurMap(), this.player.getId(), "-");
@@ -283,7 +283,7 @@ public class JobAction {
             }
 
             if (Logging.USE_LOG)
-                Logging.getInstance().write("Craft", this.player.getName() + " é crafter avec " + (success ? "SUCCES" : "ECHEC") + " l'item " + templateId + " (" + World.world.getObjTemplate(templateId).getName() + ")");
+                Logging.getInstance().write("Craft", this.player.getName() + " Ã  crafter avec " + (success ? "SUCCES" : "ECHEC") + " l'item " + templateId + " (" + World.world.getObjTemplate(templateId).getName() + ")");
             if (!success) {
                 SocketManager.GAME_SEND_Ec_PACKET(this.player, "EF");
                 SocketManager.GAME_SEND_IO_PACKET_TO_MAP(this.player.getCurMap(), this.player.getId(), "-" + templateId);
@@ -419,7 +419,7 @@ public class JobAction {
         boolean success = JobConstant.getChanceByNbrCaseByLvl(SM.get_lvl(), items.size()) >= Formulas.getRandomValue(1, 100);
 
         if (Logging.USE_LOG)
-            Logging.getInstance().write("SecureCraft", this.player.getName() + " é crafter avec " + (success ? "SUCCES" : "ECHEC") + " l'item " + template + " (" + World.world.getObjTemplate(template).getName() + ") pour " + receiver.getName());
+            Logging.getInstance().write("SecureCraft", this.player.getName() + " Ã  crafter avec " + (success ? "SUCCES" : "ECHEC") + " l'item " + template + " (" + World.world.getObjTemplate(template).getName() + ") pour " + receiver.getName());
         if (!success) {
             SocketManager.GAME_SEND_Ec_PACKET(this.player, "EF");
             SocketManager.GAME_SEND_Ec_PACKET(receiver, "EF");
@@ -508,7 +508,7 @@ public class JobAction {
         //on prend l'ancienne valeur
         int q = this.ingredients.get(guid) == null ? 0 : this.ingredients.get(guid);
         if(qua < 0) if(-qua > q) return;
-        //on enleve l'entrée dans la Map
+        //on enleve l'entrÃ©e dans la Map
         this.ingredients.remove(guid);
         //on ajoute (ou retire, en fct du signe) X objet
         q += qua;
@@ -540,24 +540,24 @@ public class JobAction {
     	int limitPerLigne = 151; // Max par ligne (101 non ?)
     	boolean isRestating = false;
         boolean isSigningRune = false; // Si on utilise une rune de signature
-        GameObject objectFm = null, signingRune = null, runeOrPotion = null; // Initalisation pour potentiellement les récuperer derriere et vide le cache
+        GameObject objectFm = null, signingRune = null, runeOrPotion = null; // Initalisation pour potentiellement les rÃ©cuperer derriere et vide le cache
         int lvlElementRune = 0, statsID = -1, lvlQuaStatsRune = 0, statsAdd = 0, deleteID = -1, poidRune = 0, idRune = 0; // De meme
         boolean bonusRune = false; // Rune "Bonus" je suppose que c'est pour les serveurs cheat
         String statsObjectFm = "-1";  // La stats que l'on veut FM
-        String loi = ""; // La loi de FM qui va être utilisé par l'algo (Potentiellement inutile si corrigé totalement)
+        String loi = ""; // La loi de FM qui va Ãªtre utilisÃ© par l'algo (Potentiellement inutile si corrigÃ© totalement)
         
-        for (int idIngredient : this.ingredients.keySet()) { // On boucle sur Les ingrédients Pour différencié la Rune de l'objet
-            GameObject ing = World.world.getGameObject(idIngredient); // On récupère l'ingrédient
+        for (int idIngredient : this.ingredients.keySet()) { // On boucle sur Les ingrÃ©dients Pour diffÃ©renciÃ© la Rune de l'objet
+            GameObject ing = World.world.getGameObject(idIngredient); // On rÃ©cupÃ¨re l'ingrÃ©dient
             if (ing == null || !this.player.hasItemGuid(idIngredient)) { // On check s'il existe et si le User a bien l'item
                 SocketManager.GAME_SEND_Ec_PACKET(this.player, "EI"); // PACKET DE RETOUR POUR AFFICHER L'ERREUR CHEZ LE JOUEUR
                 SocketManager.GAME_SEND_IO_PACKET_TO_MAP(this.player.getCurMap(), this.player.getId(), "-");
                 this.ingredients.clear(); 
-                return; // ECHEC car pas d'ingrédient ou inexistant
+                return; // ECHEC car pas d'ingrÃ©dient ou inexistant
             }
-            int templateID = ing.getTemplate().getId(); // On récupère le template de la rune
+            int templateID = ing.getTemplate().getId(); // On rÃ©cupÃ¨re le template de la rune
             if (ing.getTemplate().getType() == 78)	// Si le type d'obj est une rune on le place dans une Var 
                 idRune = idIngredient; 
-            switch (templateID) { 	// Longue serie de Switch Case pour déterminé si c'est la rune on récupère ces infos SI c'est l'object c'est le cas par défault        
+            switch (templateID) { 	// Longue serie de Switch Case pour dÃ©terminÃ© si c'est la rune on rÃ©cupÃ¨re ces infos SI c'est l'object c'est le cas par dÃ©fault
                 	// ca c'est pour reformer un item
             	case 17200:
             		runeOrPotion = ing;
@@ -1087,18 +1087,18 @@ public class JobAction {
                     break;
                 // CA c'est l'objet
                 default:
-                    int type = ing.getTemplate().getType(); // On récupère son type
+                    int type = ing.getTemplate().getType(); // On rÃ©cupÃ¨re son type
                     if ((type >= 1 && type <= 11) || (type >= 16 && type <= 22)
                             || type == 81 || type == 102 || type == 114
                             || ing.getTemplate().getPACost() > 0) { // Si c'est un obj avec des stats ou avec des PA d'utilisation 
                         objectFm = ing;
                         SocketManager.GAME_SEND_EXCHANGE_OTHER_MOVE_OK_FM(this.player.getGameClient(), 'O', "+", objectFm.getGuid()
                                 + "|" + 1); // On envoie un packet de validation au joueur il me semble
-                        deleteID = idIngredient; // On récupère l'id de l'ingrédient pour le supprimer plus tard
-                        GameObject newObj = GameObject.getCloneObjet(objectFm, 1); // Création d'un clone avec un nouveau identifiant
+                        deleteID = idIngredient; // On rÃ©cupÃ¨re l'id de l'ingrÃ©dient pour le supprimer plus tard
+                        GameObject newObj = GameObject.getCloneObjet(objectFm, 1); // CrÃ©ation d'un clone avec un nouveau identifiant
                         if (objectFm.getQuantity() > 1) { // S'il y avait plus d'un objet
-                            int newQuant = objectFm.getQuantity() - 1; // On supprime le cloné
-                            objectFm.setQuantity(newQuant); // on actualise les objets du serveur allumé
+                            int newQuant = objectFm.getQuantity() - 1; // On supprime le clonÃ©
+                            objectFm.setQuantity(newQuant); // on actualise les objets du serveur allumÃ©
                             SocketManager.GAME_SEND_OBJECT_QUANTITY_PACKET(this.player, objectFm); // on actualise les objets sur le joueur
                         } else {
                             World.world.removeGameObject(idIngredient);
@@ -1112,7 +1112,7 @@ public class JobAction {
         }
        // System.out.println("La :" + objectFm.getTemplate().getId() + " " + runeOrPotion + " " + SM );
         if( objectFm.getTemplate() == null || runeOrPotion == null ) {
-        	this.player.sendMessage("Aucune rune détecté"); 
+        	this.player.sendMessage("Aucune rune dÃ©tectÃ©");
         	if (objectFm != null) {
                 World.world.addGameObject(objectFm, true);
                 this.player.addObjet(objectFm, false);
@@ -1120,7 +1120,7 @@ public class JobAction {
             }
             SocketManager.GAME_SEND_Ec_PACKET(this.player, "EI"); // packet d'echec
             SocketManager.GAME_SEND_IO_PACKET_TO_MAP(this.player.getCurMap(), this.player.getId(), "-");  // packet d'icone rouge je crois      
-             // On nettoie les ingrédients
+             // On nettoie les ingrÃ©dients
             final String data = String.valueOf(objectFm.getGuid()) + "|1|" + objectFm.getTemplate().getId() + "|"
 					+ objectFm.parseStatsString();
             SocketManager.GAME_SEND_EXCHANGE_MOVE_OK_FM(this.player, 'O', "+", data);
@@ -1132,7 +1132,7 @@ public class JobAction {
         if(runeOrPotion.getTemplate().getId() == 17200){
         	
         	if (SM == null || objectFm == null) {
-	        	this.player.sendMessage("Vous ne possedez pas Ou de metier approprié, Ou de rune, ou d'objet"); 
+	        	this.player.sendMessage("Vous ne possedez pas Ou de metier appropriÃ©, Ou de rune, ou d'objet");
 	            if (objectFm != null) {
 	                World.world.addGameObject(objectFm, true);
 	                this.player.addObjet(objectFm, false);
@@ -1142,7 +1142,7 @@ public class JobAction {
 	            SocketManager.GAME_SEND_IO_PACKET_TO_MAP(this.player.getCurMap(), this.player.getId(), "-");  // packet d'icone rouge je crois
 	            
 	           
-	            this.ingredients.clear(); // On nettoie les ingrédients
+	            this.ingredients.clear(); // On nettoie les ingrÃ©dients
 	            
 
 	            return;
@@ -1204,7 +1204,7 @@ public class JobAction {
         		|| runeOrPotion.getTemplate().getId() == 17204 || runeOrPotion.getTemplate().getId() == 17205){
         	
         	if (SM == null || objectFm == null) {
-	        	this.player.sendMessage("Vous ne possedez pas Ou de metier approprié, Ou de rune, ou d'objet"); 
+	        	this.player.sendMessage("Vous ne possedez pas Ou de metier appropriÃ©, Ou de rune, ou d'objet");
 	            if (objectFm != null) {
 	                World.world.addGameObject(objectFm, true);
 	                this.player.addObjet(objectFm, false);
@@ -1214,7 +1214,7 @@ public class JobAction {
 	            SocketManager.GAME_SEND_IO_PACKET_TO_MAP(this.player.getCurMap(), this.player.getId(), "-");  // packet d'icone rouge je crois
 	            
 	           
-	            this.ingredients.clear(); // On nettoie les ingrédients
+	            this.ingredients.clear(); // On nettoie les ingrÃ©dients
 	            
 
 	            return;
@@ -1226,7 +1226,7 @@ public class JobAction {
        	 	/*
        	 	if(lastDigit <= rarity){
        	 		
-	       	 	this.player.sendMessage("L'objet est déjà de rareté supérieure ou égale"); 
+	       	 	this.player.sendMessage("L'objet est dÃ©jÃ  de raretÃ© supÃ©rieure ou Ã©gale");
 	            if (objectFm != null) {
 	                World.world.addGameObject(objectFm, true);
 	                this.player.addObjet(objectFm);
@@ -1236,12 +1236,12 @@ public class JobAction {
 	            SocketManager.GAME_SEND_IO_PACKET_TO_MAP(this.player.getCurMap(), this.player.getId(), "-");  // packet d'icone rouge je crois
 	            
 	           
-	            this.ingredients.clear(); // On nettoie les ingrédients
+	            this.ingredients.clear(); // On nettoie les ingrÃ©dients
        	 		return;
        	 	}
        	 
        	 	if(lastDigit-1 != rarity){
-	       	 	this.player.sendMessage("L'objet ne possède pas la rareté suffisante pour être augmenté avec cette rune"); 
+	       	 	this.player.sendMessage("L'objet ne possÃ¨de pas la raretÃ© suffisante pour Ãªtre augmentÃ© avec cette rune");
 	            if (objectFm != null) {
 	                World.world.addGameObject(objectFm, true);
 	                this.player.addObjet(objectFm);
@@ -1251,7 +1251,7 @@ public class JobAction {
 	            SocketManager.GAME_SEND_IO_PACKET_TO_MAP(this.player.getCurMap(), this.player.getId(), "-");  // packet d'icone rouge je crois
 	            
 	           
-	            this.ingredients.clear(); // On nettoie les ingrédients
+	            this.ingredients.clear(); // On nettoie les ingrÃ©dients
     	 		
     	 		return;
     	 	}
@@ -1270,7 +1270,7 @@ public class JobAction {
          	
          	
             if (deleteID != -1) { 
-            	//this.player.sendMessage("On retire l'ingrédient (Rune) :"+deleteID); 
+            	//this.player.sendMessage("On retire l'ingrÃ©dient (Rune) :"+deleteID);
                 this.ingredients.remove(deleteID);
             } 
             if (runeOrPotion != null) {
@@ -1307,16 +1307,16 @@ public class JobAction {
 	        int StatEnInt = Integer.parseInt(statsObjectFm, 16);
 	        double poidUnitaire = getPwrPerEffet(StatEnInt); // On calcul le poid unitaire de la rune
 	        //double poidStatsAfter =0;
-	        //double poidStatsBefore =0; // Inutilisé
+	        //double poidStatsBefore =0; // InutilisÃ©
 	        
 	        if (poidUnitaire > 0.0) {
 	            poidRune = (int)Math.round(statsAdd * poidUnitaire); // On le multiplie par sa valur logiquement pour avoir le poid total     
 	        }
-	        //this.player.sendMessage("poid de la stat a l'unité :"+poidUnitaire); 
+	        //this.player.sendMessage("poid de la stat a l'unitÃ© :"+poidUnitaire);
 	        //this.player.sendMessage("poid de la rune :"+poidRune);
 	    	
-	        if (SM == null || objectFm == null || runeOrPotion == null) { // On check avant de commencer le traitement si tous les pré-requis et recupération ont fonctionné
-	        	this.player.sendMessage("Vous ne possedez pas Ou de metier approprié, Ou de rune, ou d'objet"); 
+	        if (SM == null || objectFm == null || runeOrPotion == null) { // On check avant de commencer le traitement si tous les prÃ©-requis et recupÃ©ration ont fonctionnÃ©
+	        	this.player.sendMessage("Vous ne possedez pas Ou de metier appropriÃ©, Ou de rune, ou d'objet");
 	        	
 	        	 //System.out.println("On rentre forcement la " );
 	            if (objectFm != null) {
@@ -1326,22 +1326,22 @@ public class JobAction {
 	            
 	            SocketManager.GAME_SEND_Ec_PACKET(this.player, "EI"); // packet d'echec
 	            SocketManager.GAME_SEND_IO_PACKET_TO_MAP(this.player.getCurMap(), this.player.getId(), "-");  // packet d'icone rouge je crois
-	            //this.ingredients.clear(); // On nettoie les ingrédients
+	            //this.ingredients.clear(); // On nettoie les ingrÃ©dients
 	            return;
 	        }
 	        
 	        //int rarity = objectFm.getRarity();
-	        ObjectTemplate objTemplate = objectFm.getTemplate(); // On récupère le template de l'objet
+	        ObjectTemplate objTemplate = objectFm.getTemplate(); // On rÃ©cupÃ¨re le template de l'objet
 	        int chance = 0;			
-	        int lvlJob = SM.get_lvl();	// le level du métier
+	        int lvlJob = SM.get_lvl();	// le level du mÃ©tier
 	        int PoidTotItemActuel = 0;	
 	        int pwrPerte = 0;
 	        java.util.ArrayList<Integer> chances = new ArrayList<Integer>(); // Le tableau des chances
 	        int objTemplateID = objTemplate.getId(); 	// L'id du template
 	        String statStringObj = objectFm.parseStatsString();  // Les stats de l'objects en format String
 	        
-	        if (lvlElementRune > 0 && lvlQuaStatsRune == 0) { // Le cas des runes élémentaire est unique, Le level du métier défini la réussite
-	        	//this.player.sendMessage("C'est une rune élémentaire (pour CAC)"+lvlElementRune); 
+	        if (lvlElementRune > 0 && lvlQuaStatsRune == 0) { // Le cas des runes Ã©lÃ©mentaire est unique, Le level du mÃªtier dÃ©fini la rÃ©ussite
+	        	//this.player.sendMessage("C'est une rune Ã©lÃ©mentaire (pour CAC)"+lvlElementRune);
 	            chance = Formulas.calculChanceByElement(lvlJob, objTemplate.getLevel(), lvlElementRune);
 	            if (chance > 100 - (lvlJob / 20))
 	                chance = 100 - (lvlJob / 20);
@@ -1350,7 +1350,7 @@ public class JobAction {
 	            chances.add(0, chance);
 	            chances.add(1, 0);
 	            chances.add(2, 100 - chance);
-	        } else if (lvlQuaStatsRune > 0 && lvlElementRune == 0) { // Le cas du FM normal est très complèxe !
+	        } else if (lvlQuaStatsRune > 0 && lvlElementRune == 0) { // Le cas du FM normal est trÃ¨s complÃ¨xe !
 	        	//this.player.sendMessage("C'est une rune normal (pour buff de stats)"+lvlQuaStatsRune); 
 	            int PoidActuelStatAFm = 1;
 	            int PoidTotStatsExoItemActuel = 1;
@@ -1359,7 +1359,7 @@ public class JobAction {
 	            	//this.player.sendMessage("L'objet n'est pas vide"); 
 	                PoidTotItemActuel = currentTotalWeigthBase(statStringObj, objectFm); // Poids total de l'objet 
 	              //this.player.sendMessage("Poid de l'obj (Repris)  "+PoidTotItemActuel); 
-	                PoidTotStatsExoItemActuel = currentWeithStatsExo(statStringObj, objectFm); // Poid des stats EXO (car si ca dépasse 101 ca echec)
+	                PoidTotStatsExoItemActuel = currentWeithStatsExo(statStringObj, objectFm); // Poid des stats EXO (car si ca dÃ©passe 101 ca echec)
 	              //this.player.sendMessage("Le poid des Exo :"+PoidTotStatsExoItemActuel); 
 	            }
 	            else {
@@ -1370,18 +1370,18 @@ public class JobAction {
 	            
 	            
 	            
-	            int PoidMaxItem =  WeithTotalBase(objTemplateID); // Poids de l'objet en stat Max (donc théoriquement le poid max)
+	            int PoidMaxItem =  WeithTotalBase(objTemplateID); // Poids de l'objet en stat Max (donc thÃ©oriquement le poid max)
 	            /*
 	            if(rarity>3){
-	               PoidMaxItem = WeithTotalBaseLegendary(objTemplateID) ; // Poids de l'objet en stat Max et légendaire (donc théoriquement le poid max)
+	               PoidMaxItem = WeithTotalBaseLegendary(objTemplateID) ; // Poids de l'objet en stat Max et lÃ©gendaire (donc thÃ©oriquement le poid max)
 	            }
 	            else{
-	            	PoidMaxItem = WeithTotalBase(objTemplateID); // Poids de l'objet en stat Max (donc théoriquement le poid max)
+	            	PoidMaxItem = WeithTotalBase(objTemplateID); // Poids de l'objet en stat Max (donc thÃ©oriquement le poid max)
 	            }
 	            */
-	            int PoidMiniItem = WeithTotalBaseMin(objTemplateID); // Poids de l'objet en stat Mini (donc théoriquement le poid minimum)
+	            int PoidMiniItem = WeithTotalBaseMin(objTemplateID); // Poids de l'objet en stat Mini (donc thÃ©oriquement le poid minimum)
 	
-	            // Bon si les poid sont négatifs, on les positionne a 0 pour éviter les bugs, meme si faudrait gérer le cas différemment
+	            // Bon si les poid sont nÃ©gatifs, on les positionne a 0 pour Ã©viter les bugs, meme si faudrait gÃ¨rer le cas diffÃ©remment
 	            if (PoidMaxItem < 0) {
 	            	PoidMaxItem = 0;
 	            }
@@ -1401,24 +1401,24 @@ public class JobAction {
 	            int CheckStatItemActuel = viewActualStatsItem(objectFm, statsObjectFm); // Check si La stats est sur l'item 1 = oui 2 = oui 0 = non
 	            
 	               // A FAIRE !!!!      
-		         // Trouver un moment pour diminuer une stats négative plutot que la considéré comme un stat différente 
-	            int statMax = getStatBaseMax(objTemplate, statsObjectFm); // stat maximum de l'obj intéressant pour les cas ou les stats dépasse le poid théorique max
+		         // Trouver un moment pour diminuer une stats nÃ©gative plutot que la considÃ©rÃ© comme un stat diffÃ©rente
+	            int statMax = getStatBaseMax(objTemplate, statsObjectFm); // stat maximum de l'obj intÃ©ressant pour les cas ou les stats dÃ©passe le poid thÃ©orique max
 	            /*
 	            if(rarity > 3){
-	            	statMax = getStatBaseMaxLegendaire(objTemplate, statsObjectFm);// stat maximum de l'obj Legendaire intéressant pour les cas ou les stats dépasse le poid théorique max 
+	            	statMax = getStatBaseMaxLegendaire(objTemplate, statsObjectFm);// stat maximum de l'obj Legendaire intÃ©ressant pour les cas ou les stats dÃ©passe le poid thÃ©orique max
 	            }
 	            else{
-	            	statMax = getStatBaseMax(objTemplate, statsObjectFm); // stat maximum de l'obj intéressant pour les cas ou les stats dépasse le poid théorique max
+	            	statMax = getStatBaseMax(objTemplate, statsObjectFm); // stat maximum de l'obj intÃ©ressant pour les cas ou les stats dÃ©passe le poid thÃ©orique max
 	            }
 	            */
-	            int statMin = getStatBaseMin(objTemplate, statsObjectFm); // stat Minimum de l'obj intéressant pour les cas ou les stats dépasse le poid théorique max
+	            int statMin = getStatBaseMin(objTemplate, statsObjectFm); // stat Minimum de l'obj intÃ©ressant pour les cas ou les stats dÃ©passe le poid thÃ©orique max
 	            
 	            int statJetActuel = 0;
 	            
 	            // Gestion des dommages bizarres
 	            if(statsObjectFm == "70" || statsObjectFm == "79" ) {
 	            	 int statJetActuel1 = getActualJet(objectFm, "79");
-	            	 int statJetActuel2 = getActualJet(objectFm, "70");// Jet actuel de l'item pour rendre plus compliqué si on approche du poid théorique ou de la stats max si ca dépasse le poid théorique
+	            	 int statJetActuel2 = getActualJet(objectFm, "70");// Jet actuel de l'item pour rendre plus compliquÃ© si on approche du poid thÃ©orique ou de la stats max si ca dÃ©passe le poid thÃ©orique
 	            	 if(statJetActuel1>=statJetActuel2) {
 	            		 statJetActuel = statJetActuel1;
 	            	 }
@@ -1437,13 +1437,13 @@ public class JobAction {
 	            
 	            //this.player.sendMessage("Le poid max de la ligne hors limite :" + statMax*poidUnitaire);
 	            
-	            // La on fait des controles pour savoir si le FM théorique est possible ou non 
+	            // La on fait des controles pour savoir si le FM thÃ©orique est possible ou non
 	            boolean canFM = true;
 	            boolean exception = false;
 	            float x = 1;
 	            
-	            if(statMax*poidUnitaire > limitPerLigne){ // Si le poid de la ligne de stats de base de l'item supérieur au maximum théorique par ligne de 101
-	            	// On autorise quand même le fm si on dépasse pas le jet max
+	            if(statMax*poidUnitaire > limitPerLigne){ // Si le poid de la ligne de stats de base de l'item supÃ©rieur au maximum thÃ©orique par ligne de 101
+	            	// On autorise quand mÃªme le fm si on dÃ©passe pas le jet max
 	            	//this.player.sendMessage("On est la  :" + (statJetActuel+statsAdd) + " max: " + statMax);
 	            	
 	            	if (statJetActuel+statsAdd > statMax) { // On compare en statistique car le poid ne compte pas pour ces cas
@@ -1457,7 +1457,7 @@ public class JobAction {
 	            	}
 	            }
 	            else {     	
-	            	// Si la stats qui veut faire passer, dépasse la limite théorique
+	            	// Si la stats qui veut faire passer, dÃ©passe la limite thÃ©orique
 	        		if( (statJetActuel*poidUnitaire)+poidRune > limitPerLigne ) {
 	        			this.player.sendMessage("Cette statistique ne montra pas plus haut");
 	                	canFM = false;
@@ -1473,7 +1473,7 @@ public class JobAction {
 	        		}    		
 	        	}
 	        	else {
-	                // TIEN ici on va utiliser le X pour plutot simplifier si on est loin de la limite théorique mais que c'est pas un exo bien entendu                
+	                // TIEN ici on va utiliser le X pour plutot simplifier si on est loin de la limite thÃ©orique mais que c'est pas un exo bien entendu
 	                if( statJetActuel != 0 ) {
 	                	x = (float) (limitPerLigne / (statJetActuel*poidUnitaire));
 	                	if(x > 5.0f) {
@@ -1485,10 +1485,10 @@ public class JobAction {
 	                }
 	        	}
 	            
-	            // La c'est les contraintes de métier ETC
+	            // La c'est les contraintes de mÃ©tier ETC
 	            if (lvlJob < (int) Math.floor(objTemplate.getLevel() / 2)) {
-	            	this.player.sendMessage("Ton métier n'est pas suffisant pour améliorer cet objet !");
-	            	canFM = false; // On rate le FM si le métier n'est pas suffisant
+	            	this.player.sendMessage("Ton mÃ©tier n'est pas suffisant pour amÃ©liorer cet objet !");
+	            	canFM = false; // On rate le FM si le mÃ©tier n'est pas suffisant
 	            }
 	            
 	            // La notion de loi + permet de cibler le coef
@@ -1514,7 +1514,7 @@ public class JobAction {
 	            }
 	
 	            
-	            this.player.sendMessage("Loi appliquée " + loi);
+	            this.player.sendMessage("Loi appliquÃ©e " + loi);
 	            
 	            if (canFM) {
 	            	int diff = (int) Math.abs((PoidMaxItem * coef)  //*1.3f initiallement
@@ -1523,7 +1523,7 @@ public class JobAction {
 	                    chances = Formulas.chanceFM(PoidMaxItem, PoidMiniItem, PoidTotItemActuel, PoidActuelStatAFm, poidRune, diff, coef, statMax, statMin, statJetActuel, x, bonusRune, statsAdd, loi);	
 	                    // On retire la rune car on peut FM
 	                    if (deleteID != -1) { 
-	                    	//this.player.sendMessage("On retire l'ingrédient (Rune) :"+deleteID); 
+	                    	//this.player.sendMessage("On retire l'ingrÃ©dient (Rune) :"+deleteID);
 	                        this.ingredients.remove(deleteID);
 	                    }  
 	            } 
@@ -1651,7 +1651,7 @@ public class JobAction {
 	                    SocketManager.GAME_SEND_OBJECT_QUANTITY_PACKET(this.player, runeOrPotion);
 	                }
 	            }
-	            //this.player.sendMessage("Obj créé " +  objectFm); 
+	            //this.player.sendMessage("Obj crÃ©Ã© " +  objectFm);
 	            World.world.addGameObject(objectFm, true);
 				this.player.addObjet(objectFm, false);
 				SocketManager.GAME_SEND_Ow_PACKET(this.player);
@@ -1817,7 +1817,7 @@ public class JobAction {
 			case "over" : { 
 				if(succesN)
 				{				
-					// le cas de l'over dépend du puit restant
+					// le cas de l'over dÃ©pend du puit restant
 					if(poidTotal >= puit) { // Si le puit peut absorber le SN il le prend   puit >= poidTotal
 						 //player.sendMessage("On a du puit, on prend dedant et on ajoute "+statsAdd+" de stats" );
 						 objectFm.setNewStats(statsObjectFm,statsAdd);
@@ -1829,7 +1829,7 @@ public class JobAction {
 					}  
 					
 					else {       
-						// S'il reste du puits malgré que ca soit pas suffisant on prend dedans pour limité la perte					
+						// S'il reste du puits malgrÃ© que ca soit pas suffisant on prend dedans pour limitÃ© la perte
 						if(puit > 0) {
 							poidTotal -= puit;
 							objectFm.setPuit(0);
@@ -1838,7 +1838,7 @@ public class JobAction {
 						}
 						
 						
-						// On perd des caractéristiques également (si c'est possible, avant d'ajouté la stats) (Caract adapté avec le puit restant)
+						// On perd des caractÃ©ristiques Ã©galement (si c'est possible, avant d'ajoutÃ© la stats) (Caract adaptÃ© avec le puit restant)
 						if (!statStringObj.isEmpty()) { 
 							statsStr = objectFm.parseStringStatsEC_FM(objectFm, poidTotal, -1);
 				            objectFm.clearStats();
@@ -1866,17 +1866,17 @@ public class JobAction {
 							 objectFm.setNewStats(statsObjectFm,StatToAdd);	
 						}	
 						
-						if( ( (objectFm.getPuit() + pwrPerte) - poidTotal ) < 0) { // Le puit est négatif
+						if( ( (objectFm.getPuit() + pwrPerte) - poidTotal ) < 0) { // Le puit est nÃ©gatif
 							objectFm.setPuit(0);
 						}
-						else { // Sinon on applique le puit récupéré avec la baisse des stats
+						else { // Sinon on applique le puit rÃ©cupÃ©rÃ© avec la baisse des stats
 							objectFm.setPuit((objectFm.getPuit() + pwrPerte) - poidTotal);
 						}
 						return objectFm;
 					}
 				}
 				else {
-					// le cas de l'over dépend du puit restant
+					// le cas de l'over dÃ©pend du puit restant
 					if(puit >= poidTotal) { // Si le puit peut absorber l'echec il le prend
 						//player.sendMessage("On a du puit, on prend dedant");
 						objectFm.setPuit(objectFm.getPuit() - poidTotal); 
@@ -1884,7 +1884,7 @@ public class JobAction {
 					}  
 					else { 
 						
-						// Sinon on retire le puit + On perd des caractéristiques (Caract adapté avec le puit restant)
+						// Sinon on retire le puit + On perd des caractÃ©ristiques (Caract adaptÃ© avec le puit restant)
 						poidTotal -= puit;
 						objectFm.setPuit(0);
 						
@@ -1897,10 +1897,10 @@ public class JobAction {
 				                    - currentTotalWeigthBase(statsStr, objectFm);
 						}
 						
-						if( (objectFm.getPuit() + pwrPerte - poidTotal) < 0 ) { // Le puit est négatif
+						if( (objectFm.getPuit() + pwrPerte - poidTotal) < 0 ) { // Le puit est nÃ©gatif
 							objectFm.setPuit(0);
 						}
-						else { // Sinon on applique le puit récupéré avec la baisse des stats
+						else { // Sinon on applique le puit rÃ©cupÃ©rÃ© avec la baisse des stats
 							objectFm.setPuit((objectFm.getPuit() + pwrPerte - poidTotal));
 						}
 					}
@@ -1909,9 +1909,9 @@ public class JobAction {
 			}
 			case "autre" : {
 				// LE cas de l'exo c'est critique obligatoire ou echec, si les stats ne peuvent pas absorber l'echec on retire toutes les stats mais on ne change pas le puit
-				//player.sendMessage("Pas de perte de puit car EXO tenté");
+				//player.sendMessage("Pas de perte de puit car EXO tentÃ©");
 				
-				// On perd quand meme des caractérique s'il y en as				
+				// On perd quand meme des caractÃ©rique s'il y en as
 				if (!statStringObj.isEmpty()) {
 		            statsStr = objectFm.parseStringStatsEC_FM(objectFm, poidTotal, -1);
 		            objectFm.clearStats();
@@ -1928,40 +1928,40 @@ public class JobAction {
      
     // FONCTION PAS UTILISE PEUT ETRE A RETIRER
     /*
-    public static void setNewPuit(boolean success, String loi, Player player, GameObject objectFm, int poid, int pwrPerte) {        // La gestion du puit était codé avec le cu
+    public static void setNewPuit(boolean success, String loi, Player player, GameObject objectFm, int poid, int pwrPerte) {        // La gestion du puit Ã©tait codÃ© avec le cu
 
         if( !success ) {
         	switch (loi) {
         		case "over" : { 
-        			// le cas de l'over dépend du puit restant
+        			// le cas de l'over dÃ©pend du puit restant
         			if(objectFm.getPuit() > poid) { // Si le puit peut absorber l'echec ou le SN il le prend
         				objectFm.setPuit(objectFm.getPuit() - poid); 
         			}  
-        			else { // Sinon on retire le puit + Les caractéristiques perdu (Caract adapté avec le puit restant)
-        				if ( ((objectFm.getPuit() + pwrPerte) - poid) < 0) { // Si le puit + carac est tombé en dessous de 0 on le met a 0
+        			else { // Sinon on retire le puit + Les caractÃ©ristiques perdu (Caract adaptÃ© avec le puit restant)
+        				if ( ((objectFm.getPuit() + pwrPerte) - poid) < 0) { // Si le puit + carac est tombÃ© en dessous de 0 on le met a 0
         					objectFm.setPuit(0);
         				}
         				else {
-        					objectFm.setPuit((objectFm.getPuit() + pwrPerte) - poid); // Si le puit + Carac est positif on recupère le puit restant
+        					objectFm.setPuit((objectFm.getPuit() + pwrPerte) - poid); // Si le puit + Carac est positif on recupÃ¨re le puit restant
         				}
         			}
         		}
         		case "exo" : {
         			// LE cas de l'exo c'est critique obligatoire ou echec, si les stats ne peuevent pas absorber l'echec on retire toutes les stats mais on ne change pas le puit
-        			//player.sendMessage("Pas de perte de puit car EXO tenté");
+        			//player.sendMessage("Pas de perte de puit car EXO tentÃ©");
         			
         		}
         		case "normal" : {
-        			// le cas normal dépend du puit restant aussi 
+        			// le cas normal dÃ©pend du puit restant aussi
         			if(objectFm.getPuit() > poid) { // Si le puit peut absorber l'echec ou le SN il le prend
         				objectFm.setPuit(objectFm.getPuit() - poid); 
         			}  
-        			else { // Sinon on retire le puit + Les caractéristiques perdu (Caract adapté avec le puit restant)
-        				if ( ((objectFm.getPuit() + pwrPerte) - poid) < 0) { // Si le puit + carac est tombé en dessous de 0 on le met a 0
+        			else { // Sinon on retire le puit + Les caractÃ©ristiques perdu (Caract adaptÃ© avec le puit restant)
+        				if ( ((objectFm.getPuit() + pwrPerte) - poid) < 0) { // Si le puit + carac est tombÃ© en dessous de 0 on le met a 0
         					objectFm.setPuit(0);
         				}
         				else {
-        					objectFm.setPuit((objectFm.getPuit() + pwrPerte) - poid); // Si le puit + Carac est positif on recupère le puit restant
+        					objectFm.setPuit((objectFm.getPuit() + pwrPerte) - poid); // Si le puit + Carac est positif on recupÃ¨re le puit restant
         				}
         			}
         		}
@@ -1972,7 +1972,7 @@ public class JobAction {
         }
     }   
     */
-    // On donne le max pour une ligne (Attention a bien gerer les négatif dans le futur)
+    // On donne le max pour une ligne (Attention a bien gerer les nÃ©gatif dans le futur)
     public static int getStatBaseMax(ObjectTemplate objMod, String statsModif) {
         String[] split = objMod.getStrTemplate().split(",");
         for (String s : split) {
@@ -1989,7 +1989,7 @@ public class JobAction {
         return 0;
     }
     
-    // On donne le max pour une ligne avec le legendaire (Attention a bien gerer les négatif dans le futur)
+    // On donne le max pour une ligne avec le legendaire (Attention a bien gerer les nÃ©gatif dans le futur)
     public static int getStatBaseMaxLegendaire(ObjectTemplate objMod, String statsModif) {   	
     	//System.out.println(statsModif);
     	
@@ -2012,7 +2012,7 @@ public class JobAction {
         return 0;
     }
 
-    // On donne le min pour une ligne de stat donné (Attention a bien gerer les négatif dans le futur)
+    // On donne le min pour une ligne de stat donnÃ© (Attention a bien gerer les nÃ©gatif dans le futur)
     public static int getStatBaseMin(ObjectTemplate objMod, String statsModif) {
         String[] split = objMod.getStrTemplate().split(",");
         for (String s : split) {
@@ -2058,7 +2058,7 @@ public class JobAction {
                 e.printStackTrace();
             }
             
-            double coef = getPwrPerEffet(statID);   // On recupère le poid de la stat a l'unité            
+            double coef = getPwrPerEffet(statID);   // On recupÃ¨re le poid de la stat a l'unitÃ©
             weight = (int) Math.floor(value * coef);
             alt += weight;
         }
@@ -2100,7 +2100,7 @@ public class JobAction {
             } catch (Exception e) {
                 e.printStackTrace();
             }
-            double coef = getPwrPerEffet(statID);   // On recupère le poid de la stat a l'unité            
+            double coef = getPwrPerEffet(statID);   // On recupÃ¨re le poid de la stat a l'unitÃ©
             weight = (int) Math.floor(value * coef);
             alt += weight;
         }
@@ -2142,7 +2142,7 @@ public class JobAction {
             } catch (Exception e) {
                 e.printStackTrace();
             }
-            double coef = getPwrPerEffet(statID);   // On recupère le poid de la stat a l'unité            
+            double coef = getPwrPerEffet(statID);   // On recupÃ¨re le poid de la stat a l'unitÃ©
             weight = (int) Math.floor( (value + ((value)*0.5)) * coef);
             alt += weight;
         }
@@ -2182,7 +2182,7 @@ public class JobAction {
              String jet = "";
              int qua = 1;
              
-             //System.out.println("La stat :" + statID + "considéré comme exo");
+             //System.out.println("La stat :" + statID + "considÃ©rÃ© comme exo");
              try {
                  jet = stats[4];
                  try {
@@ -2199,14 +2199,14 @@ public class JobAction {
                  // Ok :/
              }
              //World.world.logger.trace("Etrange cette stats"+statID);
-             double coef = getPwrPerEffet(statID);   // On recupère le poid de la stat a l'unité            
+             double coef = getPwrPerEffet(statID);   // On recupÃ¨re le poid de la stat a l'unitÃ©
              Weigth = (int) Math.floor(qua * coef); // On multiplie par le jet
              Alto += Weigth;
          } 
          return Alto;      
     }
     
-    public static int currentTotalWeigthBase(String statsModelo, GameObject obj) { // On récupère le poid total de l'item actuel
+    public static int currentTotalWeigthBase(String statsModelo, GameObject obj) { // On rÃ©cupÃ¨re le poid total de l'item actuel
         if (statsModelo.equalsIgnoreCase(""))
             return 0;
         int Weigth = 0;
@@ -2241,7 +2241,7 @@ public class JobAction {
                 // Ok :/
             }
             
-            double coef = getPwrPerEffet(statID);   // On recupère le poid de la stat a l'unité            
+            double coef = getPwrPerEffet(statID);   // On rÃ©cupÃ¨re le poid de la stat a l'unitÃ©
             Weigth = (int) Math.floor(qua * coef); // On multiplie par le jet
             Alto += Weigth;
         } 
@@ -2549,7 +2549,7 @@ public class JobAction {
                 r = 50.0;
                 break;
         }
-    	//System.out.println("LE poid trouvé "+r);
+    	//System.out.println("LE poid trouvÃ© "+r);
         return r;
     }
 */
@@ -2593,10 +2593,10 @@ public class JobAction {
     public static byte viewActualStatsItem(GameObject obj, String stats)//retourne vrai si le stats est actuellement sur l'item
     {
         if (!obj.parseStatsString().isEmpty()) { // si l'obj est pas vide
-            for (Entry<Integer, Integer> entry : obj.getStats().getMap().entrySet()) { // Toutes les entrées 
+            for (Entry<Integer, Integer> entry : obj.getStats().getMap().entrySet()) { // Toutes les entrÃ©es
                 if (Integer.toHexString(entry.getKey()).compareTo(stats) > 0)//Effets inutiles
                 {
-                    if (Integer.toHexString(entry.getKey()).compareTo("98") == 0  // C'est un cas négatif 
+                    if (Integer.toHexString(entry.getKey()).compareTo("98") == 0  // C'est un cas nÃ©gatif
                             && stats.compareTo("7b") == 0) {
                         return 2;
                     } else if (Integer.toHexString(entry.getKey()).compareTo("9a") == 0
@@ -2656,10 +2656,10 @@ public class JobAction {
                     return 2;
                 } else if (stats[0].compareTo("99") == 0
                         && ItemStats.compareTo("7d") == 0) {
-                    return 2; // Retourne oui mais c'est un négatif
+                    return 2; // Retourne oui mais c'est un nÃ©gatif
                 } else if (stats[0].compareTo("99") == 0
                         && ItemStats.compareTo("7d") == 0) {
-                    return 2; // Retourne oui mais c'est un négatif
+                    return 2; // Retourne oui mais c'est un nÃ©gatif
                 } else {
                 }
             } else if (stats[0].compareTo(ItemStats) == 0)//L'effet existe bien !

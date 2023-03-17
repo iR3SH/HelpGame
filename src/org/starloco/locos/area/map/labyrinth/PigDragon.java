@@ -22,19 +22,19 @@ public class PigDragon {
         initializeMap(9372, 442, 320, 216, 22);
         initializeMap(9373, 414, 262, 144, 48);
         initializeMap(9374, 417, 262, 231, 51);
-        initializeMap(9375, 413, 274, 262, 36); // Huiti�me
+        initializeMap(9375, 413, 274, 262, 36); // Huitième
         initializeMap(9376, 413, 274, 262, 36);
-        initializeMap(9377, 413, 274, 262, 36); // Dix-huiti�me
+        initializeMap(9377, 413, 274, 262, 36); // Dix-huitième
         initializeMap(9378, 413, 274, 262, 36);
         initializeMap(9379, 413, 274, 262, 36);
         initializeMap(9380, 442, 320, 216, 22);
-        initializeMap(9381, 442, 320, 216, 22); // Douzi�me
+        initializeMap(9381, 442, 320, 216, 22); // Douzième
         initializeMap(9382, 442, 320, 216, 22);
         initializeMap(9383, 442, 320, 216, 22);
         initializeMap(9384, 442, 320, 216, 22);
         initializeMap(9385, 414, 262, 144, 48);
         initializeMap(9386, 414, 262, 144, 48);
-        initializeMap(9387, 414, 262, 144, 48); // Quatorzi�me
+        initializeMap(9387, 414, 262, 144, 48); // Quatorzième
         initializeMap(9388, 414, 262, 144, 48);
         initializeMap(9389, 414, 262, 144, 48);
         initializeMap(9390, 417, 262, 231, 51);
@@ -472,10 +472,10 @@ public class PigDragon {
         GameCase cell = randomCase(map, c1, c2, c3, c4);
 
         switch (id) {
-            case 9395: // 13�me
+            case 9395: // 13ème
                 PigDragon.open(map, cell);
                 break;
-            case 9375: // 8�me
+            case 9375: // 8ème
                 if (cell.getId() == 413) {
                     if (PigDragon.outside == null)
                         PigDragon.setOutside(map.getCase(returnCell(map, 413)));
@@ -484,7 +484,7 @@ public class PigDragon {
                 }
                 PigDragon.open(map, returnCell(map, cell.getId()));
                 break;
-            case 9381: // 12�me
+            case 9381: // 12ème
                 if (cell.getId() == 216) {
                     if (PigDragon.outside == null)
                         PigDragon.setOutside(map.getCase(returnCell(map, 216)));
@@ -494,7 +494,7 @@ public class PigDragon {
                 }
                 PigDragon.open(map, returnCell(map, cell.getId()));
                 break;
-            case 9387: // 14�me
+            case 9387: // 14ème
                 if (cell.getId() == 262) {
                     if (PigDragon.outside == null)
                         PigDragon.setOutside(map.getCase(returnCell(map, 262)));
@@ -503,7 +503,7 @@ public class PigDragon {
                 }
                 PigDragon.open(map, returnCell(map, cell.getId()));
                 break;
-            case 9377: // 18�me
+            case 9377: // 18ème
                 if (cell.getId() == 36) {
                     if (PigDragon.outside == null)
                         PigDragon.setOutside(map.getCase(returnCell(map, 36)));
@@ -532,25 +532,25 @@ public class PigDragon {
         GameMap map;
         GameCase cell;
         switch (Formulas.getRandomValue(0, 3)) {
-            case 0: // 9375 - 8�me
+            case 0: // 9375 - 8ème
                 closeMap(9375, 413, 274, 262, 36);
                 map = World.world.getMap((short) 9375);
                 cell = map.getCase(413);
                 open(map, cell);
                 break;
-            case 1: // 9381 - 12�me
+            case 1: // 9381 - 12ème
                 closeMap(9381, 442, 320, 216, 22);
                 map = World.world.getMap((short) 9381);
                 cell = map.getCase(216);
                 open(map, cell);
                 break;
-            case 2: // 9387 - 14�me
+            case 2: // 9387 - 14ème
                 closeMap(9387, 414, 262, 144, 48);
                 map = World.world.getMap((short) 9387);
                 cell = map.getCase(262);
                 open(map, cell);
                 break;
-            case 3: // 9377 - 18�me
+            case 3: // 9377 - 18ème
                 closeMap(9377, 413, 274, 262, 36);
                 map = World.world.getMap((short) 9377);
                 cell = map.getCase(36);

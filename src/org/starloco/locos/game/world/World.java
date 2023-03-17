@@ -1178,7 +1178,7 @@ public class World {
                 continue;
             boolean ok = true;
             for (Couple<Integer, Integer> c : craft) {
-                if (!((ingredients.get(c.first) + " ").equals(c.second + " "))) //si ingredient non pr�sent ou mauvaise quantit�
+                if (!((ingredients.get(c.first) + " ").equals(c.second + " "))) //si ingredient non présent ou mauvaise quantité
                     ok = false;
             }
             if (ok)
@@ -1326,16 +1326,16 @@ public class World {
         changeHdv.put(4607, 4271); // HDV Alchimistes
         changeHdv.put(4622, 4216); // HDV Bijoutiers
         changeHdv.put(4627, 4232); // HDV Bricoleurs
-        changeHdv.put(5112, 4178); // HDV B�cherons
+        changeHdv.put(5112, 4178); // HDV Bûcherons
         changeHdv.put(4562, 4183); // HDV Cordonniers
-        changeHdv.put(8754, 8760); // HDV Biblioth�que
+        changeHdv.put(8754, 8760); // HDV Bibliothèque
         changeHdv.put(5317, 4098); // HDV Forgerons
-        changeHdv.put(4615, 4247); // HDV P�cheurs
+        changeHdv.put(4615, 4247); // HDV Pêcheurs
         changeHdv.put(4646, 4262); // HDV Ressources
         changeHdv.put(8756, 8757); // HDV Forgemagie
         changeHdv.put(4618, 4174); // HDV Sculpteurs
         changeHdv.put(4588, 4172); // HDV Tailleurs
-        changeHdv.put(8482, 10129); // HDV �mes
+        changeHdv.put(8482, 10129); // HDV Âmes
         changeHdv.put(4595, 4287); // HDV Bouchers
         changeHdv.put(4630, 2221); // HDV Boulangers
         changeHdv.put(5311, 4179); // HDV Mineurs
@@ -1343,7 +1343,7 @@ public class World {
         return changeHdv;
     }
 
-    // Utilis� deux fois. Pour tous les modes HDV dans la fonction getHdv ci-dessous et dans le mode Vente de GameClient.java
+    // Utilisé deux fois. Pour tous les modes HDV dans la fonction getHdv ci-dessous et dans le mode Vente de GameClient.java
     public int changeHdv(int map) {
         Map<Integer, Integer> changeHdv = getChangeHdv();
         if (changeHdv.containsKey(map)) {
@@ -1373,7 +1373,7 @@ public class World {
 
     public void addHdvItem(int compteID, int hdvID, HdvEntry toAdd) {
         if (hdvsItems.get(compteID) == null) //Si le compte n'est pas dans la memoire
-            hdvsItems.put(compteID, new HashMap<>()); //Ajout du compte cl�:compteID et un nouveau Map<hdvID,items<>>
+            hdvsItems.put(compteID, new HashMap<>()); //Ajout du compte clé:compteID et un nouveau Map<hdvID,items<>>
         if (hdvsItems.get(compteID).get(hdvID) == null)
             hdvsItems.get(compteID).put(hdvID, new ArrayList<>());
         hdvsItems.get(compteID).get(hdvID).add(toAdd);
@@ -1390,7 +1390,7 @@ public class World {
     public Map<Integer, ArrayList<HdvEntry>> getMyItems(
             int compteID) {
         if (hdvsItems.get(compteID) == null)//Si le compte n'est pas dans la memoire
-            hdvsItems.put(compteID, new HashMap<>());//Ajout du compte cl�:compteID et un nouveau Map<hdvID,items
+            hdvsItems.put(compteID, new HashMap<>());//Ajout du compte clé:compteID et un nouveau Map<hdvID,items
         return hdvsItems.get(compteID);
     }
 
@@ -1402,15 +1402,15 @@ public class World {
         if(boy.getSexe() == 0 && girl.getSexe() == 1) {
             final GameMap map = boy.getCurMap();
             if (boy.getWife() != 0) {// 0 : femme | 1 = homme
-                SocketManager.GAME_SEND_MESSAGE_TO_MAP(map, boy.getName() + " est d�j� mari� !", Config.getInstance().colorMessage);
+                SocketManager.GAME_SEND_MESSAGE_TO_MAP(map, boy.getName() + " est déjà marié !", Config.getInstance().colorMessage);
                 return;
             }
             if (girl.getWife() != 0) {
-                SocketManager.GAME_SEND_MESSAGE_TO_MAP(map, girl.getName() + " est d�j� mari� !", Config.getInstance().colorMessage);
+                SocketManager.GAME_SEND_MESSAGE_TO_MAP(map, girl.getName() + " est déjà marié !", Config.getInstance().colorMessage);
                 return;
             }
-            SocketManager.GAME_SEND_cMK_PACKET_TO_MAP(map, "", -1, "Pr�tre", asked.getName()
-                    + " acceptez-vous d'�pouser " + (asked.getSexe() == 1 ? girl : boy).getName() + " ?");
+            SocketManager.GAME_SEND_cMK_PACKET_TO_MAP(map, "", -1, "Prêtre", asked.getName()
+                    + " acceptez-vous d'épouser " + (asked.getSexe() == 1 ? girl : boy).getName() + " ?");
             SocketManager.GAME_SEND_WEDDING(map, 617, (boy == asked ? boy.getId() : girl.getId()), (boy == asked ? girl.getId() : boy.getId()), -1);
         }
     }
@@ -1418,8 +1418,8 @@ public class World {
 
     public void wedding(Player boy, Player girl, int isOK) {
         if (isOK > 0) {
-            SocketManager.GAME_SEND_cMK_PACKET_TO_MAP(boy.getCurMap(), "", -1, "Pr�tre", "Je d�clare "
-                    + boy.getName() + " et " + girl.getName() + " unis par les liens sacr�s du mariage.");
+            SocketManager.GAME_SEND_cMK_PACKET_TO_MAP(boy.getCurMap(), "", -1, "Prêtre", "Je déclare "
+                    + boy.getName() + " et " + girl.getName() + " unis par les liens sacrés du mariage.");
             boy.setWife(girl.getId());
             girl.setWife(boy.getId());
         } else {
@@ -1801,15 +1801,15 @@ public class World {
 
     public ArrayList<String> getRandomChallenge(int nombreChal,
                                                        String challenges) {
-        String MovingChals = ";1;2;8;36;37;39;40;";// Challenges de d�placements incompatibles
+        String MovingChals = ";1;2;8;36;37;39;40;";// Challenges de déplacements incompatibles
         boolean hasMovingChal = false;
         String TargetChals = ";3;4;10;25;31;32;34;35;38;42;";// ceux qui ciblent
         boolean hasTargetChal = false;
-        String SpellChals = ";5;6;9;11;19;20;24;41;";// ceux qui obligent � caster sp�cialement
+        String SpellChals = ";5;6;9;11;19;20;24;41;";// ceux qui obligent à caster spécialement
         boolean hasSpellChal = false;
         String KillerChals = ";28;29;30;44;45;46;48;";// ceux qui disent qui doit tuer
         boolean hasKillerChal = false;
-        String HealChals = ";18;43;";// ceux qui emp�chent de soigner
+        String HealChals = ";18;43;";// ceux qui empêchent de soigner
         boolean hasHealChal = false;
 
         int compteur = 0, i;
@@ -2272,7 +2272,7 @@ public class World {
             if (bonus == 30.0)
                 taux += 2.0 * getTauxObtentionIntermediaire(10.0, (!b2), b2); // Si b2 est false alors on calculera 2*3.0 dans 10.0
             if (bonus == 10.0)
-                taux += 2.0 * getTauxObtentionIntermediaire(3.0, (b2), b2); // Si b2 est true alors on calculera apr�s
+                taux += 2.0 * getTauxObtentionIntermediaire(3.0, (b2), b2); // Si b2 est true alors on calculera après
             else if (bonus == 3.0)
                 taux += 2.0 * getTauxObtentionIntermediaire(1.0, false, b2);
         }
@@ -2286,7 +2286,7 @@ public class World {
             case 43: // FM Dagues
                 mId = 17;
                 break;
-            case 44: // FM Ep�es
+            case 44: // FM Epées
                 mId = 11;
                 break;
             case 45: // FM Marteaux
@@ -2304,7 +2304,7 @@ public class World {
             case 49: // FM Baguettes
                 mId = 19;
                 break;
-            case 50: // FM B�tons
+            case 50: // FM Bâtons
                 mId = 18;
                 break;
             case 62: // Cordo
@@ -2323,13 +2323,13 @@ public class World {
     public int getTempleByClasse(int classe) {
         int temple = -1;
         switch (classe) {
-            case Constant.CLASS_FECA: // f�ca
+            case Constant.CLASS_FECA: // féca
                 temple = 1554;
                 break;
             case Constant.CLASS_OSAMODAS: // osa
                 temple = 1546;
                 break;
-            case Constant.CLASS_ENUTROF: // �nu
+            case Constant.CLASS_ENUTROF: // énu
                 temple = 1470;
                 break;
             case Constant.CLASS_SRAM: // sram
@@ -2338,10 +2338,10 @@ public class World {
             case Constant.CLASS_XELOR: // xelor
                 temple = 1469;
                 break;
-            case Constant.CLASS_ECAFLIP: // �ca
+            case Constant.CLASS_ECAFLIP: // éca
                 temple = 1544;
                 break;
-            case Constant.CLASS_ENIRIPSA: // �ni
+            case Constant.CLASS_ENIRIPSA: // éni
                 temple = 6928;
                 break;
             case Constant.CLASS_IOP: // iop

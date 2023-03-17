@@ -304,7 +304,7 @@ public class Spell {
 
         public void applySpellEffectToFight(Fight fight, Fighter perso,
                                             GameCase cell, ArrayList<GameCase> cells, boolean isCC) {
-            // Seulement appell� par les pieges, or les sorts de piege
+            // Seulement appellé par les pieges, or les sorts de piege
             ArrayList<SpellEffect> effets;
             if (isCC)
                 effets = CCeffects;
@@ -350,7 +350,7 @@ public class Spell {
                 jetChance = Formulas.getRandomValue(0, 75);
                 if (jetChance % 2 == 0)
                     jetChance++;
-            } else if (this.getSpell().getSpellID() == 574) // Si c'est Ouverture hasardeuse fant�me
+            } else if (this.getSpell().getSpellID() == 574) // Si c'est Ouverture hasardeuse fantôme
                 jetChance = Formulas.getRandomValue(0, 96);
             else if (this.getSpell().getSpellID() == 574) // Si c'est Ouverture hasardeuse
                 jetChance = Formulas.getRandomValue(0, 95);
@@ -390,7 +390,7 @@ public class Spell {
                         final Fighter F = C.getFirstFighter();
                         if (F == null)
                             continue;
-                        // Ne touches pas les alli�s : 1
+                        // Ne touches pas les alliés : 1
                         if (((TE & 1) == 1) && (F.getTeam() == perso.getTeam()))
                             continue;
                         // Ne touche pas le lanceur : 2

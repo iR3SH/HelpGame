@@ -79,7 +79,7 @@ public class Prestige {
         	}catch(NumberFormatException | ArrayIndexOutOfBoundsException e)
         	{
         		e.printStackTrace();
-        		Main.stop("Problème lors de la génération des artefact Prestige");
+        		Main.stop("ProblÃ¨me lors de la gÃ©nÃ©ration des artefact Prestige");
         		return;
         	}
 		}
@@ -111,7 +111,7 @@ public class Prestige {
 					if(!player.hasItemTemplate(itemID, amount)) return 4;
 				}
 			}catch(NumberFormatException | ArrayIndexOutOfBoundsException e) {
-				player.sendErrorMessage("Un problème avec le Prestige est survenue , merci de contacter un administrateur.");
+				player.sendErrorMessage("Un problÃ¨me avec le Prestige est survenue , merci de contacter un administrateur.");
 				e.printStackTrace();
 				return 5;
 			}
@@ -141,12 +141,12 @@ public class Prestige {
 	{
 		if(this.mapToTp != -1 && this.cellToTp != -1 && player.cantTP())
 		{
-			player.sendInformationMessage("Tu ne peux pas passer prestige car tu ne peux pas te téléporter.");
+			player.sendInformationMessage("Tu ne peux pas passer prestige car tu ne peux pas te tÃ©lÃ©porter.");
 			return false;
 		}
 		if(player.getFight() != null || player.getExchangeAction() != null || player.isAway())
 		{
-			player.sendInformationMessage("Tu ne peux pas passer prestige car tu es occupé.");
+			player.sendInformationMessage("Tu ne peux pas passer prestige car tu es occupÃ©.");
 			return false;
 		}
 		
@@ -172,7 +172,7 @@ public class Prestige {
         	case 5: // error
         		return false;
         	case 6: // artefact
-        		player.sendInformationMessage("Tu n'as pas tué les monstres nécessaire pour pouvoir passer au prestige suivant.");
+        		player.sendInformationMessage("Tu n'as pas tuÃ© les monstres nÃ©cessaire pour pouvoir passer au prestige suivant.");
         		return false;
     	}
 		
@@ -226,7 +226,7 @@ public class Prestige {
 		}
 		
 		if(this.getPrestigeBonus().getItems().size() > 0) 
-			player.sendInformationMessage("Des items t'ont été donné suite a ton passement de prestige !");
+			player.sendInformationMessage("Des items t'ont Ã©tÃ© donnÃ© suite a ton passement de prestige !");
 		
 		
 		player.save();
@@ -255,7 +255,7 @@ public class Prestige {
 				TimerWaiter.addNext(()->{SocketManager.GAME_SEND_GA_PACKET_TO_MAP(player.getCurMap(), "0", 228, n.getKey() + ";" + player.getCurCell().getId() + "," + Animation.PrepareToGA(this.animation), "");}, 2000, DataType.MAP);
 			}
 		}	
-        SocketManager.GAME_SEND_MESSAGE_TO_ALL("Félicitation <b><a href='asfunction:onHref,ShowPlayerPopupMenu," + player.getName() + "'>" + player.getName() + "</a></b> est passé Prestige " + player.getPrestige() + " !", "FF0000");
+        SocketManager.GAME_SEND_MESSAGE_TO_ALL("FÃ©licitation <b><a href='asfunction:onHref,ShowPlayerPopupMenu," + player.getName() + "'>" + player.getName() + "</a></b> est passÃ© Prestige " + player.getPrestige() + " !", "FF0000");
 	}
 	
 	public void sendInfosCondition(final Player player)
@@ -264,7 +264,7 @@ public class Prestige {
 				+ "Level requis : " + this.requiredLevel + "<br>"
 				+ "Kamas requis : " + this.priceKamas + "<br>"
 				+ "Points Boutique requis : " + this.priceBoutique + "<br>"
-				+ "Information supplémentaire : <br>"
+				+ "Information supplÃ©mentaire : <br>"
 				+ this.infosCondition;
 		
 		SocketManager.send(player, "BAIO"+message);
@@ -275,11 +275,11 @@ public class Prestige {
 		final PrestigeBonus pb = this.getPrestigeBonus();
 		
 		final String message = title + " <b>" + this.id + "</b> : <br>"
-				+ "+<b>" + pb.getBaseStats()[0] + "</b> vitalité.<br>"
+				+ "+<b>" + pb.getBaseStats()[0] + "</b> vitalitÃ©.<br>"
 				+ "+<b>" + pb.getBaseStats()[1] + "</b> sagesse.<br>"
 				+ "+<b>" + pb.getBaseStats()[2] + "</b> force.<br>"
 				+ "+<b>" + pb.getBaseStats()[3] + "</b> intel.<br>"
-				+ "+<b>" + pb.getBaseStats()[4] + "</b> agilité.<br>"
+				+ "+<b>" + pb.getBaseStats()[4] + "</b> agilitÃ©.<br>"
 				+ "+<b>" + pb.getBaseStats()[5] + "</b> chance.<br>"
 				+ "+<b>" + pb.getPrimaryStats()[0] + "</b> PA.<br>"
 				+ "+<b>" + pb.getPrimaryStats()[1] + "</b> PM.<br>"
@@ -289,8 +289,8 @@ public class Prestige {
 				+ "+<b>" + pb.getAdvancedStats()[1] + "</b> prospection.<br>"
 				+ "+<b>" + pb.getAdvancedStats()[2] + "</b> initiative.<br>"
 				+ "+<b>" + pb.getAdvancedStats()[3] + "</b> % dommage.<br>"
-				+ "+<b>" + pb.getAdvancedStats()[4] + "</b> dommage piège.<br>"
-				+ "+<b>" + pb.getAdvancedStats()[5] + "</b> % dommage piège.<br>"
+				+ "+<b>" + pb.getAdvancedStats()[4] + "</b> dommage piÃ¨ge.<br>"
+				+ "+<b>" + pb.getAdvancedStats()[5] + "</b> % dommage piÃ¨ge.<br>"
 				+ "+<b>" + pb.getAdvancedStats()[6] + "</b> soin.<br>"
 				+ "+<b>" + pb.getCapital() + "</b> capital / "
 				+ "+<b>" + pb.getPdvMax() + "</b> pdv par level.<br>"

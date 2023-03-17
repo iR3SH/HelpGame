@@ -29,9 +29,9 @@ public class CraftSecure extends PlayerExchange {
         super(player1, player2);
         this.setMaxCase(JobConstant.getTotalCaseByJobLevel(this.player1.getMetierBySkill(this.player1.getIsCraftingType().get(1)).get_lvl()));
         /*
-        if (this.player1.getMetierBySkill(this.player1.getIsCraftingType().get(1)).getTemplate().isMaging()) {// Pas de métier de FM
-            SocketManager.GAME_SEND_MESSAGE(this.player1, "Pas d'invitation pour les métiers de forgemagie pour le moment.");
-            SocketManager.GAME_SEND_MESSAGE(this.player2, "Pas d'invitation pour les métiers de forgemagie pour le moment.");
+        if (this.player1.getMetierBySkill(this.player1.getIsCraftingType().get(1)).getTemplate().isMaging()) {// Pas de mÃ©tier de FM
+            SocketManager.GAME_SEND_MESSAGE(this.player1, "Pas d'invitation pour les mÃ©tiers de forgemagie pour le moment.");
+            SocketManager.GAME_SEND_MESSAGE(this.player2, "Pas d'invitation pour les mÃ©tiers de forgemagie pour le moment.");
             this.cancel();
         }
         */ // Previous Code not possible to invite other players to mage items
@@ -57,7 +57,7 @@ public class CraftSecure extends PlayerExchange {
             return;
 
         if (jobStat.getTemplate().isMaging())
-            return; // Pas de métier de FM
+            return; // Pas de mÃ©tier de FM
 
         JobAction jobAction = jobStat.getJobActionBySkill(this.player1.getIsCraftingType().get(1));
 

@@ -18,8 +18,22 @@
 - Pince de Corail refaire EffectTarget
 - Coraillement refaire EffectTarget
 - Refaire IA Kreuvet La Bwork Ingénieuse
+- Maman Tofu Obèse ne fait rien
+- IA Crocabulia à refaire
 
 # FIX
+
+### **17/03/2023**
+- Fix de toutes les maps avec les nouveaux paramètres de maps dans les SWF
+- Passage à la version de MinaCore 2.2.1 (Meilleur gestion des sessions)
+- Refonte complète des fonctions ApplySpellEffect pour le Retrait Pa/Pm et le vol de Pa/Pm
+- Fix EffectTarget du Sort Frappe Sismique
+- Fix EffectTarget du Sort Dragofeu
+- Fix EffectTarget du Sort Esprit d'Equipe
+- Fix EffectTarget du Sort Flagéllation florale
+- Fix GetPointLost on ne peut plus perdre plus de pa/pm que l'on a de disponible en combat
+- Fix de tout les accents
+
 
 ### **16/03/2023**
 - Fix effet de sort appliqué alors que la cible était morte

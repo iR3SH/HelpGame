@@ -45,7 +45,7 @@ public class Quest_Etape {
             if (aMonster.contains(",") && !aMonster.equals(0)) {
                 String[] loc0 = aMonster.split(",");
                 setMonsterId(Integer.parseInt(loc0[0]));
-                setQua(Short.parseShort(loc0[1])); // Des quêtes avec le truc vide ! ><
+                setQua(Short.parseShort(loc0[1])); // Des quÃªtes avec le truc vide ! ><
             }
         } catch (Exception e) {
             e.printStackTrace();
