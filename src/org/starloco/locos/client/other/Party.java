@@ -1,6 +1,7 @@
 package org.starloco.locos.client.other;
 
 import org.starloco.locos.area.map.GameCase;
+import org.starloco.locos.area.map.GameMap;
 import org.starloco.locos.client.Player;
 import org.starloco.locos.common.PathFinding;
 import org.starloco.locos.common.SocketManager;
@@ -97,11 +98,11 @@ public class Party {
 		{
 		if(follower.getExchangeAction() != null)
 		{
-		follower.sendMessage("Vous n'avez pas pu être téléporté car vous êtes occupé.");
-		master.sendMessage("Le joueur "+follower.getName()+" est occupé et n'a pas pu être téléporté.");
-	    continue;
+            follower.sendMessage("Vous n'avez pas pu Ãªtre tÃ©lÃ©portÃ© car vous Ãªtes occupÃ©.");
+            master.sendMessage("Le joueur "+follower.getName()+" est occupÃ© et n'a pas pu Ãªtre tÃ©lÃ©portÃ©.");
+            continue;
 		}
-		if(master.getCurMap().getId() != follower.getCurMap().getId())
+		if(master.getCurMap().getId() != follower.getCurMap().getId() && GameMap.IsInDj(master.getCurMap()))
 			follower.teleport(master.getCurMap().getId(), master.getCurCell().getId());
 		}
 		

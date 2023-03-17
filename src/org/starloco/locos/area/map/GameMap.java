@@ -1154,8 +1154,21 @@ public class GameMap {
 	        SocketManager.sendTacticalTruePacket(perso.getGameClient());
 
     }
-        
-        
+
+    public static boolean IsInDj (GameMap map) {
+
+        Map<Integer, ArrayList<Action>> actionsOnMap = map.endFightAction;
+        for (Map.Entry<Integer, ArrayList<Action> > entry : actionsOnMap.entrySet()) {
+            ArrayList<Action> Actions =  entry.getValue();
+            for (Action action : Actions) {
+                //player.sendMessage("L'action " + action.getId() + " " + action.getArgs());
+                if( action.getId() == 0 ){
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
         
         //.maitre (v1)
         /*
