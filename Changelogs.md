@@ -1,27 +1,37 @@
 # BUGS ACTUEL
 
-- IA Gourlo à revoir n'invoque pas tout le temps surtout quand il est au cac d'un ennemi
-- IA Minotot manque attaque Lancer de Tofu
-- IA Gardienne des Egouts, n'attaque pas, aspire dans le vide, lance invisibilité à la fin de son tour et ne fuis pas
-- Kapota la Fraise n'attaque pas
-- Craqueleur Légendaire ne fait pas peau de silex ni pierre de topaze sur invoc
-- Dragtula l'Ancien ne fait rien
 - Rat blanc Racasse ne fonctionne pas comme offi
-- Rat Noir Kackitu ne fonctionne pas comme offi
-- Chaferfu Lancier n'attaque qu'une seule fois
-- Corbac Apprivoisé ne marche pas correctement
-- Ia dragoss flingué
-- Bwork élémentaux ia flingué
-- Corailleur Magistral en roue libre
-- IA CM Bug (Attaque bien avec Complicité et Embranchement mais pas les deux autres et ne fait plus rien avec un ennemi au Cac)
-- Tofu Ventripotent ne fait rien
-- Pince de Corail refaire EffectTarget
-- Coraillement refaire EffectTarget
-- Refaire IA Kreuvet La Bwork Ingénieuse
-- Maman Tofu Obèse ne fait rien
-- IA Crocabulia à refaire
+- Rat Noir Kackitu ne fonctionne pas comme offi (Voir aussi peste noir)
+
+## IA à refaire
+
+### **BOSS**
+- Gourlo à revoir n'invoque pas tout le temps surtout quand il est au cac d'un ennemi
+- Minotot manque attaque Lancer de Tofu
+- Craqueleur Légendaire ne fait pas peau de silex ni pierre de topaze sur invoc
+- Corailleur Magistral
+- Chêne Mou (Attaque bien avec Complicité et Embranchement mais pas les deux autres et ne fait plus rien avec un ennemi au Cac)
+- Crocabulia (Sort Cri de Crocabulia à refaire en fonctionnement)
+
+### **MONSTRES**
+- IA Gardienne des Egouts, n'attaque pas, aspire dans le vide, lance invisibilité à la fin de son tour et ne fuis pas
+- Kapota la Fraise
+- Corbac Apprivoisé
+- Dragoss
+- Bwork élémentaux
+- Tofu Ventripotent
+- Kreuvet La Bwork Ingénieuse
+- Maman Tofu Obèse
+- Kannibouls
+- Koalak Griotte/Reinette/Indigo/Coco
 
 # FIX
+
+### **18/03/2023**
+- Fix EffectTarget du Sort Piège d'Immobilisation
+- Fix EffectTarget du Sort Réconciliation
+- Fix EffectTarget du Sort Pince de Corail
+- Fix EffectTarget du Sort Coraillement
 
 ### **17/03/2023**
 - Fix de toutes les maps avec les nouveaux paramètres de maps dans les SWF
