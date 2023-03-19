@@ -481,8 +481,7 @@ public class Action {
 
                     int morphid = 0;
                     if (position == Constant.ITEM_POS_ARME) {
-                        morphid = object.getTemplate().getId() - 12681;
-                        player.setFullMorph(morphid, false, false);
+                        morphid = object.getTemplate().getId() - 12681;;
                         Map<String, String> fullMorph = World.world.getFullMorph(morphid);
 
                         if (player.getObjetByPos(Constant.ITEM_POS_TONIQUE_EQUILIBRAGE) != null) {
@@ -493,6 +492,7 @@ public class Action {
                         }
 
                         player.setToniqueEquilibrage(player.generateStatsTonique(fullMorph));
+                        player.setFullMorph(morphid, false, false);
 
                     } else {// Tourmenteur ; on démorphe
                         if (Constant.isIncarnationWeapon(object.getTemplate().getId()))

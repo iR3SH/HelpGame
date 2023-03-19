@@ -141,6 +141,10 @@ public class Stats {
         return this.effects.get(id) == null ? 0 : this.effects.get(id);
     }
 
+    public boolean hasEffect(int id) {
+        return this.effects.containsKey(id);
+    }
+
     public int getEffect(int id) {
         int val = this.effects.get(id) == null ? 0 : this.effects.get(id);
 

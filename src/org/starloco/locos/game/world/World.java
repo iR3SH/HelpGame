@@ -2378,7 +2378,7 @@ public class World {
     public ArrayList<Monster.MobGrade> getArchiMobgradeBetweenLvl(int min, int max){
         ArrayList<Monster> arrayMonstre = new ArrayList<>();
         ArrayList<Monster.MobGrade> arrayMobgrade = new ArrayList<>();
-        getMonstres().stream().filter(monster -> monster != null && (ArrayUtils.contains(Constant.MONSTRE_TYPE_ARCHI, monster.getType())) && !(ArrayUtils.contains(Constant.EXCEPTION_GLADIATROOL_ARCHI, monster.getId())) && !(monster.getGrade(1).getSpells().keySet().isEmpty())
+        getMonstres().stream().filter(monster -> monster != null && (ArrayUtils.contains(Constant.MONSTRE_TYPE_ARCHI, monster.getType())) && !(ArrayUtils.contains(Constant.EXCEPTION_GLADIATROOL_MONSTRES, monster.getId())) && !(monster.getGrade(1).getSpells().keySet().isEmpty())
                 && (getLvlMax(monster) >= min && getLvlMax(monster) < max)).forEach(arrayMonstre::add);
 
         for(Monster mob : arrayMonstre){
@@ -2390,7 +2390,7 @@ public class World {
     public ArrayList<Monster.MobGrade> getBossMobgradeBetweenLvl(int min, int max){
         ArrayList<Monster> arrayMonstre = new ArrayList<>();
         ArrayList<Monster.MobGrade> arrayMobgrade = new ArrayList<>();
-        getMonstres().stream().filter(monster -> monster != null && (ArrayUtils.contains(Constant.BOSS_ID, monster.getId())) && !(ArrayUtils.contains(Constant.EXCEPTION_GLADIATROOL_BOSS, monster.getId())) && !(monster.getGrade(1).getSpells().keySet().isEmpty()) && (monster.getAlign() == -1)
+        getMonstres().stream().filter(monster -> monster != null && (ArrayUtils.contains(Constant.BOSS_ID, monster.getId())) && !(ArrayUtils.contains(Constant.EXCEPTION_GLADIATROOL_MONSTRES, monster.getId())) && !(monster.getGrade(1).getSpells().keySet().isEmpty()) && (monster.getAlign() == -1)
                 && (getLvlMax(monster) >= min && getLvlMax(monster) < max)).forEach(arrayMonstre::add);
 
         for(Monster mob : arrayMonstre){

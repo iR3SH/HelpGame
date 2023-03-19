@@ -778,9 +778,15 @@ public class Fighter implements Comparable<Fighter> {
     }
 
     public void applyBeginningTurnBuff(Fight fight) {
+        ArrayList<SpellEffect> buffs = new ArrayList<>(this.fightBuffs);
         for (int effectID : Constant.BEGIN_TURN_BUFF) {
-            ArrayList<SpellEffect> buffs = new ArrayList<>(this.fightBuffs);
             buffs.stream().filter(entry -> entry.getEffectID() == effectID).forEach(entry -> entry.applyBeginingBuff(fight, this));
+        }
+        // Frappe Sismique
+        for(SpellEffect effect : buffs){
+            if(effect.getSpell() == 470){
+                effect.applyBeginingBuff(fight, this);
+            }
         }
     }
 

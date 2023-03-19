@@ -1,5 +1,6 @@
 package org.starloco.locos.fight.spells;
 
+import java.lang.reflect.Array;
 import java.util.*;
 import java.util.Map.Entry;
 import java.util.HashMap;
@@ -769,6 +770,8 @@ public class SpellEffect {
 			case 271://Vol force
 				applyEffect_271(fight, cibles);
 				break;
+			case 279: // Dommage vie manquante attaquant%
+				applyEffect_279(fight, cibles);
 			case 293://Augmente les dégâts de base du sort X de Y
 				applyEffect_293(fight);
 				break;
@@ -1196,7 +1199,7 @@ public class SpellEffect {
 		}
 	}
 
-	private void applyEffect_81(ArrayList<Fighter> cibles, Fight fight) {// healcion
+	private void applyEffect_81(ArrayList<Fighter> cibles, Fight fight) {// Heal
 		if (turns <= 0) {
 			String[] jet = args.split(";");
 			int heal = 0;
@@ -2956,10 +2959,37 @@ public class SpellEffect {
 				}
 			}
 		}
-		else
-		{
-			for (Fighter target : cibles) {
-				target.addBuff(effectID, value, turns, 0, true, spell, args, caster, false);//on applique un buff
+		else {
+			if (turns < 4) {
+				int secondaryValue = -1;
+				String[] argsSplit = args.split(";");
+				int pointLost = Integer.parseInt(argsSplit[0]);
+				boolean hasSecondaryValue = argsSplit.length > 1;
+				try {
+					secondaryValue = hasSecondaryValue && !argsSplit[1].equalsIgnoreCase("-1")
+							? Integer.parseInt(argsSplit[1]) : secondaryValue;
+					if (secondaryValue != -1) value = Formulas.getRandomValue(value, secondaryValue);
+					else value = pointLost;
+				} catch (Exception ex) {
+					value = pointLost;
+				}
+				for(Fighter target : cibles) {
+					int remove = Formulas.getPointsLost('a', value, caster, target);
+					if ((value - remove) > 0)
+						SocketManager.GAME_SEND_GA_PACKET_TO_FIGHT(fight, 7, 308, caster.getId() + "", target.getId() + "," + (value - remove));
+					if(remove > 0){
+						target.addBuff(Constant.STATS_REM_PA, remove, 1, 1, false, spell, args, caster, false);
+					}
+					if (fight.getFighterByOrdreJeu() == target)
+						fight.setCurFighterPa(fight.getCurFighterPa() - remove);
+				}
+
+			}
+			else {
+				for (Fighter target : cibles) {
+
+					target.addBuff(effectID, value, turns, 0, true, spell, args, caster, false);//on applique un buff
+				}
 			}
 		}
 	}
@@ -4458,6 +4488,24 @@ public class SpellEffect {
 		SocketManager.GAME_SEND_GA_PACKET_TO_FIGHT(fight, 7, Constant.STATS_ADD_FORC, caster.getId()
 				+ "", caster.getId() + "," + vol + "," + turns);
 	}
+	private void applyEffect_279(Fight fight, ArrayList<Fighter> cibles) {
+		int damage = ((caster.getPdvMax() - caster.getPdv()) * value) / 100;
+		for (Fighter target : cibles) {
+			if(target.getTotalStats().get(Constant.STATS_ADD_RP_NEU) != 0){
+				damage = damage - (damage * target.getTotalStats().get(Constant.STATS_ADD_RP_NEU)) / 100;
+			}
+			damage = -(damage);
+			SocketManager.GAME_SEND_GA_PACKET_TO_FIGHT(fight, 7, 100, caster.getId()
+					+ "", target.getId() + "," + damage + ',' + COLOR_NEUTRE);
+			if (target.getPdv() <= 0) {
+				fight.onFighterDie(target, caster);
+				if (target.canPlay() && target.getPersonnage() != null)
+					fight.endTurn(false);
+				else if (target.canPlay())
+					target.setCanPlay(false);
+			}
+		}
+	}
 
 	private void applyEffect_293(Fight fight) {
 		caster.addBuff(effectID, value, turns, 1, false, spell, args, caster, false);
@@ -5203,20 +5251,20 @@ public class SpellEffect {
 				if(Constant.DAMAGE_EFFECT.contains(effectID)){
 					if(target.getSpellsFromFighterBuff().containsKey(World.world.getSort(1010))){
 						if (effet == 99 || effet == 94) {
-							target.addBuff(213, 50, 1, 1, false, 1039, "", target, true);// + 50 feu
-							SocketManager.GAME_SEND_GA_PACKET_TO_FIGHT(fight, 7, 1039, caster.getId()
+							target.addBuff(213, 50, 1, 1, false, 1010, "", target, true);// + 50 %feu
+							SocketManager.GAME_SEND_GA_PACKET_TO_FIGHT(fight, 7, 1010, caster.getId()
 									+ "", target.getId() + "," + "" + "," + 1);
 						} else if (effet == 98 || effet == 93) {
-							target.addBuff(212, 50, 1, 1, false, 1039, "", target, true);// + 50 air
-							SocketManager.GAME_SEND_GA_PACKET_TO_FIGHT(fight, 7, 1039, caster.getId()
+							target.addBuff(212, 50, 1, 1, false, 1010, "", target, true);// + 50 %air
+							SocketManager.GAME_SEND_GA_PACKET_TO_FIGHT(fight, 7, 1010, caster.getId()
 									+ "", target.getId() + "," + "" + "," + 1);
 						} else if (effet == 97 || effet == 92) {
-							target.addBuff(210, 50, 1, 1, false, 1039, "", target, true);// + 50 terre
-							SocketManager.GAME_SEND_GA_PACKET_TO_FIGHT(fight, 7, 1039, caster.getId()
+							target.addBuff(210, 50, 1, 1, false, 1010, "", target, true);// + 50 %terre
+							SocketManager.GAME_SEND_GA_PACKET_TO_FIGHT(fight, 7, 1010, caster.getId()
 									+ "", target.getId() + "," + "" + "," + 1);
 						} else if (effet == 96 || effet == 91) {
-							target.addBuff(211, 50, 1, 1, false, 1039, "", target, true);// + 50 eau
-							SocketManager.GAME_SEND_GA_PACKET_TO_FIGHT(fight, 7, 1039, caster.getId()
+							target.addBuff(211, 50, 1, 1, false, 1010, "", target, true);// + 50 %eau
+							SocketManager.GAME_SEND_GA_PACKET_TO_FIGHT(fight, 7, 1010, caster.getId()
 									+ "", target.getId() + "," + "" + "," + 1);
 						}
 					}

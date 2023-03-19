@@ -1913,6 +1913,10 @@ public class Player {
                 SocketManager.GAME_SEND_ADD_SHORTCUT(this, shortcut);
             }
         }
+        if(_morphMode) {
+            UpdateAllInit();
+        }
+
         verifIfPlayerHasAllTonique();
     }
 
@@ -5942,8 +5946,42 @@ public class Player {
         World.world.addGameObject(obj,true);
         this.equipItem(obj);
         this.getGameClient().onMovementItemClass(obj, pos);
+        this.UpdateInit(obj);
         SocketManager.GAME_SEND_Ow_PACKET(this);
         SocketManager.GAME_SEND_STATS_PACKET(this);
+    }
+
+    public void UpdateAllInit() {
+        if(_morphMode) {
+            this.initiative = Integer.parseInt(World.world.getFullMorph(_morphId).get("initiative"));
+
+            for (int i = Constant.ITEM_POS_TONIQUE1; i < Constant.ITEM_POS_TONIQUE9 + 1; i++) {
+                GameObject object = getObjetByPos(i);
+                if (object != null) {
+                    UpdateInit(object);
+                }
+            }
+            SocketManager.GAME_SEND_STATS_PACKET(this);
+        }
+    }
+
+    public void UpdateInit(GameObject gameObject) {
+        Stats stats = gameObject.getStats();
+        int intel = stats.hasEffect(Constant.STATS_ADD_INTE) ? stats.getEffect(Constant.STATS_ADD_INTE) : 0;
+        int force = stats.hasEffect(Constant.STATS_ADD_FORC) ? stats.getEffect(Constant.STATS_ADD_FORC) : 0;
+        int chance = stats.hasEffect(Constant.STATS_ADD_CHAN) ? stats.getEffect(Constant.STATS_ADD_CHAN) : 0;
+        int agi = stats.hasEffect(Constant.STATS_ADD_AGIL) ? stats.getEffect(Constant.STATS_ADD_AGIL) : 0;
+
+        int remIntel = stats.hasEffect(Constant.STATS_REM_INTE) ? stats.getEffect(Constant.STATS_REM_INTE) : 0;
+        int remForce = stats.hasEffect(Constant.STATS_REM_FORC) ? stats.getEffect(Constant.STATS_REM_FORC) : 0;
+        int remChance = stats.hasEffect(Constant.STATS_REM_CHAN) ? stats.getEffect(Constant.STATS_REM_CHAN) : 0;
+        int remAgi = stats.hasEffect(Constant.STATS_REM_AGIL) ? stats.getEffect(Constant.STATS_REM_AGIL) : 0;
+
+        int newInit = (this.initiative + intel + force + chance + agi) - (remIntel + remForce + remChance + remAgi);
+        if(newInit < 0){
+            newInit = 0;
+        }
+        this.initiative = newInit;
     }
 
     public void setToniqueEquilibrage(Stats stats) {
