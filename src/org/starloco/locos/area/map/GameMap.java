@@ -35,7 +35,9 @@ import org.starloco.locos.kernel.Config;
 
 //import scruffemu.common.SocketManager;
 
+import java.awt.*;
 import java.util.*;
+import java.util.List;
 import java.util.Map.Entry;
 import java.util.stream.Collectors;
 
@@ -1727,10 +1729,12 @@ public class GameMap {
             return;
         if (player.getCurMap().getId() != this.id || !player.canAggro())
             return;
-        for (Monster.MobGroup group : this.mobGroups.values()) {
-            if (PathFinding.getDistanceBetween(this, id, group.getCellId()) <= group.getAggroDistance()) {//S'il y aggr
-                startFightVersusMonstres(player, group);
-                return;
+        if(!Constant.isInGladiatorDonjon(Integer.parseInt(String.valueOf(id)))) {
+            for (Monster.MobGroup group : this.mobGroups.values()) {
+                if (PathFinding.getDistanceBetween(this, id, group.getCellId()) <= group.getAggroDistance()) {//S'il y aggr
+                    startFightVersusMonstres(player, group);
+                    return;
+                }
             }
         }
     }

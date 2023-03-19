@@ -2,6 +2,7 @@
 
 - Rat Noir Kackitu ne fonctionne pas comme offi
 - Cri du Crocabulia ne fonctionne pas correctement
+- Rasboul doit gagner des Pa que quand il lance son sort
 
 ## IA à refaire
 
@@ -29,6 +30,9 @@
 # FIX
 
 ### **19/03/2023**
+- Création de l'application d'Effet 279 pour le Sort Correction Bwork
+- Fix les monstres n'agressent plus dans le Gladiatrool
+- Fix de l'Initiative dans le Gladiatrool
 - Fix EffectTarget du Sort Esprit Félin
 - Fix EffectTarget du Sort Rekop
 - Fix EffectTarget du Sort Esprit d'Equipe
