@@ -93,7 +93,7 @@ public class SpellEffect {
 			for (SpellEffect buff : target.getBuffsByEffectID(id)) {
 				switch (id) {
 					case 114:
-						if (buff.spell == 521) finalDommage = finalDommage * 2;
+							finalDommage = finalDommage * value;
 						break;
 					case 138:
 						if (buff.getSpell() == 1039) {
@@ -470,7 +470,7 @@ public class SpellEffect {
 			case 79:// + X chance(%) dommage subis * Y sinon soigné de dommage *Z
 				applyEffect_79(cibles, fight);
 				break;
-			case 81:// Cura, PDV devueltos
+			case 81:// Soin
 				applyEffect_81(cibles, fight);
 				break;
 			case 82://Vol de Vie fixe
@@ -1212,6 +1212,11 @@ public class SpellEffect {
 				if (spell == 521)// ruse kistoune
 					if (cible.getTeam2() != caster.getTeam2())
 						continue;
+				if(cible.hasBuff(87)){
+					if(cible.getBuff(87).spell == 1009) {
+						cible.addBuff(87, 50, 0, 0, false, 1009, args, cible.getBuff(87).getCaster(), false);
+					}
+				}
 				heal = getMaxMinSpell(cible, heal);
 				int pdvMax = cible.getPdvMax();
 				int healFinal = Formulas.calculFinalHealCac(caster, heal, false);
@@ -2924,29 +2929,37 @@ public class SpellEffect {
 	}
 
 	private void applyEffect_101(ArrayList<Fighter> cibles, Fight fight) {
-		for (Fighter target : cibles) {
-			int remove = Formulas.getPointsLost('a', value, caster, target);
-			if ((value - remove) > 0)
-				SocketManager.GAME_SEND_GA_PACKET_TO_FIGHT(fight, 7, 308, caster.getId() + "", target.getId() + "," + (value - remove));
-			if (remove > 0) {
-				if (turns <= 0)
-					target.addBuff(Constant.STATS_REM_PA, remove, 1, 1, false, spell, args, caster, false);
-				else
-					target.addBuff(Constant.STATS_REM_PA, remove, turns, turns, false, spell, args, caster, false);
-				if (turns <= 1 || duration <= 1)
-					SocketManager.GAME_SEND_GA_PACKET_TO_FIGHT(fight, 7, Constant.STATS_REM_PA, target.getId() + "", target.getId() + ",-" + remove);
-			}
-
-			if (fight.getFighterByOrdreJeu() == target)
-				fight.setCurFighterPa(fight.getCurFighterPa() - remove);
-
-			if (target.getMob() != null) {
-				this.verifmobs(fight, target, Constant.STATS_REM_PA, 0);
-				if (target.getMob().getTemplate().getId() == 1071)// si Rasboul
-				{
-					target.addBuff(Constant.STATS_ADD_PA, 2, 4, 4, true, spell, args, target, false);
-					SocketManager.GAME_SEND_GA_PACKET_TO_FIGHT(fight, 7, Constant.STATS_ADD_PA, target.getId() + "", target.getId() + ",+" + value);
+		if(spell != 470) {
+			for (Fighter target : cibles) {
+				int remove = Formulas.getPointsLost('a', value, caster, target);
+				if ((value - remove) > 0)
+					SocketManager.GAME_SEND_GA_PACKET_TO_FIGHT(fight, 7, 308, caster.getId() + "", target.getId() + "," + (value - remove));
+				if (remove > 0) {
+					if (turns <= 0)
+						target.addBuff(Constant.STATS_REM_PA, remove, 1, 1, false, spell, args, caster, false);
+					else
+						target.addBuff(Constant.STATS_REM_PA, remove, turns, turns, false, spell, args, caster, false);
+					if (turns <= 1 || duration <= 1)
+						SocketManager.GAME_SEND_GA_PACKET_TO_FIGHT(fight, 7, Constant.STATS_REM_PA, target.getId() + "", target.getId() + ",-" + remove);
 				}
+
+				if (fight.getFighterByOrdreJeu() == target)
+					fight.setCurFighterPa(fight.getCurFighterPa() - remove);
+
+				if (target.getMob() != null) {
+					this.verifmobs(fight, target, Constant.STATS_REM_PA, 0);
+					if (target.getMob().getTemplate().getId() == 1071)// si Rasboul
+					{
+						target.addBuff(Constant.STATS_ADD_PA, 2, 4, 4, true, spell, args, target, false);
+						SocketManager.GAME_SEND_GA_PACKET_TO_FIGHT(fight, 7, Constant.STATS_ADD_PA, target.getId() + "", target.getId() + ",+" + value);
+					}
+				}
+			}
+		}
+		else
+		{
+			for (Fighter target : cibles) {
+				target.addBuff(effectID, value, turns, 0, true, spell, args, caster, false);//on applique un buff
 			}
 		}
 	}
@@ -3016,6 +3029,11 @@ public class SpellEffect {
 				cible.removePdv(caster, -healFinal);
 				SocketManager.GAME_SEND_GA_PACKET_TO_FIGHT(fight, 7, 108, caster.getId() + "", cible.getId() + "," + healFinal + ',' + COLOR_FEU);
 				heal = heal2;
+				if(cible.hasBuff(87)){
+					if(cible.getBuff(87).spell == 1009) {
+						cible.addBuff(87, 50, 0, 0, false, 1009, cible.getBuff(87).args, cible.getBuff(87).getCaster(), false);
+					}
+				}
 			}
 		} else {
 			cibles.stream().filter(target -> !target.isDead()).forEach(target -> target.addBuff(effectID, 0, turns, 0, true, spell, args, caster, false));
@@ -3052,7 +3070,12 @@ public class SpellEffect {
 			return;
 		}
 		for (Fighter target : cibles) {
-			target.addBuff(effectID, val, turns, 1, true, spell, args, caster, false);
+			if(turns <= 0) {
+				target.addBuff(effectID, val, 1, 1, true, spell, args, caster, false);
+			}
+			else {
+				target.addBuff(effectID, val, turns, 1, true, spell, args, caster, false);
+			}
 			SocketManager.GAME_SEND_GA_PACKET_TO_FIGHT(fight, 7, effectID, caster.getId()
 					+ "", target.getId() + "," + val + "," + turns);
 		}
@@ -3376,8 +3399,12 @@ public class SpellEffect {
 			} else if (spell == 521)// ruse kistoune
 				if (target.getTeam2() != caster.getTeam2())
 					continue;
-
-			target.addBuff(effectID, val, turns, 1, true, spell, args, caster, false);
+			if(turns <= 0) {
+				target.addBuff(effectID, val, 1, 1, true, spell, args, caster, false);
+			}
+			else {
+				target.addBuff(effectID, val, turns, 1, true, spell, args, caster, false);
+			}
 			//Gain de PM pendant le tour de jeu
 			if (target.canPlay() && target == caster)
 				target.setCurPm(fight, val);
@@ -5032,6 +5059,18 @@ public class SpellEffect {
 	}
 
 	public void verifmobs(Fight fight, Fighter target, int effet, int cura) {
+		if(Constant.DAMAGE_EFFECT.contains(effet)) {
+			if (target.hasBuff(114) && target.hasBuff(112)) {
+				SpellEffect addDom = target.getBuff(112);
+				SpellEffect multiDom = target.getBuff(114);
+				//Radicelle
+				if (multiDom.getSpell() == 1069 && addDom.getSpell() == 1069) {
+					Spell radecielle = World.world.getSort(addDom.getSpell());
+					target.addBuff(112, addDom.getValue(), 2, 1, true, radecielle.getSpellID(), args, caster, false);
+					target.addBuff(114, multiDom.getValue(), 2, 1, true, radecielle.getSpellID(), args, caster, false);
+				}
+			}
+		}
 		switch (target.getMob().getTemplate().getId()) {
 			case 232://meulou
 				if (target.hasBuff(112)) {
@@ -5040,7 +5079,7 @@ public class SpellEffect {
 							+ "", target.getId() + "," + 5 + "," + -1);
 				}
 				break;
-			case 233:
+			case 233: // Trool
 				if (effet == 168 || effet == 101) {
 					target.addBuff(128, 1, 2, 1, true, spell, args, target, false);
 					//Gain de PM pendant le tour de jeu
@@ -5066,37 +5105,6 @@ public class SpellEffect {
 					SocketManager.GAME_SEND_GA_PACKET_TO_FIGHT(fight, 7, 108, caster.getId()
 							+ "", target.getId() + "," + healFinal+ "," + COLOR_FEU);
 
-				}
-				break;
-			case 2750:
-				int healFinal = cura;
-				if ((healFinal + caster.getPdv()) > caster.getPdvMax())
-					healFinal = caster.getPdvMax() - caster.getPdv();
-				if (healFinal < 1)
-					healFinal = 0;
-				caster.removePdv(caster, -healFinal);
-				SocketManager.GAME_SEND_GA_PACKET_TO_FIGHT(fight, 7, 108, caster.getId()
-						+ "", caster.getId() + "," + healFinal+ "," + COLOR_FEU);
-				break;
-			case 1045://kimbo
-				if (effet == 99 || effet == 98 || effet == 94 || effet == 93) {
-					target.setState(30, 1,caster.getId());//etat pair
-					SocketManager.GAME_SEND_GA_PACKET_TO_FIGHT(fight, 7, 950, caster.getId()
-							+ "", target.getId() + "," + 30 + ",1");
-					if (target.haveState(29)) {
-						target.setState(29, 0,caster.getId());//etat 29 impair
-						SocketManager.GAME_SEND_GA_PACKET_TO_FIGHT(fight, 7, 950, caster.getId()
-								+ "", target.getId() + "," + 29 + ",0");
-					}
-				} else if (effet == 97 || effet == 96 || effet == 92 || effet == 91) {
-					target.setState(29, 1,caster.getId());//etat etat si pair
-					SocketManager.GAME_SEND_GA_PACKET_TO_FIGHT(fight, 7, 950, caster.getId()
-							+ "", target.getId() + "," + 29 + ",1");
-					if (target.haveState(30)) {
-						target.setState(30, 0,caster.getId());//etat 29 si pair
-						SocketManager.GAME_SEND_GA_PACKET_TO_FIGHT(fight, 7, 950, caster.getId()
-								+ "", target.getId() + "," + 30 + ",0");
-					}
 				}
 				break;
 			case 423://kralamour
@@ -5191,6 +5199,50 @@ public class SpellEffect {
 				}
 
 				break;
+			case 940: // Rat Blanc
+				if(Constant.DAMAGE_EFFECT.contains(effectID)){
+					if(target.getSpellsFromFighterBuff().containsKey(World.world.getSort(1010))){
+						if (effet == 99 || effet == 94) {
+							target.addBuff(213, 50, 1, 1, false, 1039, "", target, true);// + 50 feu
+							SocketManager.GAME_SEND_GA_PACKET_TO_FIGHT(fight, 7, 1039, caster.getId()
+									+ "", target.getId() + "," + "" + "," + 1);
+						} else if (effet == 98 || effet == 93) {
+							target.addBuff(212, 50, 1, 1, false, 1039, "", target, true);// + 50 air
+							SocketManager.GAME_SEND_GA_PACKET_TO_FIGHT(fight, 7, 1039, caster.getId()
+									+ "", target.getId() + "," + "" + "," + 1);
+						} else if (effet == 97 || effet == 92) {
+							target.addBuff(210, 50, 1, 1, false, 1039, "", target, true);// + 50 terre
+							SocketManager.GAME_SEND_GA_PACKET_TO_FIGHT(fight, 7, 1039, caster.getId()
+									+ "", target.getId() + "," + "" + "," + 1);
+						} else if (effet == 96 || effet == 91) {
+							target.addBuff(211, 50, 1, 1, false, 1039, "", target, true);// + 50 eau
+							SocketManager.GAME_SEND_GA_PACKET_TO_FIGHT(fight, 7, 1039, caster.getId()
+									+ "", target.getId() + "," + "" + "," + 1);
+						}
+					}
+				}
+				break;
+			case 1045://kimbo
+				if (effet == 99 || effet == 98 || effet == 94 || effet == 93) {
+					target.setState(30, 1,caster.getId());//etat pair
+					SocketManager.GAME_SEND_GA_PACKET_TO_FIGHT(fight, 7, 950, caster.getId()
+							+ "", target.getId() + "," + 30 + ",1");
+					if (target.haveState(29)) {
+						target.setState(29, 0,caster.getId());//etat 29 impair
+						SocketManager.GAME_SEND_GA_PACKET_TO_FIGHT(fight, 7, 950, caster.getId()
+								+ "", target.getId() + "," + 29 + ",0");
+					}
+				} else if (effet == 97 || effet == 96 || effet == 92 || effet == 91) {
+					target.setState(29, 1,caster.getId());//etat etat si pair
+					SocketManager.GAME_SEND_GA_PACKET_TO_FIGHT(fight, 7, 950, caster.getId()
+							+ "", target.getId() + "," + 29 + ",1");
+					if (target.haveState(30)) {
+						target.setState(30, 0,caster.getId());//etat 29 si pair
+						SocketManager.GAME_SEND_GA_PACKET_TO_FIGHT(fight, 7, 950, caster.getId()
+								+ "", target.getId() + "," + 30 + ",0");
+					}
+				}
+				break;
 			case 1071://Rasboul
 				if (effet == 99 || effet == 94) {
 					if (target.hasBuff(214)) {
@@ -5229,11 +5281,21 @@ public class SpellEffect {
 								+ "", target.getId() + "," + "" + "," + 1);
 					}
 				}
-				if (effet == 101) {
-					target.addBuff(111, value, 1, 1, true, spell, args, target, false);
+				if (effet == Constant.STATS_REM_PA || effet == 84) {
+					target.addBuff(Constant.STATS_ADD_PA, 2, 2, 1, true, spell, args, target, false);
 					SocketManager.GAME_SEND_GA_PACKET_TO_FIGHT(fight, 7, 111, target.getId()
 							+ "", target.getId() + ",+" + value);
 				}
+				break;
+			case 2750: // Arbre de Vie
+				int healFinal = cura;
+				if ((healFinal + caster.getPdv()) > caster.getPdvMax())
+					healFinal = caster.getPdvMax() - caster.getPdv();
+				if (healFinal < 1)
+					healFinal = 0;
+				caster.removePdv(caster, -healFinal);
+				SocketManager.GAME_SEND_GA_PACKET_TO_FIGHT(fight, 7, 108, caster.getId()
+						+ "", caster.getId() + "," + healFinal+ "," + COLOR_FEU);
 				break;
 		}
 	}

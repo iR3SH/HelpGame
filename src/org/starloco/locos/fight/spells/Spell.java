@@ -12,11 +12,8 @@ import org.starloco.locos.kernel.Constant;
 import org.starloco.locos.area.map.GameCase;
 import org.starloco.locos.kernel.Main;
 
-import java.util.ArrayList;
-import java.util.Map;
+import java.util.*;
 import java.util.Map.Entry;
-import java.util.HashMap;
-import java.util.List;
 
 public class Spell {
 
@@ -42,22 +39,15 @@ public class Spell {
         } else {
             String nET = ET.split(":")[0];
             String ccET = "";
-            if (ET.split(":").length > 1)
+            if (Arrays.stream(ET.split(":")).count() > 1)
                 ccET = ET.split(":")[1];
-            for (String num : nET.split(";")) {
-                try {
-                    effectTargets.add(Integer.parseInt(num));
-                } catch (Exception e) {
-                    // ok
-                    effectTargets.add(0);
-                }
+
+            for (int i = 0; i < Arrays.stream(nET.split(";")).count(); i++){
+                effectTargets.add(Integer.parseInt(nET.split(";")[i]));
             }
-            for (String num : ccET.split(";")) {
-                try {
-                    CCeffectTargets.add(Integer.parseInt(num));
-                } catch (Exception e) {
-                    // ok
-                    CCeffectTargets.add(0);
+            if(!ccET.isEmpty()) {
+                for (int i = 0; i < Arrays.stream(ccET.split(";")).count(); i++) {
+                    CCeffectTargets.add(Integer.parseInt(ccET.split(";")[i]));
                 }
             }
         }
@@ -67,33 +57,33 @@ public class Spell {
     public void setInfos(int aspriteID, String aspriteInfos, String ET, int type, int duration) {
         spriteID = aspriteID;
         spriteInfos = aspriteInfos;
-        String nET = ET.split(":")[0];
-        String ccET = "";
         this.type = type;
         this.duration = duration;
-        if (ET.split(":").length > 1)
-            ccET = ET.split(":")[1];
-        effectTargets.clear();
-        for (String num : nET.split(";")) {
-            try {
-                effectTargets.add(Integer.parseInt(num));
-            } catch (Exception e) {
-                // ok
-                effectTargets.add(0);
+        if (ET.equalsIgnoreCase("0")) {
+            effectTargets.add(0);
+            CCeffectTargets.add(0);
+        } else {
+            String nET = ET.split(":")[0];
+            String ccET = "";
+            if (Arrays.stream(ET.split(":")).count() > 1)
+                ccET = ET.split(":")[1];
+
+            for (int i = 0; i < Arrays.stream(nET.split(";")).count(); i++){
+                effectTargets.add(Integer.parseInt(nET.split(";")[i]));
             }
-        }
-        for (String num : ccET.split(";")) {
-            try {
-                CCeffectTargets.add(Integer.parseInt(num));
-            } catch (Exception e) {
-                // ok
-                CCeffectTargets.add(0);
+            if(!ccET.isEmpty()) {
+                for (int i = 0; i < Arrays.stream(ccET.split(";")).count(); i++) {
+                    CCeffectTargets.add(Integer.parseInt(ccET.split(";")[i]));
+                }
             }
         }
     }
 
     public ArrayList<Integer> getEffectTargets() {
         return effectTargets;
+    }
+    public ArrayList<Integer> getCCEffectTargets() {
+        return CCeffectTargets;
     }
 
     public int getSpriteID() {
@@ -381,8 +371,25 @@ public class Spell {
                     int TE = 0;
                     final Spell S = World.world.getSort(spellID);
                     // on prend le targetFlag corespondant au num de l'effet
-                    if (S != null && S.getEffectTargets().size() > num)
-                        TE = S.getEffectTargets().get(num);
+                    if (S != null && S.getEffectTargets().size() > num) {
+                        if (isCC) {
+                            if (S.getCCEffectTargets().size() > 0) {
+                                if (S.getCCEffectTargets().size() > num) {
+                                    TE = S.getCCEffectTargets().get(num);
+                                }
+                            } else {
+                                S.getEffectTargets().get(num);
+                            }
+                        }
+                        else {
+                            TE = S.getEffectTargets().get(num);
+                        }
+                    }
+                    if(spellID == 192) { // Fix Ronce Apaisante Level 6
+                        if(level == 6 && num == 1){
+                            TE = 64;
+                        }
+                    }
 
                     for (final GameCase C : cells) {
                         if (C == null)
