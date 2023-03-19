@@ -1198,4 +1198,19 @@ public class Fighter implements Comparable<Fighter> {
     {
       return hadSober;
     }
+    public HashMap<Spell, List<SpellEffect>> getSpellsFromFighterBuff() {
+        HashMap<Spell, List<SpellEffect>> spellList = new HashMap<>();
+        for(SpellEffect effect : fightBuffs){
+            Spell spell = World.world.getSort(effect.getSpell());
+            List<SpellEffect> effects = new ArrayList<>();
+            if(spellList.containsKey(spell)){
+                spellList.get(spell).add(effect);
+            }
+            else {
+                effects.add(effect);
+                spellList.put(spell, effects);
+            }
+        }
+        return spellList;
+    }
 }

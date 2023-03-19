@@ -1,7 +1,7 @@
 # BUGS ACTUEL
 
-- Rat blanc Racasse ne fonctionne pas comme offi
-- Rat Noir Kackitu ne fonctionne pas comme offi (Voir aussi peste noir)
+- Rat Noir Kackitu ne fonctionne pas comme offi
+- Cri du Crocabulia ne fonctionne pas correctement
 
 ## IA à refaire
 
@@ -24,14 +24,32 @@
 - Maman Tofu Obèse
 - Kannibouls
 - Koalak Griotte/Reinette/Indigo/Coco
+- Léopardo
 
 # FIX
+
+### **19/03/2023**
+- Fix EffectTarget du Sort Esprit Félin
+- Fix EffectTarget du Sort Rekop
+- Fix EffectTarget du Sort Esprit d'Equipe
+- Fix SpellEffect MultiDo
+- Fix SpellEffect Radicelle
+- Fix Spell Peste Noire
+- Fix Spell Rascasse
+- Fix Spell Frappe Sismique (Pas terminé)
+- Fix EffectTarget du Sort Tout ou Rien
+- Fix de la prise en compte des EffectTarget, les CCEffectTarget n'était pas du tout pris en compte
+- Fix de l'EffectTarget Ronce Apaisante Level 6
 
 ### **18/03/2023**
 - Fix EffectTarget du Sort Piège d'Immobilisation
 - Fix EffectTarget du Sort Réconciliation
 - Fix EffectTarget du Sort Pince de Corail
 - Fix EffectTarget du Sort Coraillement
+- Correction des Sorts du Cybwork
+- Implentation de toutes les Stats de Solomonk sur les monstres en BDD
+- Ajout de toutes les MapKey Officiels des maps gladiatrool
+- Baisse des Stats du Péki Péki (Tapait beaucoup trop fort)
 
 ### **17/03/2023**
 - Fix de toutes les maps avec les nouveaux paramètres de maps dans les SWF
