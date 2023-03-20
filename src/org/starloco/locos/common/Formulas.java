@@ -52,10 +52,11 @@ public class Formulas {
         return 2 * (i) * (i + 1);
     }
 
-    public static int getRandomValue(int i1, int i2) {
-        if (i2 < i1)
-            return 0;
-        return (random.nextInt((i2 - i1) + 1)) + i1;
+    public static int getRandomValue(int minValue, int maxValue) {
+        if (minValue > maxValue) {
+            throw new IllegalArgumentException("Min " + minValue + " greater than max " + maxValue);
+        }
+        return (int) ( (long) minValue + Math.random() * ((long)maxValue - minValue + 1));
     }
 
     public static int getMinJet(String jet) {
