@@ -2964,31 +2964,45 @@ public class SpellEffect {
 				int secondaryValue = -1;
 				String[] argsSplit = args.split(";");
 				int pointLost = Integer.parseInt(argsSplit[0]);
+				int firstValue = Integer.parseInt(argsSplit[0]);
 				boolean hasSecondaryValue = argsSplit.length > 1;
 				try {
-					secondaryValue = hasSecondaryValue && !argsSplit[1].equalsIgnoreCase("-1")
-							? Integer.parseInt(argsSplit[1]) : secondaryValue;
-					if (secondaryValue != -1) value = Formulas.getRandomValue(value, secondaryValue);
-					else value = pointLost;
+					if(hasSecondaryValue){
+						if(!argsSplit[1].equalsIgnoreCase("-1")){
+							secondaryValue = Integer.parseInt(argsSplit[1]);
+						}
+					}
+					if (secondaryValue > pointLost){
+						pointLost = Formulas.getRandomValue(firstValue, secondaryValue);
+						if(pointLost > secondaryValue){
+							pointLost = secondaryValue;
+						}
+					}
+					else {
+						pointLost = firstValue;
+					}
 				} catch (Exception ex) {
-					value = pointLost;
+					pointLost = firstValue;
 				}
 				for(Fighter target : cibles) {
-					int remove = Formulas.getPointsLost('a', value, caster, target);
-					if ((value - remove) > 0)
-						SocketManager.GAME_SEND_GA_PACKET_TO_FIGHT(fight, 7, 308, caster.getId() + "", target.getId() + "," + (value - remove));
-					if(remove > 0){
-						target.addBuff(Constant.STATS_REM_PA, remove, 1, 1, false, spell, args, caster, false);
+					int remove = Formulas.getPointsLost('a', pointLost, caster, target);
+					if ((pointLost - remove) > 0)
+						SocketManager.GAME_SEND_GA_PACKET_TO_FIGHT(fight, 7, 308, caster.getId() + "", target.getId() + "," + (pointLost - remove));
+					if(remove > 0) {
+						target.addBuff(Constant.STATS_REM_PA, remove, 1, 1, true, spell, args, caster, false);
+						SocketManager.GAME_SEND_GA_PACKET_TO_FIGHT(fight, 7, Constant.STATS_REM_PA, target.getId() + "", target.getId() + ",-" + remove);
+						if (fight.getFighterByOrdreJeu() == target)
+							fight.setCurFighterPa(fight.getCurFighterPa() - remove);
 					}
-					if (fight.getFighterByOrdreJeu() == target)
-						fight.setCurFighterPa(fight.getCurFighterPa() - remove);
+					if (target.getMob() != null) {
+						this.verifmobs(fight, target, Constant.STATS_REM_PA, 0);
+					}
 				}
 
 			}
 			else {
 				for (Fighter target : cibles) {
-
-					target.addBuff(effectID, value, turns, 0, true, spell, args, caster, false);//on applique un buff
+					target.addBuff(effectID, 0, turns, -1, true, spell, args, caster, false);//on applique un buff
 				}
 			}
 		}

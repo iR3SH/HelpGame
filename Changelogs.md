@@ -40,7 +40,7 @@
 - Fix SpellEffect Radicelle
 - Fix Spell Peste Noire
 - Fix Spell Rascasse
-- Fix Spell Frappe Sismique (Pas terminé)
+- Fix Spell Frappe Sismique
 - Fix EffectTarget du Sort Tout ou Rien
 - Fix de la prise en compte des EffectTarget, les CCEffectTarget n'était pas du tout pris en compte
 - Fix de l'EffectTarget Ronce Apaisante Level 6

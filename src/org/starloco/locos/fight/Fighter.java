@@ -497,44 +497,6 @@ public class Fighter implements Comparable<Fighter> {
                 if (id1 == this.mob.getTemplate().getId())
                     return;
 
-        /*switch(spellID) {
-            case 99:
-            case 5:
-            case 20:
-            case 127:
-            case 89:
-            case 126:
-            case 115:
-            case 192:
-            case 4:
-            case 1:
-            case 6:
-            case 14:
-            case 18:
-            case 7:
-            case 284:
-            case 197:
-            case 704:
-            case 168:
-            case 45:
-            case 159:
-            case 171:
-            case 167:
-            case 511:
-            case 513:
-                debuff = true;
-                break;
-            case 431:
-            case 433:
-            case 437:
-            case 443:
-            case 441:
-                debuff = false;
-                break;
-        }*/ 
-        /*if(id == 606 || id == 607 || id == 608 || id == 609 || id == 611 || id == 125 || id == 114)
-            debuff = true;*/
-
         // Certains effects peuvent être débuffable mais nous on veut que sur certains spell ils ne le soient pas.
         switch(spellID)
         {
@@ -572,6 +534,17 @@ public class Fighter implements Comparable<Fighter> {
                 SocketManager.GAME_SEND_FIGHT_GIE_TO_FIGHT(this.fight, 7, effectID, getId(), val, valMax, chance, "", duration, spellID);
                 break;
 
+            case 101: //Frappe Sismique
+                val = Integer.parseInt(args.split(";")[0]);
+                String valMax4 = args.split(";")[1];
+                if(duration == 4) {
+                    if (valMax4.equalsIgnoreCase("-1") || valMax4.equalsIgnoreCase("0")) {
+                        SocketManager.GAME_SEND_FIGHT_GIE_TO_FIGHT(this.fight, 7, effectID, getId(), val, "", "", "", duration, spellID);
+                    } else {
+                        SocketManager.GAME_SEND_FIGHT_GIE_TO_FIGHT(this.fight, 7, effectID, getId(), val, valMax4, "", "", duration, spellID);
+                    }
+                }
+                break;
             case 606:
             case 607:
             case 608:
