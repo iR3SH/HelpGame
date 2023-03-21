@@ -29,6 +29,11 @@
 
 # FIX
 
+### **21/03/2023**
+- Ajout de l'Effet + Dommages Finaux %
+- Ajout de l'Effet - Dommages Finaux %
+- Update des Stats par Paliers Gladiatrool
+
 ### **19/03/2023**
 - Création de l'application d'Effet 279 pour le Sort Correction Bwork
 - Fix les monstres n'agressent plus dans le Gladiatrool

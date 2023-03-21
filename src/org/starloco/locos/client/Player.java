@@ -6109,7 +6109,7 @@ public class Player {
                     WrData.append(tonics0[i] + ",");
                 }
             }
-            WrData.append(Constant.getStatStringbyPalier(palier+1) + "|");
+            WrData.append(Constant.getStatStringbyPalier(this, palier+1) + "|");
             for (int i = 0; i < tonics1.length; i++) {
                 if (i == 0 || i == tonics1.length - 1) {
                     WrData.append(tonics1[i] + ";");
@@ -6120,7 +6120,7 @@ public class Player {
                     WrData.append(tonics1[i] + ",");
                 }
             }
-            WrData.append(Constant.getStatStringbyPalier(palier+1) + "|");
+            WrData.append(Constant.getStatStringbyPalier(this, palier+1) + "|");
             for (int i = 0; i < tonics2.length; i++) {
                 if (i == 0 || i == tonics2.length - 1) {
                     WrData.append(tonics2[i] + ";");
@@ -6131,7 +6131,7 @@ public class Player {
                     WrData.append(tonics2[i] + ",");
                 }
             }
-            WrData.append(Constant.getStatStringbyPalier(palier+1) + "|");
+            WrData.append(Constant.getStatStringbyPalier(this, palier+1) + "|");
             WrData.append(palier + "|");
             WrData.append("10;20;40;60;90;120;160;200;250;300");
             packet = WrData.toString();

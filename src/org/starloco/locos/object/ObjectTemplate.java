@@ -685,13 +685,11 @@ public class ObjectTemplate {
 
     public GameObject createNewTonique(int posTonique,String StatsToadd) {
         Stats stats = generateNewStatsFromTemplate(StatsToadd, true);
-        GameObject item = new GameObject(-1, getId(), 1, posTonique, stats, new ArrayList<>(), new HashMap<>(), new HashMap<>(), 0);
-        return item;
+        return new GameObject(-1, getId(), 1, posTonique, stats, new ArrayList<>(), new HashMap<>(), new HashMap<>(), 0);
 
     }
 
     public GameObject createNewToniqueEquilibrage(Stats stats) {
-        GameObject item = new GameObject(-1, getId(), 1, Constant.ITEM_POS_TONIQUE_EQUILIBRAGE, stats, new ArrayList<>(), new HashMap<>(), new HashMap<>(), 0);
-        return item;
+        return new GameObject(-1, getId(), 1, Constant.ITEM_POS_TONIQUE_EQUILIBRAGE, stats, new ArrayList<>(), new HashMap<>(), new HashMap<>(), 0);
     }
 }

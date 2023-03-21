@@ -665,7 +665,7 @@ public class SpellEffect {
 			case 163:// - Esquive PM
 				applyEffect_163(fight, cibles);
 				break;
-			case 164:// Daños reducidos en x%
+			case 164:// Réduction de dégâts en x%
 				applyEffect_164(cibles, fight);
 				break;
 			case 165:// Maîtrises
@@ -1375,7 +1375,7 @@ public class SpellEffect {
 				val -= reduc;
 				if (val < 0)
 					val = 0;
-
+				val = applyFinalDamage(caster, val);
 				val = applyOnHitBuffs(val, target, caster, fight, Constant.ELEMENT_NULL);//S'il y a des buffs spéciaux
 
 				if (val > target.getPdv())
@@ -1443,6 +1443,7 @@ public class SpellEffect {
 				if (val < 0)
 					val = 0;
 
+				val = applyFinalDamage(caster, val);
 				val = applyOnHitBuffs(val, target, caster, fight, Constant.ELEMENT_NULL);//S'il y a des buffs spéciaux
 
 				if (val > target.getPdv())
@@ -1514,6 +1515,7 @@ public class SpellEffect {
 				if (val < 0)
 					val = 0;
 
+				val = applyFinalDamage(caster, val);
 				val = applyOnHitBuffs(val, target, caster, fight, Constant.ELEMENT_NULL);//S'il y a des buffs spéciaux
 
 				if (val > target.getPdv())
@@ -1580,6 +1582,7 @@ public class SpellEffect {
 				if (val < 0)
 					val = 0;
 
+				val = applyFinalDamage(caster, val);
 				val = applyOnHitBuffs(val, target, caster, fight, Constant.ELEMENT_NULL);//S'il y a des buffs spéciaux
 
 				if (val > target.getPdv())
@@ -1664,6 +1667,7 @@ public class SpellEffect {
 				if (val < 0)
 					val = 0;
 
+				val = applyFinalDamage(caster, val);
 				val = applyOnHitBuffs(val, target, caster, fight, Constant.ELEMENT_NULL);//S'il y a des buffs spéciaux
 
 				if (val > target.getPdv())
@@ -1748,6 +1752,9 @@ public class SpellEffect {
 
 				if (finalDommage > target.getPdv())
 					finalDommage = target.getPdv();//Target va mourrir
+
+				finalDommage = applyFinalDamage(caster, finalDommage);
+
 				target.removePdv(caster, finalDommage);
 				finalDommage = -(finalDommage);
 				
@@ -1793,7 +1800,10 @@ public class SpellEffect {
 				int dmg = Formulas.getRandomJet(args.split(";")[5]);
 				int finalDommage = Formulas.calculFinalDommage(fight, caster, target, Constant.ELEMENT_EAU, dmg, false, false, spell);
 
+
+				finalDommage = applyFinalDamage(caster, finalDommage);
 				finalDommage = applyOnHitBuffs(finalDommage, target, caster, fight, Constant.ELEMENT_EAU);//S'il y a des buffs spéciaux
+
 				if (finalDommage > target.getPdv())
 					finalDommage = target.getPdv();//Target va mourrir
 				target.removePdv(caster, finalDommage);
@@ -1846,6 +1856,9 @@ public class SpellEffect {
 
 				if (finalDommage > target.getPdv())
 					finalDommage = target.getPdv();//Target va mourrir
+
+				finalDommage = applyFinalDamage(caster, finalDommage);
+
 				target.removePdv(caster, finalDommage);
 				finalDommage = -(finalDommage);
 				SocketManager.GAME_SEND_GA_PACKET_TO_FIGHT(fight, 7, 100, caster.getId()
@@ -1887,7 +1900,9 @@ public class SpellEffect {
 				int dmg = Formulas.getRandomJet(args.split(";")[5]);
 				int finalDommage = Formulas.calculFinalDommage(fight, caster, target, Constant.ELEMENT_TERRE, dmg, false, false, spell);
 
+				finalDommage = applyFinalDamage(caster, finalDommage);
 				finalDommage = applyOnHitBuffs(finalDommage, target, caster, fight, Constant.ELEMENT_TERRE);//S'il y a des buffs spéciaux
+
 				if (finalDommage > target.getPdv())
 					finalDommage = target.getPdv();//Target va mourrir
 				target.removePdv(caster, finalDommage);
@@ -1940,6 +1955,9 @@ public class SpellEffect {
 
 				if (finalDommage > target.getPdv())
 					finalDommage = target.getPdv();//Target va mourrir
+
+				finalDommage = applyFinalDamage(caster, finalDommage);
+
 				target.removePdv(caster, finalDommage);
 				finalDommage = -(finalDommage);
 				SocketManager.GAME_SEND_GA_PACKET_TO_FIGHT(fight, 7, 100, caster.getId()
@@ -1981,7 +1999,9 @@ public class SpellEffect {
 				int dmg = Formulas.getRandomJet(args.split(";")[5]);
 				int finalDommage = Formulas.calculFinalDommage(fight, caster, target, Constant.ELEMENT_AIR, dmg, false, false, spell);
 
+				finalDommage = applyFinalDamage(caster, finalDommage);
 				finalDommage = applyOnHitBuffs(finalDommage, target, caster, fight, Constant.ELEMENT_AIR);//S'il y a des buffs spéciaux
+
 				if (finalDommage > target.getPdv())
 					finalDommage = target.getPdv();//Target va mourrir
 				target.removePdv(caster, finalDommage);
@@ -2035,6 +2055,9 @@ public class SpellEffect {
 
 				if (finalDommage > target.getPdv())
 					finalDommage = target.getPdv();//Target va mourrir
+
+				finalDommage = applyFinalDamage(caster, finalDommage);
+
 				target.removePdv(caster, finalDommage);
 				finalDommage = -(finalDommage);
 				SocketManager.GAME_SEND_GA_PACKET_TO_FIGHT(fight, 7, 100, caster.getId()
@@ -2077,7 +2100,9 @@ public class SpellEffect {
 				int dmg = Formulas.getRandomJet(args.split(";")[5]);
 				int finalDommage = Formulas.calculFinalDommage(fight, caster, target, Constant.ELEMENT_FEU, dmg, false, false, spell);
 
+				finalDommage = applyFinalDamage(caster, finalDommage);
 				finalDommage = applyOnHitBuffs(finalDommage, target, caster, fight, Constant.ELEMENT_FEU);//S'il y a des buffs spéciaux
+
 				if (finalDommage > target.getPdv())
 					finalDommage = target.getPdv();//Target va mourrir
 				target.removePdv(caster, finalDommage);
@@ -2126,6 +2151,7 @@ public class SpellEffect {
 				int dmg = Formulas.getRandomJet(args.split(";")[5]);
 				int finalDommage = Formulas.calculFinalDommage(fight, caster, target, Constant.ELEMENT_NEUTRE, dmg, false, true, spell);
 
+				finalDommage = applyFinalDamage(caster, finalDommage);
 				finalDommage = applyOnHitBuffs(finalDommage, target, caster, fight, Constant.ELEMENT_NEUTRE);//S'il y a des buffs spéciaux
 
 				if (finalDommage > target.getPdv())
@@ -2173,7 +2199,9 @@ public class SpellEffect {
 				int dmg = Formulas.getRandomJet(args.split(";")[5]);
 				int finalDommage = Formulas.calculFinalDommage(fight, caster, target, Constant.ELEMENT_NEUTRE, dmg, false, false, spell);
 
+				finalDommage = applyFinalDamage(caster, finalDommage);
 				finalDommage = applyOnHitBuffs(finalDommage, target, caster, fight, Constant.ELEMENT_NEUTRE);//S'il y a des buffs spéciaux
+
 				if (finalDommage > target.getPdv())
 					finalDommage = target.getPdv();//Target va mourrir
 				target.removePdv(caster, finalDommage);
@@ -2242,6 +2270,7 @@ public class SpellEffect {
 				}
 				int finalDommage = Formulas.calculFinalDommage(fight, caster, target, Constant.ELEMENT_EAU, dmg, false, true, spell);
 
+				finalDommage = applyFinalDamage(caster, finalDommage);
 				finalDommage = applyOnHitBuffs(finalDommage, target, caster, fight, Constant.ELEMENT_EAU);//S'il y a des buffs spéciaux
 
 				if (finalDommage > target.getPdv())
@@ -2311,6 +2340,7 @@ public class SpellEffect {
 
 				int finalDommage = Formulas.calculFinalDommage(fight, caster, target, Constant.ELEMENT_EAU, dmg, false, false, spell);
 
+				finalDommage = applyFinalDamage(caster, finalDommage);
 				finalDommage = applyOnHitBuffs(finalDommage, target, caster, fight, Constant.ELEMENT_EAU);//S'il y a des buffs spéciaux
 
 				if (finalDommage > target.getPdv())
@@ -2382,6 +2412,7 @@ public class SpellEffect {
 				}
 				int finalDommage = Formulas.calculFinalDommage(fight, caster, target, Constant.ELEMENT_TERRE, dmg, false, true, spell);
 
+				finalDommage = applyFinalDamage(caster, finalDommage);
 				finalDommage = applyOnHitBuffs(finalDommage, target, caster, fight, Constant.ELEMENT_TERRE);//S'il y a des buffs spéciaux
 
 				if (finalDommage > target.getPdv())
@@ -2457,7 +2488,10 @@ public class SpellEffect {
 				}
 
 				int finalDommage = Formulas.calculFinalDommage(fight, caster, target, Constant.ELEMENT_TERRE, dmg, false, false, spell);
+
+				finalDommage = applyFinalDamage(caster, finalDommage);
 				finalDommage = applyOnHitBuffs(finalDommage, target, caster, fight, Constant.ELEMENT_TERRE);//S'il y a des buffs spéciaux
+
 				if (finalDommage > target.getPdv())
 					finalDommage = target.getPdv();//Target va mourrir
 				target.removePdv(caster, finalDommage);
@@ -2539,6 +2573,7 @@ public class SpellEffect {
 
 				int finalDommage = Formulas.calculFinalDommage(fight, caster, target, Constant.ELEMENT_AIR, dmg, false, true, spell);
 
+				finalDommage = applyFinalDamage(caster, finalDommage);
 				finalDommage = applyOnHitBuffs(finalDommage, target, caster, fight, Constant.ELEMENT_AIR);//S'il y a des buffs spéciaux
 
 				if (finalDommage > target.getPdv())
@@ -2608,6 +2643,7 @@ public class SpellEffect {
 
 				int finalDommage = Formulas.calculFinalDommage(fight, caster, target, Constant.ELEMENT_AIR, dmg, false, false, spell);
 
+				finalDommage = applyFinalDamage(caster, finalDommage);
 				finalDommage = applyOnHitBuffs(finalDommage, target, caster, fight, Constant.ELEMENT_AIR);//S'il y a des buffs spéciaux
 
 				if (finalDommage > target.getPdv())
@@ -2682,6 +2718,7 @@ public class SpellEffect {
 				}
 				int finalDommage = Formulas.calculFinalDommage(fight, caster, target, Constant.ELEMENT_FEU, dmg, false, true, spell);
 
+				finalDommage = applyFinalDamage(caster, finalDommage);
 				finalDommage = applyOnHitBuffs(finalDommage, target, caster, fight, Constant.ELEMENT_FEU);//S'il y a des buffs spéciaux
 
 				if (finalDommage > target.getPdv())
@@ -2753,6 +2790,7 @@ public class SpellEffect {
 
 				int finalDommage = Formulas.calculFinalDommage(fight, caster, target, Constant.ELEMENT_FEU, dmg, false, false, spell);
 
+				finalDommage = applyFinalDamage(caster, finalDommage);
 				finalDommage = applyOnHitBuffs(finalDommage, target, caster, fight, Constant.ELEMENT_FEU);//S'il y a des buffs spéciaux
 
 				if (finalDommage > target.getPdv())
@@ -2825,6 +2863,7 @@ public class SpellEffect {
 				}
 				int finalDommage = Formulas.calculFinalDommage(fight, caster, target, Constant.ELEMENT_NEUTRE, dmg, false, true, spell);
 
+				finalDommage = applyFinalDamage(caster, finalDommage);
 				finalDommage = applyOnHitBuffs(finalDommage, target, caster, fight, Constant.ELEMENT_NEUTRE);//S'il y a des buffs spéciaux
 
 				if (finalDommage > target.getPdv())
@@ -2898,6 +2937,7 @@ public class SpellEffect {
 
 				int finalDommage = Formulas.calculFinalDommage(fight, caster, target, Constant.ELEMENT_NEUTRE, dmg, false, false, spell);
 
+				finalDommage = applyFinalDamage(caster, finalDommage);
 				finalDommage = applyOnHitBuffs(finalDommage, target, caster, fight, Constant.ELEMENT_NEUTRE);//S'il y a des buffs spéciaux
 
 				if (finalDommage > target.getPdv())
@@ -3091,6 +3131,7 @@ public class SpellEffect {
 			int finalDommage = Formulas.calculFinalDommage(fight, caster, caster, Constant.ELEMENT_NULL, dmg, false, false, spell);
 
 			finalDommage = applyOnHitBuffs(finalDommage, caster, caster, fight, Constant.ELEMENT_NULL);//S'il y a des buffs spéciaux
+			finalDommage = applyFinalDamage(caster, finalDommage);
 			if (finalDommage > caster.getPdv())
 				finalDommage = caster.getPdv();//Caster va mourrir
 			caster.removePdv(caster, finalDommage);
@@ -4508,6 +4549,7 @@ public class SpellEffect {
 			if(target.getTotalStats().get(Constant.STATS_ADD_RP_NEU) != 0){
 				damage = damage - (damage * target.getTotalStats().get(Constant.STATS_ADD_RP_NEU)) / 100;
 			}
+			damage = applyFinalDamage(caster, damage);
 			damage = -(damage);
 			SocketManager.GAME_SEND_GA_PACKET_TO_FIGHT(fight, 7, 100, caster.getId()
 					+ "", target.getId() + "," + damage + ',' + COLOR_NEUTRE);
@@ -5390,6 +5432,17 @@ public class SpellEffect {
 			Trap.doTraps(fight, fighter);
 			fight.removeTraped();
 		}, time, TimerWaiter.DataType.FIGHT);
+	}
+
+	private int applyFinalDamage(Fighter caster, int damage){
+		int finalDamage =  damage;
+		if(caster.getTotalStats().hasEffect(Constant.STATS_ADD_FINAL_DOM)) {
+			finalDamage += (finalDamage * caster.getTotalStats().get(Constant.STATS_ADD_FINAL_DOM)) / 100;
+		}
+		if(caster.getTotalStats().hasEffect(Constant.STATS_REM_FINAL_DOM)) {
+			finalDamage -= (finalDamage * caster.getTotalStats().get(Constant.STATS_ADD_FINAL_DOM)) / 100;
+		}
+		return finalDamage;
 	}
 	
 }
