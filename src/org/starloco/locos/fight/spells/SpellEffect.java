@@ -5462,7 +5462,7 @@ public class SpellEffect {
 			finalDamage += (finalDamage * caster.getTotalStats().get(Constant.STATS_ADD_FINAL_DOM)) / 100;
 		}
 		if(caster.getTotalStats().hasEffect(Constant.STATS_REM_FINAL_DOM)) {
-			finalDamage -= (finalDamage * caster.getTotalStats().get(Constant.STATS_ADD_FINAL_DOM)) / 100;
+			finalDamage -= (finalDamage * caster.getTotalStats().get(Constant.STATS_REM_FINAL_DOM)) / 100;
 		}
 		return finalDamage;
 	}
