@@ -17,6 +17,7 @@ import java.util.Map.Entry;
 
 public class Spell {
 
+    public static Object SortStats;
     private String nombre;
     private int spellID;
     private int spriteID;

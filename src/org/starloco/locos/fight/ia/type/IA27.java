@@ -89,6 +89,23 @@ public class IA27 extends AbstractNeedSpell
           action=true;
         }
       }
+      if(this.fighter.getCurPa(this.fight)>0&&E!=null&&!action)
+      {
+        String value = Function.getInstance().moveToAttackIfPossible2(this.fight,this.fighter);
+        if(!value.isEmpty())
+        {
+          int cellId = Integer.parseInt(value.split(";")[0]);
+          SortStats spellStats = fighter.getMob().getSpells().get(Integer.parseInt(value.split(";")[1]));
+
+          if(fight.canCastSpell1(fighter, spellStats, fight.getMap().getCase(cellId), cellId)){
+            int val = fight.tryCastSpell(fighter, spellStats, cellId);
+            if(val == 0) {
+              time = spellStats.getSpell().getDuration();
+              action = true;
+            }
+          }
+        }
+      }
 
       if(this.fighter.getCurPm(this.fight)>0&&!action)
       {

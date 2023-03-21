@@ -23,7 +23,7 @@ public class IA30 extends AbstractNeedSpell
       boolean action=false;
       Fighter ennemy=Function.getInstance().getNearestEnnemy(this.fight,this.fighter);
       //Fighter A=Function.getInstance().getNearestAminbrcasemax(this.fight,this.fighter,1,63);// pomax +1;
-      
+
       for(SortStats S : this.highests)
         if(S!=null&&S.getMaxPO()>maxPo)
           maxPo=S.getMaxPO();
@@ -47,10 +47,6 @@ public class IA30 extends AbstractNeedSpell
         {
           time=value;
           action=true;
-          /*longestEnnemy=Function.getInstance().getNearestEnnemynbrcasemax(this.fight,this.fighter,1,maxPo+1);// pomax +1;
-          nearestEnnemy=Function.getInstance().getNearestEnnemynbrcasemax(this.fight,this.fighter,0,2);//2 = po min 1 + 1;
-          if(maxPo==1)
-            longestEnnemy=null;*/
         }
       }
 
@@ -71,16 +67,6 @@ public class IA30 extends AbstractNeedSpell
           action=true;
         }
       }
-      
-      /*if(this.fighter.getCurPa(this.fight)>0&&!action&&A!=null)
-      {
-        if(Function.getInstance().buffIfPossible(this.fight,this.fighter,A,this.buffs))
-        {
-          time=400;
-          action=true;
-        }
-      }*/
-
 
       if(this.fighter.getCurPa(this.fight)>0&&longestEnnemy!=null&&nearestEnnemy==null&&!action)
       {
@@ -107,6 +93,23 @@ public class IA30 extends AbstractNeedSpell
         {
           time=value;
           action=true;
+        }
+      }
+      if(this.fighter.getCurPa(this.fight)>0&&nearestEnnemy!=null&&!action)
+      {
+        String value = Function.getInstance().moveToAttackIfPossible2(this.fight,this.fighter);
+        if(!value.isEmpty())
+        {
+          int cellId = Integer.parseInt(value.split(";")[0]);
+          SortStats spellStats = fighter.getMob().getSpells().get(Integer.parseInt(value.split(";")[1]));
+
+          if(fight.canCastSpell1(fighter, spellStats, fight.getMap().getCase(cellId), cellId)){
+            int val = fight.tryCastSpell(fighter, spellStats, cellId);
+            if(val == 0) {
+              time = spellStats.getSpell().getDuration();
+              action = true;
+            }
+          }
         }
       }
 

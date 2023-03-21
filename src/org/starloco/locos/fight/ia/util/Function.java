@@ -373,7 +373,7 @@ public class Function {
     }
 
 
-    public static boolean invoctantaIfPossible(Fight fight, Fighter fighter)
+    public boolean invoctantaIfPossible(Fight fight, Fighter fighter)
     {
         if (fight == null || fighter == null)
             return false;
@@ -4098,7 +4098,7 @@ public class Function {
         {
           arg2=table[spell.getMaxPO()];
         }
-        String args=Character.toString(arg1)+Character.toString(arg2);
+        String args= String.valueOf(arg1) + String.valueOf(arg2);
         possibleLaunch=PathFinding.getCellListFromAreaString(fight.getMap(),launchCell,launchCell,args,0,false);
       }
       else
