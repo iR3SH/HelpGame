@@ -64,6 +64,7 @@ FIX GLADIATROOL :
 - GameCompiled.rar contient le game compilé avec le .bat pour le lancer.
 - Ne pas oublier d'executer les SQL (help_game / help_login)
 - Si vous n'avez jamais lancé cette ému , il faut supprimer l'ancienne config.txt.
+- Client -> [Mega](https://mega.nz/file/3sAljAyR#optHLctMbZWvgsksJhOH2gDNkEo-xpwXbyVTr45Q_50)
 
 ## AIDE :
 
