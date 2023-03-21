@@ -26,7 +26,7 @@ public class IA67 extends AbstractNeedSpell
         if(spellStats.getMaxPO()>maxPo)
           maxPo=spellStats.getMaxPO();
 
-      Fighter ennemy=Function.getInstance().getNearestEnnemy(this.fight,this.fighter);
+      Fighter ennemy = Function.getInstance().getNearestEnnemy(this.fight,this.fighter);
       Fighter L=Function.getInstance().getNearestEnnemynbrcasemax(this.fight,this.fighter,1,maxPo+1);// pomax +1;
       Fighter C=Function.getInstance().getNearestEnnemynbrcasemax(this.fight,this.fighter,0,2);//2 = po min 1 + 1;
 
@@ -36,6 +36,9 @@ public class IA67 extends AbstractNeedSpell
         C=null;
       if(L!=null&&L.isHide())
         L=null;
+      if(ennemy != null && ennemy.isHide()) {
+        ennemy = null;
+      }
 
       if(this.fighter.getCurPm(this.fight)>0&&L==null&&C==null)
       {

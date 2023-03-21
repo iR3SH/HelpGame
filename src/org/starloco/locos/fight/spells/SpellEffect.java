@@ -180,6 +180,7 @@ public class SpellEffect {
 						break;
 
 					case 107://renvoie Dom
+					case 220:
 						if (target.getId() == caster.getId()) break;
 
 						if (caster.hasBuff(765))//sacrifice
@@ -1325,6 +1326,9 @@ public class SpellEffect {
 			}
 			SocketManager.GAME_SEND_GA_PACKET_TO_FIGHT(fight, 7, Constant.STATS_REM_PA, caster.getId()
 					+ "", target.getId() + ",-" + val + "," + turns);
+			if(target.getMob() != null){
+				verifmobs(fight, target, Constant.STATS_REM_PA, 0);
+			}
 			num += val;
 		}
 		if (num != 0) {
@@ -2272,6 +2276,11 @@ public class SpellEffect {
 
 				finalDommage = applyFinalDamage(caster, finalDommage);
 				finalDommage = applyOnHitBuffs(finalDommage, target, caster, fight, Constant.ELEMENT_EAU);//S'il y a des buffs spéciaux
+				if(target.hasBuff(138)){
+					SpellEffect renDo = target.getBuff(138);
+					int jet = Formulas.getRandomJet(renDo.getJet());
+
+				}
 
 				if (finalDommage > target.getPdv())
 					finalDommage = target.getPdv();//Target va mourrir
@@ -2991,11 +3000,6 @@ public class SpellEffect {
 
 				if (target.getMob() != null) {
 					this.verifmobs(fight, target, Constant.STATS_REM_PA, 0);
-					if (target.getMob().getTemplate().getId() == 1071)// si Rasboul
-					{
-						target.addBuff(Constant.STATS_ADD_PA, 2, 4, 4, true, spell, args, target, false);
-						SocketManager.GAME_SEND_GA_PACKET_TO_FIGHT(fight, 7, Constant.STATS_ADD_PA, target.getId() + "", target.getId() + ",+" + value);
-					}
 				}
 			}
 		}
@@ -4420,12 +4424,12 @@ public class SpellEffect {
 		}
 	}
 
-	private void applyEffect_220(ArrayList<Fighter> objetivos, Fight pelea) {
+	private void applyEffect_220(ArrayList<Fighter> cibles, Fight pelea) {
 		if (turns < 1)
 			return;
 		else {
-			for (Fighter objetivo : objetivos)
-				objetivo.addBuff(effectID, 0, turns, 0, true, spell, args, caster, true);
+			for (Fighter cible : cibles)
+				cible.addBuff(effectID, 0, turns, 0, true, spell, args, caster, true);
 		}
 	}
 
@@ -5174,6 +5178,19 @@ public class SpellEffect {
 					target.addBuff(114, multiDom.getValue(), 2, 1, true, radecielle.getSpellID(), args, caster, false);
 				}
 			}
+			else if(target.hasBuff(138)) {
+				SpellEffect percentDom = target.getBuff(138);
+				//Cri du Croca
+				if(percentDom.getSpell() == 972) {
+					Spell CriCroca = World.world.getSort(percentDom.getSpell());
+					int val = Integer.parseInt(percentDom.args.split(";")[0]);
+					int valMax5 = Integer.parseInt(percentDom.args.split(";")[1]);
+					int jetAleatoire = Formulas.getRandomValue(val, valMax5);
+					target.addBuff(138, jetAleatoire, 2, 1, true, CriCroca.getSpellID(), args, caster, false);
+					SocketManager.GAME_SEND_GA_PACKET_TO_FIGHT(fight, 7, effectID, caster.getId()
+							+ "", target.getId() + "," + jetAleatoire + "," + -1);
+				}
+			}
 		}
 		switch (target.getMob().getTemplate().getId()) {
 			case 232://meulou
@@ -5350,45 +5367,50 @@ public class SpellEffect {
 			case 1071://Rasboul
 				if (effet == 99 || effet == 94) {
 					if (target.hasBuff(214)) {
-						target.addBuff(218, 50, 4, 1, false, 1039, "", target, true);// - 50 feu
-						target.addBuff(210, 50, 4, 1, false, 1039, "", target, true);// + 50 terre
-						target.addBuff(211, 50, 4, 1, false, 1039, "", target, true);// + 50 eau
-						target.addBuff(212, 50, 4, 1, false, 1039, "", target, true);// + 50 air
+						target.addBuff(218, 50, 4, -1, false, 1039, "", target, true);// - 50 feu
+						target.addBuff(210, 50, 4, -1, false, 1039, "", target, true);// + 50 terre
+						target.addBuff(211, 50, 4, -1, false, 1039, "", target, true);// + 50 eau
+						target.addBuff(212, 50, 4, -1, false, 1039, "", target, true);// + 50 air
 						SocketManager.GAME_SEND_GA_PACKET_TO_FIGHT(fight, 7, 1039, caster.getId()
 								+ "", target.getId() + "," + "" + "," + 1);
 					}
 				} else if (effet == 98 || effet == 93) {
 					if (target.hasBuff(214)) {
-						target.addBuff(217, 50, 4, 1, false, 1039, "", target, true);// - 50 air
-						target.addBuff(210, 50, 4, 1, false, 1039, "", target, true);// + 50 terre
-						target.addBuff(211, 50, 4, 1, false, 1039, "", target, true);// + 50 eau
-						target.addBuff(213, 50, 4, 1, false, 1039, "", target, true);// + 50 feu
+						target.addBuff(217, 50, 4, -1, false, 1039, "", target, true);// - 50 air
+						target.addBuff(210, 50, 4, -1, false, 1039, "", target, true);// + 50 terre
+						target.addBuff(211, 50, 4, -1, false, 1039, "", target, true);// + 50 eau
+						target.addBuff(213, 50, 4, -1, false, 1039, "", target, true);// + 50 feu
 						SocketManager.GAME_SEND_GA_PACKET_TO_FIGHT(fight, 7, 1039, caster.getId()
-								+ "", target.getId() + "," + "" + "," + 1);
+								+ "", target.getId() + "," + "" + "," + -1);
 					}
 				} else if (effet == 97 || effet == 92) {
 					if (target.hasBuff(214)) {
-						target.addBuff(215, 50, 4, 1, false, 1039, "", target, true);// - 50 terre
-						target.addBuff(212, 50, 4, 1, false, 1039, "", target, true);// + 50 air
-						target.addBuff(211, 50, 4, 1, false, 1039, "", target, true);// + 50 eau
-						target.addBuff(213, 50, 4, 1, false, 1039, "", target, true);// + 50 feu
+						target.addBuff(215, 50, 4, -1, false, 1039, "", target, true);// - 50 terre
+						target.addBuff(212, 50, 4, -1, false, 1039, "", target, true);// + 50 air
+						target.addBuff(211, 50, 4, -1, false, 1039, "", target, true);// + 50 eau
+						target.addBuff(213, 50, 4, -1, false, 1039, "", target, true);// + 50 feu
 						SocketManager.GAME_SEND_GA_PACKET_TO_FIGHT(fight, 7, 1039, caster.getId()
 								+ "", target.getId() + "," + "" + "," + 1);
 					}
 				} else if (effet == 96 || effet == 91) {
 					if (target.hasBuff(214)) {
-						target.addBuff(216, 50, 4, 1, false, 1039, "", target, true);// - 50 eau
-						target.addBuff(212, 50, 4, 1, false, 1039, "", target, true);// + 50 air
-						target.addBuff(210, 50, 4, 1, false, 1039, "", target, true);// + 50 terre
-						target.addBuff(213, 50, 4, 1, false, 1039, "", target, true);// + 50 feu
+						target.addBuff(216, 50, 4, -1, false, 1039, "", target, true);// - 50 eau
+						target.addBuff(212, 50, 4, -1, false, 1039, "", target, true);// + 50 air
+						target.addBuff(210, 50, 4, -1, false, 1039, "", target, true);// + 50 terre
+						target.addBuff(213, 50, 4, -1, false, 1039, "", target, true);// + 50 feu
 						SocketManager.GAME_SEND_GA_PACKET_TO_FIGHT(fight, 7, 1039, caster.getId()
 								+ "", target.getId() + "," + "" + "," + 1);
 					}
 				}
 				if (effet == Constant.STATS_REM_PA || effet == 84) {
-					target.addBuff(Constant.STATS_ADD_PA, 2, 2, 1, true, spell, args, target, false);
-					SocketManager.GAME_SEND_GA_PACKET_TO_FIGHT(fight, 7, 111, target.getId()
-							+ "", target.getId() + ",+" + value);
+					if(target.hasBuff(Constant.STATS_ADD_PA)) {
+						SpellEffect effect = target.getBuff(Constant.STATS_ADD_PA);
+						if(effect.getSpell() == 1038) {
+							target.addBuff(Constant.STATS_ADD_PA, 2, 4, 1, true, spell, args, target, false);
+							SocketManager.GAME_SEND_GA_PACKET_TO_FIGHT(fight, 7, 111, target.getId()
+									+ "", target.getId() + ",+" + value);
+						}
+					}
 				}
 				break;
 			case 2750: // Arbre de Vie

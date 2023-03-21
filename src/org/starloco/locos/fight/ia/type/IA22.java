@@ -4,6 +4,10 @@ import org.starloco.locos.fight.Fight;
 import org.starloco.locos.fight.Fighter;
 import org.starloco.locos.fight.ia.AbstractIA;
 import org.starloco.locos.fight.ia.util.Function;
+import org.starloco.locos.fight.spells.Spell;
+import org.starloco.locos.fight.spells.Spell.SortStats;
+
+import java.util.Map;
 
 public class IA22 extends AbstractIA
 {
@@ -20,9 +24,20 @@ public class IA22 extends AbstractIA
     if(!this.stop&&this.fighter.canPlay()&&this.count>0)
     {
       int time=600;
+      boolean action = false;
       Fighter ennemy=Function.getInstance().getNearestEnnemy(this.fight,this.fighter);
+      Map<Integer, SortStats> allSpells = fighter.getMob().getSpells();
 
-      if(Function.getInstance().IfPossibleRasboulvulner(this.fight,this.fighter,this.fighter)==0)
+      if(Function.getInstance().ifCanAttack(fight, fighter)) {
+        if(fight.canCastSpell1(fighter, allSpells.get(1038), fighter.getCell(), fighter.getCell().getId())){
+          if(fight.tryCastSpell(fighter, allSpells.get(1038), fighter.getCell().getId()) == 0){
+            time = allSpells.get(1038).getSpell().getDuration();
+            action = true;
+          }
+        }
+      }
+
+      if(Function.getInstance().IfPossibleRasboulvulner(this.fight,this.fighter,this.fighter)==0 && !action)
       {
         if(attack) //has already attacked, allow it to move away
         {

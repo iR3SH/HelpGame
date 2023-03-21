@@ -7,12 +7,14 @@ import org.starloco.locos.fight.Fight;
 import org.starloco.locos.fight.Fighter;
 import org.starloco.locos.fight.ia.util.AstarPathfinding;
 import org.starloco.locos.fight.spells.Spell;
+import org.starloco.locos.fight.spells.Spell.SortStats;
 import org.starloco.locos.fight.traps.Glyph;
 import org.starloco.locos.fight.traps.Trap;
 import org.starloco.locos.game.GameServer;
 import org.starloco.locos.game.world.World;
 import org.starloco.locos.kernel.Constant;
 
+import java.sql.Array;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicReference;
 
@@ -948,13 +950,14 @@ public class PathFinding {
         if(dir != 0) {
             GameCase c = c1;
             for (int a = 0; a < max; a++) {
-                if (GetCaseIDFromDirrection(c.getId(), dir, map, true) == c2.getId())
+                int idCase = GetCaseIDFromDirrection(c.getId(), dir, map, true);
+                if (idCase == c2.getId())
                     return true;
-                if (GetCaseIDFromDirrection(c.getId(), dir, map, true) == -1)
+                if (idCase == -1)
                     break;
                 if(!c.isWalkable(true) || c.getFirstFighter() != null)
                     break;
-                c = map.getCase(GetCaseIDFromDirrection(c.getId(), dir, map, true));
+                c = map.getCase(idCase);
             }
         }
         return false;
@@ -963,15 +966,16 @@ public class PathFinding {
     public static boolean casesAreInSameLine(GameMap map, int c1, int c2, char dir, int max) {
         if (c1 == c2)
             return true;
-
+        int cell = 0;
         if (dir != 'z')//Si la direction est définie
         {
             for (int a = 0; a < max; a++) {
-                if (GetCaseIDFromDirrection(c1, dir, map, true) == c2)
+                cell = GetCaseIDFromDirrection(c1, dir, map, true);
+                if (cell == c2)
                     return true;
-                if (GetCaseIDFromDirrection(c1, dir, map, true) == -1)
+                if (cell == -1)
                     break;
-                c1 = GetCaseIDFromDirrection(c1, dir, map, true);
+                c1 = cell;
             }
         } else
         //Si on doit chercher dans toutes les directions
@@ -980,9 +984,10 @@ public class PathFinding {
             for (char d : dirs) {
                 int c = c1;
                 for (int a = 0; a < max; a++) {
-                    if (GetCaseIDFromDirrection(c, d, map, true) == c2)
+                    cell = GetCaseIDFromDirrection(c, d, map, true);
+                    if (cell == c2)
                         return true;
-                    c = GetCaseIDFromDirrection(c, d, map, true);
+                    c = cell;
                 }
             }
         }
@@ -1206,14 +1211,13 @@ public class PathFinding {
             case 'P':// Player?
                 char[] direc = {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'};
                 for (char d : direc) {
-                    cellID = castCellID;
+                    cellID = cellID;
                     for (int i = 0; i < PONum; i++) {
-                        cellID = GetCaseIDFromDirrection(cellID, d, map, true);
+                        cellID = GetCaseIDFromDirrection(cellID, d, map, false);
+                        GameCase newCase = map.getCase(cellID);
+                        if(newCase != null)
+                            cases.add(newCase);
                     }
-                    int caseId = GetCaseIDFromDirrection(cellID, d, map, true);
-                    GameCase newCase = map.getCase(caseId);
-                    if(newCase != null)
-                        cases.add(newCase);
                 }
                 break;
 
@@ -1247,7 +1251,7 @@ public class PathFinding {
         List<Short> cells = outForbiddenCells.get(map.getW() + "_" + map.getH());
 
         for (char d : new char[] {'b', 'd', 'f', 'h'}) {
-            int newCellId = PathFinding.GetCaseIDFromDirrection(startCell, d, map, true);
+            int newCellId = PathFinding.GetCaseIDFromDirrection(cellId, d, map, true);
             GameCase cell = map.getCase(newCellId);
 
             if (cell != null) {
@@ -1681,11 +1685,13 @@ public class PathFinding {
 
     public static List<GameCase> getCellsByDir(Fight fight, int startCell, char dir, int limit) {
         List<GameCase> cells = new ArrayList<>();
+        int cellId = startCell;
         for(int i = 0; i < limit; i++) {
-            int id = GetCaseIDFromDirrection(startCell, dir, fight.getMap(), true);
+            int id = GetCaseIDFromDirrection(cellId, dir, fight.getMapOld(), true);
             if(!haveFighterOnThisCell(id, fight, false)) {
                 cells.add(fight.getMap().getCase(id));
             }
+            cellId = id;
         }
         return cells;
     }
@@ -1758,11 +1764,29 @@ public class PathFinding {
         return false;
     }
 
+    public static ArrayList<Integer> getListCaseToEnnemy(Fight fight, Fighter fighter, Fighter target, ArrayList<SortStats> spells){
+        ArrayList<Integer> cells = new ArrayList<>();
+        int maxPo = -1;
+        for(SortStats sortStats : spells){
+            if(sortStats.getMaxPO() > maxPo){
+                maxPo = sortStats.getMaxPO();
+            }
+        }
+        if(maxPo == -1){
+            return cells;
+        }
+
+        ArrayList<GameCase> path = new AstarPathfinding(fight.getMapOld(), fight, fighter.getCell().getId(), target.getCell().getId()).getShortestPath(-1);
+
+
+        return cells;
+    }
+
     public static ArrayList<Integer> getListCaseFromFighter(Fight fight,
-                                                            Fighter fighter, int cellStart, ArrayList<Spell.SortStats> SS) {
+                                                            Fighter fighter, int cellStart, ArrayList<SortStats> SS) {
         int bestPo = 0;
         if (SS != null) {
-            for (Spell.SortStats sort : SS) {
+            for (SortStats sort : SS) {
                 if (sort.getMaxPO() > bestPo)
                     bestPo = sort.getMaxPO();
             }
