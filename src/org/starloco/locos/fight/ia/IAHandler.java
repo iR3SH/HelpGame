@@ -30,7 +30,9 @@ public class IAHandler {
         } else {
             switch(mobGrade.getTemplate().getIa()) {    // Ci-dessous (byte) 4 = boucle 4 fois sur l'IA
                 case 1://IA BASIQUE attaque,pm,attaque,pm
-                    ia = new IA27(fight, fighter, (byte) 4); break;  // (byte) 4 = 4 actions max
+                case 15://IA BASIQUE buff sois meme,attaque,pm,attaque,pm
+                case 30:
+                    ia = new IA30(fight, fighter, (byte) 4); break;  // (byte) 4 = 4 actions max
                 case 2://IA Dragonnet rouge
                     ia = new IA2(fight, fighter, (byte) 6); break;
                 case 5://IA Bloqueuse : Avancer vers ennemis
@@ -47,8 +49,6 @@ public class IAHandler {
                     ia = new IA12(fight, fighter, (byte) 4); break;
                 case 14://IA Tonneau : Attaque[], Soin si Etat portée
                     ia = new IA14(fight, fighter, (byte) 8); break;
-                case 15://IA BASIQUE buff sois meme,attaque,pm,attaque,pm
-                    ia = new IA30(fight, fighter, (byte) 4); break;
                 case 16: // IA Tanu : Tape, va vers l'ennemis, invocation
                     ia = new IA16(fight, fighter, (byte) 8); break;
                 case 17://IA KIMBO
@@ -77,8 +77,6 @@ public class IAHandler {
                     ia = new IA28(fight, fighter, (byte) 4); break;
                 case 29: //IA Tortu
                     ia = new IA29(fight, fighter, (byte) 4); break;
-                case 30://IA BASIQUE buff sois meme,attaque,pm,attaque,pm
-                    ia = new IA30(fight, fighter, (byte) 4); break;
                 case 31:// rats degoutant
                     ia = new IA31(fight, fighter, (byte) 3); break;
                 case 32://IA ARCHER attaque,pm loin d'enemie,attaque,pmvers enemie

@@ -1710,7 +1710,7 @@ public class PathFinding {
             // Si la distance est strictement inférieur à 1000 et que la case
             // est marchable et que personne ne
             // se trouve dessus et que la case n'est pas interdite
-            if (distance < max && distance > min && cell.getFirstFighter() != null)
+            if (distance <= max && distance >= min && cell.getFirstFighter() != null)
                 if(cell.getFirstFighter().getTeam2() != fighter.getTeam2())
                     target = cell.getFirstFighter();
 
@@ -1719,8 +1719,7 @@ public class PathFinding {
                 int h = PathFinding.GetCaseIDFromDirrection(cell.getId(), d, map, true);
                 if (map.getCase(h) != null) {
                     distance = PathFinding.getDistanceBetween(map, endCell, h);
-                    // Si la distance est strictement inférieur à 1000 et que la case est marchable et que personne ne se trouve dessus et que la case n'est pas interdite
-                    if (distance < max && cell.getFirstFighter() != null)
+                    if (distance <= max && cell.getFirstFighter() != null)
                         if(cell.getFirstFighter().getTeam2() != fighter.getTeam2())
                             target = cell.getFirstFighter();
                 } else {

@@ -2,36 +2,34 @@
 
 - Rat Noir Kackitu ne fonctionne pas comme offi
 
+
 ## IA à refaire
 
 ### **BOSS**
 - Craqueleur Légendaire ne fait pas peau de silex ni pierre de topaze sur invoc
 - Corailleur Magistral
-- Chêne Mou (Attaque bien avec Complicité et Embranchement mais pas les deux autres et ne fait plus rien avec un ennemi au Cac)
 
 ### **MONSTRES**
 - IA Gardienne des Egouts, n'attaque pas, aspire dans le vide, lance invisibilité à la fin de son tour et ne fuis pas
-- Kapota la Fraise
 - Corbac Apprivoisé
-- Dragoss
-- Bwork élémentaux
-- Tofu Ventripotent
-- Kreuvet La Bwork Ingénieuse
-- Maman Tofu Obèse
-- Kannibouls
-- Koalak Griotte/Reinette/Indigo/Coco
-- Léopardo
 
 # FIX
 
 ### **21/03/2023**
+- Nerf des Stats du Chêne Mou (Tapait du -3000 en 1 seul sort)
+- Fix IA Chêne Mou
+- Correction du Sort Enracinement
+- Correction du Sort Embranchement du Chêne Mou
+- IA 30 deviens l'IA Basique par défaut (remplace la 1)
+- Fix du numéro de Palier
+- Fix IA 30 (Attaque aussi les créatures statiques)
 - Fix Sort Rasage
 - Fix IA Silf le Rasboul Majeur
 - Fix IA Gourlo le Terrible
 - Fix Sort Cri du Crocabulia comme Officiel
 - Fix IA Crocabulia
 - Fix IA Minotor (Buff / Attaque / Invocation)
-- Fix des IA qui attaquait quand même un cible même si elle était invisible
+- Fix des IA qui attaquait quand même une cible même si elle était invisible
 - Fix complet IA Minotot
 - Ajout de l'Effet + Dommages Finaux %
 - Ajout de l'Effet - Dommages Finaux %
