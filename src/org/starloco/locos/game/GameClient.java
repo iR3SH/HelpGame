@@ -440,7 +440,7 @@ public class GameClient {
             int ToniqueTemplateID = this.player.LastTonicProposed[ToniqueChoosedPos];
             int palier = Constant.getPalierByNewMap(this.player.getCurMap().getId());
             int toniquePos = 64 + palier;
-            String StatsToadd = Constant.getStatStringbyPalier(palier);
+            String StatsToadd = Constant.getStatStringbyPalier(getPlayer(), palier);
             this.player.setTonique(ToniqueTemplateID, toniquePos, StatsToadd);
         }
     }
