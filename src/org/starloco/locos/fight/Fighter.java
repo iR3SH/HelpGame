@@ -545,6 +545,15 @@ public class Fighter implements Comparable<Fighter> {
                     }
                 }
                 break;
+            case 220:
+                val = Integer.parseInt(args.split(";")[0]);
+                String valMax5 = args.split(";")[1];
+                    if (valMax5.equalsIgnoreCase("-1") || valMax5.equalsIgnoreCase("0")) {
+                        SocketManager.GAME_SEND_FIGHT_GIE_TO_FIGHT(this.fight, 7, effectID, getId(), val, "", "", "", duration, spellID);
+                    } else {
+                        SocketManager.GAME_SEND_FIGHT_GIE_TO_FIGHT(this.fight, 7, effectID, getId(), val, valMax5, "", "", duration, spellID);
+                    }
+                    break;
             case 606:
             case 607:
             case 608:

@@ -1,5 +1,6 @@
 package org.starloco.locos.fight.ia.type;
 
+import org.starloco.locos.area.map.GameCase;
 import org.starloco.locos.common.PathFinding;
 import org.starloco.locos.fight.Fight;
 import org.starloco.locos.fight.Fighter;
@@ -9,6 +10,7 @@ import org.starloco.locos.fight.spells.Spell;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 
 public class IA80 extends AbstractNeedSpell {
@@ -31,10 +33,9 @@ public class IA80 extends AbstractNeedSpell {
                     maxPo = spellStats.getMaxPO();
 
             Fighter L = Function.getInstance().getNearestEnnemynbrcasemax(fight, fighter, 1, maxPo + 1);// pomax +1;
-            Fighter C = Function.getInstance().getNearestEnnemynbrcasemax(fight, fighter, 0, 2);//2 = po min 1 + 1;
-            Fighter cac = Function.getInstance().getNearestEnnemynbrcasemax(fight, fighter, 0, 1);
-            Fighter forMythos = Function.getInstance().getNearestEnnemynbrcasemax(fight, fighter, 0, 5 + fighter.getCurPm(fight));
-            Fighter longForTofu = Function.getInstance().getNearestEnnemynbrcasemax(fight, fighter, 1, maxPo + fighter.getCurPm(fight));
+            Fighter C = Function.getInstance().getNearestEnnemynbrcasemax(fight, fighter, 1, 1);//2 = po min 1 + 1;
+            Fighter forMythos = Function.getInstance().getNearestEnnemynbrcasemax(fight, fighter, 1, 4 + fighter.getCurPm(fight));
+            Fighter longForTofu = Function.getInstance().getNearestEnnemynbrcasemax(fight, fighter, 2, maxPo + fighter.getCurPm(fight));
 
             if (maxPo == 1)
                 L = null;
@@ -56,26 +57,38 @@ public class IA80 extends AbstractNeedSpell {
                     action = true;
                 }
             }
-            /*if (longForTofu != null && !action) {
+            if (longForTofu != null && forMythos == null && C == null && !action) {
                 if (Function.getInstance().ifCanAttackWithSpell(fight, fighter, longForTofu, allSpells.get(245))) {
-                    if (Function.getInstance().moveToAction(fight, fighter, longForTofu, (short) 0, (ArrayList<Integer>) Arrays.asList(261, 812, 813, 814), 0, true) == 3) {
-                        time = allSpells.get(245).getSpell().getDuration();
-                        action = true;
-                        cac = Function.getInstance().getNearestEnnemynbrcasemax(fight, fighter, 0, 1);
-                        forMythos = Function.getInstance().getNearestEnnemynbrcasemax(fight, fighter, 0, 4 + fighter.getCurPm(fight));
-                        longForTofu = Function.getInstance().getNearestEnnemynbrcasemax(fight, fighter, 1, maxPo + fighter.getCurPm(fight));
+                    String value = Function.getInstance().moveToAttackIfPossible2(this.fight,this.fighter);
+
+                    if(!value.isEmpty()) {
+                        int cellId = Integer.parseInt(value.split(";")[0]), spellId = Integer.parseInt(value.split(";")[1]);
+                        Spell.SortStats spellStats = this.fighter.getMob().getSpells().get(spellId);
+                        char dir = PathFinding.getDirBetweenTwoCase(longForTofu.getCell().getId(), fighter.getCell().getId(), fight.getMap(), true);
+                        cellId = PathFinding.getCaseIDFromDirrection(cellId, dir, fight.getMap());
+                        if(spellStats != null) {
+
+                            if (this.fight.canCastSpell1(this.fighter, spellStats, this.fighter.getCell(), cellId)) {
+
+                                if (this.fight.tryCastSpell(this.fighter, spellStats, cellId) == 0) {
+
+                                    time = spellStats.getSpell().getDuration();
+                                    action = true;
+                                }
+                            }
+                        }
                     }
                 }
-            }*/
+            }
+
            if(forMythos != null && !action){
                 if(Function.getInstance().ifCanAttackWithSpell(fight, fighter, forMythos, allSpells.get(813)))
                 {
                     String value = Function.getInstance().moveToAttackIfPossible2(this.fight,this.fighter);
 
-                    C = Function.getInstance().getNearestEnnemynbrcasemax(fight, fighter, 0, 2);
-                    cac = Function.getInstance().getNearestEnnemynbrcasemax(fight, fighter, 0, 1);
-                    forMythos = Function.getInstance().getNearestEnnemynbrcasemax(fight, fighter, 0, 4 + fighter.getCurPm(fight));
-                    longForTofu = Function.getInstance().getNearestEnnemynbrcasemax(fight, fighter, 1, maxPo + fighter.getCurPm(fight));
+                    C = Function.getInstance().getNearestEnnemynbrcasemax(fight, fighter, 1, 1);
+                    forMythos = Function.getInstance().getNearestEnnemynbrcasemax(fight, fighter, 1, 4 + fighter.getCurPm(fight));
+                    longForTofu = Function.getInstance().getNearestEnnemynbrcasemax(fight, fighter, 2, maxPo + fighter.getCurPm(fight));
 
                     if(!value.isEmpty()) {
                         int cellId = Integer.parseInt(value.split(";")[0]), spellId = Integer.parseInt(value.split(";")[1]);
@@ -125,10 +138,9 @@ public class IA80 extends AbstractNeedSpell {
                         int duration = Function.getInstance().movecacIfPossible(this.fight, this.fighter, target);
                         if(duration != 0){
                             time = duration;
-                            C = Function.getInstance().getNearestEnnemynbrcasemax(fight, fighter, 0, 2);
-                            cac = Function.getInstance().getNearestEnnemynbrcasemax(fight, fighter, 0, 1);
-                            forMythos = Function.getInstance().getNearestEnnemynbrcasemax(fight, fighter, 0, 4 + fighter.getCurPm(fight));
-                            longForTofu = Function.getInstance().getNearestEnnemynbrcasemax(fight, fighter, 1, maxPo + fighter.getCurPm(fight));
+                            C = Function.getInstance().getNearestEnnemynbrcasemax(fight, fighter, 1, 1);
+                            forMythos = Function.getInstance().getNearestEnnemynbrcasemax(fight, fighter, 1, 4 + fighter.getCurPm(fight));
+                            longForTofu = Function.getInstance().getNearestEnnemynbrcasemax(fight, fighter, 2, maxPo + fighter.getCurPm(fight));
                         }
                     }
                 }

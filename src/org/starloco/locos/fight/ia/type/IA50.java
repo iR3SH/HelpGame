@@ -6,6 +6,8 @@ import org.starloco.locos.fight.ia.AbstractNeedSpell;
 import org.starloco.locos.fight.ia.util.Function;
 import org.starloco.locos.fight.spells.Spell;
 
+import java.util.Map;
+
 public class IA50 extends AbstractNeedSpell
 {
 
@@ -30,6 +32,8 @@ public class IA50 extends AbstractNeedSpell
       Fighter L=Function.getInstance().getNearestEnnemynbrcasemax(this.fight,this.fighter,1,maxPo+1);// pomax +1;
       Fighter C=Function.getInstance().getNearestEnnemynbrcasemax(this.fight,this.fighter,0,2);//2 = po min 1 + 1;
 
+      Map<Integer, Spell.SortStats> allSpells = fighter.getMob().getSpells();
+
       if(maxPo==1)
         L=null;
       if(C!=null)
@@ -41,18 +45,10 @@ public class IA50 extends AbstractNeedSpell
 
       if(this.fighter.getCurPa(this.fight)>0)
       {
-        if(Function.getInstance().invocIfPossibleloin(this.fight,this.fighter,this.invocations))
+        if(Function.getInstance().invocIfPossibleCroca(this.fight,this.fighter, allSpells.get(939)))
         {
           time=2000;
           action=true;
-        }
-        else
-        {
-          if(Function.getInstance().invocIfPossible(this.fight, this.fighter, this.invocations))
-          {
-            time=2000;
-            action=true;
-          }
         }
       }
 
@@ -88,7 +84,7 @@ public class IA50 extends AbstractNeedSpell
       }
       else if(this.fighter.getCurPa(this.fight)>0&&C!=null&&!action)
       {
-        int value=Function.getInstance().attackIfPossible(this.fight,this.fighter,this.cacs);
+        int value=Function.getInstance().attackIfPossible(this.fight,this.fighter,this.highests);
         if(value!=-1)
         {
           time=value;
@@ -97,16 +93,26 @@ public class IA50 extends AbstractNeedSpell
       }
       if(this.fighter.getCurPa(this.fight)>0&&C!=null&&!action)
       {
-        int value=Function.getInstance().attackIfPossible(this.fight,this.fighter,this.highests);
+        int value=Function.getInstance().attackIfPossible(this.fight,this.fighter,this.cacs);
         if(value!=-1)
         {
           time=value;
           action=true;
         }
       }
-      if(this.fighter.getCurPm(this.fight)>0&&!action)
-      {
+      if(this.fighter.getCurPm(this.fight)>0&&!action){
         int value=Function.getInstance().moveautourIfPossible(this.fight,this.fighter,ennemy);
+        if(value!=0)
+          time=value;
+          action=true;
+      }
+      if(this.fighter.getCurPm(this.fight)>0&&!action) {
+        if (Function.getInstance().moveNearIfPossible(this.fight, this.fighter, ennemy))
+          time = 400;
+          action = true;
+      }
+      if(this.fighter.getCurPm(this.fight)>0&&!action){
+        int value=Function.getInstance().movecacIfPossible(this.fight,this.fighter,ennemy);
         if(value!=0)
           time=value;
       }

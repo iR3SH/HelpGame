@@ -187,10 +187,16 @@ public class IAHandler {
                 case 79: //Tofurby AI
                     ia=new IA79(fight,fighter,(byte)8);
                     break;
-                case 80:
+                case 80: // Minotot
                     ia = new IA80(fight, fighter, (byte)8);
                     break;
-                case 85: //Ougaa
+                case 81: // Minotoror
+                    ia = new IA81(fight, fighter, (byte)8);
+                    break;
+                case 82: // Crocabulia
+                    ia = new IA82(fight, fighter, (byte)8);
+                    break;
+                case 85: //Ougah
                     ia=new IA85(fight,fighter,(byte)4);
                     break;
                 case 100: //Alpha Invocation Dopeul Féca (+Enu)

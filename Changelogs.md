@@ -1,18 +1,13 @@
 # BUGS ACTUEL
 
 - Rat Noir Kackitu ne fonctionne pas comme offi
-- Cri du Crocabulia ne fonctionne pas correctement
-- Rasboul doit gagner des Pa que quand il lance son sort
 
 ## IA à refaire
 
 ### **BOSS**
-- Gourlo à revoir n'invoque pas tout le temps surtout quand il est au cac d'un ennemi
-- Minotot manque attaque Lancer de Tofu
 - Craqueleur Légendaire ne fait pas peau de silex ni pierre de topaze sur invoc
 - Corailleur Magistral
 - Chêne Mou (Attaque bien avec Complicité et Embranchement mais pas les deux autres et ne fait plus rien avec un ennemi au Cac)
-- Crocabulia (Sort Cri de Crocabulia à refaire en fonctionnement)
 
 ### **MONSTRES**
 - IA Gardienne des Egouts, n'attaque pas, aspire dans le vide, lance invisibilité à la fin de son tour et ne fuis pas
@@ -30,6 +25,14 @@
 # FIX
 
 ### **21/03/2023**
+- Fix Sort Rasage
+- Fix IA Silf le Rasboul Majeur
+- Fix IA Gourlo le Terrible
+- Fix Sort Cri du Crocabulia comme Officiel
+- Fix IA Crocabulia
+- Fix IA Minotor (Buff / Attaque / Invocation)
+- Fix des IA qui attaquait quand même un cible même si elle était invisible
+- Fix complet IA Minotot
 - Ajout de l'Effet + Dommages Finaux %
 - Ajout de l'Effet - Dommages Finaux %
 - Update des Stats par Paliers Gladiatrool
