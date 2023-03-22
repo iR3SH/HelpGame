@@ -194,6 +194,12 @@ public class IAHandler {
                 case 82: // Crocabulia
                     ia = new IA82(fight, fighter, (byte)8);
                     break;
+                case 83: // Craqueleur Légendaire
+                    ia = new IA83(fight, fighter, (byte)8);
+                    break;
+                case 84: // Corailleur Magistral
+                    ia = new IA84(fight, fighter, (byte)8);
+                    break;
                 case 85: //Ougah
                     ia=new IA85(fight,fighter,(byte)4);
                     break;

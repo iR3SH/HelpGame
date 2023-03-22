@@ -509,7 +509,6 @@ public class Fighter implements Comparable<Fighter> {
                 && this.canPlay && duration == 1)
             duration--;
 
-
         //Si c'est le jouer actif qui s'autoBuff, on ajoute 1 a la durée
         this.fightBuffs.add(new SpellEffect(effectID, val ,(this.canPlay ? duration + 1 : duration), turns, debuff, caster, args, spellID));
         if(Main.modDebug)
@@ -545,13 +544,22 @@ public class Fighter implements Comparable<Fighter> {
                     }
                 }
                 break;
-            case 220:
+            case 105: //Pierre de Topaze
                 val = Integer.parseInt(args.split(";")[0]);
                 String valMax5 = args.split(";")[1];
-                    if (valMax5.equalsIgnoreCase("-1") || valMax5.equalsIgnoreCase("0")) {
+                if (valMax5.equalsIgnoreCase("-1") || valMax5.equalsIgnoreCase("0")) {
+                    SocketManager.GAME_SEND_FIGHT_GIE_TO_FIGHT(this.fight, 7, effectID, getId(), val, "", "", "", duration, spellID);
+                } else {
+                    SocketManager.GAME_SEND_FIGHT_GIE_TO_FIGHT(this.fight, 7, effectID, getId(), val, valMax5, "", "", duration, spellID);
+                }
+                break;
+            case 220:
+                val = Integer.parseInt(args.split(";")[0]);
+                String valMax6 = args.split(";")[1];
+                    if (valMax6.equalsIgnoreCase("-1") || valMax6.equalsIgnoreCase("0")) {
                         SocketManager.GAME_SEND_FIGHT_GIE_TO_FIGHT(this.fight, 7, effectID, getId(), val, "", "", "", duration, spellID);
                     } else {
-                        SocketManager.GAME_SEND_FIGHT_GIE_TO_FIGHT(this.fight, 7, effectID, getId(), val, valMax5, "", "", duration, spellID);
+                        SocketManager.GAME_SEND_FIGHT_GIE_TO_FIGHT(this.fight, 7, effectID, getId(), val, valMax6, "", "", duration, spellID);
                     }
                     break;
             case 606:
@@ -639,47 +647,26 @@ public class Fighter implements Comparable<Fighter> {
             SocketManager.GAME_SEND_STATS_PACKET(this.perso);
     }
     public void debuff() {
-        Iterator<SpellEffect> it = this.fightBuffs.iterator();
-        while (it.hasNext()) {
-            SpellEffect spellEffect = it.next();
+        for (SpellEffect effect : this.fightBuffs) {
 
-            /*switch (spellEffect.getSpell()) {
-                case 197://Puissance sylvestre
-                case 437:
-                case 431:
-                case 433:
-                case 443:
-                case 441://Châtiments
-                    continue;
-                case 52://Cupidité
-                case 228://Etourderie mortelle (DC)
-                    it.remove();
-                    continue;
-            }*/ 
-
-            if (spellEffect.isDebuffabe()) it.remove();
+            if (effect.isDebuffabe()){
+                fightBuffs.remove(effect);
+            }
             //On envoie les Packets si besoin
-            switch (spellEffect.getEffectID()) {
+            switch (effect.getEffectID()) {
                 case Constant.STATS_ADD_PA:
                 case Constant.STATS_ADD_PA2:
                     SocketManager.GAME_SEND_GA_PACKET_TO_FIGHT(this.fight, 7, 101, getId()
-                            + "", getId() + ",-" + spellEffect.getValue());
+                            + "", getId() + ",-" + effect.getValue());
                     break;
 
                 case Constant.STATS_ADD_PM:
                 case Constant.STATS_ADD_PM2:
                     SocketManager.GAME_SEND_GA_PACKET_TO_FIGHT(this.fight, 7, 127, getId()
-                            + "", getId() + ",-" + spellEffect.getValue());
+                            + "", getId() + ",-" + effect.getValue());
                     break;
             }
         }
-        
-        
-        /*ArrayList<SpellEffect> array = new ArrayList<>(this.fightBuffs);
-        if (!array.isEmpty()) {
-            this.fightBuffs.clear();
-            array.stream().filter(spellEffect -> spellEffect != null).forEach(spellEffect -> this.addBuff(spellEffect.getEffectID(), spellEffect.getValue(), spellEffect.getDuration(), spellEffect.getTurn(), spellEffect.isDebuffabe(), spellEffect.getSpell(), spellEffect.getArgs(), this, false));
-        }*/
 
         if (this.perso != null && !this.hasLeft) // Envoie les stats au joueurs
             SocketManager.GAME_SEND_STATS_PACKET(this.perso);
@@ -1188,6 +1175,7 @@ public class Fighter implements Comparable<Fighter> {
     }
     public HashMap<Spell, List<SpellEffect>> getSpellsFromFighterBuff() {
         HashMap<Spell, List<SpellEffect>> spellList = new HashMap<>();
+
         for(SpellEffect effect : fightBuffs){
             Spell spell = World.world.getSort(effect.getSpell());
             List<SpellEffect> effects = new ArrayList<>();
@@ -1199,6 +1187,19 @@ public class Fighter implements Comparable<Fighter> {
                 spellList.put(spell, effects);
             }
         }
+
         return spellList;
+    }
+    public boolean hasBuffFromSpell(int spellId) {
+        HashMap<Spell, List<SpellEffect>> spellListHashMap = getSpellsFromFighterBuff();
+        boolean result = false;
+
+        for(Spell spell : spellListHashMap.keySet()){
+            if(spell.getSpellID() == spellId){
+                result = true;
+            }
+        }
+
+        return result;
     }
 }
