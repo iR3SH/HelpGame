@@ -5,6 +5,7 @@ import org.starloco.locos.client.other.Stats;
 import org.starloco.locos.common.Formulas;
 import org.starloco.locos.common.SocketManager;
 import org.starloco.locos.database.Database;
+import org.starloco.locos.entity.monster.Monster;
 import org.starloco.locos.entity.mount.Mount;
 import org.starloco.locos.entity.pet.PetEntry;
 import org.starloco.locos.fight.spells.SpellEffect;
@@ -578,7 +579,7 @@ public class GameObject {
             } else
             if ((statID == 970) || (statID == 971) || (statID == 972)
                     || (statID == 973) || (statID == 974)) {
-                int jet = entry.getValue().intValue();
+                int jet = entry.getValue();
                 if ((statID == 974) || (statID == 972) || (statID == 970))
                     stats.append(Integer.toHexString(statID)).append("#0#0#").append(Integer.toHexString(jet));
                 else
@@ -672,7 +673,6 @@ public class GameObject {
             	final String[] datas = entry.getValue().split(";");
             	stats.append(Integer.toHexString(Constant.STATS_MIMIBIOTE)).append("#0#").append(datas[0]).append("#").append(datas[1]);
             }
-            
             else {
                 stats.append(Integer.toHexString(entry.getKey())).append("#0#0#0#").append(entry.getValue());
             }

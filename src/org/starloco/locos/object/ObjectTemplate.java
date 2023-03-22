@@ -436,7 +436,7 @@ public class ObjectTemplate {
         GameObject item = null;
         Stats stats = generateNewStatsFromTemplate(getStrTemplate(), true);
         stats.addOneStat(Constant.STATS_TURN, turn);
-        item = new GameObject(id, getId(), 1, Constant.ITEM_POS_BONBON, stats, new ArrayList<SpellEffect>(), new HashMap<Integer, Integer>(), new HashMap<Integer, String>(), 0);
+        item = new GameObject(id, getId(), 1, Constant.ITEM_POS_BONBON, stats, new ArrayList<>(), new HashMap<>(), new HashMap<>(), 0);
         return item;
     }
 
@@ -446,7 +446,7 @@ public class ObjectTemplate {
         Stats stats = generateNewStatsFromTemplate(getStrTemplate(), true);
         stats.addOneStat(Constant.STATS_TURN, turn);
         stats.addOneStat(148, 0);
-        item = new GameObject(id, getId(), 1, Constant.ITEM_POS_PNJ_SUIVEUR, stats, new ArrayList<SpellEffect>(), new HashMap<Integer, Integer>(), new HashMap<Integer, String>(), 0);
+        item = new GameObject(id, getId(), 1, Constant.ITEM_POS_PNJ_SUIVEUR, stats, new ArrayList<>(), new HashMap<>(), new HashMap<>(), 0);
         return item;
     }
     
@@ -454,11 +454,11 @@ public class ObjectTemplate {
     	int id = -1;
         GameObject item;
         if (getType() == Constant.ITEM_TYPE_QUETES && (Constant.isCertificatDopeuls(getId()) || getId() == 6653 || getId() == 12803)  ) {
-            Map<Integer, String> txtStat = new HashMap<Integer, String>();
+            Map<Integer, String> txtStat = new HashMap<>();
             txtStat.put(Constant.STATS_DATE, System.currentTimeMillis() + "");
-            item = new GameObject(id, getId(), qua, Constant.ITEM_POS_NO_EQUIPED, new Stats(), new ArrayList<SpellEffect>(), new HashMap<Integer, Integer>(), txtStat, 0);
+            item = new GameObject(id, getId(), qua, Constant.ITEM_POS_NO_EQUIPED, new Stats(), new ArrayList<>(), new HashMap<>(), txtStat, 0);
         } else if (this.getId() == 10207) {
-            item = new GameObject(id, getId(), qua, Constant.ITEM_POS_NO_EQUIPED, new Stats(), new ArrayList<SpellEffect>(), new HashMap<Integer, Integer>(), Dopeul.generateStatsTrousseau(), 0);
+            item = new GameObject(id, getId(), qua, Constant.ITEM_POS_NO_EQUIPED, new Stats(), new ArrayList<>(), new HashMap<>(), Dopeul.generateStatsTrousseau(), 0);
         } else if (getType() == Constant.ITEM_TYPE_FAMILIER) {
         	id = Database.getDynamics().getWorldEntityData().getNextObjectId();
             item = new GameObject(id, getId(), 1, Constant.ITEM_POS_NO_EQUIPED, (useMax ? generateNewStatsFromTemplate(World.world.getPets(this.getId()).getJet(), false) : new Stats()), new ArrayList<>(), new HashMap<>(), World.world.getPets(getId()).generateNewtxtStatsForPets(), 0);
@@ -475,7 +475,7 @@ public class ObjectTemplate {
                 Map<Integer, Integer> Stats = new HashMap<>();
                 Stats.put(Constant.ERR_STATS_XP, 0);
                 Stats.put(Constant.STATS_NIVEAU, 1);
-                item = new GameObject(id, getId(), qua, Constant.ITEM_POS_NO_EQUIPED, generateNewStatsFromTemplate(getStrTemplate(), useMax), getEffectTemplate(getStrTemplate()), Stats, new HashMap<Integer, String>(), 0);
+                item = new GameObject(id, getId(), qua, Constant.ITEM_POS_NO_EQUIPED, generateNewStatsFromTemplate(getStrTemplate(), useMax), getEffectTemplate(getStrTemplate()), Stats, new HashMap<>(), 0);
             } else if (Constant.isGladiatroolWeapon(getId())) {
                 Map<Integer, String> Stats = new HashMap<>();
                 Stats.put(Constant.STATS_EXCHANGE_IN, -1+"");
@@ -484,7 +484,7 @@ public class ObjectTemplate {
             } else if (getId()==16001) {
                 Map<Integer, String> Stats = new HashMap<>();
                 Stats.put(Constant.STATS_EXCHANGE_IN, -1+"");
-                item = new GameObject(id, getId(), qua, Constant.ITEM_POS_NO_EQUIPED, new Stats(), new ArrayList<SpellEffect>(), new HashMap<Integer, Integer>(), Stats, 0);
+                item = new GameObject(id, getId(), qua, Constant.ITEM_POS_NO_EQUIPED, new Stats(), new ArrayList<SpellEffect>(), new HashMap<>(), Stats, 0);
             }
             else {
                 Map<Integer, String> Stat = new HashMap<>();
@@ -508,7 +508,7 @@ public class ObjectTemplate {
                         }
                         break;
                 }
-                item = new GameObject(id, getId(), qua, Constant.ITEM_POS_NO_EQUIPED, generateNewStatsFromTemplate(getStrTemplate(), useMax), getEffectTemplate(getStrTemplate()), new HashMap<Integer, Integer>(), Stat, 0);
+                item = new GameObject(id, getId(), qua, Constant.ITEM_POS_NO_EQUIPED, generateNewStatsFromTemplate(getStrTemplate(), useMax), getEffectTemplate(getStrTemplate()), new HashMap<>(), Stat, 0);
             }
         }
         return item;
@@ -531,7 +531,7 @@ public class ObjectTemplate {
                                               boolean useMax) {
         Stats itemStats = new Stats();
         //Si stats Vides
-        if (statsTemplate.equals("") || statsTemplate == null)
+        if (statsTemplate.isEmpty())
             return itemStats;
 
         String[] splitted = statsTemplate.split(",");
@@ -580,7 +580,9 @@ public class ObjectTemplate {
                         try {
                             max = Integer.parseInt(stats[2], 16);
                         }
-                        catch(Exception e){}
+                        catch(Exception e){
+                            e.printStackTrace();
+                        }
 
                         value = min;
                         if (max != 0)
@@ -599,7 +601,7 @@ public class ObjectTemplate {
     }
 
     private ArrayList<SpellEffect> getEffectTemplate(String statsTemplate) {
-        ArrayList<SpellEffect> Effets = new ArrayList<SpellEffect>();
+        ArrayList<SpellEffect> Effets = new ArrayList<>();
         if (statsTemplate.equals(""))
             return Effets;
 
@@ -641,38 +643,22 @@ public class ObjectTemplate {
             return getId() + ";" + getStrTemplate() + ";" + this.money + ";" + (this.newPrice > 0 ? ";" + this.newPrice : "") +";;";
         }
     }
+    public void applyAction(Player player, Player target, int objectId, short cellId, int quantity) {
+        for (int i = 0; i < quantity; i++) {
+            if (World.world.getGameObject(objectId) == null) return;
+            if (World.world.getGameObject(objectId).getTemplate().getType() == Constant.ITEM_TYPE_PIERRE_AME_PLEINE) {
+                if (!SoulStone.isInArenaMap(player.getCurMap().getId()))
+                    return;
 
-    /*public void applyAction(Player player, Player target, int objectId, short cellId) {
-        if (World.world.getGameObject(objectId) == null) return;
-        if (World.world.getGameObject(objectId).getTemplate().getType() == 85) {
-            if (!SoulStone.isInArenaMap(player.getCurMap().getId()))
-                return;
+                SoulStone soulStone = (SoulStone) World.world.getGameObject(objectId);
 
-            SoulStone soulStone = (SoulStone) World.world.getGameObject(objectId);
-
-            player.getCurMap().spawnNewGroup(true, player.getCurCell().getId(), soulStone.parseGroupData(), "MiS=" + player.getId());
-            SocketManager.GAME_SEND_Im_PACKET(player, "022;" + 1 + "~" + World.world.getGameObject(objectId).getTemplate().getId());
-            player.removeItem(objectId, 1, true, true);
-        } else {
-            for (ObjectAction action : this.getOnUseActions())
-                action.apply(player, target, objectId, cellId);*/ // Previous
-            // By Coding Mestre : [FIX] - Players can now use multiple consumables at once (shift + double click) Close #27
-            public void applyAction(Player player, Player target, int objectId, short cellId, int quantity) {
-                for (int i = 0; i < quantity; i++) {
-                    if (World.world.getGameObject(objectId) == null) return;
-                    if (World.world.getGameObject(objectId).getTemplate().getType() == 85) {
-                        if (!SoulStone.isInArenaMap(player.getCurMap().getId()))
-                            return;
-
-                        SoulStone soulStone = (SoulStone) World.world.getGameObject(objectId);
-
-                        player.getCurMap().spawnNewGroup(true, player.getCurCell().getId(), soulStone.parseGroupData(), "MiS=" + player.getId());
-                        SocketManager.GAME_SEND_Im_PACKET(player, "022;" + 1 + "~" + World.world.getGameObject(objectId).getTemplate().getId());
-                        player.removeItem(objectId, 1, true, true);
-                    } else {
-                        for (ObjectAction action : this.getOnUseActions())
-                            action.apply(player, target, objectId, cellId);
-                    }
+                player.getCurMap().spawnNewGroup(true, player.getCurCell().getId(), soulStone.parseGroupData(), "MiS=" + player.getId());
+                SocketManager.GAME_SEND_Im_PACKET(player, "022;" + 1 + "~" + World.world.getGameObject(objectId).getTemplate().getId());
+                player.removeItem(objectId, 1, true, true);
+            } else {
+                for (ObjectAction action : this.getOnUseActions())
+                    action.apply(player, target, objectId, cellId);
+            }
 
         }
     }

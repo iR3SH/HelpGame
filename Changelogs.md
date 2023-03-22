@@ -1,19 +1,31 @@
 # BUGS ACTUEL
 
 - Rat Noir Kackitu ne fonctionne pas comme offi
-
+- EffectTarget Fronde Kanniboul
+- Capture même sans avoir de capture équipé
 
 ## IA à refaire
 
 ### **BOSS**
-- Craqueleur Légendaire ne fait pas peau de silex ni pierre de topaze sur invoc
-- Corailleur Magistral
 
 ### **MONSTRES**
 - IA Gardienne des Egouts, n'attaque pas, aspire dans le vide, lance invisibilité à la fin de son tour et ne fuis pas
 - Corbac Apprivoisé
+- Serpiplume
+- Maman Tofu Obèse
 
 # FIX
+
+### **22/03/2023**
+- Ajout des Pierre de Gardien de Donjon et des Pierres d'Archimonstre
+- Fix sytème Pierre d'Âmes
+- Fix des ApplyEffectTarget du Trool
+- Fix EffectTarget du Sort Fronde Kanniboul
+- CleanUp de Function.java pour une meilleure lisibilité
+- Fix IA Corailleur Magistral
+- Fix Affichage EffetId 105
+- Fix IA Craqueleur Légendaire
+- Fix EffectTarget du Sort Bise du Boufcoul
 
 ### **21/03/2023**
 - Nerf des Stats du Chêne Mou (Tapait du -3000 en 1 seul sort)

@@ -706,8 +706,14 @@ public class Fight {
         return allTraps;
     }
 
-    ArrayList<Fighter> getCapturer() {
+    public ArrayList<Fighter> getCapturer() {
         return capturer;
+    }
+
+    public void setCapturer(Fighter fighter){
+        if(!capturer.contains(fighter)){
+            capturer.add(fighter);
+        }
     }
 
     ArrayList<Fighter> getTrainer() {
@@ -4227,30 +4233,44 @@ public class Fight {
             if (mobCapturable && !SoulStone.isInArenaMap(this.getMapOld().getId())) {
                 boolean isFirst = true;
                 int maxLvl = 0;
-                String pierreStats = "";
+                boolean isDj = false;
+                boolean isArchi = false;
+                StringBuilder pierreStats = new StringBuilder();
 
                 for (Fighter fighter : loosers) {
                     if(fighter.isInvocation() || fighter.getInvocator() != null) continue;
-                    pierreStats += (isFirst ? "" : "|") + fighter.getMob().getTemplate().getId() + "," + fighter.getLvl();
+                    if(fighter.getMob().getTemplate().getType() == 78){
+                        isArchi = true;
+                    }
+                    if(Constant.BOSS_ID.contains(fighter.getMob().getTemplate().getId())){
+                        isDj = true;
+                    }
+                    pierreStats.append(isFirst ? "" : "|").append(fighter.getMob().getTemplate().getId()).append(",").append(fighter.getLvl());
                     isFirst = false;
                     if (fighter.getLvl() > maxLvl)
                         maxLvl = fighter.getLvl();
                 }
-
-                setFullSoul(new SoulStone(Database.getDynamics().getWorldEntityData().getNextObjectId(), 1, 7010, Constant.ITEM_POS_NO_EQUIPED, pierreStats)); // Cre la pierre d'me
-                winners.stream().filter(F -> !F.isInvocation() && F.haveState(Constant.ETAT_CAPT_AME)).forEach(F -> getCapturer().add(F));
+                if(isArchi && !isDj){
+                    setFullSoul(new SoulStone(Database.getDynamics().getWorldEntityData().getNextObjectId(), 1, 10418, Constant.ITEM_POS_NO_EQUIPED, pierreStats.toString()));
+                }
+                else if(isDj && !isArchi){
+                    setFullSoul(new SoulStone(Database.getDynamics().getWorldEntityData().getNextObjectId(), 1, 10417, Constant.ITEM_POS_NO_EQUIPED, pierreStats.toString()));
+                }
+                else {
+                    setFullSoul(new SoulStone(Database.getDynamics().getWorldEntityData().getNextObjectId(), 1, 7010, Constant.ITEM_POS_NO_EQUIPED, pierreStats.toString())); // Crée la pierre d'âme
+                }
 
                 if (getCapturer().size() > 0 && !SoulStone.isInArenaMap(this.getMapOld().getId())) // S'il y a des captureurs
                 {
                     for (int i = 0; i < getCapturer().size(); i++) {
                         try {
-                            Fighter f = getCapturer().get(Formulas.getRandomValue(0, getCapturer().size() - 1)); // Rcupre un captureur au hasard dans la liste
+                            Fighter f = getCapturer().get(Formulas.getRandomValue(0, getCapturer().size() - 1)); // Récupère un captureur au hasard dans la liste
                             if(f != null && f.getPersonnage() != null) {
-                                if(f.getPersonnage().getObjetByPos(Constant.ITEM_POS_ARME) == null || !(f.getPersonnage().getObjetByPos(Constant.ITEM_POS_ARME).getTemplate().getType() == Constant.ITEM_TYPE_PIERRE_AME)) {
+                                if(f.getPersonnage().getObjetByPos(Constant.ITEM_POS_ARME) == null || f.getPersonnage().getObjetByPos(Constant.ITEM_POS_ARME).getTemplate().getType() != Constant.ITEM_TYPE_PIERRE_AME) {
                                     getCapturer().remove(f);
                                     continue;
                                 }
-                                Couple<Integer, Integer> pierreJoueur = Formulas.decompPierreAme(f.getPersonnage().getObjetByPos(Constant.ITEM_POS_ARME));// Rcupre les stats de la pierre quipp
+                                Couple<Integer, Integer> pierreJoueur = Formulas.decompPierreAme(f.getPersonnage().getObjetByPos(Constant.ITEM_POS_ARME));// Récupère les stats de la pierre quipp
 
                                 if (pierreJoueur.second < maxLvl) {// Si la pierre est trop faible
                                     getCapturer().remove(f);

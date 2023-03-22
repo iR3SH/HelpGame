@@ -1274,7 +1274,7 @@ public class SpellEffect {
 				if ((caster.getPdv() + heal) > caster.getPdvMax())
 					heal = caster.getPdvMax() - caster.getPdv();
 				caster.removePdv(caster, -heal);
-				SocketManager.GAME_SEND_GA_PACKET_TO_FIGHT(fight, 7, 100, target.getId()
+				SocketManager.GAME_SEND_GA_PACKET_TO_FIGHT(fight, 7, 108, target.getId()
 						+ "", caster.getId() + "," + heal+ "," + COLOR_FEU);
 
 				if (target.getPdv() <= 0) {
@@ -1379,6 +1379,7 @@ public class SpellEffect {
 				val -= reduc;
 				if (val < 0)
 					val = 0;
+
 				val = applyFinalDamage(caster, val);
 				val = applyOnHitBuffs(val, target, caster, fight, Constant.ELEMENT_NULL);//S'il y a des buffs spéciaux
 
@@ -1653,21 +1654,7 @@ public class SpellEffect {
 				val -= resF;
 				int reduc = (int) (((float) val) / (float) 100) * resP;//Reduc %resis
 				val -= reduc;
-				int armor = 0;
-				for (SpellEffect SE : target.getBuffsByEffectID(105)) {
-					int intell = target.getTotalStats().getEffect(Constant.STATS_ADD_INTE);
-					int carac = target.getTotalStats().getEffect(Constant.STATS_ADD_FORC);
-					int value = SE.getValue();
-					int a = value
-							* (100 + (int) (intell / 2) + (int) (carac / 2))
-							/ 100;
-					armor += a;
-				}
-				if (armor > 0) {
-					SocketManager.GAME_SEND_GA_PACKET_TO_FIGHT(fight, 7, 105, caster.getId()
-							+ "", target.getId() + "," + armor);
-					val = val - armor;
-				}
+
 				if (val < 0)
 					val = 0;
 
@@ -1768,7 +1755,7 @@ public class SpellEffect {
 				if ((caster.getPdv() + heal) > caster.getPdvMax())
 					heal = caster.getPdvMax() - caster.getPdv();
 				caster.removePdv(caster, -heal);
-				SocketManager.GAME_SEND_GA_PACKET_TO_FIGHT(fight, 7, 100, target.getId()
+				SocketManager.GAME_SEND_GA_PACKET_TO_FIGHT(fight, 7, 108, target.getId()
 						+ "", caster.getId() + "," + heal+ "," + COLOR_FEU);
 				if (target.getMob() != null)
 					verifmobs(fight, target, 91, (-finalDommage));
@@ -1804,7 +1791,6 @@ public class SpellEffect {
 				int dmg = Formulas.getRandomJet(args.split(";")[5]);
 				int finalDommage = Formulas.calculFinalDommage(fight, caster, target, Constant.ELEMENT_EAU, dmg, false, false, spell);
 
-
 				finalDommage = applyFinalDamage(caster, finalDommage);
 				finalDommage = applyOnHitBuffs(finalDommage, target, caster, fight, Constant.ELEMENT_EAU);//S'il y a des buffs spéciaux
 
@@ -1818,7 +1804,7 @@ public class SpellEffect {
 				if ((caster.getPdv() + heal) > caster.getPdvMax())
 					heal = caster.getPdvMax() - caster.getPdv();
 				caster.removePdv(caster, -heal);
-				SocketManager.GAME_SEND_GA_PACKET_TO_FIGHT(fight, 7, 100, target.getId()
+				SocketManager.GAME_SEND_GA_PACKET_TO_FIGHT(fight, 7, 108, target.getId()
 						+ "", caster.getId() + "," + heal+ "," + COLOR_FEU);
 				if (target.getMob() != null)
 					verifmobs(fight, target, 91, (-finalDommage));
@@ -1856,12 +1842,11 @@ public class SpellEffect {
 				int dmg = Formulas.getRandomJet(args.split(";")[5]);
 				int finalDommage = Formulas.calculFinalDommage(fight, caster, target, Constant.ELEMENT_TERRE, dmg, false, true, spell);
 
+				finalDommage = applyFinalDamage(caster, finalDommage);
 				finalDommage = applyOnHitBuffs(finalDommage, target, caster, fight, Constant.ELEMENT_TERRE);//S'il y a des buffs spéciaux
 
 				if (finalDommage > target.getPdv())
 					finalDommage = target.getPdv();//Target va mourrir
-
-				finalDommage = applyFinalDamage(caster, finalDommage);
 
 				target.removePdv(caster, finalDommage);
 				finalDommage = -(finalDommage);
@@ -1871,7 +1856,7 @@ public class SpellEffect {
 				if ((caster.getPdv() + heal) > caster.getPdvMax())
 					heal = caster.getPdvMax() - caster.getPdv();
 				caster.removePdv(caster, -heal);
-				SocketManager.GAME_SEND_GA_PACKET_TO_FIGHT(fight, 7, 100, target.getId()
+				SocketManager.GAME_SEND_GA_PACKET_TO_FIGHT(fight, 7, 108, target.getId()
 						+ "", caster.getId() + "," + heal+ "," + COLOR_FEU);
 				if (target.getMob() != null)
 					verifmobs(fight, target, 92, (-finalDommage));
@@ -1917,7 +1902,7 @@ public class SpellEffect {
 				if ((caster.getPdv() + heal) > caster.getPdvMax())
 					heal = caster.getPdvMax() - caster.getPdv();
 				caster.removePdv(caster, -heal);
-				SocketManager.GAME_SEND_GA_PACKET_TO_FIGHT(fight, 7, 100, target.getId()
+				SocketManager.GAME_SEND_GA_PACKET_TO_FIGHT(fight, 7, 108, target.getId()
 						+ "", caster.getId() + "," + heal+ "," + COLOR_FEU);
 				if (target.getMob() != null)
 					verifmobs(fight, target, 92, (-finalDommage));
@@ -1955,12 +1940,11 @@ public class SpellEffect {
 				int dmg = Formulas.getRandomJet(args.split(";")[5]);
 				int finalDommage = Formulas.calculFinalDommage(fight, caster, target, Constant.ELEMENT_AIR, dmg, false, true, spell);
 
+				finalDommage = applyFinalDamage(caster, finalDommage);
 				finalDommage = applyOnHitBuffs(finalDommage, target, caster, fight, Constant.ELEMENT_AIR);//S'il y a des buffs spéciaux
 
 				if (finalDommage > target.getPdv())
 					finalDommage = target.getPdv();//Target va mourrir
-
-				finalDommage = applyFinalDamage(caster, finalDommage);
 
 				target.removePdv(caster, finalDommage);
 				finalDommage = -(finalDommage);
@@ -1970,7 +1954,7 @@ public class SpellEffect {
 				if ((caster.getPdv() + heal) > caster.getPdvMax())
 					heal = caster.getPdvMax() - caster.getPdv();
 				caster.removePdv(caster, -heal);
-				SocketManager.GAME_SEND_GA_PACKET_TO_FIGHT(fight, 7, 100, target.getId()
+				SocketManager.GAME_SEND_GA_PACKET_TO_FIGHT(fight, 7, 108, target.getId()
 						+ "", caster.getId() + "," + heal+ "," + COLOR_FEU);
 				if (target.getMob() != null)
 					verifmobs(fight, target, 93, (-finalDommage));
@@ -2017,7 +2001,7 @@ public class SpellEffect {
 				if ((caster.getPdv() + heal) > caster.getPdvMax())
 					heal = caster.getPdvMax() - caster.getPdv();
 				caster.removePdv(caster, -heal);
-				SocketManager.GAME_SEND_GA_PACKET_TO_FIGHT(fight, 7, 100, target.getId()
+				SocketManager.GAME_SEND_GA_PACKET_TO_FIGHT(fight, 7, 108, target.getId()
 						+ "", caster.getId() + "," + heal+ "," + COLOR_FEU);
 				if (target.getMob() != null)
 					verifmobs(fight, target, 93, (-finalDommage));
@@ -2055,12 +2039,11 @@ public class SpellEffect {
 				int dmg = Formulas.getRandomJet(args.split(";")[5]);
 				int finalDommage = Formulas.calculFinalDommage(fight, caster, target, Constant.ELEMENT_FEU, dmg, false, true, spell);
 
+				finalDommage = applyFinalDamage(caster, finalDommage);
 				finalDommage = applyOnHitBuffs(finalDommage, target, caster, fight, Constant.ELEMENT_FEU);//S'il y a des buffs spéciaux
 
 				if (finalDommage > target.getPdv())
 					finalDommage = target.getPdv();//Target va mourrir
-
-				finalDommage = applyFinalDamage(caster, finalDommage);
 
 				target.removePdv(caster, finalDommage);
 				finalDommage = -(finalDommage);
@@ -2070,7 +2053,7 @@ public class SpellEffect {
 				if ((caster.getPdv() + heal) > caster.getPdvMax())
 					heal = caster.getPdvMax() - caster.getPdv();
 				caster.removePdv(caster, -heal);
-				SocketManager.GAME_SEND_GA_PACKET_TO_FIGHT(fight, 7, 100, target.getId()
+				SocketManager.GAME_SEND_GA_PACKET_TO_FIGHT(fight, 7, 108, target.getId()
 						+ "", caster.getId() + "," + heal+ "," + COLOR_FEU);
 				if (target.getMob() != null)
 					verifmobs(fight, target, 94, (-finalDommage));
@@ -2117,7 +2100,7 @@ public class SpellEffect {
 				if ((caster.getPdv() + heal) > caster.getPdvMax())
 					heal = caster.getPdvMax() - caster.getPdv();
 				caster.removePdv(caster, -heal);
-				SocketManager.GAME_SEND_GA_PACKET_TO_FIGHT(fight, 7, 100, target.getId()
+				SocketManager.GAME_SEND_GA_PACKET_TO_FIGHT(fight, 7, 108, target.getId()
 						+ "", caster.getId() + "," + heal+ "," + COLOR_FEU);
 				if (target.getMob() != null)
 					verifmobs(fight, target, 94, (-finalDommage));
@@ -2169,7 +2152,7 @@ public class SpellEffect {
 				if ((caster.getPdv() + heal) > caster.getPdvMax())
 					heal = caster.getPdvMax() - caster.getPdv();
 				caster.removePdv(caster, -heal);
-				SocketManager.GAME_SEND_GA_PACKET_TO_FIGHT(fight, 7, 100, target.getId()
+				SocketManager.GAME_SEND_GA_PACKET_TO_FIGHT(fight, 7, 108, target.getId()
 						+ "", caster.getId() + "," + heal+ "," + COLOR_FEU);
 				if (target.getMob() != null)
 					verifmobs(fight, target, 95, (-finalDommage));
@@ -3134,8 +3117,8 @@ public class SpellEffect {
 			int dmg = Formulas.getRandomJet(this.jet);
 			int finalDommage = Formulas.calculFinalDommage(fight, caster, caster, Constant.ELEMENT_NULL, dmg, false, false, spell);
 
-			finalDommage = applyOnHitBuffs(finalDommage, caster, caster, fight, Constant.ELEMENT_NULL);//S'il y a des buffs spéciaux
 			finalDommage = applyFinalDamage(caster, finalDommage);
+			finalDommage = applyOnHitBuffs(finalDommage, caster, caster, fight, Constant.ELEMENT_NULL);//S'il y a des buffs spéciaux
 			if (finalDommage > caster.getPdv())
 				finalDommage = caster.getPdv();//Caster va mourrir
 			caster.removePdv(caster, finalDommage);
@@ -3985,7 +3968,7 @@ public class SpellEffect {
 					repetibles = true;
 				} else if (spell == 197) {// portencia sivelstre
 					cible.addBuff(effectID, value, turns, turns, true, spell, args, caster, false);
-				} else if (spell == 686 || spell == 99) {// picole & momification
+				} else if (spell == 686 || spell == 99 || spell == 1026) {// picole & momification
 					cible.addBuff(effectID, value, turns, turns, true, spell, args, caster, false);
 				} else {
 					cible.addBuff(effectID, value, 1, 1, true, spell, args, caster, false);
@@ -4997,6 +4980,9 @@ public class SpellEffect {
 			if (spell == 686) {
 				target.unHide(686);
 			}
+			if(id == 2){
+				fight.setCapturer(caster);
+			}
 
 		}
 	}
@@ -5201,29 +5187,31 @@ public class SpellEffect {
 				}
 				break;
 			case 233: // Trool
-				if (effet == 168 || effet == 101) {
-					target.addBuff(128, 1, 2, 1, true, spell, args, target, false);
-					//Gain de PM pendant le tour de jeu
-					target.setCurPm(fight, 1);
-					SocketManager.GAME_SEND_GA_PACKET_TO_FIGHT(fight, 7, effectID, caster.getId()
-							+ "", target.getId() + "," + 1 + "," + 2);
+				if(target.hasBuffFromSpell(307)) {
+					if (effet == 168 || effet == 101) {
+						target.addBuff(128, 1, 2, 1, true, spell, args, target, false);
+						//Gain de PM pendant le tour de jeu
+						target.setCurPm(fight, 1);
+						SocketManager.GAME_SEND_GA_PACKET_TO_FIGHT(fight, 7, effectID, caster.getId()
+								+ "", target.getId() + "," + 1 + "," + 2);
+					}
+					if (effet == 169 || effet == 127)//rall pm don pa
+					{
+						target.addBuff(111, 1, 2, 1, true, spell, args, target, false);
+						//Gain de PA pendant le tour de jeu
+						target.setCurPa(fight, 1);
+						SocketManager.GAME_SEND_GA_PACKET_TO_FIGHT(fight, 7, effectID, caster.getId()
+								+ "", target.getId() + "," + 1 + "," + 2);
+					}
 				}
-				if (effet == 169 || effet == 127)//rall pm don pa
-				{
-					target.addBuff(111, 1, 2, 1, true, spell, args, target, false);
-					//Gain de PA pendant le tour de jeu
-					target.setCurPa(fight, 1);
-					SocketManager.GAME_SEND_GA_PACKET_TO_FIGHT(fight, 7, effectID, caster.getId()
-							+ "", target.getId() + "," + 1 + "," + 2);
-				}
-				if (effet == 100 || effet == 97) {
-					int healFinal = 200;
-					if ((healFinal + caster.getPdv()) > caster.getPdvMax())
-						healFinal = caster.getPdvMax() - caster.getPdv();
+				if(target.hasBuffFromSpell(308)){
+					int healFinal = 200 + target.getPdv();
+					if (healFinal > target.getPdvMax())
+						healFinal = target.getPdvMax();
 					if (healFinal < 1)
 						healFinal = 0;
-					caster.removePdv(caster, healFinal);
-					SocketManager.GAME_SEND_GA_PACKET_TO_FIGHT(fight, 7, 108, caster.getId()
+					target.setPdv(healFinal);
+					SocketManager.GAME_SEND_GA_PACKET_TO_FIGHT(fight, 7, 108, target.getId()
 							+ "", target.getId() + "," + healFinal+ "," + COLOR_FEU);
 
 				}
@@ -5466,5 +5454,4 @@ public class SpellEffect {
 		}
 		return finalDamage;
 	}
-	
 }

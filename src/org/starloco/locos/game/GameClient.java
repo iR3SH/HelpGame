@@ -6759,8 +6759,7 @@ public class GameClient {
             SocketManager.GAME_SEND_Im_PACKET(this.player, "119|43");
             return;
         }
-        //T.applyAction(this.player, target, guid, cellID);
-        T.applyAction(this.player, target, guid, cellID, quantity); // Coding Mestre
+        T.applyAction(this.player, target, guid, cellID, quantity);
         if (T.getType() == Constant.ITEM_TYPE_PAIN
                 || T.getType() == Constant.ITEM_TYPE_VIANDE_COMESTIBLE) {
             if (target != null)
