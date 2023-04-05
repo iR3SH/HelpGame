@@ -20,35 +20,27 @@ public class IA14 extends AbstractIA
   @Override
   public void apply()
   {
+    int time = 800;
+    Fighter target = Function.getInstance().getNearestEnnemy(this.fight, this.fighter);
     if(this.count>0&&this.fighter.canPlay()&&!this.stop)
     {
-      if(!this.fighter.haveInvocation())
-      {
-        if(!Function.getInstance().invocIfPossible(this.fight,this.fighter))
-        {
-          Fighter target=Function.getInstance().getNearestEnnemy(this.fight,this.fighter);
-          int value=Function.getInstance().moveToAttackIfPossible(this.fight,this.fighter),cellId=value-(value/1000)*1000;
-          SortStats spellStats=this.fighter.getMob().getSpells().get(value/1000);
+        if(!Function.getInstance().invocIfPossible(this.fight,this.fighter)) {
+          String value = Function.getInstance().moveToAttackIfPossible(this.fight, this.fighter);
+          if (!value.isEmpty()) {
+            int cellId = Integer.parseInt(value.split(";")[0]);
+            SortStats spellStats = this.fighter.getMob().getSpells().get(Integer.parseInt(value.split(";")[1]));
 
-          if(this.fight.canCastSpell1(this.fighter,spellStats,this.fighter.getCell(),cellId))
-            this.fight.tryCastSpell(this.fighter,spellStats,cellId);
-          else
-            Function.getInstance().moveNearIfPossible(fight,this.fighter,target);
+            if (this.fight.canCastSpell1(this.fighter, spellStats, this.fighter.getCell(), cellId)) {
+              if(this.fight.tryCastSpell(this.fighter, spellStats, cellId) != 10){
+                time = spellStats.getSpell().getDuration();
+              }
+            }
+            else {
+              Function.getInstance().moveNearIfPossible(fight, this.fighter, target);
+            }
+          }
         }
-      }
-      else
-      {
-        Fighter target=Function.getInstance().getNearestEnnemy(this.fight,this.fighter);
-        int value=Function.getInstance().moveToAttackIfPossible(this.fight,this.fighter),cellId=value-(value/1000)*1000;
-        SortStats spellStats=this.fighter.getMob().getSpells().get(value/1000);
-
-        if(this.fight.canCastSpell1(this.fighter,spellStats,this.fighter.getCell(),cellId))
-          this.fight.tryCastSpell(this.fighter,spellStats,cellId);
-        else
-          Function.getInstance().moveNearIfPossible(this.fight,this.fighter,target);
-      }
-
-      addNext(this::decrementCount,500);
+      addNext(this::decrementCount,time);
     }
     else
     {

@@ -75,7 +75,7 @@ public class IA81 extends AbstractNeedSpell {
 
                             if (this.fight.canCastSpell1(fighter, spellStats, fighter.getCell(), cellId)) {
 
-                                if (this.fight.tryCastSpell(this.fighter, spellStats, cellId) == 0) {
+                                if (this.fight.tryCastSpell(this.fighter, spellStats, cellId) != 10) {
 
                                     time = spellStats.getSpell().getDuration();
                                     action = true;
@@ -107,7 +107,7 @@ public class IA81 extends AbstractNeedSpell {
 
                             if (this.fight.canCastSpell1(this.fighter, spellStats, fighter.getCell(), cellId)) {
 
-                                if (this.fight.tryCastSpell(this.fighter, spellStats, cellId) == 0) {
+                                if (this.fight.tryCastSpell(this.fighter, spellStats, cellId) != 10) {
 
                                     time = spellStats.getSpell().getDuration();
                                     action = true;

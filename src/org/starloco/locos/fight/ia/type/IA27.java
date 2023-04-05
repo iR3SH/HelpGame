@@ -99,7 +99,7 @@ public class IA27 extends AbstractNeedSpell
 
           if(fight.canCastSpell1(fighter, spellStats, fight.getMap().getCase(cellId), cellId)){
             int val = fight.tryCastSpell(fighter, spellStats, cellId);
-            if(val == 0) {
+            if(val != 10) {
               time = spellStats.getSpell().getDuration();
               action = true;
             }

@@ -3,6 +3,7 @@
 - Rat Noir Kackitu ne fonctionne pas comme offi
 - Tonique Mutation Lait de Bambou 0 effet
 - Si une invocation invoque, alors le decompte d'invocation affecta le personnage et non l'invocation
+- Fix Effecttarget Fretillosse
 
 ## IA à refaire
 
@@ -16,6 +17,7 @@
 - Serpiplume
 - Maman Tofu Obèse
 - Bwork Elémentaux
+- Tofuzumo
 
 # FIX
 
@@ -25,6 +27,11 @@
 - Ajout du Portefeuille de kamas comme sur officiel
 - On ne peux plus voler + de kamas que n'a le monstre
 - Fix EffectTarget du Sort Dragorage
+- Fix all MoveToAttack Functions and their usage
+- Fix forgeted break in both debuff functions
+- Fisrt try fix debuff on Fighter die for Mobs
+- Optimised Functions ExchangePlaces in Fight.java
+- Begin CleanUp Fight.java
 
 ### **01/04/2023**
 - CleanUp Fighter.java

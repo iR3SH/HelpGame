@@ -173,17 +173,17 @@ public class Function {
         return attack;
     }
 
-    public int moveToAttackIfPossibleAll(Fight fight, Fighter fighter) {
+    public String moveToAttackIfPossibleAll(Fight fight, Fighter fighter) {
         if (fight == null || fighter == null)
-            return -1;
+            return "";
         Fighter target = getNearest(fight, fighter);
         int distMin = PathFinding.getDistanceBetween(fight.getMap(), fighter.getCell().getId(), target.getCell().getId());
         ArrayList<SortStats> sorts = getLaunchableSort(fighter, fight, distMin);
         if (sorts == null)
-            return -1;
+            return "";
         ArrayList<Integer> cells = PathFinding.getListCaseFromFighter(fight, fighter, fighter.getCell().getId(), sorts);
         if (cells == null)
-            return -1;
+            return "";
         int CellDest = 0;
         SortStats bestSS = null;
         int[] bestInvok = {1000, 0, 0, 0, -1};
@@ -209,7 +209,6 @@ public class Function {
                                 bestFighter[0] = dist;
                                 bestFighter[1] = i;
                                 bestFighter[2] = 1;
-                                bestFighter[3] = 0;
                                 bestFighter[4] = target.getCell().getId();
                                 bestSS = S;
                             }
@@ -220,7 +219,6 @@ public class Function {
                             bestFighter[0] = dist;
                             bestFighter[1] = i;
                             bestFighter[2] = 1;
-                            bestFighter[3] = 0;
                             bestFighter[4] = target.getCell().getId();
                             bestSS = S;
                         }
@@ -235,17 +233,15 @@ public class Function {
             CellDest = bestInvok[1];
             targetCell = bestInvok[4];
         } else
-            return -1;
-        if (CellDest == 0)
-            return -1;
+            return "";
         if (CellDest == fighter.getCell().getId())
-            return targetCell + bestSS.getSpellID() * 1000;
+            return targetCell + ";" + bestSS.getSpellID();
 
         ArrayList<GameCase> path = new AstarPathfinding(fight.getMapOld(), fight, fighter.getCell().getId(), CellDest).getShortestPath();
 
         if (path == null)
-            return -1;
-        String pathstr = "";
+            return "";
+        StringBuilder pathstr = new StringBuilder();
         try {
             int curCaseID = fighter.getCell().getId();
             int curDir = 0;
@@ -255,25 +251,23 @@ public class Function {
                     continue; // Empêche le d == 0
                 char d = PathFinding.getDirBetweenTwoCase(curCaseID, c.getId(), fight.getMap(), true);
                 if (d == 0)
-                    return -1;//Ne devrait pas arriver :O
-                if (curDir != d) {
-                    if (path.indexOf(c) != 0)
-                        pathstr += World.world.getCryptManager().cellID_To_Code(curCaseID);
-                    pathstr += d;
-                }
+                    return "";//Ne devrait pas arriver :O
+                if (path.indexOf(c) != 0)
+                    pathstr.append(World.world.getCryptManager().cellID_To_Code(curCaseID));
+                pathstr.append(d);
                 curCaseID = c.getId();
             }
             if (curCaseID != fighter.getCell().getId())
-                pathstr += World.world.getCryptManager().cellID_To_Code(curCaseID);
+                pathstr.append(World.world.getCryptManager().cellID_To_Code(curCaseID));
         } catch (Exception e) {
             e.printStackTrace();
         }
         //Création d'une GameAction
         GameAction GA = new GameAction(0, 1, "");
-        GA.args = pathstr;
+        GA.args = pathstr.toString();
         fight.onFighterDeplace(fighter, GA);
 
-        return targetCell + bestSS.getSpellID() * 1000;
+        return targetCell + ";" + bestSS.getSpellID();
     }
     
     
@@ -2748,32 +2742,32 @@ public class Function {
         }
     }
 
-    public int moveToAttackIfPossible(Fight fight, Fighter fighter) {
+    public String moveToAttackIfPossible(Fight fight, Fighter fighter) {
         try {
             if (fight == null || fighter == null)
-                return -1;
+                return "";
             GameMap m = fight.getMap();
             if (m == null)
-                return -1;
+                return "";
 
             GameCase _c = fighter.getCell();
             if (_c == null)
-                return -1;
+                return "";
 
             Fighter ennemy = getNearestEnnemy(fight, fighter);
             if (ennemy == null)
-                return -1;
+                return "";
 
             int distMin = PathFinding.getDistanceBetween(m, _c.getId(), ennemy.getCell().getId());
             ArrayList<SortStats> sorts = getLaunchableSort(fighter, fight, distMin);
             if (sorts == null)
-                return -1;
+                return "";
             ArrayList<Integer> cells = PathFinding.getListCaseFromFighter(fight, fighter, fighter.getCell().getId(), sorts);
             if (cells == null)
-                return -1;
+                return "";
             ArrayList<Fighter> targets = getPotentialTarget(fight, fighter, sorts);
             if (targets == null)
-                return -1;
+                return "";
             int CellDest = 0;
             SortStats bestSS = null;
             int[] bestInvok = {1000, 0, 0, 0, -1};
@@ -2818,7 +2812,6 @@ public class Function {
                                             bestFighter[0] = dist;
                                             bestFighter[1] = i;
                                             bestFighter[2] = 1;
-                                            bestFighter[3] = 0;
                                             bestFighter[4] = T.getCell().getId();
                                             bestSS = S;
                                         }
@@ -2829,7 +2822,6 @@ public class Function {
                                         bestFighter[0] = dist;
                                         bestFighter[1] = i;
                                         bestFighter[2] = 1;
-                                        bestFighter[3] = 0;
                                         bestFighter[4] = T.getCell().getId();
                                         bestSS = S;
                                     }
@@ -2847,17 +2839,15 @@ public class Function {
                 CellDest = bestInvok[1];
                 targetCell = bestInvok[4];
             } else
-                return -1;
-            if (CellDest == 0)
-                return -1;
+                return "";
             if (CellDest == fighter.getCell().getId())
-                return targetCell + bestSS.getSpellID() * 1000;
+                return targetCell + ";" + bestSS.getSpellID();
 
             ArrayList<GameCase> path = new AstarPathfinding(fight.getMapOld(), fight, fighter.getCell().getId(), CellDest).getShortestPath(-1);
 
             if (path == null)
-                return -1;
-            String pathstr = "";
+                return "";
+            StringBuilder pathstr = new StringBuilder();
             try {
                 int curCaseID = fighter.getCell().getId();
                 int curDir = 0;
@@ -2867,28 +2857,26 @@ public class Function {
                         continue; // Empêche le d == 0
                     char d = PathFinding.getDirBetweenTwoCase(curCaseID, c.getId(), m, true);
                     if (d == 0)
-                        return -1;//Ne devrait pas arriver :O
-                    if (curDir != d) {
-                        if (path.indexOf(c) != 0)
-                            pathstr += World.world.getCryptManager().cellID_To_Code(curCaseID);
-                        pathstr += d;
-                    }
+                        return "";//Ne devrait pas arriver :O
+                    if (path.indexOf(c) != 0)
+                        pathstr.append(World.world.getCryptManager().cellID_To_Code(curCaseID));
+                    pathstr.append(d);
                     curCaseID = c.getId();
                 }
                 if (curCaseID != fighter.getCell().getId())
-                    pathstr += World.world.getCryptManager().cellID_To_Code(curCaseID);
+                    pathstr.append(World.world.getCryptManager().cellID_To_Code(curCaseID));
             } catch (Exception e) {
                 e.printStackTrace();
             }
             //Création d'une GameAction
             GameAction GA = new GameAction(0, 1, "");
-            GA.args = pathstr;
+            GA.args = pathstr.toString();
             fight.onFighterDeplace(fighter, GA);
 
-            return targetCell + bestSS.getSpellID() * 1000;
+            return targetCell + ";" + bestSS.getSpellID();
         } catch (Exception ex) {
             Logging.getInstance().write("Error", ex.getMessage() + "\n" + Arrays.toString(ex.getStackTrace()));
-            return -1;
+            return "";
         }
     }
 

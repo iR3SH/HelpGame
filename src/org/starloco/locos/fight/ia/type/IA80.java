@@ -70,7 +70,7 @@ public class IA80 extends AbstractNeedSpell {
 
                             if (this.fight.canCastSpell1(this.fighter, spellStats, this.fighter.getCell(), cellId)) {
 
-                                if (this.fight.tryCastSpell(this.fighter, spellStats, cellId) == 0) {
+                                if (this.fight.tryCastSpell(this.fighter, spellStats, cellId) != 10) {
 
                                     time = spellStats.getSpell().getDuration();
                                     action = true;
@@ -98,7 +98,7 @@ public class IA80 extends AbstractNeedSpell {
 
                             if (this.fight.canCastSpell1(this.fighter, spellStats, this.fighter.getCell(), cellId)) {
 
-                                if (this.fight.tryCastSpell(this.fighter, spellStats, cellId) == 0) {
+                                if (this.fight.tryCastSpell(this.fighter, spellStats, cellId) != 10) {
 
                                     time = spellStats.getSpell().getDuration();
                                     action = true;
