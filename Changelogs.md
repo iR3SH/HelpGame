@@ -1,20 +1,41 @@
 # BUGS ACTUEL
 
 - Rat Noir Kackitu ne fonctionne pas comme offi
-- EffectTarget Fronde Kanniboul
-- Capture même sans avoir de capture équipé
+- Tonique Mutation Lait de Bambou 0 effet
+- Si une invocation invoque, alors le decompte d'invocation affecta le personnage et non l'invocation
 
 ## IA à refaire
 
 ### **BOSS**
+- Kouloss
+- Wa Wabbit lance pas de cawotte ni abrutissement
 
 ### **MONSTRES**
 - IA Gardienne des Egouts, n'attaque pas, aspire dans le vide, lance invisibilité à la fin de son tour et ne fuis pas
 - Corbac Apprivoisé
 - Serpiplume
 - Maman Tofu Obèse
+- Bwork Elémentaux
 
 # FIX
+
+### **05/04/2023**
+- CleanUp SpellEffect.java
+- Fix Arbre de Vie Offi'like
+- Ajout du Portefeuille de kamas comme sur officiel
+- On ne peux plus voler + de kamas que n'a le monstre
+- Fix EffectTarget du Sort Dragorage
+
+### **01/04/2023**
+- CleanUp Fighter.java
+
+### **31/03/2023**
+- CleanUp EndFight Debuff
+- Nerf Stats Minotot / Chêne Mou
+
+### **23/03/2023**
+- Fix EffectTarget du Sort Peau de Silex
+- Fix EffectTarget du Sort Peau de Granite
 
 ### **22/03/2023**
 - Ajout des Pierre de Gardien de Donjon et des Pierres d'Archimonstre

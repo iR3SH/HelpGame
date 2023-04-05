@@ -251,7 +251,7 @@ public class GameObject {
                             String max = stats[2];
                             String jet = stats[4];
                             String args = min + ";" + max + ";-1;-1;0;" + jet;
-                            Effects.add(new SpellEffect(id, args, 0, -1));
+                            Effects.add(new SpellEffect(id, args, 0, -1, true));
                             follow1 = false;
                             break;
                     }
@@ -262,7 +262,7 @@ public class GameObject {
                     boolean follow2 = true;
                     for (int a : Constant.ARMES_EFFECT_IDS) {
                         if (a == id) {
-                            Effects.add(new SpellEffect(id, stats[1] + ";" + stats[2] + ";-1;-1;0;" + stats[4], 0, -1));
+                            Effects.add(new SpellEffect(id, stats[1] + ";" + stats[2] + ";-1;-1;0;" + stats[4], 0, -1, true));
                             follow2 = false;
                         }
                     }
@@ -662,7 +662,7 @@ public class GameObject {
                     if (entry.getKey() == Constant.STATS_PETS_PDV)
                         stats.append(Integer.toHexString(entry.getKey())).append("#").append(Integer.toHexString(p.getPdv())).append("#0#").append(Integer.toHexString(p.getPdv()));
                     if (entry.getKey() == Constant.STATS_PETS_POIDS)
-                        stats.append(Integer.toHexString(entry.getKey())).append("#").append(Integer.toString(p.parseCorpulence())).append("#").append(p.getCorpulence() > 0 ? p.parseCorpulence() : 0).append("#").append(Integer.toString(p.parseCorpulence()));
+                        stats.append(Integer.toHexString(entry.getKey())).append("#").append(p.parseCorpulence()).append("#").append(p.getCorpulence() > 0 ? p.parseCorpulence() : 0).append("#").append(Integer.toString(p.parseCorpulence()));
                     if (entry.getKey() == Constant.STATS_PETS_DATE)
                         stats.append(Integer.toHexString(entry.getKey())).append(p.parseLastEatDate());
                     if (p.getIsEupeoh()
@@ -872,7 +872,7 @@ public class GameObject {
                 //exCode: String newArgs = Integer.toHexString(min)+";"+Integer.toHexString(max)+";-1;-1;0;"+jet;
                 //osef du minMax, vu qu'on se sert du jet pour calculer les dégats
                 String newArgs = "0;0;0;-1;0;" + jet;
-                effets.add(new SpellEffect(SE.getEffectID(), newArgs, 0, -1));
+                effets.add(new SpellEffect(SE.getEffectID(), newArgs, 0, -1, true));
             } catch (Exception e) {
                 e.printStackTrace();
             }

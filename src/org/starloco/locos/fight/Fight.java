@@ -2932,8 +2932,8 @@ public class Fight {
             target.setState(Constant.ETAT_PORTEUR, 0,caster.getId());
             f.setHoldedBy(null);
             target.setIsHolding(null);
-            SocketManager.GAME_SEND_GA_PACKET_TO_FIGHT(this, 7, 950, f.getId() + "", f.getId() + "," + Constant.ETAT_PORTE + ",0");
-            SocketManager.GAME_SEND_GA_PACKET_TO_FIGHT(this, 7, 950, target.getId() + "", target.getId() + "," + Constant.ETAT_PORTEUR + ",0");
+            SocketManager.GAME_SEND_GA_PACKET_TO_FIGHT(this, 7, 950, String.valueOf(f.getId()), f.getId() + "," + Constant.ETAT_PORTE + ",0");
+            SocketManager.GAME_SEND_GA_PACKET_TO_FIGHT(this, 7, 950, String.valueOf(target.getId()), target.getId() + "," + Constant.ETAT_PORTEUR + ",0");
         }
         if ((this.getType() == Constant.FIGHT_TYPE_PVM) && (this.getAllChallenges().size() > 0) || this.getType() == Constant.FIGHT_TYPE_DOPEUL && this.getAllChallenges().size() > 0)
             this.getAllChallenges().values().stream().filter(challenge -> challenge != null).forEach(challenge -> challenge.onFighterDie(target));
@@ -2966,7 +2966,7 @@ public class Fight {
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
-                    SocketManager.GAME_SEND_GA_PACKET_TO_FIGHT(this, 7, 999, target.getId() + "", this.getGTL());
+                    SocketManager.GAME_SEND_GA_PACKET_TO_FIGHT(this, 7, 999, String.valueOf(target.getId()), this.getGTL());
                 }
             }
         } else if (target.getTeam() == 1) {
@@ -2994,7 +2994,7 @@ public class Fight {
                         this.getTeam0().remove(fighter.getId());
                     else if (this.getTeam1().containsKey(fighter.getId()))
                         this.getTeam1().remove(fighter.getId());
-                    SocketManager.GAME_SEND_GA_PACKET_TO_FIGHT(this, 7, 999, target.getId() + "", getGTL());
+                    SocketManager.GAME_SEND_GA_PACKET_TO_FIGHT(this, 7, 999, String.valueOf(target.getId()), getGTL());
                 }
             }
         }
@@ -3031,7 +3031,7 @@ public class Fight {
                             this.getTeam0().remove(target.getId());
                         else if (this.getTeam1().containsKey(target.getId()))
                             this.getTeam1().remove(target.getId());
-                        SocketManager.GAME_SEND_GA_PACKET_TO_FIGHT(this, 7, 999, target.getId() + "", this.getGTL());
+                        SocketManager.GAME_SEND_GA_PACKET_TO_FIGHT(this, 7, 999, String.valueOf(target.getId()), this.getGTL());
                     }
                 }
             } catch (Exception e) {
@@ -3100,7 +3100,7 @@ public class Fight {
       Fighter carry=target.getHoldedBy();
       carry.setState(Constant.ETAT_PORTEUR,0,target.getId()); //duration 0, remove state
       carry.setIsHolding(null);
-      SocketManager.GAME_SEND_GA_PACKET_TO_FIGHT(this,7,51,carry.getId()+"",carry.getCell().getId()+"");
+      SocketManager.GAME_SEND_GA_PACKET_TO_FIGHT(this,7,51, String.valueOf(carry.getId()), String.valueOf(carry.getCell().getId()));
     }
     
     
@@ -5659,12 +5659,12 @@ public class Fight {
     }
 
     public String getGTL() {
-        String packet = "GTL";
+        StringBuilder packet = new StringBuilder("GTL");
         if (this.orderPlaying != null)
             for (Fighter f : this.orderPlaying)
                 if(!f.isDead())
-                    packet += "|" + f.getId();
-        return packet + (char) 0x00;
+                    packet.append("|").append(f.getId());
+        return packet.toString() + (char) 0x00;
     }
 
     public String parseFightInfos() {

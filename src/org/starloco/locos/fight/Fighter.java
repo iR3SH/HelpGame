@@ -57,10 +57,10 @@ public class Fighter implements Comparable<Fighter> {
     private ArrayList<SpellEffect> fightBuffs = new ArrayList<SpellEffect>();
     private Map<Integer, Integer> chatiValue = new HashMap<Integer, Integer>();
     private ArrayList<LaunchedSpell> launchedSpell = new ArrayList<LaunchedSpell>();
-    public GameCase lastInvisCell=null;
-    public int lastInvisMP=-1;
+    public GameCase lastInvisCell = null;
+    public int lastInvisMP = -1;
     public World.Couple<Byte, Long> killedBy;
-    private boolean hadSober=false;
+    private boolean hadSober = false;
 	private boolean alreadyPlayed;
 	
 
@@ -246,7 +246,7 @@ public class Fighter implements Comparable<Fighter> {
 
     public void removePdv(Fighter caster, int pdv) {
         if (pdv > 0)
-            this.getFight().getAllChallenges().values().stream().filter(challenge -> challenge != null).forEach(challenge -> challenge.onFighterAttacked(caster, this));
+            this.getFight().getAllChallenges().values().stream().filter(Objects::nonNull).forEach(challenge -> challenge.onFighterAttacked(caster, this));
         this.pdv -= pdv;
     }
 
@@ -363,40 +363,31 @@ public class Fighter implements Comparable<Fighter> {
         this.alreadyPlayed = alreadyPlayed;
     }
 
-    public void setState(int id, int t, int casterId)
-    {
-      if(t!=0)
-      {
-        if(state.get(id)!=null) //fighter already has same state
+    public void setState(int id, int t, int casterId) {
+        if (t != 0) {
+            if (state.get(id) != null) //fighter already has same state
+            {
+                if (state.get(id) == -1 || state.get(id) > t) //infite duration state or current state lasts longer than parameter state
+                    return;
+                else //current state lasts shorter than parameter state, refresh state
+                {
+                    state.remove(id);
+                    state.put(id, t);
+                }
+            } else //fighter does not have parameter state
+            {
+                state.put(id, t);
+            }
+        } else //t=0 removes state
         {
-          if(state.get(id)==-1||state.get(id)>t) //infite duration state or current state lasts longer than parameter state
-            return;
-          else //current state lasts shorter than parameter state, refresh state
-          {
-            state.remove(id);
-            state.put(id,t);
-          }
+            this.state.remove(id);
+            SocketManager.GAME_SEND_GA_PACKET_TO_FIGHT(fight, 7, 950, String.valueOf(casterId), this.getId() + "," + id + ",0");
         }
-        else //fighter does not have parameter state
-        {
-          state.put(id,t);
-        }
-      }
-      else //t=0 removes state
-      {
-        this.state.remove(id);
-        SocketManager.GAME_SEND_GA_PACKET_TO_FIGHT(fight,7,950,new StringBuilder(String.valueOf(casterId)).toString(),String.valueOf(this.getId())+","+id+",0");
-      }
     }
 
     public int getState(int id) {
         return this.state.get(id) != null ? this.state.get(id) : -1;
     }
-    
-    /*
-    public boolean haveState(int id) {
-        return this.state.get(id) != null && this.state.get(id) != 0;
-    }*/
     
     public boolean haveState(int id)
     {
@@ -409,7 +400,7 @@ public class Fighter implements Comparable<Fighter> {
     public void sendState(Player p) {
         if (p.getAccount() != null && p.getGameClient() != null)
             for (Entry<Integer, Integer> state : this.state.entrySet())
-                SocketManager.GAME_SEND_GA_PACKET(p.getGameClient(), 7 + "", 950 + "", getId() + "", getId() + "," + state.getKey() + ",1");
+                SocketManager.GAME_SEND_GA_PACKET(p.getGameClient(), 7 + "", 950 + "", String.valueOf(getId()), getId() + "," + state.getKey() + ",1");
     }
 
     public boolean haveInvocation() {
@@ -504,13 +495,17 @@ public class Fighter implements Comparable<Fighter> {
             case 431: case 433: case 437: case 443: // Chatiment sacri ( Cause : effect 776 )
                 debuff = false;
         }
-        // Coding Mestre (Removal of devotion (devouement) should only last 1 turn)
-        if ((effectID == Constant.STATS_REM_PA || effectID == Constant.STATS_ADD_PA)
-                && this.canPlay && duration == 1)
+
+        if (getSpellValueBool(89) && this.canPlay && duration == 1)
             duration--;
 
         //Si c'est le jouer actif qui s'autoBuff, on ajoute 1 a la durée
-        this.fightBuffs.add(new SpellEffect(effectID, val ,(this.canPlay ? duration + 1 : duration), turns, debuff, caster, args, spellID));
+        if(hasBuffFromSpell(spellID)){
+            this.fightBuffs.add(new SpellEffect(effectID, val, (this.canPlay ? duration + 1 : duration), turns, debuff, caster, args, spellID, false));
+        }
+        else {
+            this.fightBuffs.add(new SpellEffect(effectID, val, (this.canPlay ? duration + 1 : duration), turns, debuff, caster, args, spellID, true));
+        }
         if(Main.modDebug)
             System.out.println("- Ajout du Buff "+ effectID +" sur le personnage fighter ("+ this.getId() +") val : "+val+" duration : "+duration+" turns : "+turns+" debuff : "+debuff+" spellid : "+spellID+" args : "+args+" !");
 
@@ -523,7 +518,7 @@ public class Fighter implements Comparable<Fighter> {
     	switch(effectID)
         {
             case 6://Renvoie de sort
-                SocketManager.GAME_SEND_FIGHT_GIE_TO_FIGHT(this.fight, 7, effectID, getId(), -1, val+"", "10", "", duration, spellID);
+                SocketManager.GAME_SEND_FIGHT_GIE_TO_FIGHT(this.fight, 7, effectID, getId(), -1, String.valueOf(val), "10", "", duration, spellID);
                 break;
 
             case 79://Chance éca
@@ -571,7 +566,7 @@ public class Fighter implements Comparable<Fighter> {
                 String jet = args.split(";")[5];
                 int min = Formulas.getMinJet(jet);
                 int max = Formulas.getMaxJet(jet);
-                SocketManager.GAME_SEND_FIGHT_GIE_TO_FIGHT(this.fight, 7, effectID, getId(), min, "" + max, "" + max, "", duration,spellID);
+                SocketManager.GAME_SEND_FIGHT_GIE_TO_FIGHT(this.fight, 7, effectID, getId(), min, String.valueOf(max), String.valueOf(max), "", duration,spellID);
                 break;
 
             case 788://Fait apparaitre message le temps de buff sacri Chatiment de X sur Y tours
@@ -579,7 +574,7 @@ public class Fighter implements Comparable<Fighter> {
                 String valMax2 = args.split(";")[2];
                 if(Integer.parseInt(args.split(";")[0]) == 108)
                     return;
-                SocketManager.GAME_SEND_FIGHT_GIE_TO_FIGHT(this.fight, 7, effectID, getId(), val, ""+val, ""+valMax2, "", duration, spellID);
+                SocketManager.GAME_SEND_FIGHT_GIE_TO_FIGHT(this.fight, 7, effectID, getId(), val, String.valueOf(val), valMax2, "", duration, spellID);
 
                 break;
 
@@ -604,141 +599,140 @@ public class Fighter implements Comparable<Fighter> {
         }
     }
     public void debuffOnFighterDie(Fighter fighter) {
-        ArrayList<SpellEffect> it = this.fightBuffs;
-        ArrayList<SpellEffect> effectToDebuff = new ArrayList<>();
-        for (SpellEffect effect : it) {
+        ArrayList<SpellEffect> buffs = this.fightBuffs;
+        ArrayList<SpellEffect> buffsToRemove = new ArrayList<>();
+        for (SpellEffect effect : buffs) {
 
-            if (effect.isDebuffabe() && effect.getCaster() == fighter) {
-                effectToDebuff.add(effect);
+            if (effect.getCaster() == fighter) {
+                buffsToRemove.add(effect);
                 //On envoie les Packets si besoin
                 switch (effect.getEffectID()) {
                     case Constant.STATS_ADD_PA:
                     case Constant.STATS_ADD_PA2:
-                        SocketManager.GAME_SEND_GA_PACKET_TO_FIGHT(this.fight, 7, Constant.STATS_REM_PA, getId()
-                            + "", getId() + ",-" + effect.getValue() + "," + effect.getDuration());
+                        SocketManager.GAME_SEND_GA_PACKET_TO_FIGHT(this.fight, 7, Constant.STATS_REM_PA, String.valueOf(getId()), getId() + ",-" + effect.getValue() + "," + effect.getDuration());
                         break;
 
                     case Constant.STATS_ADD_PM:
                     case Constant.STATS_ADD_PM2:
-                        SocketManager.GAME_SEND_GA_PACKET_TO_FIGHT(this.fight, 7, Constant.STATS_REM_PM, getId()
-                        + "", getId() + ",-" + effect.getValue() + "," + effect.getDuration());
+                        SocketManager.GAME_SEND_GA_PACKET_TO_FIGHT(this.fight, 7, Constant.STATS_REM_PM, String.valueOf(getId()), getId() + ",-" + effect.getValue() + "," + effect.getDuration());
                         break;
                     case Constant.STATS_REM_PO:
-                        SocketManager.GAME_SEND_GA_PACKET_TO_FIGHT(fight, 7, Constant.STATS_ADD_PO, getId()
-                            + "", getId()+","+ effect.getValue() + "," + effect.getDuration());
+                        SocketManager.GAME_SEND_GA_PACKET_TO_FIGHT(fight, 7, Constant.STATS_ADD_PO, String.valueOf(getId()), getId()+","+ effect.getValue() + "," + effect.getDuration());
                         break;
                     case Constant.STATS_REM_PA:
-                        SocketManager.GAME_SEND_GA_PACKET_TO_FIGHT(fight, 7, Constant.STATS_ADD_PA, getId() + ""
+                        SocketManager.GAME_SEND_GA_PACKET_TO_FIGHT(fight, 7, Constant.STATS_ADD_PA, String.valueOf(getId())
                         , getId() + "," + effect.getValue() + "," + effect.getDuration());
                     case Constant.STATS_REM_PM:
-                        SocketManager.GAME_SEND_GA_PACKET_TO_FIGHT(fight, 7, Constant.STATS_ADD_PM, getId() + ""
+                        SocketManager.GAME_SEND_GA_PACKET_TO_FIGHT(fight, 7, Constant.STATS_ADD_PM, String.valueOf(getId())
                                 , getId() + "," + effect.getValue() + "," + effect.getDuration());
                     default:
                         break;
                 }
             }
         }
-        for(SpellEffect effect : effectToDebuff)
-        {
-            it.remove(effect);
+        for(SpellEffect effect : buffsToRemove){
+            this.fightBuffs.remove(effect);
         }
-        this.fightBuffs = it;
-        if (this.perso != null && !this.hasLeft) // Envoie les stats au joueurs
+
+        if (this.perso != null && !this.hasLeft) { // Envoie les stats au joueurs
             SocketManager.GAME_SEND_STATS_PACKET(this.perso);
+        }
     }
     public void debuff() {
-        for (SpellEffect effect : this.fightBuffs) {
+        ArrayList<SpellEffect> buffs = this.fightBuffs;
+        ArrayList<SpellEffect> buffsToRemove = new ArrayList<>();
 
-            if (effect.isDebuffabe()){
-                fightBuffs.remove(effect);
-            }
-            //On envoie les Packets si besoin
-            switch (effect.getEffectID()) {
-                case Constant.STATS_ADD_PA:
-                case Constant.STATS_ADD_PA2:
-                    SocketManager.GAME_SEND_GA_PACKET_TO_FIGHT(this.fight, 7, 101, getId()
-                            + "", getId() + ",-" + effect.getValue());
-                    break;
+        for(SpellEffect effect : buffs) {
 
-                case Constant.STATS_ADD_PM:
-                case Constant.STATS_ADD_PM2:
-                    SocketManager.GAME_SEND_GA_PACKET_TO_FIGHT(this.fight, 7, 127, getId()
-                            + "", getId() + ",-" + effect.getValue());
-                    break;
+            if (effect.isDebuffabe()) {
+                buffsToRemove.add(effect);
+                //On envoie les Packets si besoin
+                switch (effect.getEffectID()) {
+                    case Constant.STATS_ADD_PA:
+                    case Constant.STATS_ADD_PA2:
+                        SocketManager.GAME_SEND_GA_PACKET_TO_FIGHT(this.fight, 7, Constant.STATS_REM_PA, String.valueOf(getId()), getId() + ",-" + effect.getValue() + "," + effect.getDuration());
+                        break;
+
+                    case Constant.STATS_ADD_PM:
+                    case Constant.STATS_ADD_PM2:
+                        SocketManager.GAME_SEND_GA_PACKET_TO_FIGHT(this.fight, 7, Constant.STATS_REM_PM, String.valueOf(getId()), getId() + ",-" + effect.getValue() + "," + effect.getDuration());
+                        break;
+                    case Constant.STATS_REM_PO:
+                        SocketManager.GAME_SEND_GA_PACKET_TO_FIGHT(fight, 7, Constant.STATS_ADD_PO, String.valueOf(getId()), getId() + "," + effect.getValue() + "," + effect.getDuration());
+                        break;
+                    case Constant.STATS_REM_PA:
+                        SocketManager.GAME_SEND_GA_PACKET_TO_FIGHT(fight, 7, Constant.STATS_ADD_PA, String.valueOf(getId())
+                                , getId() + "," + effect.getValue() + "," + effect.getDuration());
+                    case Constant.STATS_REM_PM:
+                        SocketManager.GAME_SEND_GA_PACKET_TO_FIGHT(fight, 7, Constant.STATS_ADD_PM, String.valueOf(getId())
+                                , getId() + "," + effect.getValue() + "," + effect.getDuration());
+                    default:
+                        break;
+                }
             }
+        }
+        for(SpellEffect effect : buffsToRemove){
+            this.fightBuffs.remove(effect);
         }
 
         if (this.perso != null && !this.hasLeft) // Envoie les stats au joueurs
             SocketManager.GAME_SEND_STATS_PACKET(this.perso);
-        
+
         // On re donne aux Fighters les buff car le debuff retire tout dans le client
         TimerWaiter.addNext(()->{
             for(final SpellEffect spellEffect : this.fightBuffs)
                 sendGIE(spellEffect.getArgs(), spellEffect.getSpell(), spellEffect.getEffectID(), spellEffect.getValue(), spellEffect.getDuration());
         }, 2500, DataType.FIGHT);
-        
     }
 
-    public void refreshEndTurnBuff()
-    {
-      Iterator<SpellEffect> it=this.fightBuffs.iterator();
-      while(it.hasNext())
-      {
-        SpellEffect entry=it.next();
-        if(entry==null||entry.getCaster().isDead)
-          continue;
-        if(entry.decrementDuration()==0)
-        {
-          it.remove();
-          switch(entry.getEffectID())
-          {
-            case 108:
-              if(entry.getSpell()==441)
-              {
-                //Baisse des pdvs max
-                this.pdvMax=(this.pdvMax-entry.getValue());
+    public void refreshEndTurnBuff() {
+        Iterator<SpellEffect> it = this.fightBuffs.iterator();
+        while (it.hasNext()) {
+            SpellEffect entry = it.next();
+            if (entry == null || entry.getCaster().isDead)
+                continue;
+            if (entry.decrementDuration() == 0) {
+                it.remove();
+                switch (entry.getEffectID()) {
+                    case 108:
+                        if (entry.getSpell() == 441) {
+                            //Baisse des pdvs max
+                            this.pdvMax = (this.pdvMax - entry.getValue());
 
-                //Baisse des pdvs actuel
-                int pdv=0;
-                if(this.pdv-entry.getValue()<=0)
-                {
-                  pdv=0;
-                  this.fight.onFighterDie(this,this.holdedBy);
-                  this.fight.verifIfTeamAllDead();
+                            //Baisse des pdvs actuel
+                            int pdv = 0;
+                            if (this.pdv - entry.getValue() <= 0) {
+                                this.fight.onFighterDie(this, this.holdedBy);
+                                this.fight.verifIfTeamAllDead();
+                            } else
+                                pdv = (this.pdv - entry.getValue());
+                            this.pdv = pdv;
+                        }
+                        break;
+
+                    case 150://Invisibilité
+                        SocketManager.GAME_SEND_GA_PACKET_TO_FIGHT(this.fight, 7, 150, String.valueOf(entry.getCaster().getId()), getId() + ",0");
+                        break;
+
+                    case 950:
+                        String args = entry.getArgs();
+                        int id = -1;
+                        try {
+                            id = Integer.parseInt(args.split(";")[2]);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                        if (id == -1)
+                            return;
+                        if (id == Constant.ETAT_SAOUL) {
+                            entry.getCaster().setState(Constant.STATE_SOBER, -1, this.getId()); //infinite duration
+                            SocketManager.GAME_SEND_GA_PACKET_TO_FIGHT(fight, 7, 950, String.valueOf(entry.getCaster().getId()), entry.getCaster().getId() + "," + Constant.STATE_SOBER + ",1");
+                        }
+                        setState(id, 0, this.getId());
+                        break;
                 }
-                else
-                  pdv=(this.pdv-entry.getValue());
-                this.pdv=pdv;
-              }
-              break;
-
-            case 150://Invisibilité
-              SocketManager.GAME_SEND_GA_PACKET_TO_FIGHT(this.fight,7,150,entry.getCaster().getId()+"",getId()+",0");
-              break;
-
-            case 950:
-              String args=entry.getArgs();
-              int id=-1;
-              try
-              {
-                id=Integer.parseInt(args.split(";")[2]);
-              }
-              catch(Exception e)
-              {
-                e.printStackTrace();
-              }
-              if(id==-1)
-                return;
-              if(id==Constant.ETAT_SAOUL)
-              {
-                entry.getCaster().setState(Constant.STATE_SOBER,-1,this.getId()); //infinite duration
-                SocketManager.GAME_SEND_GA_PACKET_TO_FIGHT(fight,7,950,entry.getCaster().getId()+"",entry.getCaster().getId()+","+Constant.STATE_SOBER+",1");
-              }
-              setState(id,0,this.getId());
-              break;
-          }
+            }
         }
-      }
     }
 
     public void initBuffStats() {
@@ -867,16 +861,12 @@ public class Fighter implements Comparable<Fighter> {
     public int getPa() {
         switch (this.type) {
             case 1:
-                return getTotalStats().getEffect(Constant.STATS_ADD_PA);
             case 2:
-                return getTotalStats().getEffect(Constant.STATS_ADD_PA);
-//                        + this.mob.getPa();
-            case 5:
-                return getTotalStats().getEffect(Constant.STATS_ADD_PM) + 6;
-            case 7:
-                return getTotalStats().getEffect(Constant.STATS_ADD_PM) + 6;
             case 10:
                 return getTotalStats().getEffect(Constant.STATS_ADD_PA);
+            case 5:
+            case 7:
+                return getTotalStats().getEffect(Constant.STATS_ADD_PM) + 6;
         }
         return 0;
     }
@@ -884,15 +874,12 @@ public class Fighter implements Comparable<Fighter> {
     public int getPm() {
         switch (this.type) {
             case 1: // personnage
-                return getTotalStats().getEffect(Constant.STATS_ADD_PM);
             case 2: // mob
+            case 7: // prisme
+            case 10: // clone
                 return getTotalStats().getEffect(Constant.STATS_ADD_PM);// + this.mob.getPm();
             case 5: // perco
                 return getTotalStats().getEffect(Constant.STATS_ADD_PM) + 4;
-            case 7: // prisme
-                return getTotalStats().getEffect(Constant.STATS_ADD_PM);
-            case 10: // clone
-                return getTotalStats().getEffect(Constant.STATS_ADD_PM);
         }
         return 0;
     }
@@ -900,12 +887,12 @@ public class Fighter implements Comparable<Fighter> {
     public int getPros() {
         switch (this.type) {
             case 1: // personnage
-                return (getTotalStats().getEffect(Constant.STATS_ADD_PROS) + Math.round(getTotalStats().getEffect(Constant.STATS_ADD_CHAN) / 10) + Math.round(getBuffValue(Constant.STATS_ADD_CHAN) / 10));
+                return (getTotalStats().getEffect(Constant.STATS_ADD_PROS) + Math.round((float) getTotalStats().getEffect(Constant.STATS_ADD_CHAN) / 10) + Math.round((float) getBuffValue(Constant.STATS_ADD_CHAN) / 10));
             case 2: // mob
                 if (this.isInvocation()) // Si c'est un coffre animé, la chance est égale à 1000*(1+lvlinvocateur/100)
                     return (getTotalStats().getEffect(Constant.STATS_ADD_PROS) + (1000 * (1 + this.getInvocator().getLvl() / 100)) / 10);
                 else
-                    return (getTotalStats().getEffect(Constant.STATS_ADD_PROS) + Math.round(getBuffValue(Constant.STATS_ADD_CHAN) / 10));
+                    return (getTotalStats().getEffect(Constant.STATS_ADD_PROS) + Math.round((float) getBuffValue(Constant.STATS_ADD_CHAN) / 10));
         }
         return 0;
     }
@@ -944,14 +931,12 @@ public class Fighter implements Comparable<Fighter> {
                     return;
             }
         }
-        ArrayList<SpellEffect> buffs = new ArrayList<SpellEffect>();
-        buffs.addAll(getFightBuff());
+        ArrayList<SpellEffect> buffs = new ArrayList<>(getFightBuff());
         for (SpellEffect SE : buffs) {
             if (SE.getEffectID() == 150)
                 getFightBuff().remove(SE);
         }
-        SocketManager.GAME_SEND_GA_PACKET_TO_FIGHT(this.fight, 7, 150, getId()
-                + "", getId() + ",0");
+        SocketManager.GAME_SEND_GA_PACKET_TO_FIGHT(this.fight, 7, 150, String.valueOf(getId()), getId() + ",0");
         //On actualise la position
         SocketManager.GAME_SEND_GIC_PACKET_TO_FIGHT(this.fight, 7, this);
     }
@@ -1009,11 +994,11 @@ public class Fighter implements Comparable<Fighter> {
         if (this.type == 1)
             return this.perso.getName();
         if (this.type == 2)
-            return this.mob.getTemplate().getId() + "";
+            return String.valueOf(this.mob.getTemplate().getId());
         if (this.type == 5)
             return (Integer.parseInt(Integer.toString(getCollector().getN1()), 36) + "," + Integer.parseInt(Integer.toString(getCollector().getN2()), 36));
         if (this.type == 7)
-            return (getPrism().getAlignement() == 1 ? 1111 : 1112) + "";
+            return String.valueOf(getPrism().getAlignement() == 1 ? 1111 : 1112);
         if (this.type == 10)
             return getDouble().getName();
 
@@ -1104,7 +1089,7 @@ public class Fighter implements Comparable<Fighter> {
                 str.append(G.getLvl()).append(";");
                 str.append("1;");
                 str.append("2;4;");
-                str.append((int) Math.floor(G.getLvl() / 2)).append(";").append((int) Math.floor(G.getLvl() / 2)).append(";").append((int) Math.floor(G.getLvl() / 2)).append(";").append((int) Math.floor(G.getLvl() / 2)).append(";").append((int) Math.floor(G.getLvl() / 2)).append(";").append((int) Math.floor(G.getLvl() / 2)).append(";").append((int) Math.floor(G.getLvl() / 2)).append(";");//Résistances
+                str.append((int) Math.floor((double) G.getLvl() / 2)).append(";").append((int) Math.floor((double) G.getLvl() / 2)).append(";").append((int) Math.floor((double) G.getLvl() / 2)).append(";").append((int) Math.floor((double) G.getLvl() / 2)).append(";").append((int) Math.floor((double) G.getLvl() / 2)).append(";").append((int) Math.floor((double) G.getLvl() / 2)).append(";").append((int) Math.floor((double) G.getLvl() / 2)).append(";");//Résistances
                 str.append(this.team);
                 break;
             case 7://Prisme
@@ -1161,7 +1146,7 @@ public class Fighter implements Comparable<Fighter> {
 
     @Override
     public int compareTo(Fighter t) {
-        return ((this.getPros() > t.getPros() && !this.isInvocation()) ? 1 : 0);
+        return (this.getPros() > t.getPros() && !this.isInvocation()) ? 1 : 0;
     }
     
     public void setHadSober(boolean hadSober)
@@ -1190,13 +1175,22 @@ public class Fighter implements Comparable<Fighter> {
 
         return spellList;
     }
+
+    public SpellEffect getEffectFromSpellId(int spellId){
+        Spell spell = World.world.getSort(spellId);
+        if(spell != null) {
+            return getSpellsFromFighterBuff().get(spell).get(0);
+        }
+        return null;
+    }
     public boolean hasBuffFromSpell(int spellId) {
         HashMap<Spell, List<SpellEffect>> spellListHashMap = getSpellsFromFighterBuff();
         boolean result = false;
 
         for(Spell spell : spellListHashMap.keySet()){
-            if(spell.getSpellID() == spellId){
+            if (spell.getSpellID() == spellId) {
                 result = true;
+                break;
             }
         }
 

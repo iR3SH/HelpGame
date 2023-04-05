@@ -190,7 +190,7 @@ public class Spell {
                     int id = Integer.parseInt(a.split(";", 2)[0]);
 		     if (id == 400) trap = true; // spell effect '400' represents a trap
                     String args = a.split(";", 2)[1];
-                    effets.add(new SpellEffect(id, args, spellID, level));
+                    effets.add(new SpellEffect(id, args, spellID, level, true));
                 } catch (Exception f) {
                     f.printStackTrace();
                     Main.stop("parseEffect spell");
@@ -313,7 +313,7 @@ public class Spell {
                     }
                     curMin += SE.getChance();
                 }
-                ArrayList<Fighter> cibles = SpellEffect.getTargets(SE, fight, cells);
+                ArrayList<Fighter> cibles = SpellEffect.getTargets(cells);
 
                 if ((fight.getType() != Constant.FIGHT_TYPE_CHALLENGE)
                         && (fight.getAllChallenges().size() > 0)) {
@@ -431,7 +431,7 @@ public class Spell {
                     if (((TE >> 5) & 1) == 1)
                         if (!finalCells.contains(perso.getCell()))
                             finalCells.add(perso.getCell());
-                    final ArrayList<Fighter> cibles = SpellEffect.getTargets(SE, fight, finalCells);
+                    final ArrayList<Fighter> cibles = SpellEffect.getTargets(finalCells);
 
                     if(SE.getEffectID() == 202)
                     {

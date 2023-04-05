@@ -8,8 +8,8 @@ import org.starloco.locos.kernel.Main;
 import java.sql.Connection;
 
 public class Database {
-    private final static DynamicsDatabase dynamics = new DynamicsDatabase();
-    private final static StaticsDatabase statics = new StaticsDatabase();
+    protected static DynamicsDatabase dynamics = new DynamicsDatabase();
+    protected static StaticsDatabase statics = new StaticsDatabase();
 
     public static boolean launchDatabase() {
         if (!statics.initializeConnection() || !dynamics.initializeConnection()) {
@@ -31,10 +31,10 @@ public class Database {
         try {
             Connection connection = dataSource.getConnection();
             connection.close();
-            return true;
+            return false;
         } catch (Exception e) {
             e.printStackTrace();
-            return false;
+            return true;
         }
     }
 }

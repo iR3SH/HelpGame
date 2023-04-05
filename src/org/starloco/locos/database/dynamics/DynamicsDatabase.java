@@ -11,7 +11,7 @@ import org.slf4j.LoggerFactory;
 import org.starloco.locos.database.dynamics.data.*;
 
 public class DynamicsDatabase {
-    private static Logger logger = (Logger) LoggerFactory.getLogger(DynamicsDatabase.class);
+    private static final Logger logger = (Logger) LoggerFactory.getLogger(DynamicsDatabase.class);
     //connection
     private HikariDataSource dataSource;
     //data
@@ -156,7 +156,7 @@ public class DynamicsDatabase {
             config.setMinimumIdle(1);
             this.dataSource = new HikariDataSource(config);
 
-            if (!Database.tryConnection(this.dataSource)) {
+            if (Database.tryConnection(this.dataSource)) {
                 logger.error("Please check your username and password and database connection");
                 Main.stop("try database connection failed");
                 return false;

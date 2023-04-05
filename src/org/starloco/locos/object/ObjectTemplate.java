@@ -616,7 +616,7 @@ public class ObjectTemplate {
                     String max = stats[2];
                     String jet = stats[4];
                     String args = min + ";" + max + ";-1;-1;0;" + jet;
-                    Effets.add(new SpellEffect(id, args, 0, -1));
+                    Effets.add(new SpellEffect(id, args, 0, -1, true));
                 }
             }
             switch (statID) {
@@ -628,7 +628,7 @@ public class ObjectTemplate {
                     String max = stats[2];
                     String jet = stats[4];
                     String args = min + ";" + max + ";-1;-1;0;" + jet;
-                    Effets.add(new SpellEffect(statID, args, 0, -1));
+                    Effets.add(new SpellEffect(statID, args, 0, -1, true));
                     break;
             }
         }
