@@ -622,9 +622,11 @@ public class Fighter implements Comparable<Fighter> {
                     case Constant.STATS_REM_PA:
                         SocketManager.GAME_SEND_GA_PACKET_TO_FIGHT(fight, 7, Constant.STATS_ADD_PA, String.valueOf(getId())
                         , getId() + "," + effect.getValue() + "," + effect.getDuration());
+                        break;
                     case Constant.STATS_REM_PM:
                         SocketManager.GAME_SEND_GA_PACKET_TO_FIGHT(fight, 7, Constant.STATS_ADD_PM, String.valueOf(getId())
                                 , getId() + "," + effect.getValue() + "," + effect.getDuration());
+                        break;
                     default:
                         break;
                 }
@@ -663,9 +665,11 @@ public class Fighter implements Comparable<Fighter> {
                     case Constant.STATS_REM_PA:
                         SocketManager.GAME_SEND_GA_PACKET_TO_FIGHT(fight, 7, Constant.STATS_ADD_PA, String.valueOf(getId())
                                 , getId() + "," + effect.getValue() + "," + effect.getDuration());
+                        break;
                     case Constant.STATS_REM_PM:
                         SocketManager.GAME_SEND_GA_PACKET_TO_FIGHT(fight, 7, Constant.STATS_ADD_PM, String.valueOf(getId())
                                 , getId() + "," + effect.getValue() + "," + effect.getDuration());
+                        break;
                     default:
                         break;
                 }

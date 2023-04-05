@@ -97,9 +97,9 @@ public class IA83 extends AbstractNeedSpell {
                     int cellId = Integer.parseInt(value.split(";")[0]);
                     SortStats spellStats = allSpells.get(Integer.parseInt(value.split(";")[1]));
                     if(fight.canCastSpell1(fighter, spellStats, fighter.getCell(), cellId)){
-                        int timeToWait = fight.tryCastSpell(fighter, spellStats, cellId);
-                        if(timeToWait > 0){
-                            time = timeToWait;
+                        int val = fight.tryCastSpell(fighter, spellStats, cellId);
+                        if(val != 10){
+                            time = spellStats.getSpell().getDuration();
                             action = true;
                         }
                     }

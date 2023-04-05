@@ -50,7 +50,7 @@ public class IAHandler {
                     ia = new IA9(fight, fighter, (byte) 4);
                     break;
                 case 10://IA Tonneau : Attaque[], Soin si Etat portée
-                    ia = new IA10(fight, fighter, (byte) 8);
+                    ia = new IA10(fight, fighter, (byte) 4);
                     break;
                 case 12://IA Tofus
                     ia = new IA12(fight, fighter, (byte) 4);

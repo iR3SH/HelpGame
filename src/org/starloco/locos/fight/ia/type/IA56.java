@@ -57,7 +57,7 @@ public class IA56 extends AbstractNeedSpell {
           SortStats spellStats = allSpells.get(Integer.parseInt(values.split(";")[1]));
           if (fight.canCastSpell1(fighter, spellStats, fighter.getCell(), cellId)) {
             int val = fight.tryCastSpell(fighter, spellStats, cellId);
-            if (val == 0) {
+            if (val != 10) {
               time = spellStats.getSpell().getDuration();
               action = true;
             }
@@ -105,7 +105,7 @@ public class IA56 extends AbstractNeedSpell {
           SortStats spellStats = allSpells.get(Integer.parseInt(values.split(";")[1]));
           if (fight.canCastSpell1(fighter, spellStats, fighter.getCell(), fighter.getCell().getId())) {
             int val = fight.tryCastSpell(fighter, spellStats, fighter.getCell().getId());
-            if (val == 0) {
+            if (val != 10) {
               time = spellStats.getSpell().getDuration();
               action = true;
             }

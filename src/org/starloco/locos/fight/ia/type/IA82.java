@@ -73,7 +73,6 @@ public class IA82 extends AbstractNeedSpell {
                             if (this.fight.canCastSpell1(fighter, spellStats, fighter.getCell(), cellId)) {
 
                                 if (this.fight.tryCastSpell(this.fighter, spellStats, cellId) == 0) {
-
                                     time = spellStats.getSpell().getDuration();
                                     action = true;
                                     Nearest = Function.getInstance().getNearest(fight, fighter);
