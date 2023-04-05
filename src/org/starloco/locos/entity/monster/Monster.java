@@ -1013,6 +1013,7 @@ public class Monster {
         private Map<Integer, Integer> stats = new HashMap<Integer, Integer>();
         private Map<Integer, SortStats> spells = new HashMap<Integer, SortStats>();
         private ArrayList<Integer> statsInfos = new ArrayList<Integer>();
+        private int kamas = 0;
 
         public MobGrade(Monster template, int grade, int level, int pa, int pm, String resists, String stats, String statsInfos, String allSpells, int pdvMax, int aInit, int xp, int n) {
             this.size = 100 + n * pSize;
@@ -1116,6 +1117,7 @@ public class Monster {
                     this.spells.put(id, spellStats);
                 }
             }
+            this.kamas = Formulas.getRandomValue(template.minKamas, template.maxKamas);
         }
 
         private MobGrade(Monster template, int grade, int level, int pdv,
@@ -1136,6 +1138,7 @@ public class Monster {
             this.spells = spells;
             this.inFightId = -1;
             this.baseXp = xp;
+            this.kamas = Formulas.getRandomValue(template.minKamas, template.maxKamas);
         }
 
         public MobGrade getCopy() {
@@ -1148,20 +1151,20 @@ public class Monster {
         public void refresh() {
             if (this.spells.isEmpty())
                 return;
-            String spells = "";
+            StringBuilder spells = new StringBuilder();
 
             for (Entry<Integer, SortStats> entry : this.spells.entrySet()) {
-                spells += (spells.isEmpty() ? entry.getKey() + ","
+                spells.append((spells.length() == 0) ? entry.getKey() + ","
                         + entry.getValue().getLevel() : ";" + entry.getKey()
                         + "," + entry.getValue().getLevel());
             }
 
             this.spells.clear();
 
-            if (!spells.equalsIgnoreCase("")) {
-                for (String split : spells.split("\\;")) {
-                    int id = Integer.parseInt(split.split("\\,")[0]);
-                    this.spells.put(id, World.world.getSort(id).getStatsByLevel(Integer.parseInt(split.split("\\,")[1])));
+            if (!spells.toString().equalsIgnoreCase("")) {
+                for (String split : spells.toString().split(";")) {
+                    int id = Integer.parseInt(split.split(",")[0]);
+                    this.spells.put(id, World.world.getSort(id).getStatsByLevel(Integer.parseInt(split.split(",")[1])));
                 }
             }
         }
@@ -1229,13 +1232,13 @@ public class Monster {
         public ArrayList<SpellEffect> getBuffs() {
             return this.fightBuffs;
         }
+        public int getKamas() { return this.kamas; }
 
         public Stats getStats() {
             if(this.getTemplate().getId() == 42 && !stats.containsKey(Constant.STATS_CREATURE))
                 stats.put(Constant.STATS_CREATURE, 5);
             if(this.stats.get(-1) != null) {
-                Map<Integer, Integer> stats = new HashMap<>();
-                stats.putAll(this.stats);
+                Map<Integer, Integer> stats = new HashMap<>(this.stats);
                 stats.remove(-1); stats.remove(-100);
 
                 int random = Formulas.getRandomValue(210, 214);

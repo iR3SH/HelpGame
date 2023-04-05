@@ -3,7 +3,6 @@ package org.starloco.locos.area.map;
 import org.starloco.locos.area.SubArea;
 import org.starloco.locos.area.map.entity.InteractiveDoor;
 import org.starloco.locos.client.Player;
-//import org.starloco.locos.client.other.Maitre; // La
 import org.starloco.locos.client.other.Party;
 import org.starloco.locos.database.Database;
 import org.starloco.locos.entity.Collector;
@@ -22,20 +21,8 @@ import org.starloco.locos.object.GameObject;
 import org.starloco.locos.other.Action;
 import org.starloco.locos.common.*;
 import org.starloco.locos.kernel.*;
-//import org.starloco.locos.util.TimerWaiter;
-
-//import scruffemu.area.map.GameCase;
-
-//import scruffemu.common.SocketManager;
-
-//import org.starloco.locos.common.SocketManager;
-
-//import org.starloco.locos.game.*;
 import org.starloco.locos.kernel.Config;
 
-//import scruffemu.common.SocketManager;
-
-import java.awt.*;
 import java.util.*;
 import java.util.List;
 import java.util.Map.Entry;

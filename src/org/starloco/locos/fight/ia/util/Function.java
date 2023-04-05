@@ -147,6 +147,8 @@ public class Function {
         int dist = 1000;
         Fighter curF = null;
         for (Fighter f : fight.getFighters(3)) {
+            if(f.isHide())
+                continue;
             if (f.isDead())
                 continue;
             if (f == fighter)
@@ -2250,6 +2252,8 @@ public class Function {
         }
         if (curF == null) {
             for (Fighter f : fight.getFighters(3)) {
+                if(f.isHide())
+                    continue;
                 if (f.isDead())
                     continue;
                 if (f.getTeam2() != fighter.getTeam2())//Si c'est un ennemis
@@ -2362,6 +2366,8 @@ public class Function {
             return null;
         Fighter curF = null;
         for (Fighter f : fight.getFighters(3)) {
+            if(f.isHide())
+                continue;
             if (f.isDead())
                 continue;
             if (f.getTeam2() == fighter.getTeam2() && !f.isInvocation() && f == fighter.getInvocator())//Si c'est un ennemis
@@ -2420,6 +2426,8 @@ public class Function {
         Map<Integer, Fighter> list = new HashMap<Integer, Fighter>();
         Map<Integer, Fighter> ennemy = new HashMap<Integer, Fighter>();
         for (Fighter f : fight.getFighters(3)) {
+            if(f.isHide())
+                continue;
             if (f.isDead())
                 continue;
             if (f == fighter)
@@ -3509,7 +3517,6 @@ public class Function {
         for (Map.Entry<Integer, Fighter> T : potentialsT.entrySet()) {
             int dist = PathFinding.getDistanceBetween(fight.getMap(), fighter.getCell().getId(), T.getValue().getCell().getId());
             if (dist < distMax) {
-
                 targets.add(T.getValue());
             }
         }
@@ -3780,6 +3787,9 @@ public class Function {
     public String getBestTargetZone(Fight fight, Fighter fighter, SortStats spell, int launchCell, boolean line) {
         if (fight == null || fighter == null)
             return "";
+        if(fighter.isHide()){
+            return "";
+        }
         if (spell.getPorteeType().isEmpty() || (spell.getPorteeType().charAt(0) == 'P' && spell.getPorteeType().charAt(1) == 'a') || spell.isLineLaunch() && !line) {
             return "";
         }

@@ -7591,7 +7591,7 @@ public class GameClient {
 
     public void kick() {
         if(this.session.isConnected())
-            this.session.close(true);
+            this.session.closeNow();
     }
 
     public void disconnect() {

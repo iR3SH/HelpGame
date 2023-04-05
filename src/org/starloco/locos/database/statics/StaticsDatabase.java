@@ -12,7 +12,7 @@ import org.slf4j.LoggerFactory;
 public class StaticsDatabase {
     //connection
     private HikariDataSource dataSource;
-    private Logger logger = (Logger) LoggerFactory.getLogger(StaticsDatabase.class);
+    private final Logger logger = (Logger) LoggerFactory.getLogger(StaticsDatabase.class);
     //data
     private AccountData accountData;
     private CommandData commandData;
@@ -65,7 +65,7 @@ public class StaticsDatabase {
             config.setMinimumIdle(1);
             this.dataSource = new HikariDataSource(config);
 
-            if (!Database.tryConnection(this.dataSource)) {
+            if (Database.tryConnection(this.dataSource)) {
                 logger.error("Please check your username and password and database connection");
                 Main.stop("statics try connection failed");
                 return false;

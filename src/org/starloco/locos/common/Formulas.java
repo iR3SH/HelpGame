@@ -727,8 +727,34 @@ public class Formulas {
         }
         return armor;
     }
+    public static int getPointsLost(char type, int value, Fighter caster, Fighter target) {
+        float esquiveC = type == 'a' ? caster.getTotalStatsLessBuff().getEffect(Constant.STATS_ADD_AFLEE) : caster.getTotalStatsLessBuff().getEffect(Constant.STATS_ADD_MFLEE);
+        float esquiveT = type == 'a' ? target.getTotalStats().getEffect(Constant.STATS_ADD_AFLEE) : target.getTotalStats().getEffect(Constant.STATS_ADD_MFLEE);
+        float ptsMax = type == 'a' ? target.getTotalStatsLessBuff().getEffect(Constant.STATS_ADD_PA) : target.getTotalStatsLessBuff().getEffect(Constant.STATS_ADD_PM);
+        if(target.isMob())
+            ptsMax = type == 'a' ? target.getMob().getPa() : target.getMob().getPm();
+        int loose = 0;
 
-    public static int getPointsLost(final char type, final int value, final Fighter caster, final Fighter target) {
+        for (int i = 0; i < value; i++) {
+            float pts = (type == 'a' ? target.getPa() : target.getPm()) - loose;
+
+            if (esquiveT <= 0) esquiveT = 1;
+            if (esquiveC <= 0) esquiveC = 1;
+
+            float result = Math.round((float) (pts / ptsMax * esquiveC / esquiveT * 0.5) * 100);
+
+            /*
+            pourcentage de chance de retirer un PA =
+            PA ou PM restants de la cible / PA ou PM totaux de la cible * Retrait du lanceur / esquive de la cible.  1/2
+             */
+            int jet = getRandomValue(0, 100);
+
+            if (result >= jet) loose++;
+        }
+        return loose;
+    }
+
+    /*public static int getPointsLost(final char type, final int value, final Fighter caster, final Fighter target) {
         if(type == 'a') {
             if(target.getCurPa(target.getFight()) == 0){
                 return 0;
@@ -772,7 +798,7 @@ public class Formulas {
             }
         }
         return loose;
-    }
+    }*/
     
     /*
     public static int getPointsLost(char z, int value, Fighter caster,
